@@ -9,13 +9,13 @@ export const environment = {
   // linkUsed: '172.19.9.101:1001'
 
   // Exteral Link
-  FileApiUrl: "http://172.30.52.25:1007",
-  ApiUrl: "https://www.gebbsrcm.com:1008", //For CLIENT EXTERNAL LINK
-  linkUsed: 'www.gebbsrcm.com:1008'
-  // NEW UAT
   // FileApiUrl: "http://172.30.52.25:1007",
-  // ApiUrl: "http://172.30.52.25:1001/",
-  // linkUsed: '172.30.52.25:1001'
+  // ApiUrl: "https://www.gebbsrcm.com:1008", //For CLIENT EXTERNAL LINK
+  // linkUsed: 'www.gebbsrcm.com:1008'
+  // NEW UAT
+  FileApiUrl: "http://172.30.52.25:1007",
+  ApiUrl: "http://172.30.52.25:1001/",
+  linkUsed: '172.30.52.25:1001'
   // Local
 
   // FileApiUrl: "http://localhost:63482:1007",

@@ -27,7 +27,7 @@ export class InventoryHighPriorityComponent implements OnInit {
   inventoryList = [];
   maxDate = new Date();
   columnDefs = [
-    { headerName: 'Inventory Id', field: 'Inventory_Id', },
+    { headerName: 'Patient Name', field: 'Patient_Name', },
     { headerName: 'Dollar Value', field: 'Dollar_Value' },
     { headerName: 'Bucket Name', field: 'Bucket_Name' },
     { headerName: 'Voice NonVoice', field: 'Voice_NonVoice' },
