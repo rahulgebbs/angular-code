@@ -67,12 +67,12 @@ export class InventoryHighPriorityComponent implements OnInit {
 
     // setTimeout(() => {
     //   console.log('After this.gridOptions : ', this.gridOptions);
-    //   // this.gridOptions.api.forEachNode(rowNode => {
-    //   //   console.log('rowNode : ', rowNode);
-    //   //   if (rowNode.data.Bucket_Name == null) {
-    //   //     // rowNode.setDataValue('currency', rowNode.data.value + Number(Math.random().toFixed(2)))
-    //   //   }
-    //   // });
+    // this.gridOptions.api.forEachNode(rowNode => {
+    //   console.log('rowNode : ', rowNode);
+    //   if (rowNode.data.Bucket_Name == null) {
+    //     // rowNode.setDataValue('currency', rowNode.data.value + Number(Math.random().toFixed(2)))
+    //   }
+    // });
     // }, 1000);
   }
 
@@ -81,6 +81,11 @@ export class InventoryHighPriorityComponent implements OnInit {
     this.inventoryService.getInventoryDropdownList().subscribe((response) => {
       console.log('getInventoryDropdownList response : ', response);
       this.fieldList = response.Data;
+      this.fieldList.forEach((ele, index) => {
+        if (ele.Field_Name == "Unique_Key") {
+          this.fieldList.splice(index, 1)
+        }
+      })
     }, (error) => {
       this.fieldList = [];
       console.log('error : ', error)
@@ -89,6 +94,8 @@ export class InventoryHighPriorityComponent implements OnInit {
   }
 
   searchInventoryList() {
+
+    this.gridOptions.api.showLoadingOverlay();
     if (this.activeField && this.activeField.length > 0 && this.activeField[0].Type == 'date') {
       this.reference = moment(this.reference).format('MM-DD-YYYY');
     }
@@ -160,10 +167,16 @@ export class InventoryHighPriorityComponent implements OnInit {
     // this.close.emit(row.data);
     this.inventoryService.gethighPriorityFields(Inventory_Id, InventoryLogId, Bucket_Name).subscribe((resposne) => {
       console.log('gethighPriorityFields response : ', resposne);
+      // inventory_Log_Id
+      row.data.Inventory_Log_Id = resposne.Data.inventory_Log_Id;
+      setTimeout(() => {
+        sessionStorage.setItem('highPriporityAccount', 'true');
+        this.allFields.emit(row.data);
+      }, 100);
     }, (error) => {
       console.log('gethighPriorityFields error : ', error);
+      sessionStorage.removeItem('highPriporityAccount')
     })
-    this.allFields.emit(row.data);
   }
 
   BlockInput(event) {

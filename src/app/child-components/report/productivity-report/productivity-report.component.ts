@@ -39,7 +39,6 @@ export class ProductivityReportComponent implements OnInit {
         this.token = new Token(this.router);
         this.userData = this.token.GetUserData();
         this.ResponseHelper = new ResponseHelper(this.notification);
-
     }
     ngOnInit() {
         this.getClientList();
@@ -153,7 +152,7 @@ export class ProductivityReportComponent implements OnInit {
 
     getClientList() {
 
-        this.clientService.getClientAdministrator(this.userData.TokenValue).subscribe((response) => {
+        this.clientService.getClientList(this.userData.TokenValue).subscribe((response) => {
             console.log('response : ', response);
             if (response) {
 
@@ -320,8 +319,7 @@ export class ProductivityReportComponent implements OnInit {
         this.clientService.getAgentReportByDate(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, 1, this.startDate, this.endDate)
             .subscribe((response) => {
                 console.log('getAgentReport response : ', response);
-                // nodeObj.httpStatus = false;
-                // this.setAgents(nodeObj, response.Data.manager_InventoryList_count);
+      
                 this.setAgentsReportDateWise(nodeObj, response.Data.manager_InventoryList_count)
             }, (error) => {
                 console.log('getAgents error : ', error);

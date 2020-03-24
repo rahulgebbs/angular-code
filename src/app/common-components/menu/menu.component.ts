@@ -94,9 +94,7 @@ export class MenuComponent implements OnInit {
   }
 
   Logout() {
-    var token = sessionStorage.getItem('access_token');
-
-    this.analyticsService.logOutEvent(token, 'Login/Logout').subscribe((response) => {
+    this.analyticsService.logOutEvent('Login/Logout').subscribe((response) => {
       console.log('logEvent : ', response);
     }, (error) => {
       console.log('logEvent : ', error);
@@ -258,11 +256,12 @@ export class MenuComponent implements OnInit {
 
   getMenuForUser() {
     this.menuService.getMenuForUser().subscribe((response) => {
-      console.log('getMenuForUser response : ', response);
+      // console.log('getMenuForUser response : ', response);
       this.clientUserMenuList = response.Data;
       this.getBIReportMenu();
     }, (error) => {
-      console.log('getMenuForUser error : ', error);
+      console.log('error : ', error);
+      this.getBIReportMenu();
     })
   }
 

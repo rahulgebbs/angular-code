@@ -127,18 +127,20 @@ import { AddClientUserMappingManagementComponent } from './child-components/clie
 import { EditClientUserMappingManagementComponent } from './child-components/client-user-mapping-management/edit-client-user-mapping-management/edit-client-user-mapping-management.component';
 import { DeleteClientUserMappingManagementComponent } from './child-components/client-user-mapping-management/delete-client-user-mapping-management/delete-client-user-mapping-management.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
+
 import { TwoFactorAuthComponent } from './landing-page/two-factor-auth/two-factor-auth.component';
 import { UserMenuMappingComponent } from './child-components/user-menu-mapping/user-menu-mapping.component';
 import { AssignMenuComponent } from './child-components/assign-menu/assign-menu.component';
+import { InventoryHighPriorityComponent } from './child-components/agent/inventory-high-priority/inventory-high-priority.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { CallReferenceComponent } from './child-components/agent/call-reference/call-reference.component';
-import { InventoryHighPriorityComponent } from './child-components/agent/inventory-high-priority/inventory-high-priority.component';
+import { CelTooltipTextComponent } from './common-components/cel-tooltip-text/cel-tooltip-text.component';
+import { CallReferenceInfoComponent } from './child-components/agent/call-reference-info/call-reference-info.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CallReferenceComponent,
-    InventoryHighPriorityComponent,
     LoginComponent,
     ForgotPasswordComponent,
     ChangePasswordComponent,
@@ -247,10 +249,13 @@ import { InventoryHighPriorityComponent } from './child-components/agent/invento
     DeleteClientUserMappingManagementComponent,
     /*two-factor-auth*/
     TwoFactorAuthComponent,
-    /* User Menu Mapping*/
     UserMenuMappingComponent,
     AssignMenuComponent,
-    WelcomePageComponent
+    InventoryHighPriorityComponent,
+    WelcomePageComponent,
+    CallReferenceComponent,
+    CelTooltipTextComponent,
+    CallReferenceInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -268,9 +273,8 @@ import { InventoryHighPriorityComponent } from './child-components/agent/invento
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'two-factor-auth', component: TwoFactorAuthComponent },
-
-      { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'welcome-page', component: WelcomePageComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard], data: { route: ['change-password'] } },
       { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
       // { path: 'client-configuration', component: ClientConfigurationComponent },
@@ -322,9 +326,10 @@ import { InventoryHighPriorityComponent } from './child-components/agent/invento
       { path: 'productivity-report', component: ProductivityReportComponent, canActivate: [AuthGuard], data: { route: ['productivity-report'] } },
       { path: 'agent-productivity-report', component: AgentProductivityReportComponent, canActivate: [AuthGuard], data: { route: ['agent-productivity-report'] } },
       /* client user mapping management*/
-      { path: 'client-user-mapping-management', component: ClientUserMappingManagementComponent, canActivate: [AuthGuard], data: { route: ['client-user-mapping-management'] } },      // ConcluderMiniInsuranceComponent
-      { path: 'user-menu-mapping', component: UserMenuMappingComponent, canActivate: [AuthGuard], data: { route: ['user-menu-mapping'] } },      // UserMenuMappingComponent      
+      { path: 'client-user-mapping-management', component: ClientUserMappingManagementComponent, canActivate: [AuthGuard], data: { route: ['client-user-mapping-management'] } },
 
+      { path: 'user-menu-mapping', component: UserMenuMappingComponent, canActivate: [AuthGuard], data: { route: ['user-menu-mapping'] } },      // UserMenuMappingComponent      
+      // ConcluderMiniInsuranceComponent
       { path: '**', component: NotFoundComponent }
 
     ]),

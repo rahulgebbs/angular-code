@@ -43,6 +43,8 @@ export const Access = {
   "agent-productivity-report": ["Agent"],
   "client-user-mapping-management": ["Controller"],
   "user-menu-mapping": ["Administrator", "Admin"]
+
+
 };
 
   //add new role here

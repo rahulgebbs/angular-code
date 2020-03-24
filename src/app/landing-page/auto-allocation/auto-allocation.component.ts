@@ -41,9 +41,6 @@ export class AutoAllocationComponent implements OnInit {
 
 
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService, private commonservice: CommonService, private autoservice: AutoAllocationService, private fb: FormBuilder) {
-    this.testForm = this.fb.group({
-      'Client_Id': [''],
-    })
   }
 
   ngOnInit() {
@@ -51,14 +48,18 @@ export class AutoAllocationComponent implements OnInit {
     var token = new Token(this.router);
     var userdata = token.GetUserData();
     this.UserId = userdata.UserId;
-    this.MatrixForm = this.CreateMatrixForm();
-    this.SettingsForm = this.CreateSettingForm();
     this.ClientList = this.selectedFields.setSelected(userdata.Clients);
+    this.SettingsForm = this.CreateSettingForm();
     if (this.ClientList[0].selected) {
       this.ClientId = this.ClientList[0].Client_Id
-      this.SettingsForm.value.Client_Id = this.ClientId
+      // this.SettingsForm.value.Client_Id = this.ClientId
+      this.SettingsForm.patchValue({ Client_Id: this.ClientId })
       this.GetAutoAllocation();
     }
+    this.testForm = this.fb.group({
+      'Client_Id': [''],
+    })
+    this.MatrixForm = this.CreateMatrixForm();
   }
 
   CreateMatrixForm() {
@@ -93,7 +94,7 @@ export class AutoAllocationComponent implements OnInit {
   }
 
   ClientListOnChange(event) {
-    this.GroupByList=[]
+    this.GroupByList = []
     this.DisableMatrixSave = true;
     this.DisableSettingSave = true;
     this.HideAllData = true;
@@ -114,16 +115,16 @@ export class AutoAllocationComponent implements OnInit {
     this.Validated = false;
     this.DisableSettingSave = false;
     this.DisableMatrixSave = false
-    this.GroupByList=[]
+    this.GroupByList = []
     this.autoservice.GetAutoQueueAllocation(this.ClientId).subscribe(
       res => {
-        
+
         this.GroupByList = this.selectedFields.setSelected(res.json().Data.GroupBy_Fields)
         // this.ClientSettings.Group_By =this.GroupByList[0].GroupBy_Field;
-       
+
         this.ClientSettings = res.json().Data.Setting;
-        this.SettingsForm.patchValue({"Group_By": this.ClientSettings.Group_By})
-       
+        this.SettingsForm.patchValue({ "Group_By": this.ClientSettings.Group_By })
+
         this.ClientMatrixData = res.json().Data.Effective_Matrix;
         this.ConfigureBucketName();
         this.SettingsForm.patchValue({ 'Id': this.ClientSettings.Id, 'Updated_Date': this.ClientSettings.Updated_Date })
@@ -134,10 +135,10 @@ export class AutoAllocationComponent implements OnInit {
     );
   }
 
-  GroupbyChange(e){
-    
+  GroupbyChange(e) {
+
     this.ClientSettings.Group_By = e.target.value;
-    this.SettingsForm.patchValue({"Group_By": this.ClientSettings.Group_By})
+    this.SettingsForm.patchValue({ "Group_By": this.ClientSettings.Group_By })
   }
   ConfigureBucketName() {
     this.ClientMatrixData.forEach(e => {
@@ -185,7 +186,6 @@ export class AutoAllocationComponent implements OnInit {
   }
 
   MatrixSubmit() {
-    
     if (this.ClientMatrixData.length != 0) {
       this.DisableSettingSave = true;
       this.DisableMatrixSave = true;

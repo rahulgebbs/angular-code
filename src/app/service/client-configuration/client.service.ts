@@ -18,21 +18,21 @@ export class ClientService {
 
     return this.http.get(environment.ApiUrl + '/api/client/' + id, { headers: headers })
   }
-
-  getClientList(accessToken) {
-    let headers: any = new Headers({
-      'Access_Token': accessToken
-    });
-    return this.http.get(environment.ApiUrl + '/api/client', { headers: headers });
-
-  }
-
+  
   getClientAdministrator(accessToken) {
     let headers: any = new Headers({
       'Access_Token': accessToken
     });
 
     return this.http.get(environment.ApiUrl + '/api/client-administrator', { headers: headers })
+  }
+
+  getClientList(accessToken) {
+    let headers: any = new Headers({
+      'Access_Token': accessToken
+    });
+    return this.http.get(environment.ApiUrl + '/api/client-administrator', { headers: headers });
+
   }
 
   updateClient(accessToken, client) {
@@ -140,4 +140,5 @@ export class ClientService {
     return this.http.get(environment.ApiUrl + '/api/Get_PopUp_Data/' + ECN, { headers: headers })
       .map(res => res.json());
   }
+  
 }

@@ -23,8 +23,7 @@ export class MystatsComponent implements OnInit {
     { headerName: 'Date', field: 'date', },
     { headerName: 'To Call', field: 'countToCall' },
     { headerName: 'Done', field: 'countDone' },
-
-  ]
+  ];
   constructor() { }
 
   ngOnInit() {

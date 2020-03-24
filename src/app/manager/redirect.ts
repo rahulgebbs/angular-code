@@ -41,11 +41,11 @@ export class RedirectHelper {
     }
 
     getMenuListForUser() {
-        this.menuMappingService.getMenuForUser().subscribe((response) => {
+        this.menuMappingService.getMenuForUser().subscribe((response:any) => {
             console.log('getMenuForUser response : ', response);
             if (response && response.Data && response.Data.length > 0)
                 // this.router.navigate(['/client-approval']);
-                this.navigateClient();
+                this.navigateClient(response.Data);
             else
                 this.router.navigate(['/welcome-page']);
         }, (error) => {
@@ -54,17 +54,38 @@ export class RedirectHelper {
         })
     }
 
-    navigateClient() {
+    navigateClient(menuList) {
+        console.log('navigateClient menuList : ', menuList);
         switch (this.userRole) {
             case "Client Supervisor": {
-                this.router.navigate(['/client-approval']);
+                const result = menuList.find((menu) => {
+                    return menu.Route == 'client-approval'
+                });
+                console.log('Client Supervisor result : ', result)
+                if (result != undefined) {
+                    this.router.navigate(['/client-approval']);
+                }
+                else {
+                    this.router.navigate(['/welcome-page']);
+                }
                 break;
             }
             case "Client User": {
-                this.router.navigate(['/client-user']);
+                const result = menuList.find((menu) => {
+                    return menu.Route == 'client-user'
+                });
+                console.log('Client User result : ', result)
+                if (result != undefined) {
+                    this.router.navigate(['/client-user']);
+                }
+                else {
+                    this.router.navigate(['/welcome-page']);
+                }
+
                 break;
             }
             default: {
+                this.router.navigate(['/welcome-page']);
                 break;
             }
 

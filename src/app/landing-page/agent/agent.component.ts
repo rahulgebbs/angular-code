@@ -95,7 +95,8 @@ export class AgentComponent implements OnInit {
   DisplayBcbs: boolean = false;
   clientUserModal = false;
   enableClientUserMapping = null;
-  menuStatus = false
+  menuStatus = false;
+  showCallReferenceInfo = false;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
@@ -116,7 +117,7 @@ export class AgentComponent implements OnInit {
 
     setTimeout(() => {
       $('.utility-menu').hide();
-    }, 100)
+    }, 1000)
   }
 
   toggleMenu() {
@@ -148,21 +149,17 @@ export class AgentComponent implements OnInit {
   }
 
   GetAccountList(bucket, fromsubmit) {
-
     this.agentservice.GetAccountList(this.ClientId, bucket.Name).pipe(finalize(() => {
       this.GetBucketsWithCount();
-
     })).subscribe(
       res => {
         bucket.disableBtn = false;
         this.AccountsList = res.json().Data.Inventory_Info;
-
-
-
+        console.log('debug this.AccountsList : ', this.AccountsList);
         if (this.AccountsList.length > 0) {
           // this.InventoryId = this.AccountsList[0].Inventory_Id;
           // this.InventoryLogId = this.AccountsList[0].Inventory_Log_Id;
-          this.SaveAccountsInLocal(bucket.Name, this.AccountsList[0].Inventory_Id);
+
 
           if (bucket.Name.indexOf('Appeal') == -1) {
             if (this.AccountsList[0].Inventory_Log_Id) {
@@ -193,6 +190,7 @@ export class AgentComponent implements OnInit {
             this.ActiveBucket = '';
           }
         }
+        this.SaveAccountsInLocal(bucket.Name, this.AccountsList[0].Inventory_Id);
       },
       err => {
         bucket.disableBtn = false;
@@ -223,6 +221,7 @@ export class AgentComponent implements OnInit {
       if (e.Inventory_Id == inventoryId) {
         e.Processed = "Working";
       }
+      e[e.Group_By_Field_Header] = e.Group_By_Field_Value;
     })
     if (!Bucket_Name.includes("Appeal") && Bucket_Name != "Private_To_Call" && Bucket_Name != "TL_Deny") {
       this.AccountsList.forEach(e => {
@@ -238,8 +237,6 @@ export class AgentComponent implements OnInit {
         this.LocalAccounts.push(e);
       })
     }
-
-
     sessionStorage.setItem("Accounts", JSON.stringify(this.LocalAccounts));
   }
 
@@ -619,9 +616,7 @@ export class AgentComponent implements OnInit {
   getInstructionCount() {
 
     this.agentservice.GetCount(this.ClientId).subscribe(res => {
-
       this.instructionCount = res.json().Data.Count;
-
     }, err => {
       this.instructionCount = 0;
 
@@ -659,6 +654,20 @@ export class AgentComponent implements OnInit {
   ToggleAccountsModal(bucket) {
 
     if (bucket && bucket.Name != false && bucket.Name != true) {
+      sessionStorage.removeItem('Accounts');
+
+      const highPriority = sessionStorage.getItem('highPriporityAccount');
+      const callReference = localStorage.getItem('callReference');
+      if (highPriority != undefined) {
+        this.GetAccountList(bucket, false);
+        sessionStorage.removeItem('highPriporityAccount');
+      }
+      if(callReference!=undefined)
+      {
+        this.GetAccountList(bucket, false);
+        localStorage.removeItem('callReference');
+
+      }
       this.analyticsService.logEvent(bucket.Name + ' Click').subscribe((response) => {
         console.log('logEvent : ', response);
       }, (error) => {
@@ -675,12 +684,16 @@ export class AgentComponent implements OnInit {
           this.GetAccountList(bucket, false);
         }
         else {
-          this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+          this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
           this.AccountsList = [];
           this.LocalAccounts.forEach(e => {
             if (e.Bucket_Name == bucket.Name && e.Processed != "Complete")
               this.AccountsList.push(e);
-          })
+          });
+          if (this.AccountsList && this.AccountsList.length == 0) {
+            this.GetAccountList(bucket, false);
+            return false;
+          }
 
           if (this.ActiveBucket != bucket.Name) {
             // this.InventoryId = ;
@@ -713,9 +726,9 @@ export class AgentComponent implements OnInit {
   }
 
   GetAllFields(bucket, obj, fromPopup) {
-    console.log('GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
-    this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : this.InventoryLogId;
-    console.log('GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
+    console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     var oldinvenid = this.InventoryId;
     var oldinvenlogid = this.InventoryLogId;
     if (fromPopup === true) {
@@ -781,6 +794,7 @@ export class AgentComponent implements OnInit {
   }
 
   GetAllFieldsApiCall(bucket, inventoryId: number, fromPopup: boolean) {
+    console.log('GetAllFields bucket, inventoryId, fromPopup : ', bucket, inventoryId, this.InventoryLogId);
     this.agentservice.GetAllFields(this.ClientId, inventoryId, this.InventoryLogId, bucket.Name).pipe(finalize(() => {
       // this.ClearForm();
       this.Validated = false;
@@ -788,6 +802,7 @@ export class AgentComponent implements OnInit {
       res => {
         bucket.disableBtn = false;
         this.AllFields = res.json().Data;
+        console.log('GetAllFields this.AllFields : ', this.AllFields);
         this.ManageNullFields();
         this.MapActionFields();
         this.ChangeWorkingStatusInLocal(bucket.Name);
@@ -1217,14 +1232,19 @@ export class AgentComponent implements OnInit {
     this.closeCallReferenceModal(null);
   }
 
-
   highPriorityLog(data) {
-
     data.Bucket_Name = "Special_Queue";
     console.log('highPriorityLog response : ', data, this.ActiveBucket);
     this.GetAllFields({}, data, true);
     this.closeHighPriorityAccountModal(null);
   }
 
-
+  openCallReferenceInfo() {
+    console.log('openCallReferenceInfo() : ', this.showCallReferenceInfo);
+    this.showCallReferenceInfo = true;
+  }
+  hideCallReferenceInfo() {
+    console.log('hideCallReferenceInfo() : ', this.showCallReferenceInfo);
+    this.showCallReferenceInfo = false;
+  }
 }

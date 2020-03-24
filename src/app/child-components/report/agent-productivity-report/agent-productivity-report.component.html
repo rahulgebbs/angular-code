@@ -6,29 +6,7 @@
     <div id="formContainer">
       <!-- form start -->
       <form class="form-inline" [formGroup]="productivityForm">
-        <!-- Process Name -->
-        <!-- <div class="form-group">
-          <label for="exampleInputName2">Process Name </label>
-          <select class="form-control" name="exampleInputName2" id="exampleInputName2" formControlName="processName"
-            (change)="changeClient($event)">
-            <option value="">Select Process</option>
-            <option [value]="client.Id" *ngFor="let client of clientList">{{client.Client_Name}}</option>
-          </select>
-        </div> -->
-        <!-- Start date -->
-        <!-- <div class="form-group">
-          <label for="card-number">Start Date</label>
-          <div class='input-group date' id='startDate'>
-            <input autocomplete="off" [owlDateTimeTrigger]="startDate" class="owl-dp form-control" name="startDate"
-              [owlDateTime]="startDate" formControlName="startDate" (keydown)="BlockInput($event)"
-              (keypress)="BlockInput($event)">
-            <span class="input-group-addon" [owlDateTimeTrigger]="startDate">
-              <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-            <owl-date-time [pickerType]="'calendar'" #startDate></owl-date-time>
-          </div>
-        </div> -->
-
+    
         <!--End Date  -->
         <div class="form-group">
           <label>Select Month</label>

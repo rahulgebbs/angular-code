@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
 export class ClientComponent implements OnInit {
   @Output() next_page = new EventEmitter<any>();
   @Output() messageEvent = new EventEmitter<any>();
-  clientData: clientInfo = new clientInfo();
+  clientData: any = new clientInfo();
   @Input() selectClient;
   @Input() SelectedClientData;
   token: Token;
@@ -70,6 +70,7 @@ export class ClientComponent implements OnInit {
     })
     this.getClientList();
     this.addClient.get('DB_Name').disable();
+    console.log('constructor userData : ', this.userData)
 
   }
 
@@ -337,6 +338,4 @@ export class clientInfo {
   File_Location?: string;
   Is_Appeal_Processed?: boolean;
   isClientSelected?: boolean;
-  Original_Client_Name: String;
-  SubClient_Name: String;
 }

@@ -61,6 +61,7 @@ export class CallReferenceComponent implements OnInit {
     // if (this.activeField && this.activeField.length > 0 && this.activeField[0].Type == 'date') {
     //   this.reference = moment(this.reference).format('MM-DD-YYYY');
     // }
+    this.gridOptions.api.showLoadingOverlay();
     console.log('searchInventoryList this.reference : ', this.reference);
 
     this.inventoryService.searchCallReferenceAccounts(this.reference).subscribe((response: any) => {
@@ -97,5 +98,6 @@ export class CallReferenceComponent implements OnInit {
       return false;
     }
   }
+ 
 }
 

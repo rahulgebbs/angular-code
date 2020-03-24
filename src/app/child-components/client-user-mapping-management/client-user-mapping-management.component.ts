@@ -31,7 +31,6 @@ export class ClientUserMappingManagementComponent implements OnInit {
   fetchingList = false;
   status = true;
   p: number = 0;
-  
   ResponseHelper: ResponseHelper;
 
   constructor(private router: Router,
@@ -83,10 +82,6 @@ export class ClientUserMappingManagementComponent implements OnInit {
         "name": "FOB Cerner"
       },
       {
-        "key": "Process_Name",
-        "name": "Process Name"
-      },
-      {
         "key": "ClearingHouseId",
         "name": "Clearing House Id"
       },
@@ -118,6 +113,7 @@ export class ClientUserMappingManagementComponent implements OnInit {
     console.log('openEditMappingModal : ', user);
     this.editModal = { random: Math.random() };
     this.activeUser = user;
+    
   }
   openDeleteMappingModal(user) {
     console.log('openDeleteMappingModal : ');

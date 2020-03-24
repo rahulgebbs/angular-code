@@ -25,7 +25,7 @@ export class AnalyticsService {
 
     }
 
-    console.log('logEvent body : ', body);
+    // console.log('logEvent body : ', body);
     let headers: any = new Headers({
       'Access_Token': token
     });
@@ -33,8 +33,8 @@ export class AnalyticsService {
     return this.http.post(environment.ApiUrl + '/api/Insert_Login_Logout_Track', body, { headers: headers })
   }
 
-  logOutEvent(token,eventName) {
-    // const token = sessionStorage.getItem('access_token');
+  logOutEvent(eventName) {
+    const token = sessionStorage.getItem('access_token');
     let data = jwt_decode(token);
     const body = {
       "EmpCode": data.Employee_Code,
@@ -45,7 +45,7 @@ export class AnalyticsService {
 
     }
 
-    console.log('logEvent body : ', body);
+    // console.log('logEvent body : ', body);
     let headers: any = new Headers({
       'Access_Token': token
     });

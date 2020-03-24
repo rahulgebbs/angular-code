@@ -14,8 +14,9 @@
   </div>
   <div class="col-md-12 p-0">
     <div class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
-        [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"
+      <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true"
+        [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
+        class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"
         [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection"
         (firstDataRendered)="OnGridReady($event)"
         (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"

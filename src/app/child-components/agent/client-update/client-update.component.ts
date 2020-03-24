@@ -18,6 +18,7 @@ export class ClientUpdateComponent implements OnInit {
   ResponseHelper;
   gridColumnApi;
   rowSelection = "single";
+  defaultColDef
   columnDefs = [
     { headerName: 'Created/Modified Date', field: 'Created_Date', cellRenderer: this.DateFormat },
     { headerName: 'Payer Name', field: 'Payer_Name' },
@@ -33,7 +34,19 @@ export class ClientUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.defaultColDef = {
+      cellRenderer: showOrderCellRenderer,
+      resizable: false
+    };
+    function showOrderCellRenderer(params) {
+      var cell: any = document.createElement("div");
+      console.log('params : ', params)
 
+      cell.innerHTML = `<div title="${params.value}">${params.value}</div>`;
+      // var start = new Date();
+      // while (new Date() - start < 15) { }
+      return cell;
+    }
   }
   closeModel() {
     this.Toggle.emit('');

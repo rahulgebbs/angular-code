@@ -37,7 +37,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-12">
+          <div *ngIf="SettingsForm && SettingsForm.get('DOS_Days')" class="col-md-12">
             <div class="form-group">
               <label for="DOS_Days" class="label-std  control-label p-0 b-600">DOS + Days</label>
               <input type="text" class="form-control" required formControlName="DOS_Days" id="DOS_Days"

@@ -17,7 +17,7 @@
           <div class="col-md-12 p-0">
   
             <div class="sticky-table sticky-ltr-cells popup-table-height">
-              <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+              <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true"
                 [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="ClientUpdateData"
                 [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
                 [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true"

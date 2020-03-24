@@ -20,8 +20,8 @@ export class TwoFactorAuthComponent implements OnInit, OnDestroy {
   // RedirectHelper: RedirectHelper;
   constructor(
     private router: Router,
-    private RedirectHelper: RedirectHelper,
     private loginService: LoginService,
+    private RedirectHelper: RedirectHelper,
     private notification: NotificationService
   ) { }
 
@@ -65,7 +65,7 @@ export class TwoFactorAuthComponent implements OnInit, OnDestroy {
   }
   getQRCode() {
     console.log('QR code API');
-    this.loginService.getQRCode(this.activeUser.User_Id).subscribe((response) => {
+    this.loginService.getQRCode(this.activeUser.Email_Id).subscribe((response) => {
       console.log('getQRCode response : ', response);
       this.barCodeURI = response.Data.Html;
     }, (error) => {

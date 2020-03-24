@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { Token } from 'src/app/manager/token';
 import { Router } from '@angular/router';
 import { MenuMappingService } from 'src/app/menu-mapping.service';
+import * as RoleHelper from 'src/app/manager/role';
 
 @Component({
   selector: 'app-assign-menu',
@@ -28,26 +29,68 @@ export class AssignMenuComponent implements OnInit, OnChanges {
     allowSearchFilter: true
   }
   httpStatus = false;
+  Access = RoleHelper.Access;
+  UserData = null;
+  Token = null;
+  accessMenuList = [];
   constructor(private menuMappingService: MenuMappingService,
+    private route: Router,
     private notification: NotificationService) {
     this.ResponseHelper = new ResponseHelper(this.notification);
   }
 
   ngOnInit() {
-    // console.log('client : ', this.client);
+    console.log('client : ', this.client);
+    // this.CheckRole();
   }
 
   closeModal() {
     this.close.emit(null);
   }
 
+  CheckRole() {
+    this.accessMenuList = [];
+    let routes = Object.keys(this.Access);
+    console.log('routes : ', routes);
+    routes.forEach(e => {
+      if (this.Access[e].includes(this.client.Role_Name)) {
+        this.accessMenuList.push(e);
+      }
+    });
+    console.log('accessMenuList : ', this.accessMenuList, this.client);
+  }
+
+  checkMenuAccess(menuObj) {
+    // let status = false;
+    if (menuObj.Menu_Name == "BI reports") {
+      return true;
+    }
+    if (menuObj && menuObj.subMenus && menuObj.subMenus.length > 0) {
+      menuObj.subMenus.forEach((element, index) => {
+        const result = this.accessMenuList.includes(element.Route);
+        if (result == false) {
+          menuObj.subMenus.splice(index, 1)
+        }
+      });
+      // status = menuObj && menuObj.subMenus && menuObj.subMenus.length > 0 ? true : false;
+      return true;
+    }
+    else {
+      // console.log('In ELSE : ', menuObj);
+      return this.accessMenuList.includes(menuObj.Route);
+    }
+  }
   ngOnChanges(changes) {
-    console.log('ngOnChanges changes : ', this.client);
-    this.resetMenu();
-    this.selectMenuForEdit();
+    console.log('ngOnChanges changes : ', changes);
+    if (changes.client.currentValue !== changes.client.previousValue) {
+      this.resetMenu();
+      this.selectMenuForEdit();
+      this.CheckRole();
+    }
   }
 
   resetMenu() {
+    // this.accessMenuList = [];
     this.client.menuList.forEach((menu) => {
       delete menu.selected;
       delete menu.submenuList;

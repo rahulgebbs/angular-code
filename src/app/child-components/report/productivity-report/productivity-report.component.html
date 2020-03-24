@@ -63,8 +63,8 @@
                   class="owl-dp form-control" name="selectedMonth" formControlName="selectedMonth"
                   (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate">
                 <p class="monthFilter" [owlDateTimeTrigger]="selectedMonth">
-                    {{productivityForm.value['selectedMonth'] | date:'MMMM, y'}}
-                  <span class="trigger" >
+                  {{productivityForm.value['selectedMonth'] | date:'MMMM, y'}}
+                  <span class="trigger">
                     <i class="fas fa-calendar-alt"></i>
                   </span>
                   <owl-date-time [pickerType]="'calendar'" [startView]="'year'"

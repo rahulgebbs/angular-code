@@ -232,7 +232,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   seletedUserRole(e) {
-    this.canEditData = customValidation.validRole(this.addUser.value, this.userData.Role)
 
     if (e.target.value) {
       if (e.target.value.indexOf('Client') > -1) {
@@ -254,7 +253,7 @@ export class UserManagementComponent implements OnInit {
         this.addUser.get('Employee_Code').enable()
       }
     }
-
+    this.canEditData = customValidation.validRole(this.addUser.value, this.userData.Role);
   }
 
   seletedUserType(editUser) {

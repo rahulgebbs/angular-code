@@ -81,7 +81,7 @@ export class UserMenuMappingComponent implements OnInit {
     },
     rowClassRules: {
       'highLight-row': function (params) {
-        console.log('highLight-row : ', params.data)
+        // console.log('highLight-row : ', params.data)
         return params.data.active == true;
       }
     },
@@ -252,9 +252,9 @@ export class UserMenuMappingComponent implements OnInit {
     }
 
     this.assignStatus = true;
-    console.log('gridOptions : ', this.gridOptions.api.getRowNode());
+    // console.log('gridOptions : ', this.gridOptions.api.getRowNode());
     this.gridOptions.api.forEachNode((rowNode) => {
-      console.log('rowNode : ', rowNode.data.User_Id, event.data.User_Id);
+      // console.log('rowNode : ', rowNode.data.User_Id, event.data.User_Id);
       if (rowNode.data.User_Id == event.data.User_Id) {
         event.data.active = true;
         rowNode.setData(event.data);
@@ -295,7 +295,7 @@ export class UserMenuMappingComponent implements OnInit {
     // if (this.AccountsList != null) {
     var allColumnIds = [];
     event.columnApi.getAllColumns().forEach(function (column) {
-      console.log('column : ', column);
+      // console.log('column : ', column);
       // if (column.colId != "Role") return true;
       allColumnIds.push(column.colId);
     });
