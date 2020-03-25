@@ -6,6 +6,10 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { CommonService } from 'src/app/service/common-service';
 import { ClientApprovalService } from 'src/app/service/client-approval.service';
 import { finalize } from 'rxjs/operators';
+import { clientApproval } from 'src/app/service/client-approval';
+import { ExcelService } from 'src/app/service/client-configuration/excel.service';
+
+
 
 @Component({
   selector: 'app-client-approval',
@@ -45,7 +49,7 @@ export class ClientApprovalComponent implements OnInit {
   Summary;
   Comments = [];
 
-  constructor(private router: Router, private notification: NotificationService, private commonservice: CommonService, private service: ClientApprovalService) { }
+  constructor(private router: Router, private notification: NotificationService, private commonservice: CommonService, private service: ClientApprovalService,private excelService:ExcelService) { }
 
   ngOnInit() {
     var tk = new Token(this.router);
@@ -174,6 +178,36 @@ export class ClientApprovalComponent implements OnInit {
     else {
       this.ShowInventories = !this.ShowInventories;
     }
+  }
+
+  getDataForExcel() {
+    
+    this.DisableSearch = true;
+    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action).subscribe((response:any) => {
+      console.log('getDataForExcel() response : ', response);
+      this.handleData(response.Data)
+    }, (error) => {
+      this.DisableSearch = false;
+      console.log('getDataForExcel() error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+    })
+  }
+
+  handleData(Data)
+  {
+    // this.DisableSearch = true;
+    console.log('clientApproval : ', clientApproval);
+    const finalArray=[];
+    Data.forEach((client)=>{
+      const finalObj = {};
+      client.forEach((element)=>{
+        finalObj[element.Header_Name]=element.Field_Value
+      });
+      finalArray.push(finalObj);
+    });
+    this.DisableSearch = false;
+    this.excelService.exportAsExcelFile(finalArray, 'Client-Assurance-Reoprt');
+    console.log('finalArray : ',finalArray);
   }
 
 }

@@ -49,6 +49,10 @@
     <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
       (click)="Search()">Search</button>
   </span>
+  <span>
+    <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
+      (click)="getDataForExcel()">Export To Excel</button>
+  </span>
 </div>
 <div *ngIf="ShowMain" class="col-md-3 p-0 client-app blue-seprator serpartion-ht">
   <div class="col-md-12 col-sm-12 p-0">

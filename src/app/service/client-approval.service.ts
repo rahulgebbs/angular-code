@@ -46,4 +46,9 @@ export class ClientApprovalService {
     return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + Client_Id + '/' + Inventory_Id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
+  excelData(ClientId: number, fromdate, todate, status)
+  {
+    return this.http.get(environment.ApiUrl + `Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  }
+
 }
