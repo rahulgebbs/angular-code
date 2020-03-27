@@ -209,5 +209,4 @@ export class ClientApprovalComponent implements OnInit {
     this.excelService.exportAsExcelFile(finalArray, 'Client-Assurance-Reoprt');
     console.log('finalArray : ',finalArray);
   }
-
 }

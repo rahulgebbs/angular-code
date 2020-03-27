@@ -134,7 +134,7 @@ import { AssignMenuComponent } from './child-components/assign-menu/assign-menu.
 import { InventoryHighPriorityComponent } from './child-components/agent/inventory-high-priority/inventory-high-priority.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { CallReferenceComponent } from './child-components/agent/call-reference/call-reference.component';
-import { CelTooltipTextComponent } from './common-components/cel-tooltip-text/cel-tooltip-text.component';
+
 import { CallReferenceInfoComponent } from './child-components/agent/call-reference-info/call-reference-info.component';
 
 
@@ -254,7 +254,7 @@ import { CallReferenceInfoComponent } from './child-components/agent/call-refere
     InventoryHighPriorityComponent,
     WelcomePageComponent,
     CallReferenceComponent,
-    CelTooltipTextComponent,
+    
     CallReferenceInfoComponent
   ],
   imports: [

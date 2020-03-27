@@ -422,6 +422,10 @@
               <div class="form-group mh-15">
                 <div class="col-md-12 text-center p-0">
                   <!-- data-toggle="modal" data-target=".skip-ac" -->
+                  <span class="callIconDiv">
+                    <img (click)="openLinkForCall()" class="callImage" src="assets/images/call_icon.png" alt="">
+                    <span>Web calling</span>
+                  </span>
                   <button type="submit" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
                   <button type="button" (click)="ClearForm()" [disabled]="DisableSubmit"
