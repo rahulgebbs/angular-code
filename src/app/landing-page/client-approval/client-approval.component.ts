@@ -31,6 +31,7 @@ export class ClientApprovalComponent implements OnInit {
   FromDate: Date;
   ToDate: Date;
   Action = "Approve";
+  
   ActionList = [
     { Key: "Pending", Value: "Approve" },
     { Key: "To Gebbs", Value: "To Gebbs" },

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { InventoryService } from 'src/app/service/client-configuration/inventory.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
@@ -9,6 +9,7 @@ import * as moment from 'moment';
   styleUrls: ['./call-reference.component.scss']
 })
 export class CallReferenceComponent implements OnInit {
+  @Input()Old_Inventory_Log_Id;
   @Output() close = new EventEmitter();
   @Output() allFields = new EventEmitter();
   ResponseHelper: ResponseHelper;
@@ -64,7 +65,7 @@ export class CallReferenceComponent implements OnInit {
     this.gridOptions.api.showLoadingOverlay();
     console.log('searchInventoryList this.reference : ', this.reference);
 
-    this.inventoryService.searchCallReferenceAccounts(this.reference).subscribe((response: any) => {
+    this.inventoryService.searchCallReferenceAccounts(this.reference,this.Old_Inventory_Log_Id).subscribe((response: any) => {
       this.inventoryList = response.Data ? response.Data.Inventory_Info : [];
       console.log('searchCallReferenceAccounts response.Data : ', response.Data);
       // this.inventoryList.forEach((element) => {
@@ -86,8 +87,8 @@ export class CallReferenceComponent implements OnInit {
   }
   rowClick(row) {
     console.log('rowClick row : ', row.data);
-    this.allFields.emit(row.data);
     localStorage.setItem('callReference', JSON.stringify(row.data));
+    this.allFields.emit(row.data);
   }
 
   BlockInput(event) {

@@ -131,6 +131,8 @@ export class AgentComponent implements OnInit {
     }
   }
   GetBucketsWithCount() {
+    sessionStorage.removeItem('highPriporityAccount');
+    localStorage.removeItem('callReference');
     this.agentservice.GetBucketsWithCount(this.ClientId).pipe(finalize(() => {
 
     })).subscribe(
@@ -662,8 +664,7 @@ export class AgentComponent implements OnInit {
         this.GetAccountList(bucket, false);
         sessionStorage.removeItem('highPriporityAccount');
       }
-      if(callReference!=undefined)
-      {
+      if (callReference != undefined) {
         this.GetAccountList(bucket, false);
         localStorage.removeItem('callReference');
 
@@ -1220,6 +1221,7 @@ export class AgentComponent implements OnInit {
   }
 
   openCallReferenceAccounts() {
+    console.log('Old_Inventory_Log_Id : ', this.InventoryLogId);
     this.callreferenceAcccounts = true;
   }
   closeCallReferenceModal(event) {
@@ -1247,8 +1249,7 @@ export class AgentComponent implements OnInit {
     console.log('hideCallReferenceInfo() : ', this.showCallReferenceInfo);
     this.showCallReferenceInfo = false;
   }
-  openLinkForCall()
-  {
+  openLinkForCall() {
     window.open('https://ap11.pulsework360.com/', '_blank');
 
   }
