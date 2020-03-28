@@ -131,23 +131,30 @@ a.dropdown-toggle:active + .dropdown-menu {
 
 // }
 
-.callIconDiv{
-    
-    // width: 87px;
-    // border: 1px solid;
-    // display: flex;
-    // flex: 1;
-    // justify-content: center;
-    // flex-direction: column;
-    // align-items: center;
+.callIconDiv {
+  // width: 87px;
+  // border: 1px solid;
+  // display: flex;
+  // flex: 1;
+  // justify-content: center;
+  // flex-direction: column;
+  // align-items: center;
 }
+
 .callImage {
-  height: 50px;
-  border: 2px solid;
-  border-radius: 50%;
-  width: 50px;
-  padding: 0.5rem;
-  margin-right: 1rem;
-  color: #3381cc;
+  max-height: 70px;
+  max-width: 70px;
+  margin-right: 2rem;
   cursor: pointer;
+  display: inline-block;
+  margin-top: 0rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  img {
+    height: 30px;
+    width: 30px;
+  }
 }
+
+

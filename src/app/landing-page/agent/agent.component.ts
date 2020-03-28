@@ -1247,4 +1247,9 @@ export class AgentComponent implements OnInit {
     console.log('hideCallReferenceInfo() : ', this.showCallReferenceInfo);
     this.showCallReferenceInfo = false;
   }
+  openLinkForCall()
+  {
+    window.open('https://ap11.pulsework360.com/', '_blank');
+
+  }
 }
