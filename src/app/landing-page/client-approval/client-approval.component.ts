@@ -197,7 +197,7 @@ export class ClientApprovalComponent implements OnInit {
   handleData(Data)
   {
     // this.DisableSearch = true;
-    console.log('clientApproval : ', clientApproval);
+    console.log('clientApproval : ', Data);
     const finalArray=[];
     Data.forEach((client)=>{
       const finalObj = {};

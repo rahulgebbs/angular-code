@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Token } from '../manager/token';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import 'rxjs/Rx';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class ClientApprovalService {
 
   excelData(ClientId: number, fromdate, todate, status)
   {
-    return this.http.get(environment.ApiUrl + `/api/Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.get(environment.ApiUrl + `/api/Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
   }
 
 }
