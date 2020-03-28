@@ -28,11 +28,12 @@ export class RedirectHelper {
                 break;
             case "Client Supervisor": {
                 this.getMenuListForUser();
-                // this.router.navigate(['/client-approval']);
+                this.router.navigate(['/client-approval']);
                 break;
             }
             case "Client User": {
                 this.getMenuListForUser();
+                this.router.navigate(['/client-user']);
                 break;
             }
             default:
