@@ -487,7 +487,7 @@
   (Toggle)="ToggleMyStatModal($event)"></app-mystats>
 
 <!-- High Priority Accounts Popup -->
-<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" (close)="closeHighPriorityAccountModal($event)"
+<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId" (close)="closeHighPriorityAccountModal($event)"
   (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
 
 <!-- Call Reference Accounts -->

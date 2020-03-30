@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { InventoryService } from 'src/app/service/client-configuration/inventory.service';
 import { GridOptions } from "ag-grid-community";
 import { ResponseHelper } from 'src/app/manager/response.helper';
@@ -12,6 +12,7 @@ import * as moment from 'moment';
 export class InventoryHighPriorityComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Output() allFields = new EventEmitter();
+  @Input() old_Inventory_Log_Id;
   ResponseHelper: ResponseHelper;
   fieldSetting = {
     singleSelection: true,
@@ -101,7 +102,7 @@ export class InventoryHighPriorityComponent implements OnInit {
     }
     console.log('searchInventoryList this.reference : ', this.reference);
 
-    this.inventoryService.searchInventory(this.activeField[0].Field_Name, this.reference).subscribe((response: any) => {
+    this.inventoryService.searchInventory(this.activeField[0].Field_Name, this.reference,this.old_Inventory_Log_Id).subscribe((response: any) => {
       this.inventoryList = response.Data ? response.Data.Special_Queue_Bucket_Inventory_Info : [];
       this.inventoryList.forEach((element) => {
         element.Bucket_Name = "Special_Queue";
