@@ -62,6 +62,6 @@ export class InventoryService {
         // http://172.30.52.25:1001/api/Get_SQ_Inventory_Details_For_Agent/6033/28/0?bucket_Name=Special_Queue
         let userData = jwt_decode(this.TokenCls.GetToken());
         console.log('searchCallReferenceAccounts userData : ', userData);
-        return this.http.get(environment.ApiUrl + `/api/Get_SQ_Inventory_Details_For_Agent/${userData.Clients[0].Client_Id}/${inventoryid}/${inventoryLogId}/?bucket_Name=${bucket_name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
+        return this.http.get(environment.ApiUrl + `api/Get_SQ_Inventory_Details_For_Agent/${userData.Clients[0].Client_Id}/${inventoryid}/${inventoryLogId}/?bucket_Name=${bucket_name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
     }
 }
