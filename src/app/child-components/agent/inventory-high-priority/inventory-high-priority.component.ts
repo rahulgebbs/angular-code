@@ -101,7 +101,6 @@ export class InventoryHighPriorityComponent implements OnInit {
       this.reference = moment(this.reference).format('MM-DD-YYYY');
     }
     console.log('searchInventoryList this.reference : ', this.reference);
-
     this.inventoryService.searchInventory(this.activeField[0].Field_Name, this.reference,this.old_Inventory_Log_Id).subscribe((response: any) => {
       this.inventoryList = response.Data ? response.Data.Special_Queue_Bucket_Inventory_Info : [];
       this.inventoryList.forEach((element) => {
@@ -166,7 +165,7 @@ export class InventoryHighPriorityComponent implements OnInit {
     console.log('clientId, inventoryid, inventoryLogId, bucket_name : ', Inventory_Id, Bucket_Name, Inventory_Log_Id);
 
     // this.close.emit(row.data);
-    this.inventoryService.gethighPriorityFields(Inventory_Id, InventoryLogId, Bucket_Name).subscribe((resposne) => {
+    this.inventoryService.gethighPriorityFields(Inventory_Id, InventoryLogId, this.old_Inventory_Log_Id,Bucket_Name).subscribe((resposne) => {
       console.log('gethighPriorityFields response : ', resposne);
       // inventory_Log_Id
       row.data.Inventory_Log_Id = resposne.Data.inventory_Log_Id;

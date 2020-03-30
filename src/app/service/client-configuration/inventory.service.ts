@@ -49,7 +49,7 @@ export class InventoryService {
     searchInventory(fieldName, reference,old_Inventory_Log_Id) {
         let userData = jwt_decode(this.TokenCls.GetToken());
         console.log('searchInventory userData : ', userData);
-        return this.http.get(environment.ApiUrl + `api/Get_SQ_Bucket_High_Priority_List/${userData.Clients[0].Client_Id}/${fieldName}/${reference}/${old_Inventory_Log_Id}/Special_Queue`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
+        return this.http.get(environment.ApiUrl + `api/Get_SQ_Bucket_High_Priority_List/${userData.Clients[0].Client_Id}/${fieldName}/${reference}/Special_Queue`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
     }
 
     searchCallReferenceAccounts(reference,Old_Inventory_Log_Id) {
@@ -58,10 +58,10 @@ export class InventoryService {
         return this.http.get(environment.ApiUrl + `api/Get_Inventory_By_CallReferenceNo?client_Id=${userData.Clients[0].Client_Id}&CallReferenceNo=${reference}&Old_Inventory_Log_Id=`+Old_Inventory_Log_Id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
     }
 
-    gethighPriorityFields(inventoryid, inventoryLogId, bucket_name) {
+    gethighPriorityFields(inventoryid, inventoryLogId, old_Inventory_Log_Id ,bucket_name) {
         // http://172.30.52.25:1001/api/Get_SQ_Inventory_Details_For_Agent/6033/28/0?bucket_Name=Special_Queue
         let userData = jwt_decode(this.TokenCls.GetToken());
         console.log('searchCallReferenceAccounts userData : ', userData);
-        return this.http.get(environment.ApiUrl + `api/Get_SQ_Inventory_Details_For_Agent/${userData.Clients[0].Client_Id}/${inventoryid}/${inventoryLogId}/?bucket_Name=${bucket_name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
+        return this.http.get(environment.ApiUrl + `api/Get_SQ_Inventory_Details_For_Agent/${userData.Clients[0].Client_Id}/${inventoryid}/${inventoryLogId}/${old_Inventory_Log_Id}/?bucket_Name=${bucket_name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
     }
 }
