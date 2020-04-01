@@ -296,6 +296,42 @@
                 </div>
               </div>
 
+              <div *ngIf="checkMenu('concluder-report') || checkMenu('concluder-report')" class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingThree">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
+                      aria-controls="collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'true' : 'false']">
+                      Concluder
+                    </a>
+                  </h4>
+                </div>
+                <div
+                  [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'true' : 'false']"
+                  id="collapseFileConcluder"
+                  [ngClass]="[MenuName == '/concluder-report' || MenuName == '/concluder-report' ? 'in' : '']"
+                  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngIf="checkMenu('concluder-report')"><a (click)="OpenMenu('concluder-report')"
+                          [ngClass]="[MenuName == '/concluder-report' ? 'menu-active1': '']">
+                          Concluder Report</a>
+                      </li>
+                      <!-- <li *ngIf="checkMenu('client-dashboard-report')"><a (click)="OpenMenu('client-dashboard-report')"
+                          [ngClass]="[MenuName == '/client-dashboard-report' ? 'menu-active1': '']">Client Dashboard
+                          Report</a>
+                      </li>
+                      <li *ngIf="checkMenu('ageing-dashboard-report')"><a (click)="OpenMenu('ageing-dashboard-report')"
+                          [ngClass]="[MenuName == '/ageing-dashboard-report' ? 'menu-active1': '']">Ageing Dashboard
+                          Report</a>
+                        </li> -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
               <div *ngIf="checkMenu('client-instruction-report') || checkMenu('client-dashboard-report')"
                 class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">
@@ -333,17 +369,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div *ngIf="checkMenu('client-instruction-report')" class="panel panel-default">
-                <div class="acc-heading" role="tab" id="headingOne">
-                  <h4 class="acc-title">
-                    <a role="button" (click)="OpenMenu('client-instruction-report')"
-                      [ngClass]="[MenuName == '/client-instruction-report' ? 'menu-active1': '']">
-                     Client Instruction Report
-                    </a>
-                  </h4>
-                </div>
-              </div> -->
-
               <div *ngIf="checkMenu('client-approval')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingOne">
                   <h4 class="acc-title">
@@ -489,7 +514,7 @@
               </div>
 
             </div>
-
+            <!-- Dynamic menus for Client User and Client Supervisor -->
             <div *ngIf="UserData.Role=='Client User' || UserData.Role=='Client Supervisor'"
               class="panel-group menu-small" role="tablist" aria-multiselectable="true">
               <ng-container *ngFor="let menu of clientUserMenuList;let index=index">

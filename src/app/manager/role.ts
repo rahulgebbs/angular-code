@@ -42,7 +42,12 @@ export const Access = {
   "productivity-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Client Supervisor"],
   "agent-productivity-report": ["Agent"],
   "client-user-mapping-management": ["Controller"],
-  "user-menu-mapping": ["Administrator", "Admin"]
+  "user-menu-mapping": ["Administrator", "Admin"],
+  /* concluder menus*/
+  "concluder-report": ["Supervisor", "Agent", "Admin"],
+  "deallocate-concluder": ["Supervisor", "Admin"],
+  "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
+
 
 
 };

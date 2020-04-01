@@ -136,6 +136,9 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { CallReferenceComponent } from './child-components/agent/call-reference/call-reference.component';
 
 import { CallReferenceInfoComponent } from './child-components/agent/call-reference-info/call-reference-info.component';
+import { ConcluderReportComponent } from './concluder-report/concluder-report.component';
+import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
+import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 
 
 @NgModule({
@@ -254,8 +257,14 @@ import { CallReferenceInfoComponent } from './child-components/agent/call-refere
     InventoryHighPriorityComponent,
     WelcomePageComponent,
     CallReferenceComponent,
-    
-    CallReferenceInfoComponent
+
+    CallReferenceInfoComponent,
+
+    ConcluderReportComponent,
+
+    DeallocateConcluderComponent,
+
+    UploadMiniInsuranceComponent
   ],
   imports: [
     BrowserModule,
@@ -330,6 +339,9 @@ import { CallReferenceInfoComponent } from './child-components/agent/call-refere
 
       { path: 'user-menu-mapping', component: UserMenuMappingComponent, canActivate: [AuthGuard], data: { route: ['user-menu-mapping'] } },      // UserMenuMappingComponent      
       // ConcluderMiniInsuranceComponent
+      { path: 'concluder-report', component: ConcluderReportComponent, canActivate: [AuthGuard], data: { route: ['concluder-report'] } },
+      { path: 'deallocate-concluder', component: DeallocateConcluderComponent, canActivate: [AuthGuard], data: { route: ['deallocate-concluder'] } },
+      { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
       { path: '**', component: NotFoundComponent }
 
     ]),
