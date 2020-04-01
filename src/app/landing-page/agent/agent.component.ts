@@ -472,7 +472,9 @@ export class AgentComponent implements OnInit {
       obj['Fields'] = objs;
 
       this.DisableSubmit = true;
-      console.log('SubmitForm obj : ', JSON.stringify(obj));
+      // console.log('SubmitForm obj : ', JSON.stringify(obj));
+      localStorage.removeItem('callReference');
+      sessionStorage.removeItem('highPriporityAccount');
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -513,7 +515,7 @@ export class AgentComponent implements OnInit {
         }
       );
 
-      localStorage.removeItem('callReference');
+
     }
 
   }
@@ -905,7 +907,9 @@ export class AgentComponent implements OnInit {
   UpdateInventoryTime(bucket, formobj, fromPopup: boolean, InventoryId: number) {
 
     const callreference = localStorage.getItem('callReference');
-    if (callreference != null) {
+    const highPriority = sessionStorage.getItem('highPriporityAccount');
+    console.log('UpdateInventoryTime : ', callreference, highPriority)
+    if (highPriority != null || callreference != null) {
       console.log('IN Else UpdateInventoryTime : ', bucket);
       this.MapInventoryLogId(bucket.Name);
       this.GetAllFieldsApiCall(bucket, InventoryId, fromPopup);
@@ -1235,7 +1239,7 @@ export class AgentComponent implements OnInit {
   }
 
   highPriorityLog(data) {
-    data.Bucket_Name = "Special_Queue";
+    // data.Bucket_Name = "Special_Queue";
     console.log('highPriorityLog response : ', data, this.ActiveBucket);
     this.GetAllFields({}, data, true);
     this.closeHighPriorityAccountModal(null);
