@@ -76,6 +76,7 @@ export class AgentService {
     }
 
     UpdateInventoryTime(formobj: any): any {
+        console.log('UpdateInventoryTime formobj : ', formobj)
         return this.http.put(environment.ApiUrl + '/api/agent-time', formobj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
     }
     updateClientInstruction(data) {
@@ -154,18 +155,17 @@ export class AgentService {
         return this.http.put(environment.FileApiUrl + '/api/agent-template-upload', obj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) })
     }
     getBCBSAssistance() {
-           let headers: any = new Headers({
+        let headers: any = new Headers({
             'Access_Token': this.TokenCls.GetToken()
         });
         return this.http.get(environment.ApiUrl + '/api/bcbs-assistance-data', { headers: headers });
     }
 
-    checkClientUserMappingButtonStatus()
-    {
+    checkClientUserMappingButtonStatus() {
         let headers: any = new Headers({
             'Access_Token': this.TokenCls.GetToken()
         });
-        return this.http.get(environment.ApiUrl + '/api/set_Button_Visibility', { headers: headers }).map(res=>res.json());
-        
+        return this.http.get(environment.ApiUrl + '/api/set_Button_Visibility', { headers: headers }).map(res => res.json());
+
     }
 }
