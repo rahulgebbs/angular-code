@@ -1255,6 +1255,5 @@ export class AgentComponent implements OnInit {
   }
   openLinkForCall() {
     window.open('https://ap11.pulsework360.com/', '_blank');
-
   }
 }
