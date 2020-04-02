@@ -15,7 +15,23 @@
             </select>
           </div>
 
-          <div class=" form-group">
+          <div class="form-group">
+            <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
+            <div class="radioBorder">
+              <label class="radio-inline">
+                <input type="radio" name="type" value="inventory" formControlName="type"
+                  (change)="openModal($event)">
+                Inventory
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="type" value="concluder" formControlName="type"
+                  (change)="openModal($event)">
+                Concluder
+              </label>
+            </div>
+          </div>
+
+          <!-- <div class=" form-group">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Upload File</label>
             <span class="col-md-3 p-0 form-group file-provider mt-1">
               <div class="file-upload-wrapper" [attr.data-text]="Filename">
@@ -27,19 +43,7 @@
             <div class="error" *ngIf="DisplayFileError">
               Please select the file
             </div>
-            <!-- <div class="col-md-12 p-0 m-b-t">
-            </span>
-            <div class="error" *ngIf="DisplayFileError">
-              Please select the file
-            </div>
-          <div class="col-md-12 p-0 m-b-t">
-              <label class="custom-control ">
-                <input type="checkbox" id="mapb13" name="Is_Special_Queue" [(ngModel)]="Is_Special_Queue">
-                <label for="mapb13">Special Queue Upload</label>
-              </label>
-            </div> -->
-
-            <!-- <span> -->
+          
             <button [disabled]="!truefile || DisableUpload" type="button" (click)="FileUpload()"
               class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
               <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
@@ -47,10 +51,14 @@
             <button [disabled]="disableDownload" type="button" (click)="downloadTemplate()"
               class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
               <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
-          </div>
+          </div> -->
         </div>
 
       </div>
     </form>
 
+    <app-inventory-upload [ClientId]="dataUpload.value.Client_Id" *ngIf="dataUpload.value && dataUpload.value.type!=null" (close)="closeModal($event)">
+    </app-inventory-upload>
   </div>
+
+  

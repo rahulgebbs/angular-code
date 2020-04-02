@@ -139,6 +139,7 @@ import { CallReferenceInfoComponent } from './child-components/agent/call-refere
 import { ConcluderReportComponent } from './concluder-report/concluder-report.component';
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
+import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 
 
 @NgModule({
@@ -264,7 +265,9 @@ import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-min
 
     DeallocateConcluderComponent,
 
-    UploadMiniInsuranceComponent
+    UploadMiniInsuranceComponent,
+
+    InventoryUploadComponent
   ],
   imports: [
     BrowserModule,

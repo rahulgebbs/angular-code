@@ -19,12 +19,12 @@ export class DataUploadComponent implements OnInit {
   Title = "Inventory Upload";
   UserId;
   ResponseHelper;
+  ClientId;
   ClientList: any[] = [];
   DisableFileInput = true;
   DisableUpload: boolean = true;
   disableDownload: boolean = true;
   dataUpload: FormGroup;
-  ClientId;
   DisplayFileError = false;
   Filename = "No File chosen";
   File = null;
@@ -35,6 +35,7 @@ export class DataUploadComponent implements OnInit {
   constructor(private selectField: dropDownFields, private fb: FormBuilder, private excelService: ExcelService, private router: Router, private commonservice: CommonService, private notificationservice: NotificationService, private service: DataUploadService) {
     this.dataUpload = this.fb.group({
       "Client_Id": [""],
+      "type": null
     })
   }
 
@@ -168,5 +169,12 @@ export class DataUploadComponent implements OnInit {
     })
 
   }
+  openModal(event) {
+    console.log('OpenByAgent : ', this.dataUpload.value);
+  }
 
+  closeModal(event) {
+    console.log('closeModal event : ',event)
+    this.dataUpload.patchValue({ type: null });
+  }
 }
