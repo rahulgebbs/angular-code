@@ -23,7 +23,7 @@
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">From Date</label>
             <div class='input-group date' id='fromDateCalendar'>
-              <input autocomplete="off" [owlDateTimeTrigger]="fromDateCalendar" class="owl-dp form-control"
+              <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="fromDateCalendar" class="owl-dp form-control"
                 name="fromDateCalendar" [owlDateTime]="fromDateCalendar" (keydown)="BlockInput($event)"
                 (keypress)="BlockInput($event)" [max]="maxDate">
               <span class="input-group-addon" [owlDateTimeTrigger]="fromDateCalendar">
@@ -39,7 +39,7 @@
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">To Date</label>
             <div class='input-group date' id='toDateCalendar'>
-              <input autocomplete="off" [owlDateTimeTrigger]="toDateCalendar" class="owl-dp form-control"
+              <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="toDateCalendar" class="owl-dp form-control"
                 name="toDateCalendar" [owlDateTime]="toDateCalendar" (keydown)="BlockInput($event)"
                 (keypress)="BlockInput($event)" [max]="maxDate">
               <span class="input-group-addon" [owlDateTimeTrigger]="toDateCalendar">
@@ -62,25 +62,25 @@
         </div>
 
         <div class="col-md-12 col-xs-12 p-0">
-            <div class="form-group mh-15 mr-5">
-              <label class="label-std  control-label p-0 b-600">From Time</label>
-              <div class='input-group date' id='fromTimeTimer'>
-                <input autocomplete="off" [owlDateTimeTrigger]="fromTimeTimer" class="owl-dp form-control"
-                  name="fromTimeTimer" [owlDateTime]="fromTimeTimer" (keydown)="BlockInput($event)"
-                  (keypress)="BlockInput($event)" [max]="maxDate">
-                <span class="input-group-addon" [owlDateTimeTrigger]="fromTimeTimer">
-                  <span class="glyphicon glyphicon-time"></span>
-                </span>
-                <owl-date-time [pickerType]="'timer'" #fromTimeTimer></owl-date-time>
-              </div>
+          <div class="form-group mh-15 mr-5">
+            <label class="label-std  control-label p-0 b-600">From Time</label>
+            <div class='input-group date' id='fromTimeTimer'>
+              <input placeholder="hh:mm" autocomplete="off" [owlDateTimeTrigger]="fromTimeTimer" class="owl-dp form-control"
+                name="fromTimeTimer" [owlDateTime]="fromTimeTimer" (keydown)="BlockInput($event)"
+                (keypress)="BlockInput($event)" [max]="maxDate">
+              <span class="input-group-addon" [owlDateTimeTrigger]="fromTimeTimer">
+                <span class="glyphicon glyphicon-time"></span>
+              </span>
+              <owl-date-time [pickerType]="'timer'" #fromTimeTimer></owl-date-time>
             </div>
           </div>
-        
+        </div>
+
         <div class="col-md-12 col-xs-12 p-0">
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">To Time</label>
             <div class='input-group date' id='toTimeTimer'>
-              <input autocomplete="off" [owlDateTimeTrigger]="toTimeTimer" class="owl-dp form-control"
+              <input placeholder="hh:mm" autocomplete="off" [owlDateTimeTrigger]="toTimeTimer" class="owl-dp form-control"
                 name="toTimeTimer" [owlDateTime]="toTimeTimer" (keydown)="BlockInput($event)"
                 (keypress)="BlockInput($event)" [max]="maxDate">
               <span class="input-group-addon" [owlDateTimeTrigger]="toTimeTimer">
@@ -92,37 +92,41 @@
         </div>
 
         <div class="col-md-12 col-xs-12">
-            <div class="col-md-12 col-xs-12 text-center p-0">
-                <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51"
-                (click)="clearForm()">Clear</button>
-              <button type="submit" class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51"
-                data-toggle="modal" data-target=".skip-ac" [disabled]="submitBtnDisable">Submit</button>
-              
-            </div>
+          <div class="col-md-12 col-xs-12 text-center p-0">
+            <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51"
+              (click)="clearForm()">Clear</button>
+            <button type="submit" class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51" data-toggle="modal"
+              data-target=".skip-ac" [disabled]="submitBtnDisable">Submit</button>
           </div>
-
-        <!-- 
-
-          <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2">
-          <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
-
-         -->
+        </div>
       </div>
     </div>
     <div class="col-md-9">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ipsa deleniti voluptatum ullam esse, itaque
-        laudantium accusamus cumque consequatur illo nobis aspernatur voluptatem sunt voluptatibus. Facere sit qui
-        expedita cumque!</p>
+        <div class="col-md-12 col-sm-12 p-0">
+            <div class="heading-panel sT-hight p-0">
+              <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Report </span>
+              <!-- <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div> -->
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 p-0">
+            <div class="table-responcive">
+              <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+                <ag-grid-angular style="height: 75vh;" [enableColResize]="false" [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+                  [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+                  (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+                  [suppressColumnVirtualisation]="false" [rowSelection]="rowSelection" 
+                  >
+                </ag-grid-angular>
 
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ipsa deleniti voluptatum ullam esse, itaque
-        laudantium accusamus cumque consequatur illo nobis aspernatur voluptatem sunt voluptatibus. Facere sit qui
-        expedita cumque!</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ipsa deleniti voluptatum ullam esse, itaque
-        laudantium accusamus cumque consequatur illo nobis aspernatur voluptatem sunt voluptatibus. Facere sit qui
-        expedita cumque!</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ipsa deleniti voluptatum ullam esse, itaque
-        laudantium accusamus cumque consequatur illo nobis aspernatur voluptatem sunt voluptatibus. Facere sit qui
-        expedita cumque!</p>
+                <!--   <ag-grid-angular [enableColResize]="true" [enableSorting]="true" [enableFilter]="true" [pagination]="true"
+                  [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+                  (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+                  [suppressColumnVirtualisation]="true" [rowSelection]="rowSelection" (firstDataRendered)="autoSizeAll()"
+                  (gridReady)="onGridReady($event)">
+                </ag-grid-angular> -->
+              </div>
+            </div>
+          </div>
     </div>
   </div>
 </div>
