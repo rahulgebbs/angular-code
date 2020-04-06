@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 
 
 @Component({
@@ -6,8 +6,9 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
   templateUrl: './call-reference-info.component.html',
   styleUrls: ['./call-reference-info.component.scss']
 })
-export class CallReferenceInfoComponent implements OnInit {
+export class CallReferenceInfoComponent implements OnInit,OnChanges {
   @Output() close = new EventEmitter()
+  @Input() CallReference_No;
   constructor() { }
   firstName = "<<First Name>>";
   providerName = "<<Provider Name>>";
@@ -16,6 +17,12 @@ export class CallReferenceInfoComponent implements OnInit {
   extension = "<<Extension>>";
   referenceNumber = "<<Reference Number>>"
   ngOnInit() {
+    // this.referenceNumber = this.CallReference_No ? `<<${this.CallReference_No}>>` : "<<No Call Reference Number>>"
+  }
+
+  ngOnChanges()
+  {
+    this.referenceNumber = this.CallReference_No ? `<<${this.CallReference_No}>>` : "<<No Call Reference Number>>"
   }
 
   closeModal() {
