@@ -318,6 +318,10 @@
                           [ngClass]="[MenuName == '/concluder-report' ? 'menu-active1': '']">
                           Concluder Report</a>
                       </li>
+                      <li *ngIf="checkMenu('deallocate-concluder')"><a (click)="OpenMenu('deallocate-concluder')"
+                        [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
+                        De-Allocate Concluder</a>
+                    </li>
                       <!-- <li *ngIf="checkMenu('client-dashboard-report')"><a (click)="OpenMenu('client-dashboard-report')"
                           [ngClass]="[MenuName == '/client-dashboard-report' ? 'menu-active1': '']">Client Dashboard
                           Report</a>
