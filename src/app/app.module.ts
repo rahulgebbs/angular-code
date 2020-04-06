@@ -138,8 +138,9 @@ import { CallReferenceComponent } from './child-components/agent/call-reference/
 import { CallReferenceInfoComponent } from './child-components/agent/call-reference-info/call-reference-info.component';
 import { ConcluderReportComponent } from './concluder-report/concluder-report.component';
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
-import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
+// import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
+import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
 
 
 @NgModule({
@@ -265,9 +266,11 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
 
     DeallocateConcluderComponent,
 
-    UploadMiniInsuranceComponent,
+    // UploadMiniInsuranceComponent,
 
-    InventoryUploadComponent
+    InventoryUploadComponent,
+
+    AgentConcluderComponent
   ],
   imports: [
     BrowserModule,
@@ -344,7 +347,9 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
       // ConcluderMiniInsuranceComponent
       { path: 'concluder-report', component: ConcluderReportComponent, canActivate: [AuthGuard], data: { route: ['concluder-report'] } },
       { path: 'deallocate-concluder', component: DeallocateConcluderComponent, canActivate: [AuthGuard], data: { route: ['deallocate-concluder'] } },
-      { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
+      // { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
+      { path: 'concluder', component: AgentConcluderComponent, canActivate: [AuthGuard], data: { route: ['concluder'] } },
+      // AgentConcluderComponent
       { path: '**', component: NotFoundComponent }
 
     ]),

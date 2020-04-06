@@ -29,11 +29,13 @@ export class ConcluderReportComponent implements OnInit {
   ngOnInit() {
     this.rowData = [];
   }
+  
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     params.columnApi.autoSizeColumns();
   }
+  
   autoSizeAll() {
     var allColumnIds = [];
     this.gridColumnApi.getAllColumns().forEach(function (column) {
@@ -41,5 +43,6 @@ export class ConcluderReportComponent implements OnInit {
     });
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
+
   onCellClicked(e) {}
 }
