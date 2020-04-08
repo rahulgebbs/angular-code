@@ -51,6 +51,3 @@ export class AgentConcluderComponent implements OnInit {
     this.rowData = [];
   }
 }
-
-
-}
