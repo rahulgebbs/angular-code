@@ -1,3 +1,43 @@
-<p>
-  agent-concluder works!
-</p>
+<app-header [title]="Title"></app-header>
+<div class="container-fluid">
+  <div class="row mt-10 p-0 ml-10">
+    <div class="col-md-12" style="border-right: 1px solid #cfcfcf;">
+
+      <div class="col-md-3 col-md-offset-3 form-group mr-5">
+        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Process</label>
+        <select class="form-control">
+          <option [ngValue]="undefined" disabled>Select Process</option>
+        </select>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div class="col-md-12 col-xs-12 p-0"> -->
+      <div class="col-md-3 form-group mr-5">
+        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Configuration</label>
+        <select class="form-control">
+          <option [ngValue]="undefined" disabled>Select Configuration</option>
+        </select>
+      </div>
+      <!-- </div> -->
+
+      <!-- </div> -->
+    </div>
+    <div class="col-md-7 p-0">
+      <!-- <h5>User List mapped with menu</h5> -->
+      <br />
+      <!-- <span class="text-sm text-ellipsis heading-txt flex">User List Mapped With Menu</span> -->
+      <br />
+      <ag-grid-angular style="height: 60vh;" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
+        [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData"
+        [columnDefs]="columnDefs" (cellClicked)='onCellClicked($event)' (firstDataRendered)="OnGridReady($event)"
+        [suppressDragLeaveHidesColumns]="true" [suppressColumnVirtualisation]="true" [gridOptions]="gridOptions">
+      </ag-grid-angular>
+
+    </div>
+  </div>
+  <div class="col-md-4 p-0">
+    <div class="col-md-12">
+     
+    </div>
+  </div>
+</div>

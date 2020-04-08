@@ -24,14 +24,13 @@ export class AccountsModalComponent implements OnInit {
 
   ngOnInit() {
     this.defaultColDef = {
-      cellRenderer: showOrderCellRenderer,
-      width: 80
+      cellRenderer: showOrderCellRenderer
     };
     function showOrderCellRenderer(params) {
-      var eGui: any = document.createElement("div");
+      var eGui: any = document.createElement("span");
       // console.log('params : ', params)
 
-      eGui.innerHTML = '<span title=' + params.value + '>' + params.value + '</span>';
+      eGui.innerHTML = `<span title='${params.value}'>${params.value}</span>`;
       // var start = new Date();
       // while (new Date() - start < 15) { }
       return eGui;

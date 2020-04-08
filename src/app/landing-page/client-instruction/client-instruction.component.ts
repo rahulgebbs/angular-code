@@ -51,6 +51,7 @@ export class ClientInstructionComponent implements OnInit {
   RowData = [];
   Role;
   selectedRecord: boolean = false;
+  defaultColDef;
   constructor(private selectedFields:dropDownFields,private router: Router, private fb: FormBuilder, private notificationservice: NotificationService,  private instructionservice: ClientInstructionService) {
     var token = new Token(this.router);
     var userdata = token.GetUserData();
@@ -87,6 +88,19 @@ export class ClientInstructionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.defaultColDef = {
+      cellRenderer: showOrderCellRenderer,
+      // width: 80
+    };
+    function showOrderCellRenderer(params) {
+      var eGui: any = document.createElement("div");
+      // console.log('params : ', params)
+
+      eGui.innerHTML = `<span title="${params.value}">${params.value}</span>`;
+      // var start = new Date();
+      // while (new Date() - start < 15) { }
+      return eGui;
+    }
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
     var userdata = token.GetUserData();
@@ -102,7 +116,7 @@ export class ClientInstructionComponent implements OnInit {
 
     let val
     val = moment(params.value).format('MM/DD/YYYY');
-    return val
+    return val;
   }
 
 

@@ -21,7 +21,7 @@
 
 
 
-                  <option [selected]="ClientList.length >1"  value="0" disabled>Select</option>
+                  <option [selected]="ClientList.length >1" value="0" disabled>Select</option>
                   <option *ngFor="let c of ClientList; let i = index" [value]="c.Client_Id" [selected]="c.selected">
                     {{c.Client_Name}}</option>
 
@@ -39,8 +39,11 @@
                 <select [disabled]="DisableAll" formControlName="Payer" class="form-control" name="Payer"
                   [(ngModel)]="InstructionModel.Payer_Name">
 
-                  <option value="" [selected]=" (InstructionModel.Payer_Name != null) ||InstructionModel.Payer_Name == ''" disabled>Select</option>
-                  <option *ngFor="let item of PayerList; let i = index" [value]="item.Value" [selected]="item.selected ">
+                  <option value=""
+                    [selected]=" (InstructionModel.Payer_Name != null) ||InstructionModel.Payer_Name == ''" disabled>
+                    Select</option>
+                  <option *ngFor="let item of PayerList; let i = index" [value]="item.Value"
+                    [selected]="item.selected ">
                     {{item.Value}} </option>
                 </select>
 
@@ -110,9 +113,9 @@
                   id="toast-btn">Save</button>
                 <button type="button" [disabled]="DisableAll" (click)="ClearData()"
                   class="btn blue square-btn blue-hover btn-txt ">Clear</button>
-                  <div class="error" *ngIf="!canEdit && selectedRecord"> This role cannot edit this instruction</div>
+                <div class="error" *ngIf="!canEdit && selectedRecord"> This role cannot edit this instruction</div>
               </div>
-             
+
             </div>
           </form>
         </div>
@@ -125,7 +128,7 @@
           <div class="col-md-12 col-sm-12 p-0 insrt-tbl">
             <div class="sticky-table sticky-ltr-cells border-0 table-hight">
               <ag-grid-angular class="ag-theme-balham gd-w" (firstDataRendered)="AutoSizeGrid($event)"
-                 (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection"
+                [defaultColDef]="defaultColDef" (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection"
                 [rowData]="RowData" (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs"
                 [pagination]="true" [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true"
                 [enableFilter]="true" (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true"
