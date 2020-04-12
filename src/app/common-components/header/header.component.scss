@@ -1,0 +1,42 @@
+.utilitySection {
+  height: 100%;
+  // border: 1px solid #000;
+  min-width: 200px;
+  // background: #cfcfcf;
+  float: right;
+  // cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  z-index: 99999;
+  i {
+    cursor: pointer;
+    border: 1px solid;
+    padding: 0.5rem;
+  }
+}
+
+.exitMessage {
+  background: #000000;
+  // background: transparent;
+  // opacity: 0.2;
+  color: #fff;
+  position: absolute;
+  width: 30%;
+  margin: auto;
+  left: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+  // border: 1px solid;
+  span {
+    padding: 0.2rem 0.5rem;
+  }
+  p {
+    margin-bottom: 0;
+    text-align: center;
+  }
+}

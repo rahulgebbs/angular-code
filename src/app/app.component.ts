@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Token } from 'src/app/manager/token';
@@ -6,7 +6,8 @@ import { AgentService } from 'src/app/service/agent.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
-
+// import { HeaderComponent } from './common-components/header/header.component';
+// HeaderComponent
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,6 +15,7 @@ import { AnalyticsService } from './analytics.service';
 })
 
 export class AppComponent implements OnInit {
+  // @ViewChild(HeaderComponent) header;
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
     console.log('beforeUnloadHander event : ', event);
@@ -29,7 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
     this.Getcount();
   }
   ResponseHelper: ResponseHelper;

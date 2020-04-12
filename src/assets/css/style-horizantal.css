@@ -475,8 +475,9 @@ a:hover {
   position: absolute;
   margin: 0 auto;
   text-align: center;
-  width: 100%;
-  left: 0;
+  width: 20%;
+  /* border: 1px solid; */
+  left: 40%;
 }
 /*================================================================================================================================
                                                   Top navigation of css

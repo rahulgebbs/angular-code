@@ -139,7 +139,6 @@ export class MenuComponent implements OnInit {
       this.LogoutFromSystem();
     }
 
-
     this.btndis = false
   }
 

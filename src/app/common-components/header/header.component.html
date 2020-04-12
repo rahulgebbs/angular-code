@@ -1,6 +1,17 @@
-<div class="top-header white border-b">
+<div id="headerSection" *ngIf="showHeader==true" class="top-header white border-b">
   <span class="brand-logo">
     <img src="../../../assets/images/logo_156.png" class="logo-img">
   </span>
   <span class="text-center page-title grey-text">{{title}}</span>
+
+  <div class="utilitySection">
+    <i (click)="Logout()" title="Log Out" class="fa fa-power-off fa-2x" style="margin: 0 1rem" aria-hidden="true"></i>
+    <i (click)="hideHeader()" title="Full Screen" class="fa fa-window-maximize fa-2x" aria-hidden="true"></i>
+
+  </div>
+</div>
+
+<!-- <div class="exitMessage"> -->
+<div class="exitMessage" *ngIf="showExitMessage==true">
+  <p>Press <span style="border: 1px solid #fff;">Esc</span> to Exit full screen</p>
 </div>
