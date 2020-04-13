@@ -13,7 +13,7 @@ import { dropDownFields } from 'src/app/manager/dropdown-feilds'
   selector: 'app-bucket-mapping',
   templateUrl: './bucket-mapping.component.html',
   styleUrls: ['./bucket-mapping.component.css'],
-  providers: [BucketMappingService,dropDownFields]
+  providers: [BucketMappingService, dropDownFields]
 })
 export class BucketMappingComponent implements OnInit {
   Title = "AR Skills Mapping";
@@ -60,7 +60,7 @@ export class BucketMappingComponent implements OnInit {
   rowData = [];
   gridColumnApi: any;
 
-  constructor(private dropDownField:dropDownFields,private fb: FormBuilder, private bucketservice: BucketMappingService, private commonservice: CommonService, private notificationservice: NotificationService, private router: Router) {
+  constructor(private dropDownField: dropDownFields, private fb: FormBuilder, private bucketservice: BucketMappingService, private commonservice: CommonService, private notificationservice: NotificationService, private router: Router) {
     this.Bucket = this.fb.group({
       "Client_Id": [""],
     })
@@ -73,7 +73,7 @@ export class BucketMappingComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     //  this.GetClientList();
     this.ClientList = this.dropDownField.setSelected(userdata.Clients)
-    if(this.ClientList[0].selected==true){
+    if (this.ClientList[0].selected == true) {
       // data[0].selected = true;
       this.ClientId = this.ClientList[0].Client_Id
       this.GetAgentList()
@@ -258,5 +258,6 @@ export class BucketModel {
   Client_Response = false;
   Coding_Help_Desk = false;
   Coding_Responses = false;
-  CEX_Uncollectible =false;
+  CEX_Uncollectible = false;
+  Manual_Queue = false;
 }

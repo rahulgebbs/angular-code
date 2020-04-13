@@ -44,9 +44,9 @@ export const Access = {
   "client-user-mapping-management": ["Controller"],
   "user-menu-mapping": ["Administrator", "Admin"],
   /* concluder menus*/
-  "concluder-report": ["Supervisor", "Agent", "Admin"],
-  "deallocate-concluder": ["Supervisor", "Admin"],
-  "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
+  // "concluder-report": ["Supervisor", "Agent", "Admin"],
+  // "deallocate-concluder": ["Supervisor", "Admin"],
+  // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
 
 
 

@@ -185,7 +185,7 @@
                           class="form-control" [(ngModel)]="item.To_Call_Routing">
                           <!-- <option *ngFor="let list of CallList">{{list}}</option> -->
                           <option value="Public To Call"
-                            *ngIf="item.Queue_Name != 'Public To Call' && item.Queue_Name != 'Private To Call' && item.Queue_Name != 'Special Queue'">
+                            *ngIf="item.Queue_Name != 'Public To Call' && item.Queue_Name != 'Private To Call' && item.Queue_Name != 'Special Queue' && item.Queue_Name != 'Manual Queue'">
                             Public To Call</option>
                           <option value="Private To Call">Private To Call</option>
                         </select>
