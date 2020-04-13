@@ -97,6 +97,7 @@ export class AgentComponent implements OnInit {
   enableClientUserMapping = null;
   menuStatus = false;
   showCallReferenceInfo = false;
+  CallReference_No = null;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
@@ -1245,8 +1246,9 @@ export class AgentComponent implements OnInit {
     this.closeHighPriorityAccountModal(null);
   }
 
-  openCallReferenceInfo() {
+  openCallReferenceInfo(field) {
     console.log('openCallReferenceInfo() : ', this.showCallReferenceInfo);
+    this.CallReference_No = field.FieldValue;
     this.showCallReferenceInfo = true;
   }
   hideCallReferenceInfo() {
