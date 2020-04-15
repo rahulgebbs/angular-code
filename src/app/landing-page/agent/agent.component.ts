@@ -444,6 +444,7 @@ export class AgentComponent implements OnInit {
 
   ClearForm() {
     this.Validated = false;
+    this.Is_New_Line = false;
     this.CreateActionForm();
   }
 
@@ -738,6 +739,7 @@ export class AgentComponent implements OnInit {
   }
 
   GetAllFields(bucket, obj, fromPopup) {
+    this.Is_New_Line = false;
     console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
     console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
@@ -1296,10 +1298,19 @@ export class AgentComponent implements OnInit {
     console.log('submitAddNewLine : ', JSON.stringify(body));
     this.agentservice.submitAddNewLine(body).subscribe((response) => {
       console.log('response : ', response)
+      this.GetBucketsWithCount();
       this.DisableSubmit = false;
+      this.ClearForm();
+      // this.MarkLocalAccountComplete();
+      this.AssignNextInventory();
+      if (this.ActiveBucket.indexOf('Appeal') != -1) {
+        this.ClearPdfStorage();
+      }
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('error : ', error);
       this.DisableSubmit = false;
+      this.ResponseHelper.GetFaliureResponse(error);
     })
   }
 }
