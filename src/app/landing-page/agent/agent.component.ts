@@ -98,6 +98,7 @@ export class AgentComponent implements OnInit {
   menuStatus = false;
   showCallReferenceInfo = false;
   CallReference_No = null;
+  Is_New_Line = false;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
@@ -455,7 +456,9 @@ export class AgentComponent implements OnInit {
       objs['Inventory_Id'] = this.InventoryId;
       objs['Inventory_Log_Id'] = this.InventoryLogId;
       objs['Notes'] = this.ActionForm.controls['Notes'].value;
+      console.log('Before this.AllFields : ', this.AllFields);
       this.AllFields.forEach(e => {
+        console.log('loop ele : ', e.Header_Name, e);
         if (e.Header_Name == "Notes") {
           e.FieldValue = this.ActionForm.controls['Notes'].value;
         }
@@ -476,6 +479,11 @@ export class AgentComponent implements OnInit {
       // console.log('SubmitForm obj : ', JSON.stringify(obj));
       localStorage.removeItem('callReference');
       sessionStorage.removeItem('highPriporityAccount');
+
+      if (this.Is_New_Line == true) {
+        this.submitAddNewLine(obj);
+        return true;
+      }
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -1256,6 +1264,43 @@ export class AgentComponent implements OnInit {
     this.showCallReferenceInfo = false;
   }
   openLinkForCall() {
-    window.open('https://ap11.pulsework360.com/', '_blank');
+    window.open('https://ap2.pulsework360.com/', '_blank');
+  }
+
+  addNewLine() {
+    console.log('addNewLine() : ', this.AllFields);
+    this.Is_New_Line = true;
+    console.log('add New line : ', this.ClientId, this.InventoryId, this.InventoryLogId, this.ActiveBucket);
+    this.agentservice.addNewLine(this.ClientId, this.InventoryId, this.InventoryLogId, this.ActiveBucket).subscribe((response) => {
+      console.log('addNewLine response : ', response);
+      this.AllFields = response.Data;
+      this.setFieldsEditable();
+      response.Message[0] = { Message: "Add New Line.", Type: "SUCCESS" }
+      this.ResponseHelper.GetSuccessResponse(response)
+    }, (error) => {
+      console.log('error : ', error);
+      // this.notificationservice.
+      this.Is_New_Line = false;
+      this.ResponseHelper.GetFaliureResponse(error);
+    });
+  }
+  setFieldsEditable() {
+    this.AllFields.forEach(field => {
+      if (field.Is_Standard_Field == true)
+        field.editableInput = true;
+    });
+  }
+
+  submitAddNewLine(body) {
+    // this.Is_New_Line=
+    console.log('submitAddNewLine : ', JSON.stringify(body));
+    this.agentservice.submitAddNewLine(body).subscribe((response) => {
+      console.log('response : ', response)
+      this.DisableSubmit = false;
+    }, (error) => {
+      console.log('error : ', error);
+      this.DisableSubmit = false;
+    })
   }
 }
+// };

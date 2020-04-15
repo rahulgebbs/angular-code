@@ -166,6 +166,19 @@ export class AgentService {
             'Access_Token': this.TokenCls.GetToken()
         });
         return this.http.get(environment.ApiUrl + '/api/set_Button_Visibility', { headers: headers }).map(res => res.json());
+    }
 
+    addNewLine(clientId,inventoryid,inventoryLogId,bucket_Name) {
+        let headers: any = new Headers({
+            'Access_Token': this.TokenCls.GetToken()
+        });
+        // api/Get_Add_New_Line_Inventory_Details_For_Agent/{client_Id}/{inventory_Id}/{inventory_Log_Id}?bucket_Name=Special_Queue
+        console.log('addNewLine() service : ');
+        return this.http.get(environment.ApiUrl + `api/Get_Add_New_Line_Inventory_Details_For_Agent/${clientId}/${inventoryid}/${inventoryLogId}?bucket_Name=${bucket_Name}`, { headers: headers }).map(res => res.json());
+    }
+
+    submitAddNewLine(body)
+    {
+        return this.http.post(environment.ApiUrl + '/api/Save_Add_New_Line_Inventory_Details_For_Agent', body, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
     }
 }

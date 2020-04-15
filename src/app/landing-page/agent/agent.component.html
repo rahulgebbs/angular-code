@@ -130,12 +130,13 @@
         </div>
         <div class="col-md-12 p-0 auto-scroll-section" style="height: 100%">
           <form style="margin-bottom: 10rem;">
-            <ng-container *ngFor="let f of AllFields">
+            <ng-container *ngFor="let f of AllFields;let i =index">
               <div class="form-group mh-15 "
                 [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
                 *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
                 <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
-                <span [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
+                <span *ngIf="f.editableInput==null || f.editableInput==false"
+                  [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
                   <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
                   <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
                     title="Insurance Master" (click)="ToggleInsuranceMaster()">
@@ -147,11 +148,18 @@
                     <i class="fa fa-phone ft-22" aria-hidden="true"></i>
                   </span>
                 </span>
-
-
-
-
-                <!-- CallReference_No -->
+                <input *ngIf="f.editableInput==true && f.Column_Datatype=='Text'" name="{{f.Display_Name}}" type="text"
+                  class="form-control" [(ngModel)]="f.FieldValue">
+                <div class='' *ngIf="f.editableInput==true && f.Column_Datatype=='Date'">
+                  <input class="form-control" [type]="'text'" [id]="'field'+i" [owlDateTime]="dt"
+                    [owlDateTimeTrigger]="dt">
+                  <!-- <span class="input-group-addon" [owlDateTimeTrigger]="dt">
+                    <span class="glyphicon glyphicon-time"></span>
+                  </span> -->
+                  <!-- <owl-date-time [pickerType]="'calendar'" #field{{i}}></owl-date-time> -->
+                  <!-- <input [type]="type" [id]="id" [key]="key" [owlDateTime]="dt" [owlDateTimeTrigger]="dt"> -->
+                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                </div>
 
               </div>
             </ng-container>
@@ -429,7 +437,10 @@
                   <button style="margin-top: 1rem;" type="submit" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
                   <button style="margin-top: 1rem;" type="button" (click)="ClearForm()" [disabled]="DisableSubmit"
-                    class="btn blue square-btn blue-hover btn-txt">Clear</button>
+                    class="btn blue square-btn blue-hover btn-txt mr-10">Clear</button>
+                  <button style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button" (click)="addNewLine()"
+                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt">Add New Line <i
+                      class="fa fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -487,12 +498,12 @@
   (Toggle)="ToggleMyStatModal($event)"></app-mystats>
 
 <!-- High Priority Accounts Popup -->
-<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId" (close)="closeHighPriorityAccountModal($event)"
-  (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
+<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId"
+  (close)="closeHighPriorityAccountModal($event)" (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
 
 <!-- Call Reference Accounts -->
-<app-call-reference [Old_Inventory_Log_Id]="InventoryLogId" *ngIf="callreferenceAcccounts==true" (close)="closeCallReferenceModal($event)"
-  (allFields)="callreferenceLog($event)"></app-call-reference>
+<app-call-reference [Old_Inventory_Log_Id]="InventoryLogId" *ngIf="callreferenceAcccounts==true"
+  (close)="closeCallReferenceModal($event)" (allFields)="callreferenceLog($event)"></app-call-reference>
 
 <!-- Insurance master popup -->
 
@@ -516,5 +527,6 @@
   [HistoryData]="CommentHistory">
 </app-comment-history-modal>
 
-<app-call-reference-info [CallReference_No]="CallReference_No" *ngIf="showCallReferenceInfo==true" (close)="hideCallReferenceInfo()">
+<app-call-reference-info [CallReference_No]="CallReference_No" *ngIf="showCallReferenceInfo==true"
+  (close)="hideCallReferenceInfo()">
 </app-call-reference-info>

@@ -1,4 +1,4 @@
-import { Component, OnInit,EventEmitter,Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common-service';
 import { Token } from 'src/app/manager/token';
@@ -35,7 +35,7 @@ export class InventoryUploadComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
 
   }
-   ClearFileData() {
+  ClearFileData() {
     this.File = null
     this.Filename = "No File Chosen";
     this.FileBase64 = null;
@@ -44,7 +44,7 @@ export class InventoryUploadComponent implements OnInit {
   GetFileData(event) {
 
     // let reader = new FileReader();
-    console.log('GetFileData : ',event);
+    console.log('GetFileData : ', event);
     if (event.target.files && event.target.files.length > 0) {
       this.truefile = true;
       this.File = event.target.files[0];
@@ -77,9 +77,9 @@ export class InventoryUploadComponent implements OnInit {
         this.Filename = null;
         this.File = null;
         // if (this.ClientList.length == 1) {
-          this.disableDownload = false;
+        this.disableDownload = false;
         // } else {
-          // this.disableDownload = true
+        // this.disableDownload = true
         // }
         this.DisableFileInput = false;
         this.ClearFileData();
