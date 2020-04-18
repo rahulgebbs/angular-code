@@ -15,8 +15,8 @@ export class Token {
             this.router.navigate(['/login']);
         }
     }
-    private LoginTokenKey = "access_token";
-    private TokenValue: string = null;
+    public LoginTokenKey = "access_token";
+    public TokenValue: string = null;
     public UserId: number = 0;
     public Full_Name: string = null;
     public Role: string = null;

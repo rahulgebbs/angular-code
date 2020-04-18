@@ -6,15 +6,40 @@ import { AgentService } from 'src/app/service/agent.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
-
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
+
   @HostListener('window:beforeunload', ['$event'])
+  idleState = 'Not started.';
+  timedOut = false;
+  lastPing?: Date = null;
+  ResponseHelper: ResponseHelper;
+  breakStatus;
+  title = 'GeBBS : iAR';
+  MenuName: string;
+  DisplayMenu;
+  ShowElement: boolean = false;
+  FirstLogin;
+  Token: Token;
+  resumeBreak;
+  showTimeoutModal = false;
+  constructor(private router: Router,
+    private idle: Idle, private keepalive: Keepalive,
+    private ts: Title,
+    private agentService: AgentService,
+    private analyticsService: AnalyticsService,
+    private notificationservice: NotificationService,
+  ) {
+    this.ResponseHelper = new ResponseHelper(this.notificationservice);
+    this.breakAction();
+  }
   beforeUnloadHander(event) {
     console.log('beforeUnloadHander event : ', event);
     localStorage.tabCount = localStorage.tabCount - 1;
@@ -28,28 +53,84 @@ export class AppComponent implements OnInit {
     /// remove above comment to show popup to user on page refresh or close
   }
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.initiateTimer();
     this.Getcount();
   }
-  ResponseHelper: ResponseHelper;
-  breakStatus;
-  title = 'GeBBS : iAR';
-  MenuName: string;
-  DisplayMenu;
-  ShowElement: boolean = false;
-  FirstLogin;
-  Token: Token;
-  resumeBreak;
-  constructor(private router: Router,
-    private ts: Title,
-    private agentService: AgentService,
-    private analyticsService: AnalyticsService,
-    private notificationservice: NotificationService,
-  ) {
-    this.ResponseHelper = new ResponseHelper(this.notificationservice);
-    this.breakAction();
+
+  initiateTimer() {
+    // sets an idle timeout of 5 seconds, for testing purposes.
+    this.idle.setIdle(5);
+    // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+    this.idle.setTimeout(5);
+    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    this.idle.onIdleEnd.subscribe(() => {
+      this.idleState = 'No longer idle.'
+      console.log(this.idleState);
+      // this.reset();
+    });
+
+    this.idle.onTimeout.subscribe(() => {
+      // this.childModal.hide();
+      this.showTimeoutModal = false;
+      this.idleState = 'Timed out!';
+      this.timedOut = true;
+      console.log('onTimeout : ', this.idleState);
+      // sessionStorage.clear();
+      this.router.navigate(['/']);
+      console.log('onPing : ', this.lastPing);
+    });
+
+    this.idle.onIdleStart.subscribe(() => {
+      this.idleState = 'You\'ve gone idle!'
+      console.log('onIdleStart : ', this.idleState);
+      this.showTimeoutModal = true;
+      // this.childModal.show();
+    });
+
+    this.idle.onTimeoutWarning.subscribe((countdown) => {
+      this.idleState = 'You will time out in ' + countdown + ' seconds!'
+      console.log('onTimeoutWarning : ', this.idleState);
+    });
+
+    // sets the ping interval to 15 seconds
+    this.keepalive.interval(15);
+
+    this.keepalive.onPing.subscribe(() => {
+      console.log('onPing : ', this.lastPing);
+      this.lastPing = new Date();
+      return this.lastPing;
+    });
+
+    this.chekIfUserLoggedIn();
+    // this.appService.getUserLoggedIn().subscribe(userLoggedIn => {
+    //   if (userLoggedIn) {
+    //     idle.watch()
+    //     this.timedOut = false;
+    //   } else {
+    //     idle.stop();
+    //   }
+    // })
   }
+  reset() {
+    this.idle.watch();
+    //xthis.idleState = 'Started.';
+    this.timedOut = false;
+  }
+  chekIfUserLoggedIn() {
+    this.Token = new Token(this.router);
+    console.log('chekIfUserLoggedIn : ', this.Token.GetUserData());
+    if (this.Token && this.Token.GetUserData()) {
+      this.idle.watch();
+    }
+    else {
+      this.idle.stop();
+    }
+  }
+
   breakAction() {
     this.breakStatus = sessionStorage.getItem('BreakStatus');
     this.resumeBreak = sessionStorage.getItem('resumeBreak');
@@ -132,21 +213,11 @@ export class AppComponent implements OnInit {
   ToggleMenuFromFooter(event) {
     this.DisplayMenu = event;
   }
-
-  getCLientList() {
-    fetch('http://172.30.52.25:1001/api/Mapping_CRUD_', {
-      method: 'get',
-      headers: new Headers({
-        'Access_Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJVc2VyX0lkIjozNDU5LCJFbXBsb3llZV9Db2RlIjoiMzU3MDEiLCJGdWxsX05hbWUiOiJwb29qYSBtYWhpbmRyYWthciIsIlJvbGVfTmFtZSI6IkNvbnRyb2xsZXIiLCJMb2dpbl9EYXRlVGltZSI6IjIwMjAtMDItMTlUMTI6MjI6MDguNTIwMTcwMiswNTozMCIsIkNsaWVudHMiOlt7IkNsaWVudF9JZCI6MTMsIkNsaWVudF9OYW1lIjoiVGVzdF85NSJ9LHsiQ2xpZW50X0lkIjo2LCJDbGllbnRfTmFtZSI6IkNSTlJfQk5CIn0seyJDbGllbnRfSWQiOjcsIkNsaWVudF9OYW1lIjoiQ1JOUl9DUlpSIn0seyJDbGllbnRfSWQiOjgsIkNsaWVudF9OYW1lIjoiR0hTSSJ9LHsiQ2xpZW50X0lkIjo5LCJDbGllbnRfTmFtZSI6IkdIU0lfRGVtbyJ9LHsiQ2xpZW50X0lkIjoxMCwiQ2xpZW50X05hbWUiOiJDUk5SX0JOQl9KVU5FIn0seyJDbGllbnRfSWQiOjExLCJDbGllbnRfTmFtZSI6IkNSTlJfQ1JaUl9KVU5FIn0seyJDbGllbnRfSWQiOjEyLCJDbGllbnRfTmFtZSI6IlRlc3RfOTIifSx7IkNsaWVudF9JZCI6MTQsIkNsaWVudF9OYW1lIjoiQ1JOUl9BTV9KVUxZIn0seyJDbGllbnRfSWQiOjE5LCJDbGllbnRfTmFtZSI6ImNsaWVudF8xIn0seyJDbGllbnRfSWQiOjIwLCJDbGllbnRfTmFtZSI6ImNsaWVudF8yIn0seyJDbGllbnRfSWQiOjIxLCJDbGllbnRfTmFtZSI6ImNsaWVudF8zIn0seyJDbGllbnRfSWQiOjIyLCJDbGllbnRfTmFtZSI6ImNsaWVudF80In0seyJDbGllbnRfSWQiOjIzLCJDbGllbnRfTmFtZSI6ImNsaWVudF81In0seyJDbGllbnRfSWQiOjI0LCJDbGllbnRfTmFtZSI6IkNSTlJfU1RKT19PQ1QifSx7IkNsaWVudF9JZCI6MjUsIkNsaWVudF9OYW1lIjoiY2xpZW50XzYifSx7IkNsaWVudF9JZCI6MjYsIkNsaWVudF9OYW1lIjoiUlBUX0FSX09DVCJ9LHsiQ2xpZW50X0lkIjoyNywiQ2xpZW50X05hbWUiOiJDUk5SX1BBTkEifSx7IkNsaWVudF9JZCI6MjgsIkNsaWVudF9OYW1lIjoiQVBJIn0seyJDbGllbnRfSWQiOjI5LCJDbGllbnRfTmFtZSI6Ik5UTUNfSG9zcGl0YWxfTk9WIn0seyJDbGllbnRfSWQiOjEwMjgsIkNsaWVudF9OYW1lIjoiY2xpZW50XzEwIn0seyJDbGllbnRfSWQiOjEwMjksIkNsaWVudF9OYW1lIjoiY2xpZW50XzExIn0seyJDbGllbnRfSWQiOjE1LCJDbGllbnRfTmFtZSI6IlRlc3RfQUsifSx7IkNsaWVudF9JZCI6MTYsIkNsaWVudF9OYW1lIjoidGVzdDg5In0seyJDbGllbnRfSWQiOjE3LCJDbGllbnRfTmFtZSI6InRlc3Q2NyJ9LHsiQ2xpZW50X0lkIjoxOCwiQ2xpZW50X05hbWUiOiJuZXcifV0sIklzX0ZpcnN0X0xvZ2luIjpmYWxzZSwiRW1haWxfSWQiOiJwb29qYS5tYWhpbmRyYWthckBnZWJicy5jb20ifQ.VbYRLZLn5hElMwif7fAQnbzeHMBPklVrdRQFDNEhjP',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }),
-    }).then((response) => {
-      console.log('response : ', response)
-    }).catch((error) => {
-      console.log('error : ', error);
-    });
+  
+  stay() {
+    this.showTimeoutModal = false;
+    this.reset();
   }
-
 }
 
 

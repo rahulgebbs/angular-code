@@ -141,6 +141,8 @@ import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 @NgModule({
   declarations: [
@@ -280,6 +282,8 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
     BrowserAnimationsModule,
     OwlNativeDateTimeModule,
     NgbModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
     AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },

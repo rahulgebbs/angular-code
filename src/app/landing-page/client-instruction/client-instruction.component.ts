@@ -13,7 +13,7 @@ import { dropDownFields } from 'src/app/manager/dropdown-feilds';
   selector: 'app-client-instruction',
   templateUrl: './client-instruction.component.html',
   styleUrls: ['./client-instruction.component.css'],
-  providers:[dropDownFields]
+  providers: [dropDownFields]
 })
 export class ClientInstructionComponent implements OnInit {
   Title = "Client Instruction";
@@ -51,7 +51,7 @@ export class ClientInstructionComponent implements OnInit {
   RowData = [];
   Role;
   selectedRecord: boolean = false;
-  constructor(private selectedFields:dropDownFields,private router: Router, private fb: FormBuilder, private notificationservice: NotificationService,  private instructionservice: ClientInstructionService) {
+  constructor(private selectedFields: dropDownFields, private router: Router, private fb: FormBuilder, private notificationservice: NotificationService, private instructionservice: ClientInstructionService) {
     var token = new Token(this.router);
     var userdata = token.GetUserData();
     this.UserId = userdata.UserId;
@@ -167,6 +167,7 @@ export class ClientInstructionComponent implements OnInit {
     this.selectedRecord = true
     this.ShowRoleError = false;
     this.InstructionId = event.data.Id;
+    console.log('OnRowClicked : ', event)
     this.GetSingleClientInsurance();
   }
   onCellClicked(data) {
@@ -221,7 +222,7 @@ export class ClientInstructionComponent implements OnInit {
 
         this.PayerList = this.selectedFields.setSelected(res.json().Data.Payer);
         this.PracticeList = this.selectedFields.setSelected(res.json().Data.Practice);
-        this.ProviderList =this.selectedFields.setSelected( res.json().Data.Provider);
+        this.ProviderList = this.selectedFields.setSelected(res.json().Data.Provider);
         this.selectedValue(this.PayerList, 'PayerList');
         this.selectedValue(this.PracticeList, 'PracticeList');
         this.selectedValue(this.ProviderList, 'ProviderList');
@@ -269,7 +270,7 @@ export class ClientInstructionComponent implements OnInit {
     } else if (this.Role == "Supervisor" && ins.Is_Client_Created == false) {
       this.canEdit = true
     } else {
-      this.canEdit = false
+      this.canEdit = false;
     }
 
 
