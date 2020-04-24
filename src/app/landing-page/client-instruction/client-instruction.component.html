@@ -84,7 +84,7 @@
               <div class="form-group mh-15">
                 <label for="Instruction" class="label-std  control-label p-0 b-600">Instruction
                 </label>
-                <textarea [disabled]="DisableAll" formControlName="Instruction" rows="6" maxlength="500"
+                <textarea [disabled]="DisableAll" formControlName="Instruction" rows="6" maxlength="3000"
                   name="Instruction" class="form-control textarea-resize" [(ngModel)]="InstructionModel.Instructions"
                   placeholder="Enter Instructions here"></textarea>
                 <div class="error" *ngIf="InstructionForm.get('Instruction').hasError('required') && Validated">
