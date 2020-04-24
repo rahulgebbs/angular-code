@@ -1291,6 +1291,7 @@ export class AgentComponent implements OnInit {
       if (field.Is_Standard_Field == true)
         field.editableInput = true;
     });
+    this.ManageNullFields();
   }
 
   submitAddNewLine(body) {
