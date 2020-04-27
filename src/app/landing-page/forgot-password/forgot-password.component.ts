@@ -68,7 +68,8 @@ export class ForgotPasswordComponent implements OnInit {
         , Validators.minLength(5), Validators.maxLength(5)
       ]),
       New_Password: new FormControl('', [Validators.required
-        , Validators.minLength(8), Validators.maxLength(20)
+        , Validators.minLength(8), Validators.maxLength(20),
+        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/(/)/_/+/]).{8,}$')
       ]),
       confirmnewpass: new FormControl('', [Validators.required,
       ])

@@ -44,12 +44,15 @@ export class ChangePasswordComponent implements OnInit {
         , Validators.minLength(8), Validators.maxLength(20)
       ]),
       New_Password: new FormControl('', [Validators.required
-        , Validators.minLength(8), Validators.maxLength(20)
+        , Validators.minLength(8), Validators.maxLength(20),
+        //Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?#&])[A-Za-z\d$@$!%*?#&].{7,}')
+        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/(/)/_/+/]).{8,}$')
       ]),
       confirmnewpass: new FormControl('', [Validators.required,
         // ,Validators.minLength(8), Validators.maxLength(20)
       ]),
-    }, { validators: customValidation.MatchPassword })
+    }, { validators: [customValidation.MatchPassword,customValidation.NewPasswordMatchWithOld] })
+     
   }
 
   ChangePassword() {
