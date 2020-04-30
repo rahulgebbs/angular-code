@@ -51,7 +51,41 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 mt-10 text-left">
+                        <div class="col-md-12 mt-10" *ngIf="MyForm.controls.captchaModel as captcha">
+                            <div class="form-group" style="height: 17vh">
+                                <div class="captchaContainer" [style.background]="gradientColor">
+                                    <div class="captchaText" title="Captcha Code">
+                                        <div class="random-char" *ngFor="let captcha of captchaArray">
+                                            <p>{{captcha}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="controls">
+                                        <div class="inputCtrl">
+                                            <input class="valid" formControlName="captchaModel" type="text"
+                                                placeholder="Type above text">
+                                            <span *ngIf="captcha.touched==true || DisplayError">
+                                                <div class="error"
+                                                    *ngIf="captcha.errors && captcha.errors.captchaRequired">
+                                                    Captcha is required.
+                                                </div>
+                                                <div class="error"
+                                                    *ngIf="captcha.errors && captcha.errors.invalidCaptcha">
+                                                    Please type valid Captcha
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <button title="Refresh Captcha Code" type="button" class="btn btn-primary" (click)="makeid()">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-left">
                             <div class="col-md-6 pl-0 pr-10">
                                 <button [disabled]="DisableSubmit"
                                     class="btn blue square-btn blue-hover btn-txt w-100">Sign
@@ -64,25 +98,7 @@
                             </div>
                         </div>
                     </form>
-                    <!-- <div class="col-md-12 text-center">
-                        <br />
-                        <b>
-                            UNAUTHORIZED ACCESS TO THIS SERVICE IS PROHIBITED.<br />
-                        </b>
-                        <p style="font-size:11px;"> iAR is confidential and proprietary, and is for authorized users
-                            only. All authorized users are subject
-                            to contractual use restrictions and nondisclosure requirements that prevent giving access to
-                            third parties.
-                            Unauthorized users are subject to prosecution, lawsuits, and penalties under state and
-                            federal law. All
-                            system
-                            activities are monitored, recorded and reviewed by system personnel. Anyone using this
-                            system expressly
-                            consents to such monitoring and is advised that if such monitoring reveals possible evidence
-                            of criminal
-                            activity, system personnel may present the evidence to law enforcement officials.
-                        </p>
-                    </div> -->
+
                     <div class="col-md-12 mt-15 text-center copy-text">
                         <span>Copyright &copy; {{CurrentYear}} GeBBS Healthcare Solutions</span>
                     </div>

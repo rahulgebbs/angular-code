@@ -14,7 +14,7 @@ import { AnalyticsService } from 'src/app/analytics.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
@@ -24,8 +24,9 @@ export class LoginComponent implements OnInit {
   Token: Token;
   CurrentYear;
   ResponseHelper
-
-
+  captchaArray = [];
+  gradientColor = null;
+  captchaModel = '';
   constructor(
     private loginservice: LoginService,
     private notificationservice: NotificationService,
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.Token = new Token(this.router);
     this.Token.ClearUserData();
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
+    this.makeid();
   }
 
   logEvent() {
@@ -112,12 +114,85 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
+    const self=this;
+    function customValidator (control){
+      console.log('customValidator : ',control);
+      if( control.value !=null && control.value.length>0) {
+        const validCaptcha = self.checkIfValid(control.value);
+        console.log('this.checkIfValid : ',validCaptcha);
+        if(validCaptcha==false)
+        {
+          // control.setErrors({invalidCaptcha : true})
+          return {'invalidCaptcha': true}
+          // return null
+        }
+      }
+      else{
+        // control.setErrors({captChaRequired : true})
+        // return null
+        return {'captchaRequired': true}
+      }
+      control.setErrors(null);
+      // return null;
+      };
     this.MyForm = new FormGroup({
       username: new FormControl('', [Validators.required
       ]),
       password: new FormControl('', [Validators.required
-      ])
-    })
+      ]),
+      captchaModel:new FormControl('', [customValidator])
+    });
+    console.log('myForm : ',this.MyForm);
+  }
+  makeid() {
+    this.randomGradientColor();
+    this.captchaArray = [];
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 6; i++) {
+      const randomChar = characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += randomChar;
+      this.captchaArray.push(randomChar)
+    }
+    console.log('makeid : ', result, this.captchaArray)
+    // return result;
+  }
+
+  randomGradientColor() {
+
+
+    var hexValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e"];
+
+    function populate(a) {
+      for (var i = 0; i < 6; i++) {
+        var x = Math.round(Math.random() * 14);
+        var y = hexValues[x];
+        a += y;
+      }
+      return a;
+    }
+
+    var newColor1 = populate('#');
+    var newColor2 = populate('#');
+    var angle = Math.round(Math.random() * 360);
+
+    this.gradientColor = "linear-gradient(" + angle + "deg, " + newColor1 + ", " + newColor2 + ")";
+    console.log('gradient : ', this.gradientColor);
+    // document.getElementById("container").style.background = gradient;
+    // document.getElementById("output").innerHTML = gradient;
+  }
+  checkIfValid(value) {
+    console.log('checkIfValid() : ', value.split(''), this.captchaArray);
+    const answerStr: any = value.split('');
+    if (answerStr.join() == this.captchaArray) {
+      // alert('Correct')
+      return true;
+    }
+    else {
+      return false;
+      // alert('Incorrect')
+    }
   }
 
 }
