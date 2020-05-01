@@ -52,9 +52,9 @@
                             </div>
                         </div>
                         <div class="col-md-12 mt-10" *ngIf="MyForm.controls.captchaModel as captcha">
-                            <div class="form-group" style="height: 17vh">
-                                <div class="captchaContainer" [style.background]="gradientColor">
-                                    <div class="captchaText" title="Captcha Code">
+                            <div class="form-group" style="margin-bottom:0">
+                                <div class="captchaContainer">
+                                    <div class="captchaText" title="Captcha Code" [style.background]="gradientColor">
                                         <div class="random-char" *ngFor="let captcha of captchaArray">
                                             <p>{{captcha}}</p>
                                         </div>
@@ -63,7 +63,7 @@
                                         <div class="inputCtrl">
                                             <input class="valid" formControlName="captchaModel" type="text"
                                                 placeholder="Type above text">
-                                            <span *ngIf="captcha.touched==true || DisplayError">
+                                            <span class="errorSection" *ngIf="captcha.touched==true || DisplayError">
                                                 <div class="error"
                                                     *ngIf="captcha.errors && captcha.errors.captchaRequired">
                                                     Captcha is required.
@@ -74,9 +74,11 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <button title="Refresh Captcha Code" type="button" class="btn btn-primary" (click)="makeid()">
+                                        <button title="Refresh Captcha Code" type="button" class="btn btn-primary"
+                                            (click)="makeid()">
                                             <i class="fa fa-refresh"></i>
                                         </button>
+
                                     </div>
 
                                 </div>
