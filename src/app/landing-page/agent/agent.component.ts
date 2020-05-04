@@ -749,6 +749,7 @@ export class AgentComponent implements OnInit {
       bucket.Name = obj.Bucket_Name;
       bucket.Inventory_Log_Id = obj.Inventory_Log_Id ? obj.Inventory_Log_Id : null;
       this.InventoryId = obj.Inventory_Id;
+      // this.InventoryLogId = bucket.Inventory_Log_Id ? bucket.Inventory_Log_Id : 0;
     }
     else {
       this.InventoryId = obj;

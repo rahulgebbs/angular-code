@@ -1,28 +1,23 @@
 .captchaContainer {
-  // height: 10vh;
   width: 70%;
   margin: auto;
 
   .captchaText {
     height: 10vh;
     display: flex;
-    // border: 1px solid;
     justify-content: center;
     align-items: center;
-    // height: 100%;
     color: #fff;
-    // filter: invert(200%);
-    // mix-blend-mode: difference;
-    pointer-events: none;
+    user-select: none;
+    cursor: not-allowed;
     .random-char {
       display: inline;
-      cursor: not-allowed;
+      
       float: left;
       margin: 0.5rem;
       font-weight: bold;
       font-style: italic;
       font-size: 2.5rem;
-
       p {
         margin: 0;
       }
@@ -31,13 +26,10 @@
 }
 
 .controls {
-  // width: 180px;
-  // border: 1px solid red;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  // height: 8vh;
   padding: 10px 0 10px 0;
   .inputCtrl {
     flex: 4;
@@ -45,7 +37,6 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-
     input {
       flex: 1;
       width: 90%;
@@ -54,19 +45,10 @@
     .errorSection {
       flex: 1;
     }
-    // flex: 4;
-    // margin: 0.5em 0.5em 0.5em 0;
   }
-
-  // .refresh {
-  //   margin: 0.5em;
-  //   flex: 1;
   button {
-    // flex: 1;
     float: left;
     padding: 0.3rem 0.8rem;
     font-size: 1.3rem;
-
-    // }
   }
 }

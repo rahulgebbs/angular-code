@@ -39,9 +39,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   ForgotSubmit() {
     this.DisableSubmit = true;
+    console.log('ForgotSubmit() : ', this.MyForm);
     if (this.MyForm.valid) {
       this.DisplayError = false;
-      this.forgotpasswordservice.ForgotPassword(this.MyForm.value).pipe(finalize(()=>{
+      this.forgotpasswordservice.ForgotPassword(this.MyForm.value).pipe(finalize(() => {
         this.DisableSubmit = false;
       })).subscribe(
         data => {
@@ -69,7 +70,7 @@ export class ForgotPasswordComponent implements OnInit {
       ]),
       New_Password: new FormControl('', [Validators.required
         , Validators.minLength(8), Validators.maxLength(20),
-        Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/(/)/_/+/]).{8,}$')
+      Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/(/)/_/+/]).{8,}$')
       ]),
       confirmnewpass: new FormControl('', [Validators.required,
       ])
@@ -78,6 +79,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ResetPassword() {
     this.DisableSubmit = true;
+    console.log('ResetPassword : ',this.ResetForm);
     if (this.ResetForm.valid) {
       this.DisplayError = false;
       this.forgotpasswordservice.ResetPassword(this.ResetForm.value).subscribe(

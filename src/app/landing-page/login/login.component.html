@@ -55,7 +55,8 @@
                             <div class="form-group" style="margin-bottom:0">
                                 <div class="captchaContainer">
                                     <div class="captchaText" title="Captcha Code" [style.background]="gradientColor">
-                                        <div class="random-char" *ngFor="let captcha of captchaArray">
+                                        <div title="Captcha Code" class="random-char"
+                                            *ngFor="let captcha of captchaArray">
                                             <p>{{captcha}}</p>
                                         </div>
                                     </div>
@@ -78,13 +79,8 @@
                                             (click)="makeid()">
                                             <i class="fa fa-refresh"></i>
                                         </button>
-
                                     </div>
-
                                 </div>
-
-
-
                             </div>
                         </div>
                         <div class="col-md-12 text-left">

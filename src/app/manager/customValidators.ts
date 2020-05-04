@@ -3,7 +3,7 @@ export class customValidation {
 
     static validRole(editRole, userRole) {
         //
-      
+
         if (userRole == 'Admin' && editRole.Role != 'Admin') {
             return true
         }
@@ -70,7 +70,7 @@ export class customValidation {
             const NUMBER_REGEXP = /^-?[\d.]+(?:e-?\d+)?$/;
             if (control.get('Role').value.indexOf('Client') > -1) {
                 control.get('Employee_Code').clearValidators()
-               
+
             } else {
                 if (control.get('Employee_Code').value == undefined || control.get('Employee_Code').value == null || control.get('Employee_Code').value == "") {
                     control.get('Employee_Code').setErrors({ required: true })
@@ -271,7 +271,7 @@ export class customValidation {
         if (password != confirmPassword) {
             AC.get('confirmnewpass').setErrors({ notMatch: true })
         } else {
-            AC.get('confirmnewpass').setErrors({ notMatch: null });
+            AC.get('confirmnewpass').setErrors(null);
             return null
         }
     }
@@ -304,7 +304,7 @@ export class customValidation {
         }
     }
 
-    
+
 
 
 }
