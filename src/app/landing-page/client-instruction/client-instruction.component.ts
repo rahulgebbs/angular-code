@@ -13,7 +13,7 @@ import { dropDownFields } from 'src/app/manager/dropdown-feilds';
   selector: 'app-client-instruction',
   templateUrl: './client-instruction.component.html',
   styleUrls: ['./client-instruction.component.css'],
-  providers:[dropDownFields]
+  providers: [dropDownFields]
 })
 export class ClientInstructionComponent implements OnInit {
   Title = "Client Instruction";
@@ -51,7 +51,7 @@ export class ClientInstructionComponent implements OnInit {
   RowData = [];
   Role;
   selectedRecord: boolean = false;
-  constructor(private selectedFields:dropDownFields,private router: Router, private fb: FormBuilder, private notificationservice: NotificationService,  private instructionservice: ClientInstructionService) {
+  constructor(private selectedFields: dropDownFields, private router: Router, private fb: FormBuilder, private notificationservice: NotificationService, private instructionservice: ClientInstructionService) {
     var token = new Token(this.router);
     var userdata = token.GetUserData();
     this.UserId = userdata.UserId;
@@ -167,7 +167,8 @@ export class ClientInstructionComponent implements OnInit {
     this.selectedRecord = true
     this.ShowRoleError = false;
     this.InstructionId = event.data.Id;
-    this.GetSingleClientInsurance();
+    console.log('onowClicked : ', event.data)
+    this.GetSingleClientInsurance(event.data);
   }
   onCellClicked(data) {
 
@@ -221,7 +222,7 @@ export class ClientInstructionComponent implements OnInit {
 
         this.PayerList = this.selectedFields.setSelected(res.json().Data.Payer);
         this.PracticeList = this.selectedFields.setSelected(res.json().Data.Practice);
-        this.ProviderList =this.selectedFields.setSelected( res.json().Data.Provider);
+        this.ProviderList = this.selectedFields.setSelected(res.json().Data.Provider);
         this.selectedValue(this.PayerList, 'PayerList');
         this.selectedValue(this.PracticeList, 'PracticeList');
         this.selectedValue(this.ProviderList, 'ProviderList');
@@ -246,11 +247,13 @@ export class ClientInstructionComponent implements OnInit {
     );
   }
 
-  GetSingleClientInsurance() {
+  GetSingleClientInsurance(data) {
+    this.ManageForEdit(data);
     this.instructionservice.GetSingleClientInstruction(this.ClientId, this.InstructionId).pipe(finalize(() => {
     })).subscribe(
       res => {
-        this.ManageForEdit(res.json().Data);
+        console.log('GetSingleClientInsurance() : ', res.json().Data)
+        // this.ManageForEdit(res.json().Data);
         //this.InstructionModel = res.json().Data;
       },
       err => {
@@ -273,14 +276,15 @@ export class ClientInstructionComponent implements OnInit {
     }
 
 
-    if (this.Role == "Client Supervisor" && ins.Created_By == this.UserId) {
-      this.ShowRoleError = true;
-      // this.RoleMessage = "Can be edited by Supervisor Only";
-      this.InstructionModel = new InstructionModel();
-      this.InstructionModel.Client_Id = this.ClientId;
-      this.GridApi.deselectAll();
-    }
-    else if (this.Role == "QC" && this.UserId != ins.Created_By) {
+    // if (this.Role == "Client Supervisor" && ins.Created_By == this.UserId) {
+    //   this.ShowRoleError = true;
+    //   // this.RoleMessage = "Can be edited by Supervisor Only";
+    //   this.InstructionModel = new InstructionModel();
+    //   this.InstructionModel.Client_Id = this.ClientId;
+    //   this.GridApi.deselectAll();
+    // }
+    // else
+    if (this.Role == "QC" && this.UserId != ins.Created_By) {
       this.ShowRoleError = true;
       this.RoleMessage = "Your role can edit only self created instructions";
       this.InstructionModel = new InstructionModel();
