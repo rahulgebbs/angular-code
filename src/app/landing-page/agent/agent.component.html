@@ -137,7 +137,10 @@
                 <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
                 <span *ngIf="f.editableInput==null || f.editableInput==false"
                   [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
-                  <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
+                  <label *ngIf="f.Column_Datatype!='Date'" for="f.Id"
+                    class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
+                  <label *ngIf="f.Column_Datatype=='Date'" for="f.Id" class="control-label w-80 label-s text-color">
+                    {{f.FieldValue | date:'MM/dd/yyyy'}}</label>
                   <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
                     title="Insurance Master" (click)="ToggleInsuranceMaster()">
                     <i class="fa fa-book ft-22" aria-hidden="true"></i>
@@ -151,13 +154,9 @@
                 <input *ngIf="f.editableInput==true && f.Column_Datatype=='Text'" name="{{f.Display_Name}}" type="text"
                   class="form-control" [(ngModel)]="f.FieldValue">
                 <div class='' *ngIf="f.editableInput==true && f.Column_Datatype=='Date'">
-                  <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" class="form-control" [type]="'text'" [id]="'field'+i" [owlDateTime]="dt"
-                    [owlDateTimeTrigger]="dt">
-                  <!-- <span class="input-group-addon" [owlDateTimeTrigger]="dt">
-                    <span class="glyphicon glyphicon-time"></span>
-                  </span> -->
-                  <!-- <owl-date-time [pickerType]="'calendar'" #field{{i}}></owl-date-time> -->
-                  <!-- <input [type]="type" [id]="id" [key]="key" [owlDateTime]="dt" [owlDateTimeTrigger]="dt"> -->
+                  <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                    class="form-control" [(ngModel)]="f.FieldValue" [type]="'text'" [name]="'field'+i" [id]="'field'+i"
+                    [owlDateTime]="dt" [owlDateTimeTrigger]="dt" (change)="dateTimeChange($event,field)">
                   <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                 </div>
 
@@ -421,7 +420,7 @@
                   <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
                     <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span>
                 </label>
-                <textarea formControlName="Notes" rows="8" class="form-control textarea-resize"
+                <textarea formControlName="Notes" rows="6" class="form-control textarea-resize"
                   placeholder="Write Notes.."></textarea>
                 <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
                   Notes is required

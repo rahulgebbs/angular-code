@@ -15,7 +15,7 @@ import { CommonService } from 'src/app/service/common-service';
 import { dropDownFields } from 'src/app/manager/dropdown-feilds';
 import { DenialCodeService } from './../../service/denial-code.service';
 import { AnalyticsService } from 'src/app/analytics.service';
-
+import * as moment from 'moment'
 
 import * as $ from 'jquery'
 
@@ -462,6 +462,10 @@ export class AgentComponent implements OnInit {
         console.log('loop ele : ', e.Header_Name, e);
         if (e.Header_Name == "Notes") {
           e.FieldValue = this.ActionForm.controls['Notes'].value;
+        }
+        else if (e.Column_Datatype == 'Date') {
+          // moment().utcOffset(0, true).format()
+          objs[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
         }
         else {
           objs[e.Header_Name] = e.FieldValue;
@@ -965,10 +969,11 @@ export class AgentComponent implements OnInit {
 
   ManageNullFields() {
     this.AllFields.forEach(e => {
+      console.log('label value ', e.FieldValue, e.Display_Name)
       if (e.Display_Name.indexOf('Payer') != -1) {
         this.CurrentPayerName = e.FieldValue;
       }
-      if (e.Is_Standard_Field) {
+      if (e.Is_Standard_Field == true) {
         switch (e.Column_Datatype) {
           case "Text":
             // if (e.FieldValue == null) {
@@ -979,10 +984,14 @@ export class AgentComponent implements OnInit {
             }
             break;
           case "Date":
-            if (e.FieldValue != null) {
-              var d = new Date(e.FieldValue);
-              e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
-            }
+            // if (e.FieldValue != null) {
+            //   var d = new Date(e.FieldValue);
+            //   e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
+            // }
+            // else {
+            // var d = new Date(e.FieldValue).toISOString();
+            // }
+            e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
             // else {
             //   e.FieldValue = "NA"
             // }
@@ -1313,6 +1322,9 @@ export class AgentComponent implements OnInit {
       this.DisableSubmit = false;
       this.ResponseHelper.GetFaliureResponse(error);
     })
+  }
+  dateTimeChange(event, field) {
+    console.log('dateTimeChange : ', event, field);
   }
 }
 // };
