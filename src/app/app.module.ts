@@ -140,6 +140,8 @@ import { ConcluderReportComponent } from './concluder-report/concluder-report.co
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
+import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
+import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
 
 
 @NgModule({
@@ -267,7 +269,11 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
 
     UploadMiniInsuranceComponent,
 
-    InventoryUploadComponent
+    InventoryUploadComponent,
+
+    PcnConfigurationComponent,
+
+    AddPcnConfigurationComponent
   ],
   imports: [
     BrowserModule,

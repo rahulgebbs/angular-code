@@ -122,6 +122,16 @@
                       <label for="ag-report" class="label-status">Aging Report</label>
                     </label>
                   </span>
+
+                  <span class="p-0 text-left mr-10">
+                    <!-- <input type="hidden" formControlName="Updated_Date" [(ngModel)]="clientData.Updated_Date"> -->
+                    <label class="custom-control client-conf">
+                      <input type="checkbox" id="is-pcn" [checked]="clientData.Is_PCN" formControlName="Is_PCN"
+                        [(ngModel)]="Is_PCN" class="mr-5 mt-0">
+                      <label for="is-pcn" class="label-status">Is PCN</label>
+                    </label>
+                  </span>
+
                   <span class="mr-10 text-left" *ngIf="show_Is_Appeal_Processed">
                     <label class="custom-control client-conf">
                       <input type="checkbox" id="ac-active1" [checked]="clientData.Is_Appeal_Processed"
