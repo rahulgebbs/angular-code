@@ -6,7 +6,7 @@
         <div class="provider-process">
           <div class="col-md-9 btnCOntainer">
             <span>
-              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="showPopup()"
+              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
                 data-target=".add-saag-master">
                 <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
             </span>
@@ -23,22 +23,25 @@
       <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
       <div class="col-md-12 p-0">
         <div class="col-md-12">
-
         </div>
         <div class="col-md-offset-3 col-md-6 p-0">
-          <div class="sagg-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+          <div style="height: 55vh;" class="border-0 table-hight">
             <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
               [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
-              (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
-              [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)"
-              [suppressColumnVirtualisation]="true"></ag-grid-angular>
+              [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
+              [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true">
+            </ag-grid-angular>
+            <div class="col-md-12 text-right p-0">
+              <button type="button" id="step-1-save" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+                (click)="submit()">Save</button>
+              <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+                (click)="navigate()">Next</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-12 text-right p-0">
-        <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
-          (click)="navigate()">Next</button>
       </div>
     </div>
   </form>
 </div>
+<app-add-pcn-configuration *ngIf="showPopup==true" (save)="saveFields($event)" (close)="closePopup($event)">
+</app-add-pcn-configuration>

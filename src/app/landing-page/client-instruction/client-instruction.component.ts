@@ -208,7 +208,6 @@ export class ClientInstructionComponent implements OnInit {
       this.InstructionModel.Client_Id = this.ClientId;
       this.GetAllLookups();
       this.GetClientInstructions();
-
     }
   }
 
@@ -376,12 +375,12 @@ export class ClientInstructionComponent implements OnInit {
     //  this.ProviderList = [];
     this.InstructionModel = new InstructionModel();
     if (this.singleclient) {
-      this.InstructionModel.Client_Id = this.ClientId
+      this.InstructionModel.Client_Id = this.ClientId;
     } else {
       this.InstructionModel.Client_Id = "0"
     }
 
-    this.RowData = [];
+    // this.RowData = [];
     this.Validated = false;
   }
   ActionCellRendererClass(params) {

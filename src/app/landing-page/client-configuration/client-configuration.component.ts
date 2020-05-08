@@ -54,6 +54,11 @@ export class ClientConfigurationComponent implements OnInit {
     else if (e == "formula") {
       this.clientData.Is_Formula_Uploaded = true;
       // location.reload()
+      this.ShowTabName = 'pcn';
+    }
+    else if (e == "pcn") {
+      this.clientData.Is_Formula_Uploaded = true;
+      // location.reload()
       this.ShowTabName = 'appeal';
     }
     else if (e == "appeal") {

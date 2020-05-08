@@ -1,3 +1,98 @@
-<p>
-  add-pcn-configuration works!
-</p>
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+    <div>
+        <div class="col-md-12 p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+                <div class="heading-panel pl-10">
+                    <span class="text-sm text-ellipsis heading-txt flex">Add PCN Configuration </span>
+                </div>
+            </span>
+            <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="col-md-12 p-0">
+            <div class=" mb-0 pb-0">
+                <div class="col-md-11 col-md-offset-1 p-0 mt-10">
+                    <button id="addItem"
+                        [ngStyle]="{'cursor':disableBtn==true ? 'not-allowed':'pointer','opacity':disableBtn==true ? 0.5:1}"
+                        [disabled]="disableBtn" (click)="addItem()">Add PCN
+                    </button>
+                    <form [formGroup]="addPCNForm">
+                        <div formArrayName="pcnList"
+                            *ngFor="let item of addPCNForm.get('pcnList').controls; let i = index;">
+                            <div [formGroupName]="i" class="row">
+                                <div class="col-md-3" *ngIf="item.controls.Display_Header as displayHeaderControl">
+                                    <input formControlName="Display_Header" placeholder="Dispaly Header"
+                                        [ngClass]="{'input-error' : (displayHeaderControl.dirty==true || displayHeaderControl.touched==true) && displayHeaderControl.errors && (displayHeaderControl.errors.required==true || displayHeaderControl.errors.incorrect==true) }"
+                                        (keyup)="checkIfAlreadyExist(displayHeaderControl, i)">
+                                    <label
+                                        *ngIf="(displayHeaderControl.dirty==true || displayHeaderControl.touched==true) && displayHeaderControl.errors"
+                                        class="error" for="">
+                                        <span *ngIf="displayHeaderControl.errors.required==true">
+                                            Display Header is required
+                                        </span>
+                                        <span *ngIf="displayHeaderControl.errors.incorrect==true">
+                                            Display Header Already Exists
+                                        </span>
+                                    </label>
+                                    <!-- <label for="" *ngIf="displayHeaderControl.errors.incorrect==true">
+
+                                    </label> -->
+                                </div>
+
+                                <div class="col-md-3" *ngIf="item.controls.Column_Data_Type as columnDataTypeControl">
+                                    <select name="" id="" formControlName="Column_Data_Type">
+                                        <option [value]="''">Select Column Data Type</option>
+                                        <option [value]="'Text'">Text</option>
+                                        <option [value]="'Numeric'">Numeric</option>
+                                        <option [value]="'Date'">Date</option>
+                                    </select>
+                                    <label
+                                        *ngIf="(columnDataTypeControl.dirty==true || columnDataTypeControl.touched==true) && columnDataTypeControl.errors && columnDataTypeControl.errors.required==true"
+                                        class="error" for="">
+                                        Column Data Type is required
+                                    </label>
+                                </div>
+
+                                <div class="col-md-3" *ngIf="item.controls.Field_Limit as fieldLimitControl">
+                                    <input type="number" min="0" formControlName="Field_Limit" placeholder="Field Limit"
+                                        [ngClass]="{'input-error' : (fieldLimitControl.dirty==true || fieldLimitControl.touched==true) && fieldLimitControl.errors && (fieldLimitControl.errors.required==true || fieldLimitControl.errors.pattern!=null) }"
+                                        (blur)="checkField(fieldLimitControl)">
+                                    <label
+                                        *ngIf="(fieldLimitControl.dirty==true || fieldLimitControl.touched==true) && fieldLimitControl.errors"
+                                        class="error" for="">
+                                        <span *ngIf="fieldLimitControl.errors.required==true">
+                                            Field Limit is required
+                                        </span>
+                                        <span *ngIf="fieldLimitControl.errors.pattern!=null">
+                                            Enter Valid Field Limit
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-2 removeContainer" *ngIf="pcnList && pcnList.length>1">
+                                    <span class="removeItem" (click)="removeItem(i)">remove</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-md-12 footerSection">
+                    <div class="form-group col-md-offset-10 col-md-2">
+                        <button type="button" class="btn blue square-btn blue-hover btn-txt mr-5"
+                            (click)="CloseModal()">
+                            Cancel
+                        </button>
+                        <button type="button" (click)="saveFields()" class="btn blue square-btn blue-hover btn-txt"
+                            [disabled]="!addPCNForm.valid">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
