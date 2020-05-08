@@ -143,6 +143,8 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
 import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
 import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 @NgModule({
   declarations: [
@@ -286,6 +288,8 @@ import { AddPcnConfigurationComponent } from './child-components/client-configur
     BrowserAnimationsModule,
     OwlNativeDateTimeModule,
     NgbModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
     AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },

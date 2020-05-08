@@ -271,7 +271,7 @@ export class ClientInstructionComponent implements OnInit {
     } else if (this.Role == "Supervisor" && ins.Is_Client_Created == false) {
       this.canEdit = true
     } else {
-      this.canEdit = false
+      this.canEdit = false;
     }
 
 

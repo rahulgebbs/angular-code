@@ -11,6 +11,7 @@ export class DeallocateConcluderComponent implements OnInit {
   maxDate = new Date();
   gridApi;
   gridColumnApi;
+  submitBtnDisable=false;
   rowData;
   columnDefs = [
     {
@@ -51,5 +52,7 @@ export class DeallocateConcluderComponent implements OnInit {
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
   onCellClicked(e) { }
-
+  clearForm()
+  {
+  }
 }
