@@ -10,22 +10,16 @@
               <div class="heading-panel pt-0 pl-0">
                 <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Instructions</span>
               </div>
+
             </div>
             <div class="col-md-12 p-0 instruction-gp1">
               <div class="form-group  mh-15">
                 <label class=" label-std control-label p-0 b-600 pl-0">Client </label>
-
-
                 <select formControlName="Client" [disabled]="DisableClientList" name="Client"
                   [(ngModel)]="InstructionModel.Client_Id" (change)="ClientListOnChange($event)" class="form-control">
-
-
-
-                  <option [selected]="ClientList.length >1"  value="0" disabled>Select</option>
+                  <option [selected]="ClientList.length >1" value="0" disabled>Select</option>
                   <option *ngFor="let c of ClientList; let i = index" [value]="c.Client_Id" [selected]="c.selected">
                     {{c.Client_Name}}</option>
-
-
                 </select>
 
                 <div class="error" *ngIf="InstructionForm.get('Client').value < 1 && Validated">
@@ -39,8 +33,11 @@
                 <select [disabled]="DisableAll" formControlName="Payer" class="form-control" name="Payer"
                   [(ngModel)]="InstructionModel.Payer_Name">
 
-                  <option value="" [selected]=" (InstructionModel.Payer_Name != null) ||InstructionModel.Payer_Name == ''" disabled>Select</option>
-                  <option *ngFor="let item of PayerList; let i = index" [value]="item.Value" [selected]="item.selected ">
+                  <option value=""
+                    [selected]=" (InstructionModel.Payer_Name != null) ||InstructionModel.Payer_Name == ''" disabled>
+                    Select</option>
+                  <option *ngFor="let item of PayerList; let i = index" [value]="item.Value"
+                    [selected]="item.selected ">
                     {{item.Value}} </option>
                 </select>
 
@@ -84,7 +81,7 @@
               <div class="form-group mh-15">
                 <label for="Instruction" class="label-std  control-label p-0 b-600">Instruction
                 </label>
-                <textarea [disabled]="DisableAll" formControlName="Instruction" rows="6" maxlength="3000"
+                <textarea [disabled]="DisableAll" formControlName="Instruction" rows="5" maxlength="500"
                   name="Instruction" class="form-control textarea-resize" [(ngModel)]="InstructionModel.Instructions"
                   placeholder="Enter Instructions here"></textarea>
                 <div class="error" *ngIf="InstructionForm.get('Instruction').hasError('required') && Validated">
@@ -105,14 +102,41 @@
                   {{RoleMessage}}
                 </div>
               </div>
-              <div class="col-md-12 text-left mt-5">
+              <div class="col-md-12 text-left mt-5" id="btnContainer">
                 <button type="submit" [disabled]="DisableAll || !canEdit" class="btn blue square-btn blue-hover btn-txt"
                   id="toast-btn">Save</button>
                 <button type="button" [disabled]="DisableAll" (click)="ClearData()"
                   class="btn blue square-btn blue-hover btn-txt ">Clear</button>
-                  <div class="error" *ngIf="!canEdit && selectedRecord"> This role cannot edit this instruction</div>
+                <div class="error" *ngIf="!canEdit && selectedRecord"> This role cannot edit this instruction</div>
+                <!-- 
+                <button type="button" style="float: left" [disabled]="DisableAll || !canEdit" class="btn blue square-btn blue-hover btn-txt"
+                  id="toast-btn">Bulk Upload</button>
+                <button type="button" style="float: left" [disabled]="DisableAll" class="btn blue square-btn blue-hover btn-txt ">Template
+                  Download</button>
+                <div class="error" *ngIf="!canEdit && selectedRecord"> This role cannot edit this instruction</div> -->
               </div>
-             
+              <div class="form-group mh-15">
+                <label class="label-std control-label p-0 b-600 pl-0 mt-5" for="">Upload File</label>
+                <div style="margin-bottom: 0.5rem;" class="col-md-12 file-upload-wrapper p-0 mb-15"
+                  [attr.data-text]="Filename">
+                  <input (change)="GetFileData($event)" #file [disabled]="DisableFileInput" name="file-upload-field"
+                    type="file" accept=".xlsx" class="file-upload-field" (onclick)="file.value = null">
+
+                </div>
+                <!-- </span> -->
+                <div class="error" *ngIf="DisplayFileError">
+                  Please select the file
+                </div>
+
+                <button [disabled]="!truefile || DisableUpload" type="button" (click)="FileUpload()"
+                  class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+                  <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+
+                <button [disabled]="disableDownload" type="button" (click)="downloadTemplate()"
+                  class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
+                  <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+              </div>
+
             </div>
           </form>
         </div>
@@ -120,15 +144,21 @@
           <div class="col-md-12 col-sm-12 p-0 mt-10">
             <div class="heading-panel pt-0 pl-0">
               <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text"> Client Instructions</span>
+              <div class="exportBtn">
+                <button type="button" (click)="exportToExcel()" [disabled]="!RowData || RowData.length==0"
+                  class="btn blue square-btn blue-hover btn-txt ">
+                  <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i> Export To Excel</button>
+              </div>
             </div>
+
           </div>
           <div class="col-md-12 col-sm-12 p-0 insrt-tbl">
             <div class="sticky-table sticky-ltr-cells border-0 table-hight">
               <ag-grid-angular class="ag-theme-balham gd-w" (firstDataRendered)="AutoSizeGrid($event)"
-                 (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection"
-                [rowData]="RowData" (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs"
-                [pagination]="true" [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true"
-                [enableFilter]="true" (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true"
+                (gridReady)="OnGridReady($event)" [rowSelection]="RowSelection" [rowData]="RowData"
+                (columnResized)="onColumnResized($event)" [columnDefs]="ColumnDefs" [pagination]="true"
+                [paginationAutoPageSize]="true" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
+                (rowData)="OnGridReady($event)" [suppressColumnVirtualisation]="true"
                 (rowClicked)="OnRowClicked($event)" (cellClicked)='onCellClicked($event)'>
               </ag-grid-angular>
             </div>

@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.initiateTimer();
+    // this.initiateTimer();
     this.Getcount();
   }
 
@@ -213,7 +213,7 @@ export class AppComponent implements OnInit {
   ToggleMenuFromFooter(event) {
     this.DisplayMenu = event;
   }
-  
+
   stay() {
     this.showTimeoutModal = false;
     this.reset();
