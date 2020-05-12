@@ -144,7 +144,8 @@ import { PcnConfigurationComponent } from './child-components/client-configurati
 import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
 
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { MomentModule } from 'angular2-moment';
+import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
 @NgModule({
   declarations: [
@@ -275,7 +276,9 @@ import { MomentModule } from 'angular2-moment'; // optional, provides moment-sty
 
     PcnConfigurationComponent,
 
-    AddPcnConfigurationComponent
+    AddPcnConfigurationComponent,
+
+    AddPcnModalComponent
   ],
   imports: [
     BrowserModule,

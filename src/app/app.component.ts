@@ -104,16 +104,7 @@ export class AppComponent implements OnInit {
       this.lastPing = new Date();
       return this.lastPing;
     });
-
     this.chekIfUserLoggedIn();
-    // this.appService.getUserLoggedIn().subscribe(userLoggedIn => {
-    //   if (userLoggedIn) {
-    //     idle.watch()
-    //     this.timedOut = false;
-    //   } else {
-    //     idle.stop();
-    //   }
-    // })
   }
   reset() {
     this.idle.watch();
