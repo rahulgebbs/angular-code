@@ -23,6 +23,7 @@
   z-index: 100000;
   overflow-y: inherit;
 }
+
 .pop-position {
   height: auto;
   background: white;
@@ -35,13 +36,16 @@
   top: 5%;
   /* min-height: 300px; */
 }
+
 .grey {
   background: #ddd;
   color: #000;
 }
+
 .p-0 {
   padding: 0px !important;
 }
+
 .heading-panel {
   position: relative;
   display: -ms-flexbox;
@@ -54,11 +58,13 @@
   justify-content: space-between;
   padding: 0.5em 1em;
 }
+
 .heading-txt {
   font-size: 18px;
   font-weight: 600;
   height: 20px;
 }
+
 .pv-10 {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -72,23 +78,28 @@ input {
   // margin: 0.5rem;
   // padding: 0.5rem;
 }
+
 select {
   // margin: 0.5rem;
   // padding: 0.5rem;
   // width: 100%;
 }
+
 form {
-  min-height: 200px;
+  min-height: 50vh;
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
+
   .form-group {
     min-height: 75px;
   }
+
   /* width: 55%;
     margin: auto; */
 }
+
 .removeItem {
   color: #e74c3c;
   text-transform: capitalize;
@@ -128,9 +139,20 @@ form {
   justify-content: center;
   align-items: center;
   border: 1px solid #cfcfcf;
+
   .form-group {
     justify-content: center;
     align-items: center;
     display: flex;
   }
+}
+
+.myBackdropClass {
+  background: red;
+  color: blue;
+}
+
+.myPanelClass {
+  background: green;
+  color: yellow;
 }

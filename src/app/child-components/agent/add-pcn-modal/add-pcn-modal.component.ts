@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -6,11 +6,13 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
   templateUrl: './add-pcn-modal.component.html',
   styleUrls: ['./add-pcn-modal.component.scss']
 })
-export class AddPcnModalComponent implements OnInit {
-  addPCNForm: FormGroup
-  // @Output() close = new EventEmitter();
+export class AddPcnModalComponent implements OnInit, OnChanges {
+  addPCNForm: FormGroup;
+  @Input() inventory;
+  @Output() close = new EventEmitter();
   // @Output() save = new EventEmitter();
   pcnList: any;
+  keyList = [];
   fixedPCNFields = [
 
     {
@@ -95,6 +97,20 @@ export class AddPcnModalComponent implements OnInit {
     this.addPCN();
   }
 
+  ngOnChanges(changes) {
+    // this.keyList = ["Patient Name",
+    //   "MRN",
+    //   "Patient Account",
+    //   "Admit Date",
+    //   "Payer",
+    //   "Total Charges",
+    //   "Claim Amount",
+    //   "Practice",
+    //   "Last_billed_date",
+    //   "CallReference_No"];
+    // console.log('this.inventory : ', this.inventory);
+  }
+
   createPCN() {
     return this.fb.group({
       pcn: this.fb.array([])
@@ -117,10 +133,10 @@ export class AddPcnModalComponent implements OnInit {
   createPCNItem(pcn) {
     return this.fb.group({
       "Display_Header": [pcn.Display_Header, Validators.required],
-      "Column_Data_Type": [pcn.Column_Data_Type, Validators.required],
-      "FieldType": [pcn.FieldType, Validators.required],
-      "Field_Limit": [pcn.Field_Limit, [Validators.required, Validators.pattern(/^(\d|,)*\d*$/)]],
-      "FieldValue": [pcn.FieldValue, [Validators.required, Validators.pattern(/^(\d|,)*\d*$/)]]
+      "Column_Data_Type": [pcn.Column_Data_Type],
+      "FieldType": [pcn.FieldType],
+      "Field_Limit": [pcn.Field_Limit],
+      "FieldValue": [pcn.FieldValue, [Validators.required]]
     })
   }
 
@@ -138,4 +154,37 @@ export class AddPcnModalComponent implements OnInit {
   //   this.pcnList = this.addPCNForm.get('pcnList') as FormArray;
   // this.pcnList.push(this.createItem());
   // }
+  dateTimeChange(event, controls) {
+    console.log('event,controls : ', event, controls);
+  }
+  BlockInput(event) {
+    console.log('BlockInput(event) : ', event);
+  }
+  changeDropdown() {
+    console.log('changeDropdown() : ', this.addPCNForm);
+  }
+
+  checkIfAlreadyExist(field, index) {
+    console.log('field,index : ', field, index);
+  }
+  savPCN() {
+    // console.log('final submit : ', this.addPCNForm);
+    const finalArray = [];
+    const { value } = this.addPCNForm;
+    // console.log('value : ', value);
+    value.pcnList.forEach((ele) => {
+      const obj = {}
+      ele.pcn.forEach(element => {
+        obj[element['Display_Header']] = element['FieldValue']
+      });
+      // console.log('obj : ', obj);
+      finalArray.push(obj)
+    })
+    console.log('finalArray : ', finalArray)
+  }
+
+  CloseModal() {
+    console.log('CloseModal() :');
+    this.close.emit();
+  }
 }

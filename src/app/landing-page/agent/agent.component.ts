@@ -99,6 +99,8 @@ export class AgentComponent implements OnInit {
   showCallReferenceInfo = false;
   CallReference_No = null;
   Is_New_Line = false;
+  showAddPCNModal = false;
+  inventoryDetails = {};
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
@@ -1325,6 +1327,30 @@ export class AgentComponent implements OnInit {
   }
   dateTimeChange(event, field) {
     console.log('dateTimeChange : ', event, field);
+  }
+
+  openAddPCNModal() {
+    this.inventoryDetails = {}
+    this.inventoryDetails['Client_Id'] = this.ClientId;
+    this.inventoryDetails['Inventory_Id'] = this.InventoryId;
+    this.inventoryDetails['Inventory_Log_Id'] = this.InventoryLogId;
+    // this.inventoryDetails['Notes'] = this.ActionForm.controls['Notes'].value;
+    // console.log('Before this.AllFields : ', this.AllFields);
+    this.AllFields.forEach(e => {
+      // console.log('loop ele : ', e.Header_Name, e);
+      if (e.Column_Datatype == 'Date') {
+        this.inventoryDetails[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+      }
+      else {
+        this.inventoryDetails[e.Header_Name] = e.FieldValue;
+      }
+    });
+    console.log('openAddPCNModal objs :', this.inventoryDetails)
+    this.showAddPCNModal = true;
+  }
+  closeAddPCNModal() {
+    console.log('showAddPCNModal :', this.showAddPCNModal);
+    this.showAddPCNModal = false;
   }
 }
 // };

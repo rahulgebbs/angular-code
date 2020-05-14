@@ -19,7 +19,17 @@
             [ngStyle]="{'cursor':disableBtn==true ? 'not-allowed':'pointer','opacity':disableBtn==true ? 0.5:1}"
             [disabled]="disableBtn" (click)="addPCN()">Add PCN
           </button>
+
           <form [formGroup]="addPCNForm">
+            <!-- <div class="row"> -->
+            <div class="col-md-3 col-sm-6 col-xs-6" *ngFor="let key of keyList">
+              <label for="">
+                {{key}}
+              </label>
+              <br />
+              <label for="">{{inventory[key]}}</label>
+              <!-- </div> -->
+            </div>
             <div class="pcnList col-md-12" formArrayName="pcnList"
               *ngFor="let pcnItem of addPCNForm.get('pcnList').controls; let pcnIndex = index;">
               <h5 style="font-weight: bolder">#PCN{{pcnIndex+1}}</h5>
@@ -70,7 +80,8 @@
                       <div class="form-group" *ngIf="item.controls.FieldType.value=='Dropdown'">
                         <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                         <select class="form-control" name="field{{pcnIndex}}{{pcnItemIndex}}"
-                          id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue">
+                          id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
+                          (change)="changeDropdown()">
                           <option [value]="''">Select Column Data Type</option>
                           <option [value]="'Text'">Text</option>
                           <option [value]="'Numeric'">Numeric</option>
@@ -79,21 +90,27 @@
                         <label
                           *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors"
                           class="error" for="">
-                          {{item.controls.Display_Header.value}} is required
+                          <span *ngIf="fieldValueControl.errors.required==true">
+                            {{item.controls.Display_Header.value}} is required
+                          </span>
                         </label>
                       </div>
                       <!-- show if date -->
                       <div class="form-group" *ngIf="item.controls.FieldType.value=='Date'">
-                        <label for="field{{pcnIndex}}{{pcnItemIndex}}"></label>
-                        <input name="field{{pcnIndex}}{{pcnItemIndex}}" type="text" class="form-control"
-                          formControlName="FieldValue">
-                        <div class=''>
-                          <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                            class="form-control" formControlName="" [type]="'text'" [name]="'field'+i" [id]="'field'+i"
-                            [owlDateTime]="dt" [owlDateTimeTrigger]="dt" (change)="dateTimeChange($event,field)">
-                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
-                        </div>
-
+                        <label for="field{{pcnIndex}}{{pcnItemIndex}}">
+                          {{item.controls.Display_Header.value}}
+                        </label>
+                        <input class="form-control" (dateTimeInput)="dateTimeChange($event,item.controls)"
+                          formControlName="FieldValue" autocomplete="off" (keydown)="BlockInput($event)"
+                          (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt"
+                          name="field{{pcnIndex}}{{pcnItemIndex}}" id="field{{pcnIndex}}{{pcnItemIndex}}"
+                          [owlDateTime]="dt" backdropClass="myBackdropClass" panelClass="myPanelClass">
+                        <!-- <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                          class="form-control" [formControl]="FieldValue" [type]="'text'"
+                          name="field{{pcnIndex}}{{pcnItemIndex}}" id="field{{pcnIndex}}{{pcnItemIndex}}"
+                          [owlDateTime]="dt" [owlDateTimeTrigger]="dt" (change)="dateTimeChange($event,item.controls)"> -->
+                        <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                      </div>
                     </ng-container>
                     <!-- <div class="col-md-2 removeContainer" *ngIf="pcnList && pcnList.length>1">
                       <span class="removeItem" (click)="removeItem(i)">remove</span>
@@ -112,7 +129,7 @@
             <button type="button" class="btn blue square-btn blue-hover btn-txt mr-5" (click)="CloseModal()">
               Cancel
             </button>
-            <button type="button" (click)="saveFields()" class="btn blue square-btn blue-hover btn-txt"
+            <button type="button" (click)="savPCN()" class="btn blue square-btn blue-hover btn-txt"
               [disabled]="!addPCNForm.valid">
               Submit
             </button>
