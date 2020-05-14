@@ -537,5 +537,5 @@
   (close)="hideCallReferenceInfo()">
 </app-call-reference-info>
 
-<app-add-pcn-modal [inventory]="inventoryDetails" *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
+<app-add-pcn-modal [inventory]="inventoryDetails" [SaagLookup]="SaagLookup" *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
 </app-add-pcn-modal>

@@ -1339,10 +1339,10 @@ export class AgentComponent implements OnInit {
     this.AllFields.forEach(e => {
       // console.log('loop ele : ', e.Header_Name, e);
       if (e.Column_Datatype == 'Date') {
-        this.inventoryDetails[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+        this.inventoryDetails[e.Display_Name] = moment(e.FieldValue).utcOffset(0, true).format();
       }
       else {
-        this.inventoryDetails[e.Header_Name] = e.FieldValue;
+        this.inventoryDetails[e.Display_Name] = e.FieldValue;
       }
     });
     console.log('openAddPCNModal objs :', this.inventoryDetails)

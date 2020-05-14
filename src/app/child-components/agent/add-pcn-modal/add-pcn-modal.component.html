@@ -22,12 +22,12 @@
 
           <form [formGroup]="addPCNForm">
             <!-- <div class="row"> -->
-            <div class="col-md-3 col-sm-6 col-xs-6" *ngFor="let key of keyList">
+            <div class="keyItem col-md-2 col-sm-6 col-xs-6" *ngFor="let key of keyList">
               <label for="">
                 {{key}}
               </label>
               <br />
-              <label for="">{{inventory[key]}}</label>
+              <h6 for="">{{inventory[key]}}</h6>
               <!-- </div> -->
             </div>
             <div class="pcnList col-md-12" formArrayName="pcnList"
@@ -81,11 +81,11 @@
                         <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                         <select class="form-control" name="field{{pcnIndex}}{{pcnItemIndex}}"
                           id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
-                          (change)="changeDropdown()">
-                          <option [value]="''">Select Column Data Type</option>
-                          <option [value]="'Text'">Text</option>
-                          <option [value]="'Numeric'">Numeric</option>
-                          <option [value]="'Date'">Date</option>
+                          (change)="onSelect(item.controls,pcnIndex,pcnItemIndex)">
+                          <option [value]="''">Select {{item.controls.Display_Header.value}}</option>
+                          <option *ngFor="let option of item.controls.list.value" [value]="option">{{option}}
+                          </option>
+
                         </select>
                         <label
                           *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors"
@@ -129,8 +129,8 @@
             <button type="button" class="btn blue square-btn blue-hover btn-txt mr-5" (click)="CloseModal()">
               Cancel
             </button>
-            <button type="button" (click)="savPCN()" class="btn blue square-btn blue-hover btn-txt"
-              [disabled]="!addPCNForm.valid">
+            <button type="button" (click)="savePCN()" class="btn blue square-btn blue-hover btn-txt"
+              [disabled]="!addPCNForm.valid || disableBtn">
               Submit
             </button>
           </div>

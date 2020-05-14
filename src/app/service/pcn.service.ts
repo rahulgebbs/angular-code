@@ -34,4 +34,14 @@ export class PcnService {
 
     return this.http.post(environment.ApiUrl + '/api/Upload_PCN_Configuration', body, { headers: headers })
   }
+
+  savePCN(body) {
+    // Insert_PCN_Data
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    // http://172.30.52.25:1001/api/Get_Pcn_Configuration_Data?Client_Id=3035
+
+    return this.http.post(environment.ApiUrl + '/api/Insert_PCN_Data', body, { headers: headers })
+  }
 }
