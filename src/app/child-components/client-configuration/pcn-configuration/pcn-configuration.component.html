@@ -1,5 +1,5 @@
 <div class="tab-content nav-tab-content">
-  <form>
+  <div class="form-container">
     <div role="tabpanel" class="tab-pane" id="step-2">
 
       <div class="col-md-12 p-0">
@@ -21,16 +21,45 @@
         </div>
       </div>
       <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
-      <div class="col-md-12 p-0">
+      <div style="max-height: 55vh;" class="col-md-12 p-0">
         <div class="col-md-12">
         </div>
         <div class="col-md-offset-3 col-md-6 p-0">
-          <div style="height: 55vh;" class="border-0 table-hight">
-            <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
-              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
-              [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
-              [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true">
-            </ag-grid-angular>
+          <div class="border-0 table-hight">
+            <div  class="col-md-12 p-0 client-inv-sticky">
+
+              <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important">
+                <table class="table">
+                  <thead>
+                    <tr class="sticky-header">
+                      <th>Display Header</th>
+                      <th>Column Data Type</th>
+                      <th>Field Limit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of rowData">
+                      <td>
+                        <input class="form-control" maxlength="200" type="text" placeholder="Enter Display Header"
+                          [(ngModel)]="row.DisPlay_Header">
+                      </td>
+                      <td>
+                        <select name="" id="" [(ngModel)]="row.Column_Data_Type">
+                          <option [value]="''">Select Column Data Type</option>
+                          <option [value]="'Text'">Text</option>
+                          <option [value]="'Numeric'">Numeric</option>
+                          <option [value]="'Date'">Date</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="form-control" min="0" max="1000" type="number" placeholder="Enter FieldLimit"
+                          [(ngModel)]="row.Field_Limit">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div class="col-md-12 text-right p-0">
               <button type="button" id="step-1-save" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
                 (click)="submit()">Save</button>
@@ -41,7 +70,7 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <app-add-pcn-configuration *ngIf="showPopup==true" (save)="saveFields($event)" (close)="closePopup($event)">
 </app-add-pcn-configuration>

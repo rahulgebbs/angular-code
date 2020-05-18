@@ -57,7 +57,7 @@ export class ClientConfigurationComponent implements OnInit {
       this.ShowTabName = 'pcn';
     }
     else if (e == "pcn") {
-      this.clientData.Is_Formula_Uploaded = true;
+      this.clientData.Is_PCN_Uploaded = true;
       // location.reload()
       this.ShowTabName = 'appeal';
     }
@@ -108,7 +108,11 @@ export class ClientConfigurationComponent implements OnInit {
     }
   }
   managePCN(event) {
-    console.log('managePCN(event) : ', event);
+    this.clientData.Is_PCN = event.Is_PCN;
+    console.log('managePCN(event) : ', this.clientData);
+    if (this.clientData.Is_PCN == true) {
+      // this.ShowTabName = 'pcn';
+    }
   }
 
 }

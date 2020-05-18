@@ -70,7 +70,7 @@ export class PcnConfigurationComponent implements OnInit {
     console.log('getPCNList() :', this.ClientData);
     this.rowData = null;
     this.pcnService.getPCNList(this.ClientData.Id).subscribe((response: any) => {
-      console.log('response : ', response);
+      console.log('response : ', response.Data);
       this.rowData = response.Data
     }, (error) => {
       this.rowData = [];

@@ -315,12 +315,17 @@ export class ClientComponent implements OnInit {
 
   }
 
+  checkPCN() {
+    console.log('checkPCN() : ', this.addClient.value);
+    this.managePCN.emit(this.addClient.value);
+  }
+
   nextPage() {
 
     if (this.clientData.Client_Name) {
       this.selectClient = false
       this.next_page.emit('client');
-      this.managePCN.emit(this.SelectedClientData);
+      
     } else {
       this.selectClient = true
     }

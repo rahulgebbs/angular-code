@@ -1,8 +1,14 @@
-.btnCOntainer{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.btnCOntainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-.grid-w{  
-    height: 100%;
+.grid-w {
+  height: 100%;
+}
+.nav-tab-content {
+  height: 73vh;
+}
+.sticky-table {
+  max-height: 55vh;
 }

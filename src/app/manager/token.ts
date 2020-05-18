@@ -37,7 +37,7 @@ export class Token {
     GetUserData() {
 
         let data = jwt_decode(sessionStorage.getItem(this.LoginTokenKey));
-        console.log('getUser : ', data);
+        // console.log('getUser : ', data);
         this.TokenValue = sessionStorage.getItem(this.LoginTokenKey);
         this.Full_Name = data.Full_Name;
         this.UserId = data.User_Id;

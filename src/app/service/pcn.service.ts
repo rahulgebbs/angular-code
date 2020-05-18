@@ -23,7 +23,7 @@ export class PcnService {
     });
     // http://172.30.52.25:1001/api/Get_Pcn_Configuration_Data?Client_Id=3035
 
-    return this.http.get(environment.ApiUrl + '/api/Get_Pcn_Configuration_Data?Client_Id=' + Client_Id, { headers: headers });
+    return this.http.get(environment.ApiUrl + '/api/Get_Pcn_Configuration_Data?Client_Id=' + Client_Id, { headers: headers }).map(res => res.json());
   }
 
   updatePCNList(body) {
@@ -42,7 +42,7 @@ export class PcnService {
     });
     // http://172.30.52.25:1001/api/Get_Pcn_Configuration_Data?Client_Id=3035
 
-    return this.http.post(environment.ApiUrl + '/api/Insert_PCN_Data', body, { headers: headers })
+    return this.http.post(environment.ApiUrl + '/api/Insert_PCN_Data', body, { headers: headers }).map(res => res.json());
   }
 
   getPCNForInventory(Client_Id, inventoryId, Inventory_Log_Id) {

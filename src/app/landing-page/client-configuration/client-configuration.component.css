@@ -127,8 +127,8 @@ color:#fff !important;
   .steps li.completed {background-color: #90bf5e;color:#fff;}
   .steps li.completed::after {border-left-color: #90bf5e}
   .nav-tab-content {
-    border: 1px solid #ddd;
-    border-top: 0px;
+    /* border: 1px solid #ddd;
+    border-top: 0px; */
 }
 @media screen and (max-width: 1024px) and (min-width: 768px) {
     .dm-width{

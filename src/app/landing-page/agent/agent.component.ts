@@ -4,7 +4,7 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AgentService } from 'src/app/service/agent.service';
-import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
+import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError, last } from 'rxjs/operators';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalInsuranceService } from 'src/app/service/global-insurance.service';
@@ -293,6 +293,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnStatusChange(event) {
+    console.log('OnStatusChange : ', event)
     this.ActionForm.patchValue({ "SubStatus": "" })
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.SubStatus = [];
@@ -324,6 +325,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnSubStatusChange(event) {
+    console.log('OnSubStatusChange : ', event)
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.ActionCode = [];
     let actionCode = [];
@@ -1351,6 +1353,14 @@ export class AgentComponent implements OnInit {
   closeAddPCNModal() {
     console.log('showAddPCNModal :', this.showAddPCNModal);
     this.showAddPCNModal = false;
+    var lastPCN: any = sessionStorage.getItem('lastPCN');
+    lastPCN = lastPCN ? JSON.parse(lastPCN) : {}
+    console.log('lastPCN : ', lastPCN);
+    this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    this.OnStatusChange(lastPCN);
+    this.ActionForm.patchValue({ "SubStatus": lastPCN.Sub_Status });
+    this.OnSubStatusChange(lastPCN);
+    this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
   }
 }
 // };

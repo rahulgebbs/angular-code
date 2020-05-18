@@ -124,10 +124,9 @@
                   </span>
 
                   <span class="p-0 text-left mr-10">
-                    <!-- <input type="hidden" formControlName="Updated_Date" [(ngModel)]="clientData.Updated_Date"> -->
                     <label class="custom-control client-conf">
                       <input type="checkbox" id="is-pcn" [checked]="clientData.Is_PCN" formControlName="Is_PCN"
-                        [(ngModel)]="Is_PCN" class="mr-5 mt-0">
+                        [(ngModel)]="Is_PCN" class="mr-5 mt-0" (change)="checkPCN()">
                       <label for="is-pcn" class="label-status">Is PCN</label>
                     </label>
                   </span>
@@ -142,33 +141,6 @@
                   </span>
                 </div>
               </div>
-              <!-- <div class="form-group">
-              <label for="inputEmail3" class="label-std control-label p-0 b-600">Client Alias</label>
-              <input type="text" class="form-control" id="lastname" placeholder="" value="db-Jitendrasing">
-            </div> -->
-              <!-- <div class="form-group">
-        <label for="inputEmail3" class="label-std control-label p-0 b-600">Client Appeal File Path</label>
-        <input type="text" class="form-control" id="lastname" formControlName="File_Location"
-         [(ngModel)]="clientData.File_Location">
-        <label class=" error" *ngIf="addClient.get('File_Location').hasError('maxlength') && validated">Maximum
-         1000 character allowed</label>
-        <label class=" error" *ngIf="addClient.get('File_Location').hasError('required') && validated">Client
-         Appeal File Path
-         is Required</label>
-       </div> -->
-              <!-- <div class="form-group" *ngIf="show_Is_Appeal_Processed">
-        <div class="col-md-12 p-0">
-         <span class="col-md-6 p-0 text-left">
-          
-          <label class="custom-control client-conf pt-4">
-           <input type="checkbox" id="ac-active1" [checked]="clientData.Is_Appeal_Processed" formControlName="Is_Appeal_Processed"
-            [(ngModel)]="clientData.Is_Appeal_Processed">
-           <label for="ac-active1">Activate Appeal Process</label>
-          </label>
-         </span>
-        </div>
-       </div> -->
-
             </div>
 
           </div>

@@ -119,8 +119,8 @@
             Formula Management
           </div>
         </li>
-        <li (click)="navigation('pcn')"
-          [ngClass]="[ShowTabName == 'pcn' ? 'active' :'',clientData.Is_PCN ? 'completed':'']">
+        <li (click)="navigation('pcn')" *ngIf="clientData.Is_PCN==true"
+          [ngClass]="[ShowTabName == 'pcn' ? 'active' :'',clientData.Is_PCN_Uploaded ? 'completed':'']">
           <div class="li-title">
             PCN Configuration
           </div>

@@ -81,7 +81,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   setUpNewPCN() {
-    console.log('getPCNData : ', getPCNData);
+    console.log('getPCNData : ', this.pcnInfo);
     if (this.pcnInfo != null && this.pcnInfo.length > 0) {
       // this.pcnInfo = getPCNData;
       this.pcnInfo.forEach((pcnList) => {
@@ -133,7 +133,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         }
       })
     })
-
   }
 
   manageKeyList() {
@@ -266,58 +265,20 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     };
     console.log('body : ', JSON.stringify(body));
     this.pcnService.savePCN(body).subscribe((response) => {
+      console.log('savePCN : ', response);
       this.disableBtn = false;
+      this.setResponseIntoLocal(response);
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
+      console.log('savePCN error : ', error);
       this.disableBtn = false;
-      this.setResponseIntoLocal({});
+      this.ResponseHelper.GetFaliureResponse(error);
+
     })
     console.log('finalArray : ', finalArray)
   }
 
   setResponseIntoLocal(response) {
-    response = {
-      "Message": [
-        {
-          "Message": "PCN Data Save Successfully",
-          "Type": "SUCCESS"
-        }
-      ],
-      "Data": {
-        "_pcn_Ids": [
-          {
-            "Pcn_Id": 5
-          },
-          {
-            "Pcn_Id": 6
-          },
-          {
-            "Pcn_Id": 7
-          },
-          {
-            "Pcn_Id": 8
-          }
-        ],
-        "_high_Priority": {
-          "_lstHighPriority": {
-            "Balance": "200",
-            "DOS": "07/06/2010",
-            "Charge": "20",
-            "PCN_Number": "A002",
-            "Status": "CLAIM PAID",
-            "Sub_Status": "PAID NOT POSTED_POST 30DAYS",
-            "Action_Code": "CANCELLED CHECK REQUESTED",
-            "Effectiveness": "CASH IN BANK",
-            "InventoryId": "7",
-            "Inventory_Log_Id": "1",
-            "PCN_IDs": [
-              1,
-              2,
-              3
-            ]
-          }
-        }
-      }
-    }
     const finalObj = response.Data._high_Priority._lstHighPriority;
     finalObj.PCN_IDs = finalObj.PCN_IDs && finalObj.PCN_IDs.length > 0 ? finalObj.PCN_IDs : [];
     response.Data._pcn_Ids.forEach((pcn) => {
@@ -325,7 +286,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     })
     finalObj.PCN_IDs = _.uniq(finalObj.PCN_IDs);
     console.log('finalObj : ', finalObj);
-    sessionStorage.setItem('localPCN', JSON.stringify(finalObj));
+    sessionStorage.setItem('lastPCN', JSON.stringify(finalObj));
     this.close.emit();
   }
 

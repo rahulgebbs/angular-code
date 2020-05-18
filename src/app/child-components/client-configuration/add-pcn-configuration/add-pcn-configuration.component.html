@@ -24,7 +24,7 @@
                             *ngFor="let item of addPCNForm.get('pcnList').controls; let i = index;">
                             <div [formGroupName]="i" class="row">
                                 <div class="col-md-3" *ngIf="item.controls.Display_Header as displayHeaderControl">
-                                    <input formControlName="Display_Header" placeholder="Dispaly Header"
+                                    <input formControlName="Display_Header" placeholder="Display Header"
                                         [ngClass]="{'input-error' : (displayHeaderControl.dirty==true || displayHeaderControl.touched==true) && displayHeaderControl.errors && (displayHeaderControl.errors.required==true || displayHeaderControl.errors.incorrect==true) }"
                                         (keyup)="checkIfAlreadyExist(displayHeaderControl, i)">
                                     <label
