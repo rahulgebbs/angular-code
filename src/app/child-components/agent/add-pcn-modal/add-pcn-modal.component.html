@@ -17,18 +17,19 @@
         <div class="col-md-12 p-0 mt-10">
           <button id="addItem"
             [ngStyle]="{'cursor':disableBtn==true ? 'not-allowed':'pointer','opacity':disableBtn==true ? 0.5:1}"
-            [disabled]="disableBtn" (click)="addPCN()">Add PCN
+            [disabled]="disableBtn" (click)="addNewPCN()">Add PCN
           </button>
 
           <form [formGroup]="addPCNForm">
-            <!-- <div class="row"> -->
-            <div class="keyItem col-md-2 col-sm-6 col-xs-6" *ngFor="let key of keyList">
-              <label for="">
-                {{key}}
-              </label>
-              <br />
-              <h6 for="">{{inventory[key]}}</h6>
-              <!-- </div> -->
+            <div class="col-md-12">
+              <div class="keyItem col-md-2 col-sm-6 col-xs-6" *ngFor="let key of keyList"
+                (click)="copyText(inventory[key])">
+                <label for="">
+                  {{key}}
+                </label>
+                <br />
+                <h6 for="">{{inventory[key]}}</h6>
+              </div>
             </div>
             <div class="pcnList col-md-12" formArrayName="pcnList"
               *ngFor="let pcnItem of addPCNForm.get('pcnList').controls; let pcnIndex = index;">
@@ -43,10 +44,10 @@
                         <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                         <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
                           placeholder="{{item.controls.Display_Header.value}}"
-                          [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
+                          [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
                           (keyup)="checkIfAlreadyExist(fieldValueControl, i)">
                         <label
-                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors"
+                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
                           class="error" for="">
                           <span *ngIf="fieldValueControl.errors.required==true">
                             {{item.controls.Display_Header.value}} is required
@@ -62,10 +63,10 @@
                         <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                         <input type="number" min="0" class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                           formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
-                          [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
+                          [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
                           (keyup)="checkIfAlreadyExist(fieldValueControl, i)">
                         <label
-                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors"
+                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
                           class="error" for="">
                           <span *ngIf="fieldValueControl.errors.required==true">
                             {{item.controls.Display_Header.value}} is required
@@ -81,14 +82,14 @@
                         <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                         <select class="form-control" name="field{{pcnIndex}}{{pcnItemIndex}}"
                           id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
-                          (change)="onSelect(item.controls,pcnIndex,pcnItemIndex)">
+                          (change)="onSelect(item.controls.Display_Header.value,item.controls.FieldValue.value,pcnIndex)">
                           <option [value]="''">Select {{item.controls.Display_Header.value}}</option>
                           <option *ngFor="let option of item.controls.list.value" [value]="option">{{option}}
                           </option>
 
                         </select>
                         <label
-                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true) && fieldValueControl.errors"
+                          *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
                           class="error" for="">
                           <span *ngIf="fieldValueControl.errors.required==true">
                             {{item.controls.Display_Header.value}} is required
@@ -130,7 +131,7 @@
               Cancel
             </button>
             <button type="button" (click)="savePCN()" class="btn blue square-btn blue-hover btn-txt"
-              [disabled]="!addPCNForm.valid || disableBtn">
+              [disabled]="disableBtn">
               Submit
             </button>
           </div>

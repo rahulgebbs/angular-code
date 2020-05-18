@@ -3393,7 +3393,7 @@ div[role="tabpanel"]:after {
   padding: 15px 20px;
   color: #fff;
   z-index: 10000;
-  background: rgba(0, 128, 0, 0.59) !important;
+  background: rgba(0, 128, 0, 1) !important;
   width: 100%;
   float: left;
   margin-bottom: 10px;

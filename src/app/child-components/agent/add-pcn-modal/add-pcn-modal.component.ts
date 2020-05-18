@@ -3,6 +3,10 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import * as _ from 'lodash'
 import { PcnService } from 'src/app/service/pcn.service';
+import { getPCNData, fixedPCNFields } from './getPCNData';
+import { ClipboardService } from 'ngx-clipboard'
+import { NotificationService } from 'src/app/service/notification.service';
+import { ResponseHelper } from 'src/app/manager/response.helper';
 
 
 @Component({
@@ -19,108 +23,117 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   pcnList: any;
   disableBtn = false;
   keyList = [];
-  // statusList = [];
-  // subStatusList = [];
-  // actionCodeList = [];
-  fixedPCNFields = [
 
-    {
-      "Display_Header": "PCN_Number",
-      "Column_Data_Type": "Text",
-      "FieldType": "Textbox",
-      "FieldValue": "",
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Status",
-      "Column_Data_Type": "Text",
-      "FieldType": "Dropdown",
-      "FieldValue": "",
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Sub_Status",
-      "Column_Data_Type": "Text",
-      "FieldType": "Dropdown",
-      "FieldValue": "",
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Action_Code",
-      "Column_Data_Type": "Text",
-      "FieldType": "Dropdown",
-      "FieldValue": "",
-      "Field_Limit": 0
-    },
-    {
+  localPCN = [];
 
-      "Display_Header": "Effectiveness",
-      "Column_Data_Type": "Text",
-      "FieldType": "Textbox",
-      "FieldValue": "",
-      "Field_Limit": 0
-    },
-    {
-
-      "Display_Header": "InventoryId",
-      "Column_Data_Type": "Numeric",
-      "FieldType": "Numeric",
-      "FieldValue": 0,
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Inventory_Log_Id",
-      "Column_Data_Type": "Numeric",
-      "FieldType": "Numeric",
-      "FieldValue": 0,
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Charge",
-      "Column_Data_Type": "Numeric",
-      "FieldType": "Numeric",
-      "FieldValue": 0,
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "Balance",
-      "Column_Data_Type": "Numeric",
-      "FieldType": "Numeric",
-      "FieldValue": 0,
-      "Field_Limit": 0
-    },
-    {
-      "Display_Header": "DOS",
-      "Column_Data_Type": "Date",
-      "FieldType": "Date",
-      "FieldValue": new Date().toISOString(),
-      "Field_Limit": 0
-    }
-  ]
-  constructor(private fb: FormBuilder, private pcnService: PcnService) { }
+  fixedPCNFields = fixedPCNFields;
+  pcnInfo = [];
+  submitBtnStatus = false;
+  ResponseHelper: ResponseHelper;
+  constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService) { }
 
   ngOnInit() {
-    this.addPCNForm = this.fb.group({
-      pcnList: this.fb.array([])
-    });
-    this.addPCN();
+
+    // this.addPCN();
+  }
+
+  copyText(text) {
+    this._clipboardService.copyFromContent(text);
+    this.notification.ChangeNotification([{ Message: "Text Copied successfully!", Type: "SUCCESS" }])
   }
 
   ngOnChanges(changes) {
     console.log('changes : ', changes);
+    this.ResponseHelper = new ResponseHelper(this.notification);
     this.manageKeyList();
-
-    // this.manageDropDownList();
+    this.addPCNForm = this.fb.group({
+      pcnList: this.fb.array([])
+    });
+    this.getPCNInfo();
   }
 
-  manageDropDownList() {
-    // this.statusList = _.map(this.SaagLookup, 'Status');
-    // this.statusList = _.uniq(this.statusList);
-    // this.actionCodeList = _.map(this.SaagLookup, 'Action_Code');
-    // this.actionCodeList = _.uniq(this.actionCodeList);
-    // this.subStatusList = _.map(this.SaagLookup, 'Sub_Status');
-    // this.subStatusList = _.uniq(this.subStatusList);
-    // console.log('manageDropDownList : ', this.statusList, this.subStatusList, this.actionCodeList);
+  getPCNInfo() {
+    const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
+    this.pcnService.getPCNForInventory(Client_Id, Inventory_Id, Inventory_Log_Id).subscribe((response: any) => {
+      console.log('response : ', response);
+      // this.addNewPCN();
+      this.pcnInfo = response.Data;
+      this.setUpNewPCN();
+    }, (error) => {
+      console.log('error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.addNewPCN();
+    })
+    // console.log('getPCNData : ', getPCNData);
+    // if (getPCNData != null) {
+    //   this.pcnInfo = getPCNData;
+    //   this.pcnInfo.forEach((pcnList) => {
+    //     this.fixedPCNFields = JSON.parse(JSON.stringify(pcnList));
+    //     this.setFieldType();
+    //     console.log('pcnList : ', pcnList, this.fixedPCNFields);
+    //   });
+    //   this.setDropdownFields();
+    // }
+    // else {
+    //   this.addNewPCN();
+    // }
+    // this.addNewPCN();
+  }
+
+  setUpNewPCN() {
+    console.log('getPCNData : ', getPCNData);
+    if (this.pcnInfo != null && this.pcnInfo.length > 0) {
+      // this.pcnInfo = getPCNData;
+      this.pcnInfo.forEach((pcnList) => {
+        this.fixedPCNFields = JSON.parse(JSON.stringify(pcnList));
+        this.setFieldType();
+        console.log('pcnList : ', pcnList, this.fixedPCNFields);
+      });
+      this.setDropdownFields();
+    }
+    else {
+      this.addNewPCN();
+    }
+  }
+
+  addNewPCN() {
+    this.fixedPCNFields = fixedPCNFields;
+    this.fixedPCNFields.forEach((pcn: any) => {
+      switch (pcn.Display_Header) {
+        case 'InventoryId':
+          pcn.FieldValue = this.inventory.Inventory_Id;
+          break;
+        case 'Inventory_Log_Id':
+          pcn.FieldValue = this.inventory.Inventory_Log_Id;
+          break;
+        default:
+          break;
+      }
+    })
+    this.addPCN();
+  }
+  setDropdownFields() {
+    // const pcnList = this.addPCN
+    this.pcnInfo.forEach((pcnList, pcnListIndex) => {
+      pcnList.forEach((pcn, pcnIndex) => {
+        console.log('pcn : ', pcn.Display_Header, pcnIndex);
+        switch (pcn.Display_Header) {
+          case 'Status':
+            this.onSelect(pcn.Display_Header, pcn.FieldValue, pcnListIndex);
+            break;
+          case 'Sub_Status':
+            this.onSelect(pcn.Display_Header, pcn.FieldValue, pcnListIndex);
+            break;
+          case 'Action_Code':
+            this.onSelect(pcn.Display_Header, pcn.FieldValue, pcnListIndex);
+            break;
+
+          default:
+            break;
+        }
+      })
+    })
+
   }
 
   manageKeyList() {
@@ -142,7 +155,27 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         this.keyList.push(item)
       }
     });
+  }
 
+  setFieldType() {
+    this.fixedPCNFields.forEach((pcn) => {
+
+      if (pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
+        pcn.FieldType = 'Numeric';
+      }
+      else if (pcn.Display_Header == 'Status' || pcn.Display_Header == 'Sub_Status' || pcn.Display_Header == 'Action_Code') {
+        pcn.FieldType = 'Dropdown';
+      }
+      else if (pcn.Display_Header == 'DOS') {
+        pcn.FieldType = 'Date';
+      }
+      else {
+        pcn.FieldType = 'Textbox';
+      }
+
+    });
+
+    this.addPCN();
   }
 
   createPCN() {
@@ -152,15 +185,16 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   addPCN() {
-    console.log('addPCN() : ', this.addPCNForm.controls);
+    // console.log('addPCN() : ', this.addPCNForm.controls);
     const pcnList = this.addPCNForm.get('pcnList') as FormArray;
-    console.log('pcnList : ', pcnList);
+    // console.log('pcnList : ', pcnList);
     pcnList.push(this.createPCN());
 
     const lastPCN = pcnList.controls[pcnList.controls.length - 1];
     const pcnItemList = lastPCN.get('pcn') as FormArray;
-    console.log('pcnItemList : ', pcnItemList);
-    this.fixedPCNFields.forEach((pcn: any) => {
+    // console.log('Before pcnItemList this.fixedPCNFields : ', this.fixedPCNFields);
+    // const lastPCNListIndex = pcnList.controls.length - 1;
+    this.fixedPCNFields.forEach((pcn: any, pcnIndex) => {
       if (pcn && pcn.FieldType == 'Dropdown') {
         switch (pcn.Display_Header) {
           case 'Status':
@@ -178,6 +212,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
             break;
         }
       }
+
       pcnItemList.push(this.createPCNItem(pcn));
     });
   }
@@ -208,6 +243,10 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     // console.log('final submit : ', this.addPCNForm);
     const finalArray = [];
     const { value } = this.addPCNForm;
+    this.submitBtnStatus = true;
+    if (this.addPCNForm.valid == false) {
+      return false;
+    }
     this.disableBtn = true;
     // console.log('value : ', value);
     value.pcnList.forEach((ele) => {
@@ -218,6 +257,9 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       // console.log('obj : ', obj);
       finalArray.push(obj);
     });
+    finalArray.forEach((pcn) => {
+      pcn['PCN_IDs'] = [];
+    })
     const body = {
       "Client_Id": this.inventory.Client_Id,
       "_lstFields": finalArray
@@ -227,8 +269,64 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       this.disableBtn = false;
     }, (error) => {
       this.disableBtn = false;
+      this.setResponseIntoLocal({});
     })
     console.log('finalArray : ', finalArray)
+  }
+
+  setResponseIntoLocal(response) {
+    response = {
+      "Message": [
+        {
+          "Message": "PCN Data Save Successfully",
+          "Type": "SUCCESS"
+        }
+      ],
+      "Data": {
+        "_pcn_Ids": [
+          {
+            "Pcn_Id": 5
+          },
+          {
+            "Pcn_Id": 6
+          },
+          {
+            "Pcn_Id": 7
+          },
+          {
+            "Pcn_Id": 8
+          }
+        ],
+        "_high_Priority": {
+          "_lstHighPriority": {
+            "Balance": "200",
+            "DOS": "07/06/2010",
+            "Charge": "20",
+            "PCN_Number": "A002",
+            "Status": "CLAIM PAID",
+            "Sub_Status": "PAID NOT POSTED_POST 30DAYS",
+            "Action_Code": "CANCELLED CHECK REQUESTED",
+            "Effectiveness": "CASH IN BANK",
+            "InventoryId": "7",
+            "Inventory_Log_Id": "1",
+            "PCN_IDs": [
+              1,
+              2,
+              3
+            ]
+          }
+        }
+      }
+    }
+    const finalObj = response.Data._high_Priority._lstHighPriority;
+    finalObj.PCN_IDs = finalObj.PCN_IDs && finalObj.PCN_IDs.length > 0 ? finalObj.PCN_IDs : [];
+    response.Data._pcn_Ids.forEach((pcn) => {
+      finalObj.PCN_IDs.push(pcn.Pcn_Id);
+    })
+    finalObj.PCN_IDs = _.uniq(finalObj.PCN_IDs);
+    console.log('finalObj : ', finalObj);
+    sessionStorage.setItem('localPCN', JSON.stringify(finalObj));
+    this.close.emit();
   }
 
   CloseModal() {
@@ -240,34 +338,32 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     console.log('onStatusChange() : ');
   }
 
-  onSelect(control, listIndex, itemIndex) {
+  onSelect(header, value, listIndex) {
     // console.log('control, listIndex, itemIndex : ', control, listIndex, itemIndex)
     const pcnList = this.addPCNForm.get('pcnList') as FormArray;
     const activePCN = pcnList.controls[listIndex];
     const pcnItemList = activePCN.get('pcn') as FormArray;
     // console.log('onSelect : ', pcnList, pcnItemList);
-    switch (control.Display_Header.value) {
+    switch (header) {
 
       case 'Status': {
         const subStatusList = this.SaagLookup.filter((saag) => {
-          if (saag.Status == control.FieldValue.value) {
+          if (saag.Status == value) {
             return saag.Sub_Status;
           }
         });
         this.setSubStatus(pcnItemList, subStatusList);
         break;
       }
-
       case 'Sub_Status': {
         const actionCodeList = this.SaagLookup.filter((saag) => {
-          if (saag.Sub_Status == control.FieldValue.value) {
+          if (saag.Sub_Status == value) {
             return saag.Action_Code;
           }
         });
         this.setActionCode(pcnItemList, actionCodeList);
         break;
       }
-
     }
 
     // console.log('subStatusList : ', subStatusList);
@@ -297,7 +393,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   setActionCode(pcnItemList, actionCodeList) {
-    console.log('setSubStatus : ', pcnItemList, actionCodeList);
+    console.log('setActionCode : ', pcnItemList, actionCodeList);
     pcnItemList.controls.forEach((pcnItem, index) => {
       // console.log('pcnItem.controls.Display_Header.value : ', pcnItem.controls.Display_Header)
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {

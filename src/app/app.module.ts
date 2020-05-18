@@ -147,6 +147,9 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the
 import { MomentModule } from 'angular2-moment';
 import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
+import { ClipboardModule } from 'ngx-clipboard';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -290,6 +293,7 @@ import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add
     OwlDateTimeModule,
     BrowserAnimationsModule,
     OwlNativeDateTimeModule,
+    ClipboardModule,
     NgbModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,

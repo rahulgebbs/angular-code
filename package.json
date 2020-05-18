@@ -39,6 +39,7 @@
     "ng-pick-datetime": "^6.0.16",
     "ng4-loading-spinner": "^1.2.3",
     "ngx-pagination": "^5.0.0",
+    "ngx-clipboard": "12.3.0",
     "rxjs": "6.0.0",
     "rxjs-compat": "6.3.3",
     "xlsx": "^0.14.1",
