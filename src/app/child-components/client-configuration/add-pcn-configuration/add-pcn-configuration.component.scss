@@ -69,22 +69,23 @@
 }
 
 input {
-  margin: 0.5rem;
-  padding: 0.5rem;
+  // margin: 0.5rem;
+  // padding: 0.5rem;
 }
 select {
-  margin: 0.5rem;
-  padding: 0.5rem;
+  // margin: 0.5rem;
+  padding: 0;
   // width: 100%;
 }
 form {
-  min-height: 200px;
+  min-height: 150px;
   max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
-  /* width: 55%;
-  margin: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .removeItem {
   color: #e74c3c;
@@ -126,4 +127,15 @@ form {
     align-items: center;
     display: flex;
   }
+}
+
+.submitSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 58px;
+}
+
+.fieldCtrl {
+  min-height: 71px;
 }

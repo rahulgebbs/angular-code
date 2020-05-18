@@ -85,12 +85,10 @@ export class PcnConfigurationComponent implements OnInit {
     console.log('closePopup(event) : ', event)
     this.showPopup = false;
   }
-  saveFields(pcnList) {
-    console.log('pcnList : ', pcnList);
+  saveFields(value) {
+    console.log('pcn value : ', value);
     this.rowData = this.rowData ? this.rowData : []
-    pcnList.forEach(element => {
-      this.rowData.push(element);
-    });
+    this.rowData.push(value);
     this.rowData = JSON.parse(JSON.stringify(this.rowData));
     console.log('this.rowData : ', this.rowData);
     this.showPopup = false;
