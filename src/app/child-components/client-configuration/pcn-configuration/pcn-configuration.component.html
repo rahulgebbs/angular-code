@@ -24,7 +24,7 @@
       <div style="max-height: 55vh;" class="col-md-12 p-0">
         <div class="col-md-12">
         </div>
-        <div class="col-md-offset-3 col-md-6 p-0">
+        <div class="col-md-offset-2 col-md-8 p-0">
           <div class="border-0">
             <div class="col-md-12 p-0 client-inv-sticky">
 
@@ -38,28 +38,56 @@
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr *ngFor="let row of rowData;let i=index">
-                      <td>
-                        <input class="form-control" maxlength="200" type="text" placeholder="Enter Display Header"
-                          [(ngModel)]="row.Display_Header">
-                      </td>
-                      <td>
-                        <select name="" id="" [(ngModel)]="row.Column_Data_Type">
-                          <option [value]="''">Select Column Data Type</option>
-                          <option [value]="'Text'">Text</option>
-                          <option [value]="'Numeric'">Numeric</option>
-                          <option [value]="'Date'">Date</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input class="form-control" min="0" max="1000" type="number" placeholder="Enter FieldLimit"
-                          [(ngModel)]="row.Field_Limit">
-                      </td>
-                      <td>
-                        <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)"> <i
-                            class="fa fa-trash"></i> Remove</button>
-                      </td>
+                  <tbody [formGroup]="addPCNForm">
+                    <tr formArrayName="pcnList" *ngFor="let item of addPCNForm.get('pcnList').controls; let i = index;">
+                      <ng-container [formGroupName]="i">
+                        <td *ngIf="item.controls.Display_Header as displayHeaderControl">
+                          <input class="form-control" maxlength="200" type="text" placeholder="Enter Display Header"
+                            formControlName="Display_Header" (keyup)="checkIfAlreadyExist(displayHeaderControl, i)">
+                          <label
+                            *ngIf="(displayHeaderControl.dirty==true || displayHeaderControl.touched==true) && displayHeaderControl.errors"
+                            class="error" for="">
+                            <span *ngIf="displayHeaderControl.errors.required==true">
+                              Display Header is required
+                            </span>
+                            <span *ngIf="displayHeaderControl.errors.incorrect==true">
+                              Display Header Already Exists
+                            </span>
+                          </label>
+                        </td>
+                        <td *ngIf="item.controls.Column_Data_Type as columnDataTypeControl">
+                          <select class="form-control" name="" id="" formControlName="Column_Data_Type">
+                            <option [value]="''">Select Column Data Type</option>
+                            <option [value]="'Text'">Text</option>
+                            <option [value]="'Numeric'">Numeric</option>
+                            <option [value]="'Date'">Date</option>
+                          </select>
+                          <label
+                            *ngIf="(columnDataTypeControl.dirty==true || columnDataTypeControl.touched==true) && columnDataTypeControl.errors && columnDataTypeControl.errors.required==true"
+                            class="error" for="">
+                            Column Data Type is required
+                          </label>
+                        </td>
+                        <td *ngIf="item.controls.Field_Limit as fieldLimitControl">
+                          <input class="form-control" min="0" max="1000" type="number" placeholder="Enter FieldLimit"
+                            formControlName="Field_Limit">
+                          <label
+                            *ngIf="(fieldLimitControl.dirty==true || fieldLimitControl.touched==true) && fieldLimitControl.errors"
+                            class="error" for="">
+                            <span *ngIf="fieldLimitControl.errors.required==true">
+                              Field Limit is required
+                            </span>
+                            <span *ngIf="fieldLimitControl.errors.pattern!=null">
+                              Enter Valid Field Limit
+                            </span>
+                          </label>
+                        </td>
+                        <td>
+                          <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)">
+                            <i class="fa fa-trash"></i> Remove</button>
+                        </td>
+                      </ng-container>
+
                     </tr>
 
                   </tbody>
