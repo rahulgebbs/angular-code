@@ -19,6 +19,8 @@ import * as moment from 'moment'
 
 import * as $ from 'jquery'
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-agent',
   templateUrl: './agent.component.html',
@@ -1356,11 +1358,34 @@ export class AgentComponent implements OnInit {
     var lastPCN: any = sessionStorage.getItem('lastPCN');
     lastPCN = lastPCN ? JSON.parse(lastPCN) : {}
     console.log('lastPCN : ', lastPCN);
+    this.setActionFormFields(lastPCN);
+    // this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    // this.OnStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ "SubStatus": lastPCN.Sub_Status });
+    // this.OnSubStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+  }
+
+  setActionFormFields(lastPCN) {
+    // Set Status
     this.ActionForm.patchValue({ "Status": lastPCN.Status });
-    this.OnStatusChange(lastPCN);
-    this.ActionForm.patchValue({ "SubStatus": lastPCN.Sub_Status });
-    this.OnSubStatusChange(lastPCN);
+    // SET Sub_Status
+    const subStatusList = this.SaagLookup.filter((saag) => {
+      if (saag.Status == lastPCN.Status) {
+        return saag.Sub_Status;
+      }
+    });
+    this.SubStatus = _.map(subStatusList, 'Sub_Status');
+    this.ActionForm.patchValue({ SubStatus: lastPCN.Sub_Status });
+    // SET Action_Code
+    const actionCodeList = this.SaagLookup.filter((saag) => {
+      if (saag.Sub_Status == lastPCN.Sub_Status) {
+        return saag.Action_Code;
+      }
+    });
+    this.ActionCode = _.map(actionCodeList, 'Action_Code');
     this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+    // console.log('setActionFormFields : ', this.ActionForm.value, this.SubStatus, this.ActionCode);
   }
 }
 // };
