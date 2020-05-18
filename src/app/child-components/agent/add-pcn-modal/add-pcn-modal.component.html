@@ -106,17 +106,9 @@
                           (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt"
                           name="field{{pcnIndex}}{{pcnItemIndex}}" id="field{{pcnIndex}}{{pcnItemIndex}}"
                           [owlDateTime]="dt" backdropClass="myBackdropClass" panelClass="myPanelClass">
-                        <!-- <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                          class="form-control" [formControl]="FieldValue" [type]="'text'"
-                          name="field{{pcnIndex}}{{pcnItemIndex}}" id="field{{pcnIndex}}{{pcnItemIndex}}"
-                          [owlDateTime]="dt" [owlDateTimeTrigger]="dt" (change)="dateTimeChange($event,item.controls)"> -->
                         <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                       </div>
                     </ng-container>
-                    <!-- <div class="col-md-2 removeContainer" *ngIf="pcnList && pcnList.length>1">
-                      <span class="removeItem" (click)="removeItem(i)">remove</span>
-                    </div> -->
-
                   </ng-container>
                 </div>
               </div>

@@ -25,23 +25,24 @@
         <div class="col-md-12">
         </div>
         <div class="col-md-offset-3 col-md-6 p-0">
-          <div class="border-0 table-hight">
-            <div  class="col-md-12 p-0 client-inv-sticky">
+          <div class="border-0">
+            <div class="col-md-12 p-0 client-inv-sticky">
 
-              <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important">
+              <div class="sticky-table sticky-ltr-cells border-0" style="padding-bottom:0px !important">
                 <table class="table">
                   <thead>
                     <tr class="sticky-header">
                       <th>Display Header</th>
                       <th>Column Data Type</th>
                       <th>Field Limit</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let row of rowData">
+                    <tr *ngFor="let row of rowData;let i=index">
                       <td>
                         <input class="form-control" maxlength="200" type="text" placeholder="Enter Display Header"
-                          [(ngModel)]="row.DisPlay_Header">
+                          [(ngModel)]="row.Display_Header">
                       </td>
                       <td>
                         <select name="" id="" [(ngModel)]="row.Column_Data_Type">
@@ -55,7 +56,12 @@
                         <input class="form-control" min="0" max="1000" type="number" placeholder="Enter FieldLimit"
                           [(ngModel)]="row.Field_Limit">
                       </td>
+                      <td>
+                        <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)"> <i
+                            class="fa fa-trash"></i> Remove</button>
+                      </td>
                     </tr>
+
                   </tbody>
                 </table>
               </div>

@@ -109,4 +109,7 @@ export class PcnConfigurationComponent implements OnInit {
       console.log('error :', error)
     })
   }
+  removeItem(i) {
+    this.rowData.splice(i, 1)
+  }
 }

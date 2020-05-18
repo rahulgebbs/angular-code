@@ -63,21 +63,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       console.log('error : ', error);
       this.ResponseHelper.GetFaliureResponse(error);
       this.addNewPCN();
-    })
-    // console.log('getPCNData : ', getPCNData);
-    // if (getPCNData != null) {
-    //   this.pcnInfo = getPCNData;
-    //   this.pcnInfo.forEach((pcnList) => {
-    //     this.fixedPCNFields = JSON.parse(JSON.stringify(pcnList));
-    //     this.setFieldType();
-    //     console.log('pcnList : ', pcnList, this.fixedPCNFields);
-    //   });
-    //   this.setDropdownFields();
-    // }
-    // else {
-    //   this.addNewPCN();
-    // }
-    // this.addNewPCN();
+    });
   }
 
   setUpNewPCN() {

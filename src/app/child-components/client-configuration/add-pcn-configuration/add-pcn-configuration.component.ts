@@ -16,7 +16,6 @@ export class AddPcnConfigurationComponent implements OnInit {
   disableBtn = false;
   ngOnInit() {
     this.addPCNForm = this.fb.group({
-
       pcnList: this.fb.array([])
     });
     this.addItem();
