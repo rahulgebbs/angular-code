@@ -23,9 +23,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   pcnList: any;
   disableBtn = false;
   keyList = [];
-
   localPCN = [];
-
   fixedPCNFields = fixedPCNFields;
   pcnInfo = [];
   submitBtnStatus = false;
@@ -33,8 +31,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService) { }
 
   ngOnInit() {
-
-    // this.addPCN();
   }
 
   copyText(text) {
@@ -99,10 +95,8 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     this.addPCN();
   }
   setDropdownFields() {
-    // const pcnList = this.addPCN
     this.pcnInfo.forEach((pcnList, pcnListIndex) => {
       pcnList.forEach((pcn, pcnIndex) => {
-        console.log('pcn : ', pcn.Display_Header, pcnIndex);
         switch (pcn.Display_Header) {
           case 'Status':
             this.onSelect(pcn.Display_Header, pcn.FieldValue, pcnListIndex);
@@ -144,7 +138,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
   setFieldType() {
     this.fixedPCNFields.forEach((pcn) => {
-
       if (pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
         pcn.FieldType = 'Numeric';
       }
@@ -157,9 +150,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       else {
         pcn.FieldType = 'Textbox';
       }
-
     });
-
     this.addPCN();
   }
 
@@ -170,15 +161,10 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   addPCN() {
-    // console.log('addPCN() : ', this.addPCNForm.controls);
     const pcnList = this.addPCNForm.get('pcnList') as FormArray;
-    // console.log('pcnList : ', pcnList);
     pcnList.push(this.createPCN());
-
     const lastPCN = pcnList.controls[pcnList.controls.length - 1];
     const pcnItemList = lastPCN.get('pcn') as FormArray;
-    // console.log('Before pcnItemList this.fixedPCNFields : ', this.fixedPCNFields);
-    // const lastPCNListIndex = pcnList.controls.length - 1;
     this.fixedPCNFields.forEach((pcn: any, pcnIndex) => {
       if (pcn && pcn.FieldType == 'Dropdown') {
         switch (pcn.Display_Header) {
@@ -197,11 +183,16 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
             break;
         }
       }
-
       pcnItemList.push(this.createPCNItem(pcn));
     });
   }
   createPCNItem(pcn) {
+    if (pcn.Display_Header == 'InventoryId') {
+      pcn.FieldValue = (pcn.FieldValue != null) ? pcn.FieldValue : this.inventory.Inventory_Id;
+    }
+    if (pcn.Display_Header == 'Inventory_Log_Id') {
+      pcn.FieldValue = (pcn.FieldValue != null) ? pcn.FieldValue : this.inventory.Inventory_Log_Id;
+    }
     return this.fb.group({
       "Display_Header": [pcn.Display_Header, Validators.required],
       "Column_Data_Type": [pcn.Column_Data_Type],
@@ -216,6 +207,12 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
   BlockInput(event) {
     console.log('BlockInput(event) : ', event);
+    if (event.key == 'Backspace' || event.key == 'Tab') {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
   changeDropdown() {
     console.log('changeDropdown() : ', this.addPCNForm);
@@ -312,39 +309,55 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         break;
       }
     }
+    this.setEffectiveness(pcnItemList);
+  }
 
-    // console.log('subStatusList : ', subStatusList);
+  setEffectiveness(pcnItemList) {
+    // console.log('setEffectiveness : ', pcnItemList.value);
+    const obj: any = {};
+    pcnItemList.value.forEach((item) => {
+      if (item.Display_Header == 'Status' || item.Display_Header == 'Sub_Status' || item.Display_Header == 'Action_Code') {
+        obj[item.Display_Header] = item.FieldValue;
+      }
+    });
+    // console.log('setEffectiveness obj : ', obj);
+    if (obj.Status != null && obj.Sub_Status != null && obj.Action_Code != null) {
+
+      const matchedObj = _.find(this.SaagLookup, (saag) => {
+        // console.log('find loop : ', saag.Status, obj.Status, saag.Sub_Status, obj.Sub_Status, saag.Sub_Status, obj.Action_Code);
+        return saag.Status == obj.Status && saag.Sub_Status == obj.Sub_Status && saag.Action_Code == obj.Action_Code;
+      });
+      console.log('effectiveness : ', matchedObj);
+      pcnItemList.controls.forEach((pcnItem, index) => {
+        console.log('pcnItemList forEach : ', pcnItem);
+        if (pcnItem.controls.Display_Header.value == 'Effectiveness') {
+          pcnItem.disable();
+          if (matchedObj && matchedObj.Effectiveness_Matrix) {
+            pcnItem.patchValue({ FieldValue: matchedObj.Effectiveness_Matrix });
+          }
+          else {
+            pcnItem.patchValue({ FieldValue: null });
+          }
+        }
+      });
+    }
   }
 
   setSubStatus(pcnItemList, subStatusList) {
-    // pcnItem.controls.list.value = []
-    console.log('setSubStatus : ', pcnItemList, subStatusList);
     pcnItemList.controls.forEach((pcnItem, index) => {
-      // console.log('pcnItem.controls.Display_Header.value : ', pcnItem.controls.Display_Header)
       if (pcnItem.controls.Display_Header.value == 'Sub_Status') {
-        // pcnItem.controls.list.value = subStatusList;
-        const obj = pcnItem.value;
-        console.log('obj : ', obj);
         pcnItem.patchValue({ list: _.map(subStatusList, 'Sub_Status') });
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
         }
-
         return true;
       }
     })
   }
 
-  onSubStatusChange() {
-    console.log('onSubStatusChange() : ');
-  }
-
   setActionCode(pcnItemList, actionCodeList) {
-    console.log('setActionCode : ', pcnItemList, actionCodeList);
     pcnItemList.controls.forEach((pcnItem, index) => {
-      // console.log('pcnItem.controls.Display_Header.value : ', pcnItem.controls.Display_Header)
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {
-        // pcnItem.controls.list.value = subStatusList;
         const obj = pcnItem.value;
         console.log('obj : ', obj);
         pcnItem.patchValue({ list: _.map(actionCodeList, 'Action_Code') });
