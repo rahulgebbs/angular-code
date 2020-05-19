@@ -32,7 +32,7 @@
               </div>
             </div>
             <div class="pcnList col-md-12" formArrayName="pcnList"
-              *ngFor="let pcnItem of addPCNForm.get('pcnList').controls; let pcnIndex = index;">
+              *ngFor="let pcnItem of addPCNForm.get('pcnList').controls; let pcnIndex = index;" id="pcnList{{pcnIndex}}">
               <h5 style="font-weight: bolder">#PCN{{pcnIndex+1}}</h5>
               <div [formGroupName]="pcnIndex" class="row">
                 <ng-container formArrayName="pcn"
@@ -49,7 +49,7 @@
                             <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
                               [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
-                              (keyup)="checkIfAlreadyExist(fieldValueControl, i)">
+                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)">
                             <label
                               *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">
@@ -68,8 +68,6 @@
 
                       <!-- show if Numeric -->
                       <ng-container *ngIf="item.controls.Display_Header as displayHeaderCtrl">
-
-
                         <div class="col-md-3 col-sm-6 col-xs-6"
                           *ngIf="item.controls.FieldType.value=='Numeric' && displayHeaderCtrl.value!='InventoryId' && displayHeaderCtrl.value!='Inventory_Log_Id'">
                           <div class="form-group">
@@ -77,8 +75,7 @@
                               for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                             <input type="number" min="0" class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
-                              [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
-                              (keyup)="checkIfAlreadyExist(fieldValueControl, i)">
+                              [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }">
                             <label
                               *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">
@@ -103,7 +100,6 @@
                             <option [value]="''">Select {{item.controls.Display_Header.value}}</option>
                             <option *ngFor="let option of item.controls.list.value" [value]="option">{{option}}
                             </option>
-
                           </select>
                           <label
                             *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"

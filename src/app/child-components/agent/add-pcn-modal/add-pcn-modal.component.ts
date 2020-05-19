@@ -28,6 +28,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   pcnInfo = [];
   submitBtnStatus = false;
   ResponseHelper: ResponseHelper;
+  PCN_IDs = []
   constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService) { }
 
   ngOnInit() {
@@ -50,6 +51,18 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
   getPCNInfo() {
     const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
+    var lastPCN = sessionStorage.getItem('lastPCN') ? JSON.parse(sessionStorage.getItem('lastPCN')) : null
+    if (lastPCN != null) {
+      this.PCN_IDs = lastPCN.PCN_IDs;
+    }
+    var localPCN: any = sessionStorage.getItem('localPCN');
+    localPCN = localPCN ? JSON.parse(localPCN) : null;
+    if (localPCN != null) {
+      this.pcnInfo = localPCN;
+      this.setUpNewPCN();
+      return false;
+    }
+    console.log('localPCN : ', localPCN);
     this.pcnService.getPCNForInventory(Client_Id, Inventory_Id, Inventory_Log_Id).subscribe((response: any) => {
       console.log('response : ', response);
       // this.addNewPCN();
@@ -93,6 +106,12 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       }
     })
     this.addPCN();
+
+    setTimeout(() => {
+      const pcnList = this.addPCNForm.get('pcnList') as FormArray;
+      var elmnt = document.getElementById('pcnList' + (pcnList.length - 1));
+      elmnt.scrollIntoView();
+    }, 100)
   }
   setDropdownFields() {
     this.pcnInfo.forEach((pcnList, pcnListIndex) => {
@@ -218,30 +237,47 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     console.log('changeDropdown() : ', this.addPCNForm);
   }
 
-  checkIfAlreadyExist(field, index) {
-    console.log('field,index : ', field, index);
+  checkIfAlreadyExist(control, listIndex, itemIndex) {
+    console.log('control, pcnIndex,pcnItemIndex : ', control, listIndex, itemIndex);
+    const pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    control.FieldValue.setErrors(null);
+    pcnList.controls.forEach((pcn, pcnIndex) => {
+      if (listIndex !== pcnIndex) {
+        const pcnItemList = pcn.get('pcn') as FormArray;
+        pcnItemList.controls.forEach((pcnItem: any, index) => {
+          // console.log('pcnItem : ', pcnItem)
+          if (control.Display_Header.value == 'PCN_Number' && pcnItem.controls.Display_Header.value == 'PCN_Number') {
+            if (control.FieldValue.value == pcnItem.controls.FieldValue.value) {
+              control.FieldValue.setErrors({ incorrect: true });
+            }
+          }
+        });
+      }
+    });
   }
   savePCN() {
-    // console.log('final submit : ', this.addPCNForm);
     const finalArray = [];
-    const { value } = this.addPCNForm;
+    const value = this.addPCNForm.getRawValue();
     this.submitBtnStatus = true;
     if (this.addPCNForm.valid == false) {
       return false;
     }
     this.disableBtn = true;
-    // console.log('value : ', value);
+    const localPCNArray = []
+    value.pcnList.forEach((ele) => {
+      localPCNArray.push(ele.pcn)
+    })
+    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
     value.pcnList.forEach((ele) => {
       const obj = {}
       ele.pcn.forEach(element => {
-        obj[element['Display_Header']] = element['FieldValue']
+        obj[element['Display_Header']] = element['FieldValue'];
       });
-      // console.log('obj : ', obj);
       finalArray.push(obj);
     });
     finalArray.forEach((pcn) => {
-      pcn['PCN_IDs'] = [];
-    })
+      pcn['PCN_IDs'] = (this.PCN_IDs && this.PCN_IDs.length > 0) ? this.PCN_IDs : [];
+    });
     const body = {
       "Client_Id": this.inventory.Client_Id,
       "_lstFields": finalArray

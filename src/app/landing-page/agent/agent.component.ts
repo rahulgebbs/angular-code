@@ -109,6 +109,8 @@ export class AgentComponent implements OnInit {
 
   ngOnInit() {
 
+    sessionStorage.removeItem('localPCN');
+    sessionStorage.removeItem('lastPCN');
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
     var userdata = token.GetUserData();
@@ -139,6 +141,8 @@ export class AgentComponent implements OnInit {
   GetBucketsWithCount() {
     sessionStorage.removeItem('highPriporityAccount');
     localStorage.removeItem('callReference');
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     this.agentservice.GetBucketsWithCount(this.ClientId).pipe(finalize(() => {
 
     })).subscribe(
@@ -223,9 +227,10 @@ export class AgentComponent implements OnInit {
   }
 
   SaveAccountsInLocal(Bucket_Name, inventoryId) {
+    console.log('SaveAccountsInLocal Bucket_Name : ', Bucket_Name)
     this.AccountsList.forEach(e => {
       e.Processed = "Pending";
-      e.Bucket_Name = Bucket_Name;
+      e.Bucket_Name = Bucket_Name && Bucket_Name.Name ? Bucket_Name.Name : Bucket_Name;
       if (e.Inventory_Id == inventoryId) {
         e.Processed = "Working";
       }
@@ -477,6 +482,7 @@ export class AgentComponent implements OnInit {
           objs[e.Header_Name] = e.FieldValue;
         }
       });
+      console.log('Bucket_Name : ', this.ActiveBucket);
       objs["Bucket_Name"] = this.ActiveBucket;
       objs["Status"] = this.ActionForm.controls['Status'].value;
       objs["Sub-Status"] = this.ActionForm.controls['SubStatus'].value;
@@ -490,6 +496,8 @@ export class AgentComponent implements OnInit {
       // console.log('SubmitForm obj : ', JSON.stringify(obj));
       localStorage.removeItem('callReference');
       sessionStorage.removeItem('highPriporityAccount');
+      sessionStorage.removeItem('localPCN');
+      sessionStorage.removeItem('lastPCN');
 
       if (this.Is_New_Line == true) {
         this.submitAddNewLine(obj);
@@ -691,6 +699,9 @@ export class AgentComponent implements OnInit {
         localStorage.removeItem('callReference');
 
       }
+      // remove PCN local info
+      // sessionStorage.removeItem('localPCN');
+      // sessionStorage.removeItem('lastPCN');
       this.analyticsService.logEvent(bucket.Name + ' Click').subscribe((response) => {
         console.log('logEvent : ', response);
       }, (error) => {
@@ -698,7 +709,7 @@ export class AgentComponent implements OnInit {
       });
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
-      this.ActiveBucket = bucket;
+      this.ActiveBucket = bucket.Name;
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
@@ -750,9 +761,11 @@ export class AgentComponent implements OnInit {
 
   GetAllFields(bucket, obj, fromPopup) {
     this.Is_New_Line = false;
-    console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
-    console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     var oldinvenid = this.InventoryId;
     var oldinvenlogid = this.InventoryLogId;
     if (fromPopup === true) {
