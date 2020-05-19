@@ -111,7 +111,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       const pcnList = this.addPCNForm.get('pcnList') as FormArray;
       var elmnt = document.getElementById('pcnList' + (pcnList.length - 1));
       elmnt.scrollIntoView();
-    }, 100)
+    }, 100);
   }
   setDropdownFields() {
     this.pcnInfo.forEach((pcnList, pcnListIndex) => {
