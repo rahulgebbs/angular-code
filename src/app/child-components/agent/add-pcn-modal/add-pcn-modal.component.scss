@@ -28,7 +28,7 @@
   height: auto;
   background: white;
   margin: auto;
-  width: 75%;
+  width: 95%;
   position: fixed;
   z-index: 100000000;
   left: 0px;
@@ -93,7 +93,7 @@ form {
   width: 100%;
 
   .form-group {
-    min-height: 75px;
+    min-height: 55px;
   }
 
   /* width: 55%;
@@ -130,7 +130,7 @@ form {
 }
 
 .pcnList {
-  // border: 1px solid;
+  // border-bottom: 1px solid #dfdfdf;
 }
 
 .footerSection {
@@ -158,10 +158,12 @@ form {
 }
 
 .keyItem {
-  border: 1px solid #cfcfcf;
-  margin: 0.5rem;
-  padding: 0.5rem;
+  border-bottom: 1px solid #cfcfcf;
+  margin: 0.5rem 0.6rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   cursor: pointer;
+  float: left;
+  min-width: 10%;
   label {
     cursor: pointer;
   }

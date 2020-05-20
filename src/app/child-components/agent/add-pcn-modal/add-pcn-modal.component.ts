@@ -92,26 +92,32 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   addNewPCN() {
-    this.fixedPCNFields = fixedPCNFields;
-    this.fixedPCNFields.forEach((pcn: any) => {
-      switch (pcn.Display_Header) {
-        case 'InventoryId':
-          pcn.FieldValue = this.inventory.Inventory_Id;
-          break;
-        case 'Inventory_Log_Id':
-          pcn.FieldValue = this.inventory.Inventory_Log_Id;
-          break;
-        default:
-          break;
-      }
-    })
-    this.addPCN();
+    this.fixedPCNFields = this.pcnInfo[0];
+    this.setFieldType();
+    // this.fixedPCNFields.forEach((pcn: any) => {
+    //   switch (pcn.Display_Header) {
+    //     case 'InventoryId':
+    //       pcn.FieldValue = this.inventory.Inventory_Id;
+    //       break;
+    //     case 'Inventory_Log_Id':
+    //       pcn.FieldValue = this.inventory.Inventory_Log_Id;
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // })
+    // this.addPCN();
 
     setTimeout(() => {
       const pcnList = this.addPCNForm.get('pcnList') as FormArray;
       var elmnt = document.getElementById('pcnList' + (pcnList.length - 1));
       elmnt.scrollIntoView();
     }, 100);
+  }
+
+  removePCN(index) {
+    const pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    pcnList.removeAt(index)
   }
   setDropdownFields() {
     this.pcnInfo.forEach((pcnList, pcnListIndex) => {
