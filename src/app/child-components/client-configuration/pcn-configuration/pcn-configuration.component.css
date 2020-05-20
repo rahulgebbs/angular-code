@@ -12,3 +12,10 @@
 .sticky-table {
   max-height: 55vh;
 }
+
+td {
+  border-bottom: none;
+  /* justify-content: center;
+  align-items: center;
+  display: flex; */
+}

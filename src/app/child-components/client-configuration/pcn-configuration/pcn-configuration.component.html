@@ -2,7 +2,7 @@
   <div class="form-container">
     <div role="tabpanel" class="tab-pane" id="step-2">
 
-      <div class="col-md-12 p-0">
+      <!-- <div class="col-md-12 p-0">
         <div class="provider-process">
           <div class="col-md-9 btnCOntainer">
             <span>
@@ -12,19 +12,30 @@
             </span>
           </div>
           <div class="col-md-3 p-0">
-            <span class="pull-right pt-8  w-auto" *ngIf="ClientData">
-              <b>Client Name :-
 
-                {{ClientData.Client_Name}}</b>
-            </span>
           </div>
         </div>
-      </div>
-      <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+      </div> -->
+
       <div style="max-height: 55vh;" class="col-md-12 p-0">
         <div class="col-md-12">
         </div>
         <div class="col-md-offset-2 col-md-8 p-0">
+          <div style="float: right;text-align: right; width: 200px;padding-right: 1rem">
+            <span class="w-auto">
+              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
+                data-target=".add-saag-master">
+                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+            </span>
+            <br>
+            <span class="w-auto" *ngIf="ClientData">
+              Client Name :-<b>{{ClientData.Client_Name}}</b>
+            </span>
+            <br>
+            <span class="w-auto" *ngIf="ClientData">
+              Total Rows:-<b>{{rowData == null ? '0' : rowData.length}}</b>
+            </span>
+          </div>
           <div class="border-0">
             <div class="col-md-12 p-0 client-inv-sticky">
 
@@ -82,11 +93,13 @@
                             </span>
                           </label>
                         </td>
-                        <td>
-                          <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10" (click)="addItem(i)">
-                            <i class="fa fa-plus"></i> </button>
-                          <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)">
-                            <i class="fa fa-trash"></i> </button>
+                        <td style="justify-content: center;align-items: center;display: flex;">
+                          <!-- <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10"
+                            (click)="addItem(i)">
+                            <i class="fa fa-plus"></i> </button> -->
+                          <button *ngIf="addPCNForm.get('pcnList').controls.length>1" type="button"
+                            class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)">
+                            <i class="fa fa-times"></i> </button>
                         </td>
                       </ng-container>
 
