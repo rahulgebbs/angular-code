@@ -259,6 +259,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     const finalArray = [];
     const value = this.addPCNForm.getRawValue();
     this.submitBtnStatus = true;
+    this.makeFieldsDirty();
     if (this.addPCNForm.valid == false) {
       return false;
     }
@@ -309,6 +310,19 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     this.close.emit();
   }
 
+  makeFieldsDirty() {
+    const pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    console.log('pcnList : ', pcnList)
+    pcnList.controls.forEach((list) => {
+      const pcnItemList = list.get('pcn') as FormArray;
+      console.log('pcnItemList : ', pcnItemList);
+      pcnItemList.controls.forEach((pcnItem: any) => {
+        console.log('pcnItem : ', pcnItem);
+        pcnItem.controls.FieldValue.markAsDirty();
+        // pcnItem.markAsDirty();
+      })
+    })
+  }
   CloseModal() {
     console.log('CloseModal() :');
     this.close.emit();

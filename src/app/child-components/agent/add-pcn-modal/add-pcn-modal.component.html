@@ -49,10 +49,10 @@
                               for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                             <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
-                              [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }"
+                              [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}"
                               (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)">
                             <label
-                              *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
+                              *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">
                               <span *ngIf="fieldValueControl.errors.required==true">
                                 {{item.controls.Display_Header.value}} is required
@@ -76,9 +76,9 @@
                               for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
                             <input type="number" min="0" class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
-                              [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }">
+                              [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
                             <label
-                              *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
+                              *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">
                               <span *ngIf="fieldValueControl.errors.required==true">
                                 {{item.controls.Display_Header.value}} is required
@@ -98,13 +98,13 @@
                           <select class="form-control" name="field{{pcnIndex}}{{pcnItemIndex}}"
                             id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
                             (change)="onSelect(item.controls.Display_Header.value,item.controls.FieldValue.value,pcnIndex)"
-                            [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }">
+                            [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
                             <option [value]="''">Select {{item.controls.Display_Header.value}}</option>
                             <option *ngFor="let option of item.controls.list.value" [value]="option">{{option}}
                             </option>
                           </select>
                           <label
-                            *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
+                            *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors"
                             class="error" for="">
                             <span *ngIf="fieldValueControl.errors.required==true">
                               {{item.controls.Display_Header.value}} is required
@@ -124,10 +124,10 @@
                             (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt"
                             name="field{{pcnIndex}}{{pcnItemIndex}}" id="field{{pcnIndex}}{{pcnItemIndex}}"
                             [owlDateTime]="dt" backdropClass="myBackdropClass" panelClass="myPanelClass"
-                            [ngClass]="{'input-error' : (fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true) }">
+                            [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
                           <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
                           <label
-                            *ngIf="(fieldValueControl.dirty==true || fieldValueControl.touched==true || submitBtnStatus==true || submitBtnStatus==true) && fieldValueControl.errors"
+                            *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) && submitBtnStatus==true) && fieldValueControl.errors"
                             class="error" for="">
                             <span *ngIf="fieldValueControl.errors.required==true">
                               {{item.controls.Display_Header.value}} is required

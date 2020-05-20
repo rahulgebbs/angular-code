@@ -83,12 +83,19 @@
                           </label>
                         </td>
                         <td>
+                          <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10" (click)="addItem(i)">
+                            <i class="fa fa-plus"></i> </button>
                           <button type="button" class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)">
-                            <i class="fa fa-trash"></i> Remove</button>
+                            <i class="fa fa-trash"></i> </button>
                         </td>
                       </ng-container>
 
                     </tr>
+                    <!-- <tr style="text-align: center" *ngIf="rowData==null || rowData.length==0">
+                      <td colspan="4">
+                        NO PCN Configuration found
+                      </td>
+                    </tr> -->
 
                   </tbody>
                 </table>

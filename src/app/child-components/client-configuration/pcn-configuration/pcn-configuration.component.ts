@@ -73,14 +73,18 @@ export class PcnConfigurationComponent implements OnInit {
     });
   }
 
-  addItem(pcn): void {
+  addItem(pcn, index): void {
     this.pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    index = index >= 0 ? index : 0
     this.pcnList.push(this.createItem(pcn));
-    console.log('this.pcnList : ', this.pcnList);
-    const lastIndex = this.pcnList.length - 1;
     setTimeout(() => {
-      this.checkIfAlreadyExist(this.pcnList.controls[lastIndex].controls.Display_Header, lastIndex);
+      this.makeFieldsDirty();
     }, 100);
+    // console.log('this.pcnList : ', this.pcnList);
+    // const lastIndex = this.pcnList.length - 1;
+    // setTimeout(() => {
+    // this.checkIfAlreadyExist(this.pcnList.controls[lastIndex].controls.Display_Header, lastIndex);
+    // }, 100);
 
   }
 
@@ -98,8 +102,8 @@ export class PcnConfigurationComponent implements OnInit {
   }
 
   setFormFields() {
-    this.rowData.forEach((pcn) => {
-      this.addItem(pcn)
+    this.rowData.forEach((pcn, index) => {
+      this.addItem(pcn, index - 1)
     });
   }
 
@@ -115,7 +119,7 @@ export class PcnConfigurationComponent implements OnInit {
   saveFields(value) {
     console.log('pcn value : ', value);
     if (value) {
-      this.addItem(value);
+      this.addItem(value, this.pcnList.length - 1);
     }
     this.showPopup = false;
     // this.rowData = this.rowData ? this.rowData : []
@@ -137,31 +141,39 @@ export class PcnConfigurationComponent implements OnInit {
     }
     this.pcnService.updatePCNList(obj).subscribe((response) => {
       console.log('response :', response)
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
-      console.log('error :', error)
+      console.log('error :', error);
+      this.ResponseHelper.GetFaliureResponse(error);
     })
   }
 
   checkIfAlreadyExist(field, fieldIndex) {
-    console.log('checkIfAlreadyExist : ', field, fieldIndex)
     const pcnList = this.addPCNForm.value.pcnList;
-    var matchedElement;
-    matchedElement = pcnList.find((element, index) => {
-      if (field.value.length > 0 && fieldIndex != index) {
-        return field.value == element.Display_Header;
+    if (field.value && field.value.length > 0)
+      field.setErrors(null);
+    pcnList.find((element, index) => {
+      console.log('checkIfAlreadyExist : ', field.value, fieldIndex, element.Display_Header, index);
+
+      if (field.value.length > 0 && fieldIndex != index && fieldIndex > index && field.value == element.Display_Header) {
+        console.log('matched : ', field.value, fieldIndex, element.Display_Header, index)
+        field.setErrors({ 'incorrect': true });
+        field.markAsDirty();
       }
     });
-    if (matchedElement != null) {
-      console.log('matchedElement : ', matchedElement)
-      field.setErrors({ 'incorrect': true });
-      field.markAsDirty();
-    }
-    else {
-      if (field.value.length > 0)
-        field.setErrors(null);
-    }
   }
   removeItem(i) {
-    this.rowData.splice(i, 1)
+    // this.rowData.splice(i, 1);
+    this.pcnList.removeAt(i);
+    setTimeout(() => {
+      this.makeFieldsDirty();
+    }, 100);
+  }
+
+  makeFieldsDirty() {
+    this.pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    this.pcnList.controls.forEach((field, index) => {
+      this.checkIfAlreadyExist(field.controls.Display_Header, index);
+    })
   }
 }
