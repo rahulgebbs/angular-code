@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, Form } from '@angular/forms';
 
 
 import { Token } from '../../../manager/token';
@@ -11,7 +11,7 @@ import { PcnService } from 'src/app/service/pcn.service';
 @Component({
   selector: 'app-pcn-configuration',
   templateUrl: './pcn-configuration.component.html',
-  styleUrls: ['./pcn-configuration.component.css'],
+  styleUrls: ['./pcn-configuration.component.scss'],
   // providers: [ExcelService, dropDownFields]
 
 })
@@ -24,6 +24,7 @@ export class PcnConfigurationComponent implements OnInit {
   addBtnDisable;
   showPopup;
   @Input() ClientData;
+  confirmSave = false;
   @Output() next_page = new EventEmitter<any>();
   // columnDefs = [];
   // gridApi;
@@ -80,12 +81,6 @@ export class PcnConfigurationComponent implements OnInit {
     setTimeout(() => {
       this.makeFieldsDirty();
     }, 100);
-    // console.log('this.pcnList : ', this.pcnList);
-    // const lastIndex = this.pcnList.length - 1;
-    // setTimeout(() => {
-    // this.checkIfAlreadyExist(this.pcnList.controls[lastIndex].controls.Display_Header, lastIndex);
-    // }, 100);
-
   }
 
   getPCNList() {
@@ -95,9 +90,11 @@ export class PcnConfigurationComponent implements OnInit {
       console.log('response : ', response.Data);
       this.rowData = response.Data;
       this.setFormFields();
+      this.ResponseHelper.GetSuccessResponse(response)
     }, (error) => {
       this.rowData = [];
-      console.log('error : ', error)
+      console.log('error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
     });
   }
 
@@ -118,20 +115,31 @@ export class PcnConfigurationComponent implements OnInit {
 
   saveFields(value) {
     console.log('pcn value : ', value);
+    this.pcnList = this.addPCNForm.get('pcnList') as FormArray;
     if (value) {
       this.addItem(value, this.pcnList.length - 1);
     }
     this.showPopup = false;
-    // this.rowData = this.rowData ? this.rowData : []
-    // this.rowData.push(value);
-    // this.rowData = JSON.parse(JSON.stringify(this.rowData));
-    // console.log('this.rowData : ', this.rowData);
-    // this.showPopup = false;
+  }
+
+  confirmPCN() {
+    // this.confirmSave = 
+    console.log('confirmPCN() : ', this.addPCNForm);
+    const { value } = this.addPCNForm;
+    if (this.rowData.length == 0 && value && value.pcnList.length > 0) {
+      this.confirmSave = true;
+    }
+  }
+
+  savePCNStatus(status) {
+    if (status == true) {
+      this.submit();
+    }
+    this.confirmSave = false;
   }
 
   submit() {
     console.log('submit() : ', this.rowData);
-    // this.next_page.emit('pcn');
     if (this.addPCNForm && !this.addPCNForm.valid) {
       return false;
     }
