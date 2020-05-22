@@ -142,10 +142,10 @@ import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-min
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
 import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
+import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment';
-import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
 import { ClipboardModule } from 'ngx-clipboard';
 

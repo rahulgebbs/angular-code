@@ -66,7 +66,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     this.pcnService.getPCNForInventory(Client_Id, Inventory_Id, Inventory_Log_Id).subscribe((response: any) => {
       console.log('response : ', response);
       // this.addNewPCN();
-      this.pcnInfo = response.Data;
+      this.pcnInfo = JSON.parse(JSON.stringify(response.Data));
       this.setUpNewPCN();
     }, (error) => {
       console.log('error : ', error);
@@ -92,7 +92,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   addNewPCN() {
-    this.fixedPCNFields = this.pcnInfo[0];
+    this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
     this.setFieldType();
     // this.fixedPCNFields.forEach((pcn: any) => {
     //   switch (pcn.Display_Header) {

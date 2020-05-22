@@ -150,6 +150,7 @@ export class PcnConfigurationComponent implements OnInit {
     this.pcnService.updatePCNList(obj).subscribe((response) => {
       console.log('response :', response)
       this.ResponseHelper.GetSuccessResponse(response);
+      this.getPCNList();
     }, (error) => {
       console.log('error :', error);
       this.ResponseHelper.GetFaliureResponse(error);
