@@ -48,7 +48,7 @@ export class ProductionReportComponent implements OnInit {
   DonwloadConfig: boolean = false;
 
 
-  constructor(private excelService:ExcelService, private selectField: dropDownFields, private router: Router, private notification: NotificationService, private simpleservice: ProductionReportService, private fb: FormBuilder) {
+  constructor(private excelService: ExcelService, private selectField: dropDownFields, private router: Router, private notification: NotificationService, private simpleservice: ProductionReportService, private fb: FormBuilder) {
     this.ResponseHelper = new ResponseHelper(this.notification);
     this.maxDate1 = new Date(moment(new Date).format('YYYY-MM-DDT23:59'))
   }
@@ -95,8 +95,8 @@ export class ProductionReportComponent implements OnInit {
         'Employee_Ids': ['', Validators.required],
         'From_Date': [this.FromDate],
         'To_Date': [this.ToDate, Validators.required],
-        //'From_Time': ['', Validators.required],
-        //'To_Time': ['', Validators.required],
+        'From_Time': ['', Validators.required],
+        'To_Time': ['', Validators.required],
         'Is_Only_Worked': [false, Validators.required],
 
       }
@@ -110,8 +110,8 @@ export class ProductionReportComponent implements OnInit {
         'Employee_Ids': ['', Validators.required],
         'From_Date': [this.FromDate],
         'To_Date': [this.ToDate, Validators.required],
-        //'From_Time': ['', Validators.required],
-        //'To_Time': ['', Validators.required],
+        'From_Time': ['', Validators.required],
+        'To_Time': ['', Validators.required],
         'Is_Only_Worked': [false, Validators.required],
 
       }
@@ -149,8 +149,8 @@ export class ProductionReportComponent implements OnInit {
       Employee_Ids: '',
       From_Date: this.FromDate,
       To_Date: this.ToDate,
-     // From_Time: '',
-    // To_Time: '',
+      // From_Time: '',
+      // To_Time: '',
       Is_Only_Worked: false
     })
     this.ClientId
@@ -172,7 +172,8 @@ export class ProductionReportComponent implements OnInit {
   GetAllEmployees() {
     this.simpleservice.GetAllEmployees(this.ClientId).subscribe(
       res => {
-        this.Employees = res.json().Data;
+        console.log('res : ', res.json());
+        this.Employees = res.json() ? res.json().Data : [];
         this.Employees.forEach(e => {
           e.Is_Selected = false;
 
@@ -327,10 +328,8 @@ export class ProductionReportComponent implements OnInit {
     }
   }
 
-  GetSimpleReportData()
-  {    
-    if(this.SimpleForm.valid)
-    {
+  GetSimpleReportData() {
+    if (this.SimpleForm.valid) {
       this.DisplayError = false;
       this.SimpleForm.value.From_Date = moment(this.SimpleForm.value.From_Date).format('YYYY-MM-DD')
       this.SimpleForm.value.To_Date = moment(this.SimpleForm.value.To_Date).format('YYYY-MM-DD')
@@ -365,11 +364,13 @@ export class ProductionReportComponent implements OnInit {
     let endTime = endDate + " " + this.SimpleForm.value.To_Time
     startTime = moment(startTime).format('YYYY-MM-DDTHH:mm');
     endTime = moment(endTime).format('YYYY-MM-DDTHH:mm');
+    console.log('startTime,endTime : ', startTime, endTime, startTime < endTime);
     if (startTime < endTime) {
       this.validationError = false
     } else {
       this.validationError = true
     }
+    console.log('this.validationError : ', this.validationError);
   }
 
   function(event) {

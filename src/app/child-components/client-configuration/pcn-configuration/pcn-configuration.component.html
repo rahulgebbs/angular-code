@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-offset-2 col-md-8 p-0">
           <div class="headerInfo">
-            <div *ngIf="rowData && rowData.length==0" class="addBtn">
+            <div *ngIf="(rowData==null || rowData.length==0)" class="addBtn">
               <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
                 data-target=".add-saag-master">
                 <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
@@ -107,9 +107,16 @@
                       </ng-container>
 
                     </tr>
-                    <tr *ngIf="addPCNForm && addPCNForm.get('pcnList').controls.length==0" style="text-align: center">
+                    <tr *ngIf="addPCNForm && addPCNForm.get('pcnList').controls.length==0 && fetchingStatus == false"
+                      style="text-align: center">
                       <td colspan="4">
                         NO PCN Configuration found
+                      </td>
+                    </tr>
+                    <tr *ngIf="addPCNForm && addPCNForm.get('pcnList').controls.length==0 && fetchingStatus == true"
+                      style="text-align: center">
+                      <td colspan="4">
+                        Fetching PCN Configuration ...
                       </td>
                     </tr>
 
@@ -118,9 +125,9 @@
               </div>
             </div>
             <div class="col-md-12 text-right p-0">
-              <button *ngIf="rowData && rowData.length==0" type="button" id="step-1-save"
+              <button *ngIf="(rowData==null || rowData.length==0 )" type="button" id="step-1-save"
                 class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
-                [disabled]="addPCNForm.value.pcnList.length==0" (click)="confirmPCN()">Save</button>
+                [disabled]="addPCNForm.value.pcnList.length==0 || dataExist==true" (click)="confirmPCN()">Save</button>
               <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
                 (click)="navigate()">Next</button>
             </div>

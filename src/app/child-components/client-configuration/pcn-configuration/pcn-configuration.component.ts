@@ -26,20 +26,14 @@ export class PcnConfigurationComponent implements OnInit {
   @Input() ClientData;
   confirmSave = false;
   @Output() next_page = new EventEmitter<any>();
-  // columnDefs = [];
-  // gridApi;
-  // gridColumnApi;
-  // rowSelection = "single";
+  dataExist = false;
   addPCNForm;
   pcnList: any;
+  fetchingStatus = false;
   // constructor(private fb: FormBuilder) { }
   constructor(private router: Router, private notificationservice: NotificationService, private pcnService: PcnService, private fb: FormBuilder) {
     this.token = new Token(this.router);
     this.userData = this.token.GetUserData();
-  }
-
-  CreateSaagForm() {
-
   }
 
   ngOnInit() {
@@ -86,14 +80,21 @@ export class PcnConfigurationComponent implements OnInit {
   getPCNList() {
     console.log('getPCNList() :', this.ClientData);
     this.rowData = null;
+    const pcnList = this.addPCNForm.get('pcnList') as FormArray;
+    this.fetchingStatus = true;
+    pcnList.controls = []
     this.pcnService.getPCNList(this.ClientData.Id).subscribe((response: any) => {
       console.log('response : ', response.Data);
       this.rowData = response.Data;
+      this.dataExist = true;
       this.setFormFields();
+      this.fetchingStatus = false;
       this.ResponseHelper.GetSuccessResponse(response)
     }, (error) => {
       this.rowData = [];
+      this.dataExist = false;
       console.log('error : ', error);
+      this.fetchingStatus = false;
       this.ResponseHelper.GetFaliureResponse(error);
     });
   }
@@ -153,6 +154,7 @@ export class PcnConfigurationComponent implements OnInit {
       this.getPCNList();
     }, (error) => {
       console.log('error :', error);
+      // this.getPCNList();
       this.ResponseHelper.GetFaliureResponse(error);
     })
   }

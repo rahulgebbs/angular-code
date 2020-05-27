@@ -106,3 +106,9 @@ td {
   float: right;
   margin: 1rem 0;
 }
+
+.disableInput {
+  user-select: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.3 !important;
+}

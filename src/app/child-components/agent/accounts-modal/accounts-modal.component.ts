@@ -124,6 +124,8 @@ export class AccountsModalComponent implements OnInit {
 
   OnRowClicked(e) {
     console.log('OnRowClicked : ', e.data)
+    sessionStorage.removeItem('localPCN');
+    sessionStorage.removeItem('lastPCN');
     this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Inventory_Id);
   }
 

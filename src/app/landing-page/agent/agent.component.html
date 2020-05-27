@@ -365,7 +365,7 @@
                 </label>
                 <select class="form-control" formControlName="Status" (change)="OnStatusChange($event)">
                   <option value="" [selected]="(!Status) || Status.length>1">Select</option>
-                  <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}</option>
+                  <option value="{{item}}" *ngFor="let item of Status" [selected]="Status.length==1">{{item}}</option>
                 </select>
                 <div class="error" *ngIf="ActionForm.get('Status').value == '' && Validated">
                   Status Required

@@ -10,7 +10,8 @@
             <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client" #selectedelem
               class="form-control" [(ngModel)]="ClientId">
               <option [selected]="ClientList.length >1" value="" disabled>Select</option>
-              <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+              <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
+              </option>
             </select>
             <div class="error" *ngIf="SimpleForm.get('Client_Id').hasError('required') && DisplayError">
               please select a client
@@ -58,9 +59,9 @@
               <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
             </div>
           </div>
-          <!-- <div class="form-group">
+          <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="">From Time</label>
-            
+
             <select name="From_Time" id="From_Time" formControlName="From_Time" class="form-control"
               (change)="getFromTime()">
               <option value="">Select Time</option>
@@ -92,10 +93,10 @@
             <div class="error" *ngIf="SimpleForm.get('From_Time').hasError('required') && DisplayError && only_worked">
               Please select from time
             </div>
-          </div> -->
-          <!-- <div class="form-group">
+          </div>
+          <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="">To Time</label>
-            
+
             <select name="To_Time" id="To_Time" formControlName="To_Time" class="form-control" (change)="getFromTime()">
               <option value="">Select Time</option>
               <option value="0:00">0:00</option>
@@ -126,12 +127,12 @@
             <div class="error" *ngIf="SimpleForm.get('To_Time').hasError('required') && DisplayError && only_worked">
               Please select to time
             </div>
-            
+
             <div class="error" *ngIf="validationError">
               From time should be less than to time
             </div>
           </div>
-          <div class="col-md-12 p-0">
+          <!--<div class="col-md-12 p-0">
             <span class="col-md-6 p-0 text-left">
               <label class="custom-control client-conf">
                 <input type="checkbox" name="ac-active" id="ac-active" formControlName="Is_Only_Worked"
@@ -145,17 +146,18 @@
         <div class="col-md-12 p-0 mt-10 text-left">
           <button type="submit" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit">Export
             To Excel</button> &nbsp;
-            <span *ngIf="DonwloadConfig"> <input type="button" value="Download" (click)="GetSimpleReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" /> </span>
+          <span *ngIf="DonwloadConfig"> <input type="button" value="Download" (click)="GetSimpleReportData()"
+              class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" /> </span>
         </div>
         <div class="col-md-12 p-0 mt-10 text-left">
           <!-- <input type="submit" class="btn blue square-btn blue-hover btn-txt" (click)="GetSimpleReportData" [disabled]="disablesubmit">Download
             To Excel</input> -->
-            <!-- <input type="button" value="Download" (click)="GetSimpleReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" > -->
+          <!-- <input type="button" value="Download" (click)="GetSimpleReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" > -->
         </div>
       </div>
     </form>
   </div>
 </div>
 
-<app-production-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
-  (CloseModal)="CloseModal($event)"></app-production-employee-selector-modal>
+<app-production-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees"
+  (SendSelectedEmp)="SetSelectedEmp($event)" (CloseModal)="CloseModal($event)"></app-production-employee-selector-modal>

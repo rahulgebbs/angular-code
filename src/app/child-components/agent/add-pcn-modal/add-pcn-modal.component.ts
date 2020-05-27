@@ -93,19 +93,22 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
   addNewPCN() {
     this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
-    this.setFieldType();
-    // this.fixedPCNFields.forEach((pcn: any) => {
-    //   switch (pcn.Display_Header) {
-    //     case 'InventoryId':
-    //       pcn.FieldValue = this.inventory.Inventory_Id;
-    //       break;
-    //     case 'Inventory_Log_Id':
-    //       pcn.FieldValue = this.inventory.Inventory_Log_Id;
-    //       break;
-    //     default:
-    //       break;
-    //   }
+    // this.fixedPCNFields.forEach(()=>{
     // })
+    this.fixedPCNFields.forEach((pcn: any) => {
+      switch (pcn.Display_Header) {
+        case 'InventoryId':
+          pcn.FieldValue = this.inventory.Inventory_Id;
+          break;
+        case 'Inventory_Log_Id':
+          pcn.FieldValue = this.inventory.Inventory_Log_Id;
+          break;
+        default:
+          pcn.FieldValue = null;
+          break;
+      }
+    })
+    this.setFieldType();
     // this.addPCN();
 
     setTimeout(() => {
@@ -173,7 +176,13 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         pcn.FieldType = 'Date';
       }
       else {
-        pcn.FieldType = 'Textbox';
+        if (pcn.Column_Data_Type == 'Text') {
+          pcn.FieldType = 'Textbox'
+        }
+        else {
+          pcn.FieldType = pcn.Column_Data_Type
+        }
+        // pcn.FieldType = 'Textbox';
       }
     });
     this.addPCN();
@@ -270,11 +279,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       return false;
     }
     this.disableBtn = true;
-    const localPCNArray = []
-    value.pcnList.forEach((ele) => {
-      localPCNArray.push(ele.pcn)
-    })
-    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
+    this.saveFieldsIntoLocal()
     value.pcnList.forEach((ele) => {
       const obj = {}
       ele.pcn.forEach(element => {
@@ -302,6 +307,15 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
     })
     console.log('finalArray : ', finalArray)
+  }
+
+  saveFieldsIntoLocal() {
+    const value = this.addPCNForm.getRawValue();
+    const localPCNArray = []
+    value.pcnList.forEach((ele) => {
+      localPCNArray.push(ele.pcn)
+    })
+    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
   }
 
   setResponseIntoLocal(response) {
@@ -332,6 +346,8 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   CloseModal() {
     console.log('CloseModal() :');
     this.close.emit();
+    this.saveFieldsIntoLocal();
+    sessionStorage.removeItem('lastPCN');
   }
 
   onStatusChange() {
@@ -402,9 +418,16 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   setSubStatus(pcnItemList, subStatusList) {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Sub_Status') {
+        console.log('setSubStatus obj : ',subStatusList);
         pcnItem.patchValue({ list: _.map(subStatusList, 'Sub_Status') });
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
+          const actionCodeList = this.SaagLookup.filter((saag) => {
+            if (saag.Sub_Status == pcnItem.controls.FieldValue.value) {
+              return saag.Action_Code;
+            }
+          });
+          this.setActionCode(pcnItemList, actionCodeList);
         }
         return true;
       }
@@ -415,7 +438,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {
         const obj = pcnItem.value;
-        console.log('obj : ', obj);
+        console.log('setActionCode obj : ', obj,actionCodeList);
         pcnItem.patchValue({ list: _.map(actionCodeList, 'Action_Code') });
         if (actionCodeList && actionCodeList.length == 1) {
           pcnItem.patchValue({ FieldValue: actionCodeList[0].Action_Code });
