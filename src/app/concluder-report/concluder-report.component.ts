@@ -11,6 +11,7 @@ export class ConcluderReportComponent implements OnInit {
   fromDate = new Date();
   maxDate = new Date();
   gridApi;
+  submitBtnDisable=false;
   gridColumnApi;
   rowData;
   columnDefs = [
@@ -43,6 +44,12 @@ export class ConcluderReportComponent implements OnInit {
     });
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
+  BlockInput(e)
+  {
 
+  }
   onCellClicked(e) {}
+  clearForm()
+  {
+  }
 }

@@ -4,7 +4,7 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AgentService } from 'src/app/service/agent.service';
-import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
+import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError, last } from 'rxjs/operators';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalInsuranceService } from 'src/app/service/global-insurance.service';
@@ -15,9 +15,11 @@ import { CommonService } from 'src/app/service/common-service';
 import { dropDownFields } from 'src/app/manager/dropdown-feilds';
 import { DenialCodeService } from './../../service/denial-code.service';
 import { AnalyticsService } from 'src/app/analytics.service';
-
+import * as moment from 'moment'
 
 import * as $ from 'jquery'
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-agent',
@@ -97,12 +99,18 @@ export class AgentComponent implements OnInit {
   enableClientUserMapping = null;
   menuStatus = false;
   showCallReferenceInfo = false;
+  CallReference_No = null;
+  Is_New_Line = false;
+  showAddPCNModal = false;
+  inventoryDetails = {};
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
 
   ngOnInit() {
 
+    sessionStorage.removeItem('localPCN');
+    sessionStorage.removeItem('lastPCN');
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
     var userdata = token.GetUserData();
@@ -133,6 +141,8 @@ export class AgentComponent implements OnInit {
   GetBucketsWithCount() {
     sessionStorage.removeItem('highPriporityAccount');
     localStorage.removeItem('callReference');
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     this.agentservice.GetBucketsWithCount(this.ClientId).pipe(finalize(() => {
 
     })).subscribe(
@@ -217,9 +227,10 @@ export class AgentComponent implements OnInit {
   }
 
   SaveAccountsInLocal(Bucket_Name, inventoryId) {
+    console.log('SaveAccountsInLocal Bucket_Name : ', Bucket_Name)
     this.AccountsList.forEach(e => {
       e.Processed = "Pending";
-      e.Bucket_Name = Bucket_Name;
+      e.Bucket_Name = Bucket_Name && Bucket_Name.Name ? Bucket_Name.Name : Bucket_Name;
       if (e.Inventory_Id == inventoryId) {
         e.Processed = "Working";
       }
@@ -289,6 +300,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnStatusChange(event) {
+    console.log('OnStatusChange : ', event)
     this.ActionForm.patchValue({ "SubStatus": "" })
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.SubStatus = [];
@@ -320,6 +332,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnSubStatusChange(event) {
+    console.log('OnSubStatusChange : ', event)
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.ActionCode = [];
     let actionCode = [];
@@ -442,6 +455,7 @@ export class AgentComponent implements OnInit {
 
   ClearForm() {
     this.Validated = false;
+    this.Is_New_Line = false;
     this.CreateActionForm();
   }
 
@@ -454,14 +468,21 @@ export class AgentComponent implements OnInit {
       objs['Inventory_Id'] = this.InventoryId;
       objs['Inventory_Log_Id'] = this.InventoryLogId;
       objs['Notes'] = this.ActionForm.controls['Notes'].value;
+      console.log('Before this.AllFields : ', this.AllFields);
       this.AllFields.forEach(e => {
+        console.log('loop ele : ', e.Header_Name, e);
         if (e.Header_Name == "Notes") {
           e.FieldValue = this.ActionForm.controls['Notes'].value;
+        }
+        else if (e.Column_Datatype == 'Date') {
+          // moment().utcOffset(0, true).format()
+          objs[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
         }
         else {
           objs[e.Header_Name] = e.FieldValue;
         }
       });
+      console.log('Bucket_Name : ', this.ActiveBucket);
       objs["Bucket_Name"] = this.ActiveBucket;
       objs["Status"] = this.ActionForm.controls['Status'].value;
       objs["Sub-Status"] = this.ActionForm.controls['SubStatus'].value;
@@ -475,6 +496,13 @@ export class AgentComponent implements OnInit {
       // console.log('SubmitForm obj : ', JSON.stringify(obj));
       localStorage.removeItem('callReference');
       sessionStorage.removeItem('highPriporityAccount');
+      sessionStorage.removeItem('localPCN');
+      sessionStorage.removeItem('lastPCN');
+
+      if (this.Is_New_Line == true) {
+        this.submitAddNewLine(obj);
+        return true;
+      }
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -671,6 +699,9 @@ export class AgentComponent implements OnInit {
         localStorage.removeItem('callReference');
 
       }
+      // remove PCN local info
+      // sessionStorage.removeItem('localPCN');
+      // sessionStorage.removeItem('lastPCN');
       this.analyticsService.logEvent(bucket.Name + ' Click').subscribe((response) => {
         console.log('logEvent : ', response);
       }, (error) => {
@@ -678,7 +709,7 @@ export class AgentComponent implements OnInit {
       });
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
-      this.ActiveBucket = bucket;
+      this.ActiveBucket = bucket.Name;
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
@@ -729,9 +760,12 @@ export class AgentComponent implements OnInit {
   }
 
   GetAllFields(bucket, obj, fromPopup) {
-    console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    this.Is_New_Line = false;
+    // console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
-    console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     var oldinvenid = this.InventoryId;
     var oldinvenlogid = this.InventoryLogId;
     if (fromPopup === true) {
@@ -954,10 +988,11 @@ export class AgentComponent implements OnInit {
 
   ManageNullFields() {
     this.AllFields.forEach(e => {
+      console.log('label value ', e.FieldValue, e.Display_Name)
       if (e.Display_Name.indexOf('Payer') != -1) {
         this.CurrentPayerName = e.FieldValue;
       }
-      if (e.Is_Standard_Field) {
+      if (e.Is_Standard_Field == true) {
         switch (e.Column_Datatype) {
           case "Text":
             // if (e.FieldValue == null) {
@@ -968,10 +1003,14 @@ export class AgentComponent implements OnInit {
             }
             break;
           case "Date":
-            if (e.FieldValue != null) {
-              var d = new Date(e.FieldValue);
-              e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
-            }
+            // if (e.FieldValue != null) {
+            //   var d = new Date(e.FieldValue);
+            //   e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
+            // }
+            // else {
+            // var d = new Date(e.FieldValue).toISOString();
+            // }
+            e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
             // else {
             //   e.FieldValue = "NA"
             // }
@@ -1245,8 +1284,9 @@ export class AgentComponent implements OnInit {
     this.closeHighPriorityAccountModal(null);
   }
 
-  openCallReferenceInfo() {
+  openCallReferenceInfo(field) {
     console.log('openCallReferenceInfo() : ', this.showCallReferenceInfo);
+    this.CallReference_No = field.FieldValue;
     this.showCallReferenceInfo = true;
   }
   hideCallReferenceInfo() {
@@ -1254,6 +1294,111 @@ export class AgentComponent implements OnInit {
     this.showCallReferenceInfo = false;
   }
   openLinkForCall() {
-    window.open('https://ap11.pulsework360.com/', '_blank');
+    window.open('https://ap2.pulsework360.com/', '_blank');
+  }
+
+  addNewLine() {
+    console.log('addNewLine() : ', this.AllFields);
+    this.Is_New_Line = true;
+    console.log('add New line : ', this.ClientId, this.InventoryId, this.InventoryLogId, this.ActiveBucket);
+    this.agentservice.addNewLine(this.ClientId, this.InventoryId, this.InventoryLogId, this.ActiveBucket).subscribe((response) => {
+      console.log('addNewLine response : ', response);
+      this.AllFields = response.Data;
+      this.setFieldsEditable();
+      response.Message[0] = { Message: "Add New Line.", Type: "SUCCESS" }
+      this.ResponseHelper.GetSuccessResponse(response)
+    }, (error) => {
+      console.log('error : ', error);
+      // this.notificationservice.
+      this.Is_New_Line = false;
+      this.ResponseHelper.GetFaliureResponse(error);
+    });
+  }
+  setFieldsEditable() {
+    this.AllFields.forEach(field => {
+      if (field.Is_Standard_Field == true)
+        field.editableInput = true;
+    });
+    this.ManageNullFields();
+  }
+
+  submitAddNewLine(body) {
+    // this.Is_New_Line=
+    console.log('submitAddNewLine : ', JSON.stringify(body));
+    this.agentservice.submitAddNewLine(body).subscribe((response) => {
+      console.log('response : ', response)
+      this.GetBucketsWithCount();
+      this.DisableSubmit = false;
+      this.ClearForm();
+      // this.MarkLocalAccountComplete();
+      this.AssignNextInventory();
+      if (this.ActiveBucket.indexOf('Appeal') != -1) {
+        this.ClearPdfStorage();
+      }
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('error : ', error);
+      this.DisableSubmit = false;
+      this.ResponseHelper.GetFaliureResponse(error);
+    })
+  }
+  dateTimeChange(event, field) {
+    console.log('dateTimeChange : ', event, field);
+  }
+
+  openAddPCNModal() {
+    this.inventoryDetails = {}
+    this.inventoryDetails['Client_Id'] = this.ClientId;
+    this.inventoryDetails['Inventory_Id'] = this.InventoryId;
+    this.inventoryDetails['Inventory_Log_Id'] = this.InventoryLogId;
+    // this.inventoryDetails['Notes'] = this.ActionForm.controls['Notes'].value;
+    // console.log('Before this.AllFields : ', this.AllFields);
+    this.AllFields.forEach(e => {
+      // console.log('loop ele : ', e.Header_Name, e);
+      if (e.Column_Datatype == 'Date') {
+        this.inventoryDetails[e.Display_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+      }
+      else {
+        this.inventoryDetails[e.Display_Name] = e.FieldValue;
+      }
+    });
+    console.log('openAddPCNModal objs :', this.inventoryDetails)
+    this.showAddPCNModal = true;
+  }
+  closeAddPCNModal() {
+    console.log('showAddPCNModal :', this.showAddPCNModal);
+    this.showAddPCNModal = false;
+    var lastPCN: any = sessionStorage.getItem('lastPCN');
+    lastPCN = lastPCN ? JSON.parse(lastPCN) : {}
+    console.log('lastPCN : ', lastPCN);
+    this.setActionFormFields(lastPCN);
+    // this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    // this.OnStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ "SubStatus": lastPCN.Sub_Status });
+    // this.OnSubStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+  }
+
+  setActionFormFields(lastPCN) {
+    // Set Status
+    this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    // SET Sub_Status
+    const subStatusList = this.SaagLookup.filter((saag) => {
+      if (saag.Status == lastPCN.Status) {
+        return saag.Sub_Status;
+      }
+    });
+    this.SubStatus = _.map(subStatusList, 'Sub_Status');
+    this.ActionForm.patchValue({ SubStatus: lastPCN.Sub_Status });
+    // SET Action_Code
+    const actionCodeList = this.SaagLookup.filter((saag) => {
+      if (saag.Sub_Status == lastPCN.Sub_Status) {
+        return saag.Action_Code;
+      }
+    });
+    this.ActionCode = _.map(actionCodeList, 'Action_Code');
+    this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+    // console.log('setActionFormFields : ', this.ActionForm.value, this.SubStatus, this.ActionCode);
   }
 }
+// };

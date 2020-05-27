@@ -58,6 +58,6 @@ export class CountModelComponent implements OnInit {
       
       exportData.push(obj);  
     })
-    this.excelService.exportAsExcelFile(exportData, 'Clien_INstruction_Data')
+    this.excelService.exportAsExcelFile(exportData, 'Clien_INstruction_Data');
   }
 }

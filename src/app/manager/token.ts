@@ -15,8 +15,8 @@ export class Token {
             this.router.navigate(['/login']);
         }
     }
-    private LoginTokenKey = "access_token";
-    private TokenValue: string = null;
+    public LoginTokenKey = "access_token";
+    public TokenValue: string = null;
     public UserId: number = 0;
     public Full_Name: string = null;
     public Role: string = null;
@@ -37,7 +37,7 @@ export class Token {
     GetUserData() {
 
         let data = jwt_decode(sessionStorage.getItem(this.LoginTokenKey));
-        console.log('getUser : ', data);
+        // console.log('getUser : ', data);
         this.TokenValue = sessionStorage.getItem(this.LoginTokenKey);
         this.Full_Name = data.Full_Name;
         this.UserId = data.User_Id;

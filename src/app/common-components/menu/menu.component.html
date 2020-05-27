@@ -296,7 +296,7 @@
                 </div>
               </div>
 
-              <div *ngIf="checkMenu('concluder-report') || checkMenu('deallocate-concluder') || checkMenu('concluder')" class="panel panel-default">
+              <!-- <div *ngIf="checkMenu('concluder-report') || checkMenu('concluder-report')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">
                   <h4 class="acc-title">
                     <a [ngClass]="[MenuName == '/concluder-report' || MenuName=='/deallocate-concluder' || MenuName == '/concluder' ? '' : 'collapsed']"
@@ -324,15 +324,14 @@
                           Concluder</a>
                       </li>
                       <li *ngIf="checkMenu('deallocate-concluder')"><a (click)="OpenMenu('deallocate-concluder')"
-                          [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
-                          De-Allocate Concluder</a>
-                      </li>
-
+                        [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
+                        De-Allocate Concluder</a>
+                    </li>
+                     
                     </ul>
                   </div>
                 </div>
-              </div>
-
+              </div> -->
 
               <div *ngIf="checkMenu('client-instruction-report') || checkMenu('client-dashboard-report')"
                 class="panel panel-default">

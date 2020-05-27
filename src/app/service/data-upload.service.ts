@@ -17,8 +17,12 @@ export class DataUploadService {
     return this.http.post(environment.FileApiUrl + '/api/inventory-data-upload', dataobj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  downloadInventoryTemplate(id){
-  //  api/inventory-data-upload-download-template/client/{id}
-    return this.http.get(environment.ApiUrl +'/api/inventory-data-upload-download-template/client/'+id , { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) })
+  downloadInventoryTemplate(id) {
+    //  api/inventory-data-upload-download-template/client/{id}
+    return this.http.get(environment.ApiUrl + '/api/inventory-data-upload-download-template/client/' + id,
+      {
+        headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() })
+      }
+    )
   }
 }

@@ -167,8 +167,8 @@ export class DataUploadComponent implements OnInit {
     }, err => {
       this.ResponseHelper.GetFaliureResponse(err)
     })
-
   }
+  
   openModal(event) {
     console.log('OpenByAgent : ', this.dataUpload.value);
   }

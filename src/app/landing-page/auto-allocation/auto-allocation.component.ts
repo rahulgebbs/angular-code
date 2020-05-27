@@ -146,6 +146,7 @@ export class AutoAllocationComponent implements OnInit {
         case "Public To Call":
         case "Private To Call":
         case "Special Queue":
+        case "Manual Queue":
         case "TL Deny":
           e.Bucket = e.Queue_Name;
           break;

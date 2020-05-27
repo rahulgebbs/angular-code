@@ -1,5 +1,33 @@
+<!-- <h1>timeout : {{timedOut}}</h1> -->
 <router-outlet (activate)="ChangeRouteName($event)"></router-outlet>
-<app-menu (Toggle)="ToggleMenu($event)" [MenuName]="MenuName" [DisplayMenu]="DisplayMenu" *ngIf="ShowElement && DisplayMenu"></app-menu>
+<app-menu (Toggle)="ToggleMenu($event)" [MenuName]="MenuName" [DisplayMenu]="DisplayMenu"
+    *ngIf="ShowElement && DisplayMenu"></app-menu>
 <app-footer [DisplayMenu]="DisplayMenu" (Toggle)="ToggleMenuFromFooter($event)" *ngIf="ShowElement"></app-footer>
 
 <app-notification></app-notification>
+
+<!-- <div> -->
+<div *ngIf="showTimeoutModal==true">
+    <div class="popup-bg">
+    </div>
+
+    <div class="popup-position container">
+        <div class="white fade mystats in">
+            <div class="row">
+                <div class="col-md-11 popup-header">
+                    <p>
+                        Session Timeout {{timedOut}}
+                    </p>
+                    <!-- <h3>Session Timeout {{timedOut}}</h3> -->
+                </div>
+                <div class="col-md-1 popup-header closeIcon">
+                    <i class="fa fa-close" (click)="stay()"></i>
+                    <!-- <h3>Session Timeout {{timedOut}}</h3> -->
+                </div>
+                <div class="col-md-12">
+                    <h3>You will be logged out in : {{idleState}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

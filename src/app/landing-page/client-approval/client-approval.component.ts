@@ -63,21 +63,7 @@ export class ClientApprovalComponent implements OnInit {
     //  this.GetClientList();
   }
 
-  // GetClientList() {
-  //   this.commonservice.GetClientList(this.UserId).subscribe(
-  //     data => {
 
-  //       this.ClientList = data.json().Data;
-  //       if (this.ClientList.length == 1) {
-  //         this.ClientId = this.ClientList[0].Id;
-  //       }
-  //     },
-  //     err => {
-  //       this.ResponseHelper.GetFaliureResponse(err)
-  //     }
-  //   )
-
-  // }
 
   BlockInput(event) {
     if (event.key == 'Backspace' || event.key == 'Tab') {

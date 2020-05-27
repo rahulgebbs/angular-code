@@ -33,3 +33,7 @@
 html{
   overflow-x: hidden !important;
 }
+
+.cdk-overlay-container{
+  z-index: 99999999999;
+}

@@ -28,13 +28,14 @@
   height: auto;
   background: white;
   margin: auto;
-  width: 100%;
+  width: 50%;
   position: fixed;
   /* -webkit-transform: translate(0, 50%); */
   z-index: 1000;
   left: 0px;
   right: 0;
-  bottom: 43px;
+  top: 15%;
+  // bottom: 43px;
 }
 .grey {
   background: #ddd;
@@ -79,9 +80,9 @@
 }
 
 #infoContainer {
-  border: 1px solid;
+  // border: 1px solid;
   padding: 3rem;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   .heading {
     border-bottom: 1px solid;
     padding-bottom: 1rem;

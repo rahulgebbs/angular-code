@@ -37,7 +37,7 @@ export class AccountsModalComponent implements OnInit {
     }
     this.PayerName = this.AccountsList[0].Group_By_Field_Header;
     console.log('this.PayerName : ', this.PayerName, this.AccountsList);
-    this.AccountsList.forEach((e )=> {
+    this.AccountsList.forEach((e) => {
       if (!e.Completion_Date) {
         e.Completion_Date = "NULL";
       }
@@ -130,6 +130,8 @@ export class AccountsModalComponent implements OnInit {
   GetFieldsFromAccount(bucketname, inventoryid) {
     if (this.WorkingAccountId != inventoryid) {
       this.WorkingAccountId = inventoryid;
+      sessionStorage.removeItem('localPCN');
+      sessionStorage.removeItem('lastPCN');
       this.GetAllFields.emit({ Bucket_Name: bucketname, Inventory_Id: inventoryid });
     }
     else {

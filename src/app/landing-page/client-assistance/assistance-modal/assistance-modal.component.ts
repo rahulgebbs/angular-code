@@ -5,7 +5,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { ClientAssistanceService } from 'src/app/service/client-assistance.service';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { finalize } from 'rxjs/operators';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-assistance-modal',
@@ -19,6 +19,8 @@ export class AssistanceModalComponent implements OnInit {
   @Input() Inventories;
   @Input() TLAction;
   @Output() ClosePopup = new EventEmitter<any>();
+  Start_Time = null;
+  End_Time = null;
 
   File;
   FileName;
@@ -52,6 +54,8 @@ export class AssistanceModalComponent implements OnInit {
   constructor(private standardCommentService: StandardCommentService, private notification: NotificationService, private service: ClientAssistanceService, private saagservice: SaagService) { }
 
   ngOnInit() {
+    // this.Start_Time = new Date().toISOString();
+    this.Start_Time = moment().utcOffset(0, true).format();
     this.ResponseHelper = new ResponseHelper(this.notification)
 
     this.Inventories.forEach(e => {
@@ -111,7 +115,7 @@ export class AssistanceModalComponent implements OnInit {
       e.IsChecked = false;
 
       if (this.TLAction == 'Done') {
-        e.FileName = 'Upload File';
+        e.FileName = '';
       }
       else {
         if (refFileName != '') {
@@ -141,7 +145,7 @@ export class AssistanceModalComponent implements OnInit {
       // e.Reference_File_Name = refFileName;
       e.IsSAAGEditable = false;
     });
-
+    console.log('this.Inventories : ', this.Inventories);
     this.GetStandardComments();
     this.GetSaagLookup();
     this.GetCloseSAAG();
@@ -387,7 +391,7 @@ export class AssistanceModalComponent implements OnInit {
       this.ConvertToBase64(i);
     }
     else {
-      this.Inventories[i].FileName = 'Upload File';
+      this.Inventories[i].FileName = '';
       this.File = null;
       this.FileBase64 = '';
     }
@@ -406,6 +410,8 @@ export class AssistanceModalComponent implements OnInit {
   Submit() {
     this.Invalid = false;
     this.Inventories.forEach(e => {
+      // e.Start_Time = this.Start_Time;
+      // e.End_Time = this.End_Time;
       if (e.IsChecked) {
         if (e.Action == '' || e.Standard_Comments == '') {
           this.Invalid = true;
@@ -419,25 +425,38 @@ export class AssistanceModalComponent implements OnInit {
       this.Inventories.forEach(e => {
         if (e.IsChecked === true) {
           response.push(
-            { Client_Id: this.Client_Id, Inventory_Log_Id: e.Inventory_Log_Id, Action: e.Action, Standard_Comments: e.Standard_Comments, Comments: e.Comments, File: e.File, FileName: e.FileName, Status: e.Status, Sub_Status: e.Sub_Status, Action_Code: e.Action_Code }
+            {
+              Client_Id: this.Client_Id,
+              Inventory_Log_Id: e.Inventory_Log_Id,
+              Action: e.Action,
+              Standard_Comments: e.Standard_Comments,
+              Comments: e.Comments,
+              File: e.File ? e.File : '',
+              FileName: e.FileName,
+              Status: e.Status,
+              Sub_Status: e.Sub_Status,
+              Action_Code: e.Action_Code,
+              Start_Time: this.Start_Time
+              //,End_Time: null
+            }
           )
         }
       });
       var obj = new Object();
       obj['request_info'] = response;
-      // console.log(obj);
-      this.DisableSubmit = true;
-      this.service.SaveInventories(obj).pipe(finalize(() => {
-        this.DisableSubmit = false;
-      })).subscribe(
-        res => {
-          this.ResponseHelper.GetSuccessResponse(res);
-          this.ClosePopup.emit(true);
-        },
-        err => {
-          this.ResponseHelper.GetFaliureResponse(err);
-        }
-      );
+      console.log(obj);
+      // this.DisableSubmit = true;
+      // this.service.SaveInventories(obj).pipe(finalize(() => {
+      //   this.DisableSubmit = false;
+      // })).subscribe(
+      //   res => {
+      //     this.ResponseHelper.GetSuccessResponse(res);
+      //     this.ClosePopup.emit(true);
+      //   },
+      //   err => {
+      //     this.ResponseHelper.GetFaliureResponse(err);
+      //   }
+      // );
     }
   }
 

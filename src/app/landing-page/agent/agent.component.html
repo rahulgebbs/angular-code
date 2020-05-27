@@ -126,28 +126,35 @@
         </div>
         <div class="col-md-12 p-0 auto-scroll-section" style="height: 100%">
           <form style="margin-bottom: 10rem;">
-            <ng-container *ngFor="let f of AllFields">
+            <ng-container *ngFor="let f of AllFields;let i =index">
               <div class="form-group mh-15 "
                 [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
                 *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
                 <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
-                <span [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
-                  <label for="f.Id" class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
+                <span *ngIf="f.editableInput==null || f.editableInput==false"
+                  [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
+                  <label *ngIf="f.Column_Datatype!='Date'" for="f.Id"
+                    class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
+                  <label *ngIf="f.Column_Datatype=='Date'" for="f.Id" class="control-label w-80 label-s text-color">
+                    {{f.FieldValue | date:'MM/dd/yyyy'}}</label>
                   <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
                     title="Insurance Master" (click)="ToggleInsuranceMaster()">
                     <i class="fa fa-book ft-22" aria-hidden="true"></i>
                   </span>
                   <!-- show icon for CallReference_No -->
                   <span *ngIf="f.Display_Name.indexOf('CallReference_No') != -1" class="text-right payor-label-ins"
-                    title="Call Reference Info" (click)="openCallReferenceInfo()">
+                    title="Call Reference Info" (click)="openCallReferenceInfo(f)">
                     <i class="fa fa-phone ft-22" aria-hidden="true"></i>
                   </span>
                 </span>
-
-
-
-
-                <!-- CallReference_No -->
+                <input *ngIf="f.editableInput==true && f.Column_Datatype=='Text'" name="{{f.Display_Name}}" type="text"
+                  class="form-control" [(ngModel)]="f.FieldValue">
+                <div class='' *ngIf="f.editableInput==true && f.Column_Datatype=='Date'">
+                  <input autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                    class="form-control" [(ngModel)]="f.FieldValue" [type]="'text'" [name]="'field'+i" [id]="'field'+i"
+                    [owlDateTime]="dt" [owlDateTimeTrigger]="dt" (change)="dateTimeChange($event,field)">
+                  <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                </div>
 
               </div>
             </ng-container>
@@ -409,23 +416,33 @@
                   <span class="pull-right text-right cursor" (click)="ToggleNotesGenerator(false)">
                     <i class="mr-5 fa fa-sticky-note-o" aria-hidden="true"></i>Notes Generator</span>
                 </label>
-                <textarea formControlName="Notes" rows="8" class="form-control textarea-resize"
+                <textarea formControlName="Notes" rows="6" class="form-control textarea-resize"
                   placeholder="Write Notes.."></textarea>
                 <div class="error" *ngIf="ActionForm.get('Notes').hasError('required') && Validated">
                   Notes is required
                 </div>
               </div>
               <div class="form-group mh-15">
-                <div class="col-md-12 text-center p-0">
+                <div class="col-md-12 text-center p-0 btnContainer">
                   <!-- data-toggle="modal" data-target=".skip-ac" -->
                   <div class="callImage">
-                    <img (click)="openLinkForCall()" src="assets/images/call_icon.png" alt="">
+                    <img (click)="openLinkForCall()" src="assets/images/call_icon.png" title="Web Calling">
                     <p class="callText">Web Calling</p>
                   </div>
-                  <button style="margin-top: 1rem;" type="submit" [disabled]="DisableSubmit"
+                  <button title="Submit" style="margin-top: 1rem;" type="submit" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
-                  <button style="margin-top: 1rem;" type="button" (click)="ClearForm()" [disabled]="DisableSubmit"
-                    class="btn blue square-btn blue-hover btn-txt">Clear</button>
+                  <button title="Cancel" style="margin-top: 1rem;" type="button" (click)="ClearForm()"
+                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-10">Clear</button>
+                  <button title="Add New Line" style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button"
+                    (click)="addNewLine()" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt mr-10"><i class="fa fa-plus"></i>
+                    New Line </button>
+                  <button title="Add PCN" style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button"
+                    (click)="openAddPCNModal()" [disabled]="DisableSubmit"
+                    class="btn blue square-btn blue-hover btn-txt">
+                    <i class="fa fa-plus"></i> PCN
+                  </button>
+                  <!-- openAddPCNModal() -->
                 </div>
               </div>
             </div>
@@ -483,12 +500,12 @@
   (Toggle)="ToggleMyStatModal($event)"></app-mystats>
 
 <!-- High Priority Accounts Popup -->
-<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId" (close)="closeHighPriorityAccountModal($event)"
-  (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
+<app-inventory-high-priority *ngIf="showHighPriorityAccounts==true" [old_Inventory_Log_Id]="InventoryLogId"
+  (close)="closeHighPriorityAccountModal($event)" (allFields)="highPriorityLog($event)"></app-inventory-high-priority>
 
 <!-- Call Reference Accounts -->
-<app-call-reference [Old_Inventory_Log_Id]="InventoryLogId" *ngIf="callreferenceAcccounts==true" (close)="closeCallReferenceModal($event)"
-  (allFields)="callreferenceLog($event)"></app-call-reference>
+<app-call-reference [Old_Inventory_Log_Id]="InventoryLogId" *ngIf="callreferenceAcccounts==true"
+  (close)="closeCallReferenceModal($event)" (allFields)="callreferenceLog($event)"></app-call-reference>
 
 <!-- Insurance master popup -->
 
@@ -512,5 +529,9 @@
   [HistoryData]="CommentHistory">
 </app-comment-history-modal>
 
-<app-call-reference-info *ngIf="showCallReferenceInfo==true" (close)="hideCallReferenceInfo()">
+<app-call-reference-info [CallReference_No]="CallReference_No" *ngIf="showCallReferenceInfo==true"
+  (close)="hideCallReferenceInfo()">
 </app-call-reference-info>
+
+<app-add-pcn-modal [inventory]="inventoryDetails" [SaagLookup]="SaagLookup" *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
+</app-add-pcn-modal>

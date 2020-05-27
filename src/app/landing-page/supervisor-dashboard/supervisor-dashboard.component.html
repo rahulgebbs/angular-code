@@ -139,6 +139,7 @@
                         <th class="dark " colspan="2" width="250">Call Banks</th>
                         <th class="dark " colspan="2" width="250">closed</th>
                         <th class="dark " rowspan="2" width="250">Special Queue</th>
+                        <th class="dark " rowspan="2" width="250">Manual Queue</th>
                         <th class="dark " rowspan="2" width="250">Public To call</th>
                         <th class="dark " rowspan="2" width="250">Private To Call</th>
                         <th class="dark " rowspan="2" width="250" style="width:450px !important;">Appeal Follow Up</th>
@@ -194,6 +195,7 @@
                         <td>{{OpeningARdollars?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
 
                         <td class="borderright floor ">{{OpeningARdollars?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{OpeningARdollars?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{OpeningARdollars?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{OpeningARdollars?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{OpeningARdollars?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
@@ -226,6 +228,8 @@
                         <td class="floright">{{OpeningARcount?.Closed_Voice}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Closed_NonVoice}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Special_Queue}}</td>
+                        <td class="borderright floor ">{{OpeningARcount?.Manual_Queue}}</td>
+                        
                         <td class="borderright floor ">{{OpeningARcount?.Public_To_Call}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Appeal_Follow_Up}}</td>
@@ -257,6 +261,8 @@
                         <td class="floright">{{Influx$$?.Closed_Voice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Influx$$?.Closed_NonVoice| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Influx$$?.Special_Queue| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor ">{{Influx$$?.Manual_Queue| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+
                         <td class="borderright floor ">{{Influx$$?.Public_To_Call| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Influx$$?.Private_To_Call| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Influx$$?.Appeal_Follow_Up| currency : 'USD' : 'symbol' : '1.0-0'}}</td>
@@ -286,6 +292,7 @@
                         <td class="floright">{{Influxhash?.Closed_Voice}}</td>
                         <td class="borderright floor">{{Influxhash?.Closed_NonVoice}}</td>
                         <td class="borderright floor">{{Influxhash?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Influxhash?.Manual_Queue}}</td>
                         <td class="borderright floor">{{Influxhash?.Public_To_Call}}</td>
                         <td class="borderright floor">{{Influxhash?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{Influxhash?.Appeal_Follow_Up}}</td>
@@ -316,6 +323,7 @@
                         <td class="floright">{{PendingARdollars?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{PendingARdollars?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{PendingARdollars?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{PendingARdollars?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{PendingARdollars?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{PendingARdollars?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{PendingARdollars?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
@@ -345,7 +353,9 @@
                         <td class="borderright floor">{{PendingARcount?.Call_Backs_NonVoice}}</td>
                         <td class="floright">{{PendingARcount?.Closed_Voice}}</td>
                         <td class="borderright floor">{{PendingARcount?.Closed_NonVoice}}</td>
+                        <td class="borderright floor">{{PendingARcount?.denialInput}}</td>
                         <td class="borderright floor">{{PendingARcount?.Special_Queue}}</td>
+                        <td class="borderright floor">{{PendingARcount?.Manual_Queue}}</td>
                         <td class="borderright floor">{{PendingARcount?.Public_To_Call}}</td>
                         <td class="borderright floor">{{PendingARcount?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{PendingARcount?.Appeal_Follow_Up}}</td>
@@ -377,6 +387,7 @@
                         <td class="floright">{{Productivity_Target?.Closed_Voice}}</td>
                         <td class="borderright floor">{{Productivity_Target?.Closed_NonVoice}}</td>
                         <td class="borderright floor">{{Productivity_Target?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Productivity_Target?.Manual_Queue}}</td>
                         <td class="borderright floor">{{Productivity_Target?.Public_To_Call}}</td>
                         <td class="borderright floor">{{Productivity_Target?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{Productivity_Target?.Appeal_Follow_Up}}</td>
@@ -456,6 +467,11 @@
                                 {{Allocated_Count?.Special_Queue}}</div>
                             
                         </td>
+                        <td class="dark-text borderright floor">
+                                <div class="t-n" (click)="function(14)">
+                                    {{Allocated_Count?.Manual_Queue}}</div>
+                                
+                            </td>
                         <td class="dark-text borderright floor">
                             <div class="t-n" (click)="function(13)">
                                 {{Allocated_Count?.Public_To_Call}}</div>
@@ -537,6 +553,7 @@
                         <td class="floright">{{Allocated_$_Value?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Allocated_$_Value?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Allocated_$_Value?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Allocated_$_Value?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Allocated_$_Value?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Allocated_$_Value?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Allocated_$_Value?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
@@ -568,6 +585,7 @@
                         <td class="floright">{{Staff_Allocated?.Closed_Voice}}</td>
                         <td class="borderright floor">{{Staff_Allocated?.Closed_NonVoice}}</td>
                         <td class="borderright floor">{{Staff_Allocated?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Staff_Allocated?.Manual_Queue}}</td>
                         <td class="borderright floor">{{Staff_Allocated?.Public_To_Call}}</td>
                         <td class="borderright floor">{{Staff_Allocated?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{Staff_Allocated?.Appeal_Follow_Up}}</td>
@@ -601,6 +619,7 @@
                         <td class="floright">{{Agents_Required?.Closed_Voice}}</td>
                         <td class="borderright floor">{{Agents_Required?.Closed_NonVoice}}</td>
                         <td class="borderright floor">{{Agents_Required?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Agents_Required?.Manual_Queue}}</td>
                         <td class="borderright floor">{{Agents_Required?.Public_To_Call}}</td>
                         <td class="borderright floor">{{Agents_Required?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{Agents_Required?.Appeal_Follow_Up}}</td>
@@ -636,6 +655,7 @@
                         <td class="shortfall floright">{{Shortfall?.Closed_Voice}}</td>
                         <td class="shortfall borderright floor">{{Shortfall?.Closed_NonVoice}}</td>
                         <td class="shortfall borderright floor">{{Shortfall?.Special_Queue}}</td>
+                        <td class="shortfall borderright floor">{{Shortfall?.Manual_Queue}}</td>
                         <td class="shortfall borderright floor">{{Shortfall?.Public_To_Call}}</td>
                         <td class="shortfall borderright floor">{{Shortfall?.Private_To_Call}}</td>
                         <td class="shortfall borderright floor">{{Shortfall?.Appeal_Follow_Up}}</td>
@@ -670,6 +690,7 @@
                         <td class="floright">{{Completed_Accounts?.Closed_Voice}}</td>
                         <td class="borderright floor">{{Completed_Accounts?.Closed_NonVoice}}</td>
                         <td class="borderright floor">{{Completed_Accounts?.Special_Queue}}</td>
+                        <td class="borderright floor">{{Completed_Accounts?.Manual_Queue}}</td>
                         <td class="borderright floor">{{Completed_Accounts?.Public_To_Call}}</td>
                         <td class="borderright floor">{{Completed_Accounts?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{Completed_Accounts?.Appeal_Follow_Up}}
@@ -702,6 +723,7 @@
                         <td class="floright">{{Dollar_Addressed?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Dollar_Addressed?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Dollar_Addressed?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Dollar_Addressed?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Dollar_Addressed?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Dollar_Addressed?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Dollar_Addressed?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
@@ -728,6 +750,7 @@
                         <td class="floright">{{poca?.Closed_Voice}}%</td>
                         <td class="borderright floor">{{poca?.Closed_NonVoice}}%</td>
                         <td class="borderright floor">{{poca?.Special_Queue}}%</td>
+                        <td class="borderright floor">{{poca?.Manual_Queue}}%</td>
                         <td class="borderright floor">{{poca?.Public_To_Call}}%</td>
                         <td class="borderright floor">{{poca?.Private_To_Call}}%</td>
                         <td class="borderright floor ">{{poca?.Appeal_Follow_Up}}%</td>
@@ -756,6 +779,7 @@
                         <td class="floright">{{poda?.Closed_Voice}}%</td>
                         <td class="borderright floor">{{poda?.Closed_NonVoice}}%</td>
                         <td class="borderright floor">{{poda?.Special_Queue}}%</td>
+                        <td class="borderright floor">{{poda?.Manual_Queue}}%</td>
                         <td class="borderright floor">{{poda?.Public_To_Call}}%</td>
                         <td class="borderright floor">{{poda?.Private_To_Call}}%</td>
                         <td class="borderright floor ">{{poda?.Appeal_Follow_Up}}%</td>
@@ -785,6 +809,7 @@
                         <td class="floright">{{Next_Account?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Next_Account?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Next_Account?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
+                        <td class="borderright floor">{{Next_Account?.Manual_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Next_Account?.Public_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor">{{Next_Account?.Private_To_Call | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">{{Next_Account?.Appeal_Follow_Up | currency : 'USD' : 'symbol' : '1.0-0'}}</td>

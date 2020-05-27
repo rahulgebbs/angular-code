@@ -140,8 +140,15 @@ import { ConcluderReportComponent } from './concluder-report/concluder-report.co
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
 // import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
-import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
+import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
+import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
+import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment';
+
+import { ClipboardModule } from 'ngx-clipboard';
+import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
 
 @NgModule({
   declarations: [
@@ -270,7 +277,11 @@ import { AgentConcluderComponent } from './agent-concluder/agent-concluder.compo
 
     InventoryUploadComponent,
 
-    AgentConcluderComponent
+    PcnConfigurationComponent,
+
+    AddPcnConfigurationComponent,
+
+    AddPcnModalComponent
   ],
   imports: [
     BrowserModule,
@@ -282,7 +293,10 @@ import { AgentConcluderComponent } from './agent-concluder/agent-concluder.compo
     OwlDateTimeModule,
     BrowserAnimationsModule,
     OwlNativeDateTimeModule,
+    ClipboardModule,
     NgbModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
     AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -6,6 +6,13 @@
 }
 .input-group.date .input-group-addon {
   cursor: pointer;
+  color: #666;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  padding: 0px 8px;
+  font-size: 12px;
+  height: 25px;
+  border-radius: 0px;
 }
 .h-48 {
   height: 100%;
@@ -108,7 +115,7 @@ a.dropdown-toggle:active + .dropdown-menu {
 .floatingBtn {
   position: fixed;
   right: 2%;
-  bottom: 10%;
+  bottom: 7%;
   .userImage {
     width: 40px;
     cursor: pointer;
@@ -141,16 +148,25 @@ a.dropdown-toggle:active + .dropdown-menu {
   // align-items: center;
 }
 
+.btnContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .callImage {
-  max-height: 70px;
-  max-width: 70px;
-  margin-right: 2rem;
+  // max-height: 70px; 
+  /* max-width: 70px; */
+  // display: flex;
   cursor: pointer;
   display: inline-block;
-  margin-top: 0rem;
-  position: absolute;
-  left: 0;
-  top: 0;
+  margin-top: 1rem;
+  margin-right: 10px;
+  /* position: absolute; */
+  /* left: -2rem; */
+  /* top: 0; */
+  // align-items: center;
+  // justify-content: center;
   img {
     height: 30px;
     width: 30px;

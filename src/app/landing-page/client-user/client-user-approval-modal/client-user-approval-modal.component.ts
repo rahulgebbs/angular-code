@@ -4,7 +4,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { ClientUserApprovalService } from 'src/app/service/client-user-approval.service';
 import { UserManagementService } from 'src/app/service/user-management.service';
 import { finalize } from 'rxjs/operators';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-client-user-approval-modal',
   templateUrl: './client-user-approval-modal.component.html',
@@ -27,10 +27,12 @@ export class ClientUserApprovalModalComponent implements OnInit {
   AllChecked = false;
   DisableSubmit = true;
   ResponseHelper: ResponseHelper;
+  Start_Time = null;
   ActionList = [
     // { Key: "Pending", Value: "To Internal" },
     { Key: "To Gebbs", Value: "To Gebbs" },
     { Key: "Hold", Value: "Hold" },
+
     { Key: "Close", Value: "Close" },
     // { Key: "To Internal", Value: "To Internal" }
   ]
@@ -45,7 +47,7 @@ export class ClientUserApprovalModalComponent implements OnInit {
 
   ngOnInit() {
     this.ResponseHelper = new ResponseHelper(this.notification)
-
+    this.Start_Time = moment().utcOffset(0, true).format();
     this.Inventories.forEach(e => {
 
       var Inventory_Log_Id = 0;
@@ -101,7 +103,7 @@ export class ClientUserApprovalModalComponent implements OnInit {
       e.Repeat_Count = repeat_count;
 
       if (this.TLAction == 'Hold' || this.TLAction == 'To Internal') {
-        e.FileName = 'Upload File';
+        e.FileName = '';
       }
       else {
         if (refFileName != '') {
@@ -128,7 +130,6 @@ export class ClientUserApprovalModalComponent implements OnInit {
         e.Comments = '';
       }
     });
-
     this.GetUsersList();
   }
 
@@ -222,7 +223,7 @@ export class ClientUserApprovalModalComponent implements OnInit {
       this.ConvertToBase64(i);
     }
     else {
-      this.Inventories[i].FileName = 'Upload File';
+      this.Inventories[i].FileName = '';
       this.File = null;
       this.FileBase64 = '';
     }
@@ -259,9 +260,10 @@ export class ClientUserApprovalModalComponent implements OnInit {
               Action: e.Action,
               Standard_Comments: this.Standard_Comment,
               Comments: e.Comments,
-              File: e.File,
+              File: e.File ? e.File : '',
               FileName: e.FileName,
-              Assigned_To_Client_User: e.Client_User
+              Assigned_To_Client_User: e.Client_User,
+              Start_Time: this.Start_Time
               // Status: e.Status,
               // Sub_Status: e.Sub_Status,
               // Action_Code: e.Action_Code

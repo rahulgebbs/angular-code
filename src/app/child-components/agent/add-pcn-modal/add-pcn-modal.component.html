@@ -1,0 +1,175 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div>
+    <div class="col-md-12 p-0 grey">
+      <span class="col-md-10 col-sm-10 p-0">
+        <div class="heading-panel pl-10">
+          <span class="text-sm text-ellipsis heading-txt flex">Add PCN </span>
+        </div>
+      </span>
+      <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="col-md-12 p-0">
+      <div class=" mb-0 pb-0">
+        <div class="col-md-12 p-0 mt-10">
+          <!-- <button id="addItem"
+            [ngStyle]="{'cursor':disableBtn==true ? 'not-allowed':'pointer','opacity':disableBtn==true ? 0.5:1}"
+            [disabled]="disableBtn" (click)="addNewPCN()">Add PCN
+          </button> -->
+
+          <form [formGroup]="addPCNForm" *ngIf="addPCNForm.get('pcnList').controls as pcnList">
+            <div class="col-md-12">
+              <div class="keyItem" *ngFor="let key of keyList" (click)="copyText(inventory[key])">
+                <label for="">
+                  {{key}}
+                </label>
+                <br />
+                <h6 *ngIf="key!='Last_billed_date'" for="">{{inventory[key]}}</h6>
+                <h6 *ngIf="key=='Last_billed_date'"> {{inventory[key] | date:'MM/dd/y'}}</h6>
+              </div>
+            </div>
+            <div [ngStyle]="{'border-bottom':pcnList.length-1!=pcnIndex? '1px solid #cfcfcf':'none' }"
+              class="pcnList col-md-12" formArrayName="pcnList"
+              *ngFor="let pcnItem of addPCNForm.get('pcnList').controls; let pcnIndex = index;"
+              id="pcnList{{pcnIndex}}">
+              <h5 style="font-weight: bolder">#PCN{{pcnIndex+1}}
+                <button type="button" title="Add PCN" class="btn blue square-btn blue-hover btn-txt ml-5"
+                  (click)="addNewPCN()">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <button *ngIf="addPCNForm.get('pcnList').controls.length>1" type="button"
+                  title="Remove PCN{{pcnIndex+1}}" class="btn blue square-btn blue-hover btn-txt ml-5"
+                  (click)="removePCN(i)">
+                  <i class="fa fa-times"></i>
+                </button>
+              </h5>
+              <div [formGroupName]="pcnIndex" class="row">
+                <ng-container formArrayName="pcn"
+                  *ngFor="let item of pcnItem.get('pcn').controls; let pcnItemIndex = index;">
+                  <ng-container [formGroupName]="pcnItemIndex">
+                    <ng-container *ngIf="item.controls.FieldValue as fieldValueControl">
+                      <!-- show if Textbox -->
+                      <ng-container *ngIf="item.controls.Display_Header as displayHeaderCtrl">
+                        <!-- *ngIf="item.controls.FieldType.value=='Textbox' && displayHeaderCtrl.value!='Effectiveness'" -->
+                        <div *ngIf="item.controls.FieldType.value=='Textbox'" class="col-md-2 col-sm-6 col-xs-6">
+                          <div class="form-group">
+                            <label
+                              for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
+                            <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
+                              formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
+                              [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}"
+                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)">
+                            <label
+                              *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
+                              class="error" for="">
+                              <span *ngIf="fieldValueControl.errors.required==true">
+                                {{item.controls.Display_Header.value}} is required
+                              </span>
+                              <span *ngIf="fieldValueControl.errors.incorrect==true">
+                                {{item.controls.Display_Header.value}} Already Exists
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+
+                      </ng-container>
+
+
+                      <!-- show if Numeric -->
+                      <ng-container *ngIf="item.controls.Display_Header as displayHeaderCtrl">
+                        <div class="col-md-2 col-sm-6 col-xs-6"
+                          *ngIf="item.controls.FieldType.value=='Numeric' && displayHeaderCtrl.value!='InventoryId' && displayHeaderCtrl.value!='Inventory_Log_Id'">
+                          <div class="form-group">
+                            <label
+                              for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
+                            <input type="number" min="0" class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
+                              formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
+                              [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
+                            <label
+                              *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
+                              class="error" for="">
+                              <span *ngIf="fieldValueControl.errors.required==true">
+                                {{item.controls.Display_Header.value}} is required
+                              </span>
+                              <span *ngIf="fieldValueControl.errors.incorrect==true">
+                                {{item.controls.Display_Header.value}} Already Exists
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </ng-container>
+
+                      <!-- show if dropdown -->
+                      <div class="col-md-2 col-sm-6 col-xs-6" *ngIf="item.controls.FieldType.value=='Dropdown'">
+                        <div class="form-group">
+                          <label for="field{{pcnIndex}}{{pcnItemIndex}}">{{item.controls.Display_Header.value}}</label>
+                          <select class="form-control" name="field{{pcnIndex}}{{pcnItemIndex}}"
+                            id="field{{pcnIndex}}{{pcnItemIndex}}" formControlName="FieldValue"
+                            (change)="onSelect(item.controls.Display_Header.value,item.controls.FieldValue.value,pcnIndex)"
+                            [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
+                            <option [value]="null">Select {{item.controls.Display_Header.value}}</option>
+                            <option *ngFor="let option of item.controls.list.value" [value]="option">{{option}}
+                            </option>
+                          </select>
+                          <label
+                            *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
+                            class="error" for="">
+                            <span *ngIf="fieldValueControl.errors.required==true">
+                              {{item.controls.Display_Header.value}} is required
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <!-- show if date -->
+                      <div class="col-md-2 col-sm-6 col-xs-6" *ngIf="item.controls.FieldType.value=='Date'">
+                        <div class="form-group">
+                          <label for="field{{pcnIndex}}{{pcnItemIndex}}">
+                            {{item.controls.Display_Header.value}}
+                          </label>
+                          <input placeholder="{{item.controls.Display_Header.value}}" class="form-control"
+                            (dateTimeInput)="dateTimeChange($event,item.controls)" formControlName="FieldValue"
+                            autocomplete="off" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                            [owlDateTimeTrigger]="dt" name="field{{pcnIndex}}{{pcnItemIndex}}"
+                            id="field{{pcnIndex}}{{pcnItemIndex}}" [owlDateTime]="dt" backdropClass="myBackdropClass"
+                            panelClass="myPanelClass"
+                            [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}">
+                          <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                          <label
+                            *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
+                            class="error" for="">
+                            <span *ngIf="fieldValueControl.errors.required==true">
+                              {{item.controls.Display_Header.value}} is required
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+                <!-- end -->
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+        <div class="col-md-12 footerSection">
+          <div class="form-group col-md-offset-10 col-md-2">
+            <button type="button" class="btn blue square-btn blue-hover btn-txt mr-5" (click)="CloseModal()">
+              Close
+            </button>
+            <button type="button" (click)="savePCN()" class="btn blue square-btn blue-hover btn-txt"
+              [disabled]="disableBtn">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

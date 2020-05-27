@@ -3,7 +3,6 @@ import { Http, Headers } from '@angular/http';
 import { environment } from '../../../environments/environment';
 import 'rxjs/Rx';
 
-
 @Injectable({
   providedIn: 'root'
 })
