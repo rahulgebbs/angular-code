@@ -51,4 +51,11 @@ export class PcnService {
     });
     return this.http.get(environment.ApiUrl + `/api/Get_PCN_Agent_Fields?id=${Client_Id}&inventoryId=${inventoryId}&Inventory_Log_Id=${Inventory_Log_Id}`, { headers: headers }).map(res => res.json());
   }
+
+  checkIfPCNExist(Client_Id, PCN_Number, InventoryId, userId) {
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/Check_Is_PCN_No_Exist?id=${userId}&inventoryId=${InventoryId}&PCNNO=${PCN_Number}&ClientId=${Client_Id}`, { headers: headers }).map(res => res.json());
+  }
 }

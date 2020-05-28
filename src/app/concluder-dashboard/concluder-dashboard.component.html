@@ -1,0 +1,79 @@
+<app-header [title]="title"></app-header>
+
+<div class="col-md-12 col-sm-12 col-sm-12 p-0 box-heightSD">
+  <div class="col-md-12 pt-8">
+    <span class="col-md-12 pull-left pl-7">
+      <form [formGroup]="dashboard">
+        <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+        <span class="pull-left mr-10 pt-3 wt-15">
+          <select class="form-control" formControlName="ClientId" (change)="getClientName()">
+
+            <option [selected]="ClientList.length>1" disabled>Select</option>
+            <option *ngFor="let Client of ClientList" [value]="Client.Client_Id" [selected]="Client.selected">
+              {{Client.Client_Name}}
+            </option>
+
+          </select>
+        </span>
+        <span>
+          <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" data-toggle="modal"
+            data-target=".account-list" (click)="getResponseList()" [disabled]="!dashboard.valid">Search</button>
+
+        </span>
+      </form>
+    </span>
+  </div>
+  <div class="col-md-12 supervisor-dash-tbl">
+    <!-- <label class="error" *ngIf="nodata">There is no Data for Client :- {{ Client_Name}}</label> -->
+    <!-- <div class="" style="border:0px solid #ddd;"> -->
+
+    <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table" *ngIf="!nodata">
+      <table class="table" cellspacing="0" cellpadding="0">
+        <thead>
+          <!-- <tr class="bor">
+            <th class="hg-header dark heading-txt " colspan="25"> Weekly Execution Plan
+              Dashboard </th>
+          </tr> -->
+          <tr>
+            <!-- <th class="restbar" width="250">{{uploaddate}}</th> -->
+            <!-- <th class="restbar" width="250">Configuration</th> -->
+            <!-- <th class="restbar" colspan="2" width="250">{{payerwise}}</th> -->
+            <!-- <th class="restbar" colspan="2" width="250">Day - {{uploadInventory_date}} </th> -->
+            <th class="clientnames " colspan="7" width="250">Client Name : {{clientName || "N/A"}}
+            </th>
+            <!-- <th class="restbar" width="250"> IM Edits</th> -->
+            <!-- <th width="250" class="restbar" (click)="onImedit()" onmouseover="" style="cursor: pointer;">
+              {{IM_edits_count}}
+            </th> -->
+          </tr>
+          <tr class="border-t">
+            <ng-container *ngFor="let key of keyList">
+              <th class="dark" *ngIf="key!='Id'" rowspan="2" style="min-width: 150px"> {{key}}</th>
+            </ng-container>
+  
+          </tr>
+
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of dashboardData">
+            <tr class="t-bold">
+              <!-- <td class="borderright floor ">Opening AR_Dollars</td> -->
+              <ng-container *ngFor="let key of keyList">
+                <td *ngIf="key!='Id'"
+                  [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none'}"
+                  class="">{{data[key]}}</td>
+              </ng-container>
+            </tr>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- <app-supervisor-dashboard-modal *ngIf="DisplayModal" (Toggle)="ToggleModal()"
+    [AllocatedCountsData]="AllocatedCountsData">
+</app-supervisor-dashboard-modal>
+<app-imedit *ngIf="DisplayModalIm" (Toggle)="ToggleModal()" [IMdata]="IM_edits_data" [IMdates]="IMdates">
+</app-imedit> -->

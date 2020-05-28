@@ -1,4 +1,4 @@
-<div id="headerSection" *ngIf="showHeader==true" class="top-header white border-b">
+<div id="headerSection" [hidden]="showHeader==false" class="top-header white border-b">
   <span class="brand-logo">
     <img src="../../../assets/images/logo_156.png" class="logo-img">
   </span>

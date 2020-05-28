@@ -296,42 +296,39 @@
                 </div>
               </div>
 
-              <!-- <div *ngIf="checkMenu('concluder-report') || checkMenu('concluder-report')" class="panel panel-default">
+              <div *ngIf="checkMenu('concluder-dashboard')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">
                   <h4 class="acc-title">
-                    <a [ngClass]="[MenuName == '/concluder-report' || MenuName=='/deallocate-concluder' || MenuName == '/concluder' ? '' : 'collapsed']"
-                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
+                    <a [ngClass]="[MenuName == '/concluder-dashboard' ? '' : 'collapsed']" role="button"
+                      data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
                       aria-controls="collapseThree"
-                      [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName=='/deallocate-concluder' || MenuName == '/concluder' ? 'true' : 'false']">
+                      [attr.aria-expanded]="[MenuName == '/concluder-dashboard' ? 'true' : 'false']">
                       Concluder
                     </a>
                   </h4>
                 </div>
-                <div
-                  [attr.aria-expanded]="[MenuName == '/concluder-report' || MenuName == '/concluder' || MenuName=='/deallocate-concluder' ? 'true' : 'false']"
-                  id="collapseFileConcluder"
-                  [ngClass]="[MenuName == '/concluder-report' || MenuName == '/concluder' ? 'in' : '']"
+                <div [attr.aria-expanded]="[MenuName == '/concluder-dashboard' ? 'true' : 'false']"
+                  id="collapseFileConcluder" [ngClass]="[MenuName == '/concluder-dashboard' ? 'in' : '']"
                   class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
                   <div class="accordianbody">
                     <ul class="nav">
-
-                      <li *ngIf="checkMenu('concluder-report')"><a (click)="OpenMenu('concluder-report')"
-                          [ngClass]="[MenuName == '/concluder-report' ? 'menu-active1': '']">
-                          Concluder Report</a>
+                      <li *ngIf="checkMenu('concluder-dashboard')"><a (click)="OpenMenu('concluder-dashboard')"
+                          [ngClass]="[MenuName == '/concluder-dashboard' ? 'menu-active1': '']">
+                          Concluder Dashboard</a>
                       </li>
-                      <li *ngIf="checkMenu('concluder')"><a (click)="OpenMenu('concluder')"
+                      <!-- <li *ngIf="checkMenu('concluder')"><a (click)="OpenMenu('concluder')"
                           [ngClass]="[MenuName == '/concluder' ? 'menu-active1': '']">
                           Concluder</a>
                       </li>
                       <li *ngIf="checkMenu('deallocate-concluder')"><a (click)="OpenMenu('deallocate-concluder')"
-                        [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
-                        De-Allocate Concluder</a>
-                    </li>
-                     
+                          [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
+                          De-Allocate Concluder</a>
+                      </li> -->
+
                     </ul>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
               <div *ngIf="checkMenu('client-instruction-report') || checkMenu('client-dashboard-report')"
                 class="panel panel-default">

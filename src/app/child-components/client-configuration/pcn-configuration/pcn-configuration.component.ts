@@ -89,6 +89,7 @@ export class PcnConfigurationComponent implements OnInit {
     this.pcnService.getPCNList(this.ClientData.Id).subscribe((response: any) => {
       console.log('response : ', response.Data);
       this.rowData = response.Data;
+      this.ClientData.Is_PCN_Uploaded = true;
       this.setFormFields();
       this.ResponseHelper.GetSuccessResponse(response)
     }, (error) => {
@@ -151,6 +152,7 @@ export class PcnConfigurationComponent implements OnInit {
       console.log('response :', response)
       this.ResponseHelper.GetSuccessResponse(response);
       this.getPCNList();
+      this.ClientData.Is_PCN_Uploaded = true;
     }, (error) => {
       console.log('error :', error);
       this.ResponseHelper.GetFaliureResponse(error);

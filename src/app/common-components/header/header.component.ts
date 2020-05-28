@@ -45,21 +45,21 @@ export class HeaderComponent implements OnInit {
       this.showHeader = true;
     }
     // document.removeEventListener("keydown", function () { });
-    setTimeout(() => {
-      const self = this;
-      document.addEventListener('keydown', logKey);
-      function logKey(e) {
-        console.log('keydown : ', e.keyCode, self.showHeader);
-        if (e.keyCode == 27) {
-          if (self.showHeader == false) {
-            self.showHeader = true;
-            localStorage.removeItem('showHeader');
-            self.setExitMessage(false);
-          }
-        }
-        event.preventDefault()
-      }
-    }, 1000);
+    // setTimeout(() => {
+    // const self = this;
+    // document.addEventListener('keydown', logKey);
+    // function logKey(e) {
+    //   console.log('keydown : ', e.keyCode, self.showHeader);
+    //   if (e.keyCode == 27) {
+    //     if (self.showHeader == false) {
+    //       self.showHeader = true;
+    //       localStorage.removeItem('showHeader');
+    //       self.setExitMessage(false);
+    //     }
+    //   }
+    //   // event.preventDefault()
+    // }
+    // // }, 1000);
 
 
   }
@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
     this.setExitMessage(true);
     localStorage.setItem('showHeader', 'false');
     setTimeout(() => {
-      this.setExitMessage(false);
+      // this.setExitMessage(false);
     }, 2000);
   }
 
@@ -97,7 +97,7 @@ export class HeaderComponent implements OnInit {
             }
           });
         }
-        if (logId !=null && logId != 0) {
+        if (logId != null && logId != 0) {
           this.EndCurrentAccount(logId);
         }
         else {

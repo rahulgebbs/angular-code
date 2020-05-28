@@ -7,6 +7,10 @@ import { getPCNData, fixedPCNFields } from './getPCNData';
 import { ClipboardService } from 'ngx-clipboard'
 import { NotificationService } from 'src/app/service/notification.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
+import { Router } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
+import { Token } from 'src/app/manager/token';
+
 
 
 @Component({
@@ -28,8 +32,14 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   pcnInfo = [];
   submitBtnStatus = false;
   ResponseHelper: ResponseHelper;
-  PCN_IDs = []
-  constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService) { }
+  PCN_IDs = [];
+  UserData;
+  Token;
+
+  constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService, private route: Router) {
+    this.Token = new Token(this.route);
+    this.UserData = this.Token.GetUserData();
+  }
 
   ngOnInit() {
   }
@@ -91,21 +101,34 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     }
   }
 
+
   addNewPCN() {
     this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
+
+    this.fixedPCNFields.forEach((pcn: any) => {
+      switch (pcn.Column_Data_Type) {
+        case 'Date': {
+          pcn.FieldValue = new Date().toISOString();
+        }
+        case 'Text': {
+          pcn.FieldValue = null;
+        }
+        default: {
+          pcn.FieldValue = null;
+        }
+      }
+      switch (pcn.Display_Header) {
+        case 'InventoryId':
+          pcn.FieldValue = this.inventory.Inventory_Id;
+          break;
+        case 'Inventory_Log_Id':
+          pcn.FieldValue = this.inventory.Inventory_Log_Id;
+          break;
+        default:
+          break;
+      }
+    })
     this.setFieldType();
-    // this.fixedPCNFields.forEach((pcn: any) => {
-    //   switch (pcn.Display_Header) {
-    //     case 'InventoryId':
-    //       pcn.FieldValue = this.inventory.Inventory_Id;
-    //       break;
-    //     case 'Inventory_Log_Id':
-    //       pcn.FieldValue = this.inventory.Inventory_Log_Id;
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // })
     // this.addPCN();
 
     setTimeout(() => {
@@ -244,16 +267,21 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   checkIfAlreadyExist(control, listIndex, itemIndex) {
-    console.log('control, pcnIndex,pcnItemIndex : ', control, listIndex, itemIndex);
+    // console.log('control, pcnIndex,pcnItemIndex : ', control, listIndex, itemIndex);
     const pcnList = this.addPCNForm.get('pcnList') as FormArray;
-    control.FieldValue.setErrors(null);
+    if (control.Display_Header.value == 'PCN_Number') {
+      control.FieldValue.setErrors(null);
+      if (control.FieldValue.value == null || control.FieldValue.value.length == 0) {
+        control.FieldValue.setErrors({ required: true });
+      }
+    }
     pcnList.controls.forEach((pcn, pcnIndex) => {
       if (listIndex !== pcnIndex) {
         const pcnItemList = pcn.get('pcn') as FormArray;
         pcnItemList.controls.forEach((pcnItem: any, index) => {
           // console.log('pcnItem : ', pcnItem)
           if (control.Display_Header.value == 'PCN_Number' && pcnItem.controls.Display_Header.value == 'PCN_Number') {
-            if (control.FieldValue.value == pcnItem.controls.FieldValue.value) {
+            if (control.FieldValue.value.toLowerCase() == pcnItem.controls.FieldValue.value.toLowerCase()) {
               control.FieldValue.setErrors({ incorrect: true });
             }
           }
@@ -290,6 +318,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       "_lstFields": finalArray
     };
     console.log('body : ', JSON.stringify(body));
+
     this.pcnService.savePCN(body).subscribe((response) => {
       console.log('savePCN : ', response);
       this.disableBtn = false;
@@ -329,8 +358,34 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       })
     })
   }
+
+  checkIfExist(control) {
+    // console.log('checkIfExist : ', controls);
+    //Client_Id, PCN_Number, InventoryId, userId
+    const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
+    if (control.Display_Header.value == 'PCN_Number' && (control.FieldValue.value != null || control.FieldValue.value.length == 0)) {
+      this.pcnService.checkIfPCNExist(Client_Id, control.FieldValue.value, Inventory_Id, this.UserData.UserId).subscribe((response) => {
+        console.log('checkIfPCNExist response : ', response);
+        if (response.Data == true)
+          control.FieldValue.setErrors({ incorrect: true });
+        else
+          control.FieldValue.setErrors(null);
+      }, (error) => {
+        console.log('error : ', error);
+      })
+    }
+
+
+  }
+
   CloseModal() {
     console.log('CloseModal() :');
+    const value = this.addPCNForm.getRawValue();
+    const localPCNArray = []
+    value.pcnList.forEach((ele) => {
+      localPCNArray.push(ele.pcn)
+    })
+    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
     this.close.emit();
   }
 

@@ -149,6 +149,7 @@ import { MomentModule } from 'angular2-moment';
 
 import { ClipboardModule } from 'ngx-clipboard';
 import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
+import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -272,7 +273,7 @@ import { AgentConcluderComponent } from './agent-concluder/agent-concluder.compo
     ConcluderReportComponent,
 
     DeallocateConcluderComponent,
-
+    AgentConcluderComponent,
     // UploadMiniInsuranceComponent,
 
     InventoryUploadComponent,
@@ -281,7 +282,9 @@ import { AgentConcluderComponent } from './agent-concluder/agent-concluder.compo
 
     AddPcnConfigurationComponent,
 
-    AddPcnModalComponent
+    AddPcnModalComponent,
+
+    ConcluderDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -363,7 +366,7 @@ import { AgentConcluderComponent } from './agent-concluder/agent-concluder.compo
       { path: 'deallocate-concluder', component: DeallocateConcluderComponent, canActivate: [AuthGuard], data: { route: ['deallocate-concluder'] } },
       // { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
       { path: 'concluder', component: AgentConcluderComponent, canActivate: [AuthGuard], data: { route: ['concluder'] } },
-      // AgentConcluderComponent
+      { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
       { path: '**', component: NotFoundComponent }
 
     ]),

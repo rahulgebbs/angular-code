@@ -61,7 +61,8 @@
                             <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
                               [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}"
-                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)">
+                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)"
+                              (blur)="checkIfExist(item.controls)">
                             <label
                               *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">
