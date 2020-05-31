@@ -24,56 +24,41 @@
     </span>
   </div>
   <div class="col-md-12 supervisor-dash-tbl">
-    <!-- <label class="error" *ngIf="nodata">There is no Data for Client :- {{ Client_Name}}</label> -->
-    <!-- <div class="" style="border:0px solid #ddd;"> -->
+    <label class="error" *ngIf="submitStatus!=null && (dashboardData==null || dashboardData.length==0)">There is no Data
+      for Client :-
+      {{ Client_Name}}</label>
+    <div class="" style="border:0px solid #ddd;">
 
-    <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table" *ngIf="!nodata">
-      <table class="table" cellspacing="0" cellpadding="0">
-        <thead>
-          <!-- <tr class="bor">
-            <th class="hg-header dark heading-txt " colspan="25"> Weekly Execution Plan
-              Dashboard </th>
-          </tr> -->
-          <tr>
-            <!-- <th class="restbar" width="250">{{uploaddate}}</th> -->
-            <!-- <th class="restbar" width="250">Configuration</th> -->
-            <!-- <th class="restbar" colspan="2" width="250">{{payerwise}}</th> -->
-            <!-- <th class="restbar" colspan="2" width="250">Day - {{uploadInventory_date}} </th> -->
-            <th class="clientnames " colspan="7" width="250">Client Name : {{clientName || "N/A"}}
-            </th>
-            <!-- <th class="restbar" width="250"> IM Edits</th> -->
-            <!-- <th width="250" class="restbar" (click)="onImedit()" onmouseover="" style="cursor: pointer;">
-              {{IM_edits_count}}
-            </th> -->
-          </tr>
-          <tr class="border-t">
-            <ng-container *ngFor="let key of keyList">
-              <th class="dark" *ngIf="key!='Id'" rowspan="2" style="min-width: 150px"> {{key}}</th>
-            </ng-container>
-  
-          </tr>
-
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let data of dashboardData">
-            <tr class="t-bold">
-              <!-- <td class="borderright floor ">Opening AR_Dollars</td> -->
+      <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table"
+        *ngIf="dashboardData!=null && dashboardData.length>0">
+        <table class="table" cellspacing="0" cellpadding="0">
+          <thead>
+            <tr>
+              <th class="clientnames " colspan="7" width="250">Client Name : {{clientName || "N/A"}}
+              </th>
+            </tr>
+            <tr class="border-t">
               <ng-container *ngFor="let key of keyList">
-                <td *ngIf="key!='Id'"
-                  [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none'}"
-                  class="">{{data[key]}}</td>
+                <th class="dark" *ngIf="key!='Id'" rowspan="2" style="min-width: 150px"> {{key}}</th>
               </ng-container>
             </tr>
-          </ng-container>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of dashboardData">
+              <tr class="t-bold">
+                <ng-container *ngFor="let key of keyList">
+                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id'"
+                    [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none'}"
+                    class="">{{data[key]}}</td>
+                </ng-container>
+              </tr>
+            </ng-container>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
-
-<!-- <app-supervisor-dashboard-modal *ngIf="DisplayModal" (Toggle)="ToggleModal()"
-    [AllocatedCountsData]="AllocatedCountsData">
-</app-supervisor-dashboard-modal>
-<app-imedit *ngIf="DisplayModalIm" (Toggle)="ToggleModal()" [IMdata]="IM_edits_data" [IMdates]="IMdates">
-</app-imedit> -->
+  <app-allocated-count-modal *ngIf="showAllocatedCountModal==true" [AllocatedCountsData]="activeAllocatedCount"
+    (close)="closeAllocatedCount()">
+  </app-allocated-count-modal>

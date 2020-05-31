@@ -33,6 +33,10 @@ export class ConcluderDashboardComponent implements OnInit {
   dashboardData = [];
   title = "Concluder Dashboard";
   clientName = null;
+  allocatedCountList = [];
+  submitStatus = null;
+  activeAllocatedCount = [];
+  showAllocatedCountModal = false;
   constructor(private router: Router, private notification: NotificationService, public fb: FormBuilder, private pcnService: PcnService) {
     this.ResponseHelper = new ResponseHelper(this.notification);
 
@@ -58,20 +62,26 @@ export class ConcluderDashboardComponent implements OnInit {
 
   search() {
     const { value } = this.dashboard;
-    if (value && value.ClientId) {
 
-      this.getAllocatedCount(value.ClientId);
+    if (value && value.ClientId) {
+      this.submitStatus = true;
       this.getConcluderDashboard(value.ClientId);
+      this.getAllocatedCount(value.ClientId);
     }
   }
 
   getConcluderDashboard(ClientId) {
+    this.dashboardData = []
     this.pcnService.getConcluderDashboard(ClientId).subscribe((response) => {
       console.log('getConcluderDashboard response : ', response);
       this.dashboardData = response.Data;
+      this.submitStatus = false;
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('getConcluderDashboard error : ', error);
       this.dashboardData = [];
+      this.submitStatus = false;
+      this.ResponseHelper.GetFaliureResponse(error);
     })
   }
 
@@ -88,12 +98,34 @@ export class ConcluderDashboardComponent implements OnInit {
   }
 
   getAllocatedCount(ClientId) {
+    this.allocatedCountList = [];
     this.pcnService.getAllocatedCount(ClientId).subscribe((response) => {
       console.log('getAllocatedCount() response : ', response);
+      this.allocatedCountList = response.Data;
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
+      this.allocatedCountList = [];
+      this.ResponseHelper.GetFaliureResponse(error);
       console.log('error : ', error);
     })
+  }
 
+  opeAllocatedCount(obj, key) {
+    console.log('opeAllocatedCount() : ', obj, key, this.allocatedCountList);
+    this.activeAllocatedCount = [];
+    this.allocatedCountList.every((element) => {
+      if (element && element.Bucket_Name.toLowerCase() == key.toLowerCase()) {
+        this.activeAllocatedCount = element.allocated_Counts;
+        return true;
+      }
+    });
+
+    this.showAllocatedCountModal = true;
+    console.log('opeAllocatedCount : ', this.activeAllocatedCount);
+  }
+
+  closeAllocatedCount() {
+    this.showAllocatedCountModal = false;
   }
 }
 

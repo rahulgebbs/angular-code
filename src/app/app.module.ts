@@ -150,6 +150,8 @@ import { MomentModule } from 'angular2-moment';
 import { ClipboardModule } from 'ngx-clipboard';
 import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
 import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-dashboard.component';
+import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-count-modal/allocated-count-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -284,7 +286,8 @@ import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-das
 
     AddPcnModalComponent,
 
-    ConcluderDashboardComponent
+    ConcluderDashboardComponent,
+    AllocatedCountModalComponent
   ],
   imports: [
     BrowserModule,
