@@ -42,7 +42,7 @@
                 </button>
                 <button *ngIf="addPCNForm.get('pcnList').controls.length>1" type="button"
                   title="Remove PCN{{pcnIndex+1}}" class="btn blue square-btn blue-hover btn-txt ml-5"
-                  (click)="removePCN(i)">
+                  (click)="removePCN(pcnIndex)">
                   <i class="fa fa-times"></i>
                 </button>
               </h5>

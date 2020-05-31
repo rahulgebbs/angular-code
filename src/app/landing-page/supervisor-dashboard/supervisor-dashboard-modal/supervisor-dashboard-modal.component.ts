@@ -22,7 +22,7 @@ export class SupervisorDashboardModalComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-      
+    console.log('AllocatedCountsData : ', this.AllocatedCountsData);
     this.rowData = this.AllocatedCountsData
   }
 

@@ -58,4 +58,20 @@ export class PcnService {
     });
     return this.http.get(environment.ApiUrl + `/api/Check_Is_PCN_No_Exist?id=${userId}&inventoryId=${InventoryId}&PCNNO=${PCN_Number}&ClientId=${Client_Id}`, { headers: headers }).map(res => res.json());
   }
+
+  getAllocatedCount(Client_Id) {
+    // http://localhost:63482/api/concluder-dashboard-allocated-count/client/9086
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/concluder-dashboard-allocated-count/client/${Client_Id}`, { headers: headers }).map(res => res.json());
+  }
+
+  getConcluderDashboard(Client_Id)
+  {
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/concluder-dashboard/client/${Client_Id}`, { headers: headers }).map(res => res.json());
+  }
 }

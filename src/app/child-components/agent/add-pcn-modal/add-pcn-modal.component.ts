@@ -186,13 +186,23 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
   setFieldType() {
     this.fixedPCNFields.forEach((pcn) => {
-      if (pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
+      switch (pcn.Display_Header) {
+        case 'InventoryId':
+          pcn.FieldValue = this.inventory.Inventory_Id;
+          break;
+        case 'Inventory_Log_Id':
+          pcn.FieldValue = this.inventory.Inventory_Log_Id;
+          break;
+        default:
+          break;
+      }
+      if (pcn.Column_Data_Type == 'Numeric' || pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
         pcn.FieldType = 'Numeric';
       }
       else if (pcn.Display_Header == 'Status' || pcn.Display_Header == 'Sub_Status' || pcn.Display_Header == 'Action_Code') {
         pcn.FieldType = 'Dropdown';
       }
-      else if (pcn.Display_Header == 'DOS') {
+      else if (pcn.Column_Data_Type == 'Date' || pcn.Display_Header == 'DOS') {
         pcn.FieldType = 'Date';
       }
       else {
@@ -460,6 +470,12 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         pcnItem.patchValue({ list: _.map(subStatusList, 'Sub_Status') });
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
+          const actionCodeList = this.SaagLookup.filter((saag) => {
+            if (saag.Sub_Status == subStatusList[0].Sub_Status) {
+              return saag.Action_Code;
+            }
+          });
+          this.setActionCode(pcnItemList, actionCodeList);
         }
         return true;
       }
