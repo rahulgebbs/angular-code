@@ -161,6 +161,7 @@ export class AgentComponent implements OnInit {
   }
 
   GetAccountList(bucket, fromsubmit) {
+    console.log('debug bucket : ', bucket)
     this.agentservice.GetAccountList(this.ClientId, bucket.Name).pipe(finalize(() => {
       this.GetBucketsWithCount();
     })).subscribe(
@@ -684,10 +685,9 @@ export class AgentComponent implements OnInit {
   }
 
   ToggleAccountsModal(bucket) {
-
+    console.log('ToggleAccountsModal bucket : ', bucket);
     if (bucket && bucket.Name != false && bucket.Name != true) {
       sessionStorage.removeItem('Accounts');
-
       const highPriority = sessionStorage.getItem('highPriporityAccount');
       const callReference = localStorage.getItem('callReference');
       if (highPriority != undefined) {
@@ -772,6 +772,7 @@ export class AgentComponent implements OnInit {
       bucket.Name = obj.Bucket_Name;
       bucket.Inventory_Log_Id = obj.Inventory_Log_Id ? obj.Inventory_Log_Id : null;
       this.InventoryId = obj.Inventory_Id;
+      // this.InventoryLogId = bucket.Inventory_Log_Id ? bucket.Inventory_Log_Id : 0;
     }
     else {
       this.InventoryId = obj;
