@@ -372,18 +372,18 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   checkIfExist(control) {
     // console.log('checkIfExist : ', controls);
     //Client_Id, PCN_Number, InventoryId, userId
-    const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
-    if (control.Display_Header.value == 'PCN_Number' && (control.FieldValue.value != null || control.FieldValue.value.length == 0)) {
-      this.pcnService.checkIfPCNExist(Client_Id, control.FieldValue.value, Inventory_Id, this.UserData.UserId).subscribe((response) => {
-        console.log('checkIfPCNExist response : ', response);
-        if (response.Data == true)
-          control.FieldValue.setErrors({ incorrect: true });
-        else
-          control.FieldValue.setErrors(null);
-      }, (error) => {
-        console.log('error : ', error);
-      })
-    }
+    // const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
+    // if (control.Display_Header.value == 'PCN_Number' && (control.FieldValue.value != null || control.FieldValue.value.length == 0)) {
+    //   this.pcnService.checkIfPCNExist(Client_Id, control.FieldValue.value, Inventory_Id, this.UserData.UserId).subscribe((response) => {
+    //     console.log('checkIfPCNExist response : ', response);
+    //     if (response.Data == true)
+    //       control.FieldValue.setErrors({ incorrect: true });
+    //     else
+    //       control.FieldValue.setErrors(null);
+    //   }, (error) => {
+    //     console.log('error : ', error);
+    //   })
+    // }
 
 
   }

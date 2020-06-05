@@ -151,6 +151,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
 import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-dashboard.component';
 import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-count-modal/allocated-count-modal.component';
+import { PcnReportComponent } from './landing-page/pcn-report/pcn-report.component';
 
 
 @NgModule({
@@ -287,7 +288,8 @@ import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-co
     AddPcnModalComponent,
 
     ConcluderDashboardComponent,
-    AllocatedCountModalComponent
+    AllocatedCountModalComponent,
+    PcnReportComponent
   ],
   imports: [
     BrowserModule,
@@ -370,6 +372,7 @@ import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-co
       // { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
       { path: 'concluder', component: AgentConcluderComponent, canActivate: [AuthGuard], data: { route: ['concluder'] } },
       { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
+      {path:'pcn-report',component:PcnReportComponent,canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
       { path: '**', component: NotFoundComponent }
 
     ]),

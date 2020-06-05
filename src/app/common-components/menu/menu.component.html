@@ -7,10 +7,8 @@
     <aside class="sidebar2">
 
       <div class="col-md-12 p-0">
-        <div class="col-md-4 blue-seprator1">
+        <div class="col-md-12 blue-seprator1">
           <img src="../../../assets/images/iAR.png" class="img-responsive">
-        </div>
-        <div class="col-md-8">
           <div class="middle-align1">
             <div class="col-md-12 p-0">
               <span class="u-name">{{UserData.Full_Name}}</span>
@@ -20,6 +18,16 @@
             </div>
           </div>
         </div>
+        <!-- <div class="col-md-8">
+          <div class="middle-align1">
+            <div class="col-md-12 p-0">
+              <span class="u-name">{{UserData.Full_Name}}</span>
+            </div>
+            <div class="col-md-12 p-0">
+              <span class="u-type">{{UserData.Role}}</span>
+            </div>
+          </div>
+        </div> -->
       </div>
 
       <div class="col-md-12 p-0 mt-10">
@@ -256,6 +264,9 @@
                       <li><a (click)="OpenMenu('citra-audit-report')"
                           [ngClass]="[MenuName == '/citra-audit-report' ? 'menu-active1': '']">Citra Audit Report</a>
                       </li>
+                      <li><a (click)="OpenMenu('pcn-report')"
+                        [ngClass]="[MenuName == '/pcn-report' ? 'menu-active1': '']">PCN Report</a>
+                    </li>
                     </ul>
                   </div>
                 </div>

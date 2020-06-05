@@ -801,8 +801,10 @@ a:hover {
   padding-bottom: 0px;
 }
 .m-leftsidebar .menu-small {
-  height: auto;
-  overflow-y: unset;
+  /* height: auto;
+  overflow-y: unset; */
+  height: 55vh;
+  overflow-y: auto;
 }
 
 /*================================================================================================================================

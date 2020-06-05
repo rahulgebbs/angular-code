@@ -45,6 +45,7 @@ export const Access = {
   "user-menu-mapping": ["Administrator", "Admin"],
   /* concluder menus*/
   "concluder-dashboard": ["Supervisor"],
+  "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
   // "concluder-report": ["Supervisor", "Agent", "Admin"],
   // "deallocate-concluder": ["Supervisor", "Admin"],
   // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
