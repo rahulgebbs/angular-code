@@ -87,7 +87,21 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   CreateResetForm() {
-
+    const self = this;
+    function customValidator(control) {
+      console.log('customValidator : ', control);
+      if (control.value != null && control.value.length > 0) {
+        const validCaptcha = self.checkIfValid(control.value);
+        console.log('this.checkIfValid : ', validCaptcha);
+        if (validCaptcha == false) {
+          return { 'invalidCaptcha': true }
+        }
+      }
+      else {
+        return { 'captchaRequired': true }
+      }
+      control.setErrors(null);
+    };
     this.ResetForm = new FormGroup({
       Username: new FormControl(this.MyForm.controls['username'].value, Validators.required),
       Temporary_Password: new FormControl('', [Validators.required
@@ -98,8 +112,10 @@ export class ForgotPasswordComponent implements OnInit {
       Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-/(/)/_/+/]).{8,}$')
       ]),
       confirmnewpass: new FormControl('', [Validators.required,
-      ])
-    }, { validators: customValidation.MatchPassword })
+      ]),
+      captchaModel: new FormControl('', [customValidator])
+    }, { validators: customValidation.MatchPassword });
+    this.makeid();
   }
 
   ResetPassword() {
