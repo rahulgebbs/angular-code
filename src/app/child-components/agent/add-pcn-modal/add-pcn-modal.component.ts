@@ -22,6 +22,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   addPCNForm: FormGroup;
   @Input() inventory;
   @Input() SaagLookup;
+  @Input() AllFields;
   @Output() close = new EventEmitter();
   // @Output() save = new EventEmitter();
   pcnList: any;
@@ -164,22 +165,10 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   manageKeyList() {
-    const fixedList = [
-      "Patient Name",
-      "MRN",
-      "Patient Account",
-      "Admit Date",
-      "Payer",
-      "Total Charges",
-      "Claim Amount",
-      "Practice",
-      "Last_billed_date",
-      "CallReference_No"
-    ];
-    const keys = Object.keys(this.inventory);
-    fixedList.forEach((item) => {
-      if (keys.includes(item) == true) {
-        this.keyList.push(item)
+    console.log('AllFields : ', this.AllFields);
+    this.AllFields.forEach((field) => {
+      if (field.Is_Standard_Field == true) {
+        this.keyList.push({ key: field.Header_Name, name: field.Display_Header });;
       }
     });
   }
@@ -477,11 +466,21 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
           });
           this.setActionCode(pcnItemList, actionCodeList);
         }
+        else {
+          this.resetSubStatusAndActionCode(pcnItemList)
+        }
         return true;
       }
     })
   }
 
+  resetSubStatusAndActionCode(pcnItemList) {
+    pcnItemList.controls.forEach((pcnItem, index) => {
+      if (pcnItem.controls.Display_Header.value == 'Sub_Status' || pcnItem.controls.Display_Header.value == 'Action_Code' || pcnItem.controls.Display_Header.value == 'Effectiveness') {
+        pcnItem.patchValue({ FieldValue: null });
+      }
+    });
+  }
   setActionCode(pcnItemList, actionCodeList) {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {
