@@ -1,47 +1,14 @@
-<app-header [title]="Title"></app-header>
+<!-- <app-header [title]="Title"></app-header> -->
 <div class="container-fluid">
   <div class="row mt-10 p-0">
-    <div class="col-md-12 p-0" style="border-bottom: 1px solid #dfdfdf;margin-bottom: 1rem;">
 
-      <div class="col-md-3 col-md-offset-3 form-group mr-5">
-        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Process</label>
-        <select class="form-control">
-          <option [ngValue]="undefined" disabled>Select Process</option>
-        </select>
-      </div>
-      <!-- </div> -->
 
-      <!-- <div class="col-md-12 col-xs-12 p-0"> -->
-      <div class="col-md-3 form-group mr-5">
-        <label for="inputEmail3" class="label-std  control-label p-0 b-600">Configuration</label>
-        <select class="form-control">
-          <option [ngValue]="undefined" disabled>Select Configuration</option>
-        </select>
-      </div>
-      <!-- </div> -->
+    <div class="col-md-12 col-xs-4 p-0 ueser-crt blue-seprator serpartion-htg">
 
-      <!-- </div> -->
-    </div>
-
-    <div class="col-md-3 col-xs-4 p-0 ueser-crt blue-seprator serpartion-htg"
-      >
-      <!-- <div class="col-md-12 col-sm-12">
-        <div class="heading-panel sT-hight p-0">
-          <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Concluder Report</span>
-        </div>
-      </div> -->
       <div class="col-md-12 col-xs-12 p-0 box-heightLG">
 
-        <!-- <div class="col-md-12 col-xs-12 p-0">
-          <div class="form-group mh-15 mr-5">
-            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Process</label>
-            <select class="form-control">
-              <option [ngValue]="undefined" disabled>Select Process</option>
-            </select>
-          </div>
-        </div> -->
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">Original Claim Billed Date</label>
             <div class='input-group date' id='originalBilledDateCalendar'>
@@ -57,7 +24,7 @@
 
         </div>
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">Last Claim Billed Date</label>
             <div class='input-group date' id='lastBilledDateCalendar'>
@@ -72,14 +39,14 @@
           </div>
         </div>
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Provider</label>
             <textarea class="form-control" name="provider" id="" cols="30" rows="3"></textarea>
           </div>
         </div>
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Rejection</label>
             <div class="radioBorder">
@@ -95,7 +62,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Rejection Reason</label>
             <textarea class="form-control" name="provider" id="" cols="30" rows="3"></textarea>
@@ -103,7 +70,7 @@
         </div>
 
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">EOB Available</label>
             <div class="radioBorder">
@@ -118,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status</label>
             <select class="form-control">
@@ -127,7 +94,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">EOB Posted in Sys</label>
             <div class="radioBorder">
@@ -142,7 +109,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
             <input type="text" class="form-control denialInput" placeholder="denial_1">
@@ -154,13 +121,13 @@
 
           </div>
         </div>
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Reason (Remark Code)</label>
             <textarea class="form-control" name="denialReason" id="" cols="30" rows="3"></textarea>
           </div>
         </div>
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">Denial Date</label>
             <div class='input-group date' id='denialDateCalendar'>
@@ -174,12 +141,12 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 col-xs-12 p-0 mb-5">
-            <div class="form-group mh-15 mr-5">
-              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Remarks (Max Char 100)</label>
-              <textarea class="form-control" name="Remarks" id="" cols="30" rows="3"></textarea>
-            </div>
+        <div class="col-md-4 col-xs-4 p-0 mb-5">
+          <div class="form-group mh-15 mr-5">
+            <label for="inputEmail3" class="label-std  control-label p-0 b-600">Remarks (Max Char 100)</label>
+            <textarea class="form-control" name="Remarks" id="" cols="30" rows="3"></textarea>
           </div>
+        </div>
         <!-- Remarks (Max Char 100) -->
 
         <!-- Denial Reason (Remark Code) -->
@@ -195,26 +162,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-9">
-      <div class="col-md-12 col-sm-12 p-0">
-        <div class="heading-panel sT-hight p-0">
-          <!-- <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Report </span> -->
-          <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
-        </div>
-      </div>
-      <div class="col-md-12 col-sm-12 p-0">
-        <div class="table-responcive">
-          <div class="sticky-table sticky-ltr-cells border-0 table-hight">
-            <ag-grid-angular style="height: 65vh;" [enableColResize]="true" [enableSorting]="true" [enableFilter]="true"
-              [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData"
-              [columnDefs]="columnDefs" (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
-              [suppressColumnVirtualisation]="true" [rowSelection]="rowSelection" (firstDataRendered)="autoSizeAll()"
-              (gridReady)="onGridReady($event)">
-            </ag-grid-angular>
-          </div>
-        </div>
-      </div>
-    </div>
+
+
+
   </div>
 
 </div>

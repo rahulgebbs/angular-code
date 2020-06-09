@@ -16,6 +16,9 @@ export class DataUploadService {
   InventoryDataUpload(dataobj): any {
     return this.http.post(environment.FileApiUrl + '/api/inventory-data-upload', dataobj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
+  ConcluderDataUpload(dataobj): any {
+    return this.http.post(environment.ApiUrl + '/api/Upload_Concluder_Inventory', dataobj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  }
 
   downloadInventoryTemplate(id) {
     //  api/inventory-data-upload-download-template/client/{id}

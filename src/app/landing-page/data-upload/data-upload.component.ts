@@ -129,6 +129,11 @@ export class DataUploadComponent implements OnInit {
       this.DisableUpload = true;
       this.DisableFileInput = true;
       let dataobj = { File: this.FileBase64, File_Name: this.Filename, Client_Id: this.ClientId };
+      const formValue = this.dataUpload.value;
+      if (formValue && formValue.type == 'concluder') {
+        this.uploadInventoryForConcluder(dataobj);
+        return null;
+      }
       this.service.InventoryDataUpload(dataobj).pipe(finalize(() => {
         this.DisableUpload = false;
         this.Filename = null;
@@ -150,7 +155,9 @@ export class DataUploadComponent implements OnInit {
           this.ResponseHelper.GetSuccessResponse(res)
         },
         err => {
-          this.truefile = false
+          this.truefile = false;
+          this.truefile = false;
+          this.DisableUpload = false;
           this.ResponseHelper.GetFaliureResponse(err)
         }
       );
@@ -168,13 +175,49 @@ export class DataUploadComponent implements OnInit {
       this.ResponseHelper.GetFaliureResponse(err)
     })
   }
-  
+
   openModal(event) {
     console.log('OpenByAgent : ', this.dataUpload.value);
   }
 
   closeModal(event) {
-    console.log('closeModal event : ',event)
+    console.log('closeModal event : ', event)
     this.dataUpload.patchValue({ type: null });
   }
+
+  uploadInventoryForConcluder(dataObj) {
+    console.log('uploadInventoryForConcluder : ', dataObj);
+    // return null;
+    dataObj['Is_Special_Queue'] = true;
+    this.service.ConcluderDataUpload(dataObj).pipe(finalize(() => {
+      this.DisableUpload = false;
+      this.Filename = null;
+      this.File = null;
+      if (this.ClientList.length == 1) {
+        this.disableDownload = false
+      } else {
+        this.disableDownload = true
+      }
+      this.DisableFileInput = false;
+      this.ClearFileData();
+      if (!this.singleclient) {
+        this.ClientId = "";
+      }
+      // this.Is_Special_Queue = false;
+    })).subscribe(
+      res => {
+        console.log('ConcluderDataUpload :', res);
+        this.truefile = false;
+        this.ResponseHelper.GetSuccessResponse(res)
+      },
+      err => {
+        this.truefile = false;
+        this.DisableUpload = false;
+        this.ClearFileData();
+        console.log('error : ', err);
+        this.ResponseHelper.GetFaliureResponse(err)
+      }
+    );
+  }
+
 }

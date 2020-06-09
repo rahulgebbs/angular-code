@@ -30,9 +30,19 @@
             </li>
           </ul>
         </div>
-
       </li>
-
+    </ul>
+    <ul>
+      <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
+        [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
+        <!-- class="active-li" -->
+        <div>
+          <span>{{to_be_concluded_bucket.Display_Name}}</span>
+          <!-- <span class="buckets-list-cl">
+            <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+          </span> -->
+        </div>
+      </li>
     </ul>
   </ul>
   <div class="uitlites-nav">
@@ -161,7 +171,9 @@
           </form>
         </div>
       </div>
-      <div [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
+      <!-- Input Fields Started -->
+      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==null"
+        [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
@@ -251,6 +263,7 @@
           </div>
         </div>
       </div>
+      <!-- Input Fields ended -->
       <!--Appeal Section-->
       <div *ngIf="ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal'"
         class="col-md-3 p-0 p-0 blue-seprator serpartion-h">
@@ -344,7 +357,8 @@
         </div>
       </div>
       <!--Appeal Ends-->
-      <div class="col-md-3 p-0">
+      <!-- Action Form Started -->
+      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==null" class="col-md-3 p-0">
         <div class="col-md-12 p-0">
           <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
             <div class="col-md-12 col-sm-12 p-0">
@@ -457,6 +471,23 @@
         </div>
 
       </div>
+      <!-- Action Form ended -->
+      <!-- Concluder Fields Started -->
+      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null"
+        class="p-0 blue-seprator serpartion-h col-md-9">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Concluder Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0">
+            <app-agent-concluder></app-agent-concluder>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concluder Fields ended -->
     </div>
   </div>
 </ng-container>

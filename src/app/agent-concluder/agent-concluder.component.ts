@@ -12,23 +12,9 @@ import { NotificationService } from 'src/app/service/notification.service';
 export class AgentConcluderComponent implements OnInit {
   ResponseHelper: ResponseHelper;
   userData;
+  concludedForm: FormGroup
   token: Token;
   Title = 'User Menu Mapping';
-  rowData;
-  columnDefs;
-  gridOptions: any = {
-    context: {
-      componentParent: this
-    },
-    // rowClassRules: {
-    //   'highLight-row': function (params) {
-    // console.log('highLight-row : ', params.data)
-    //     return params.data.active == true;
-    //   }
-    // },
-    force: true
-  };
-
   constructor(
     private router: Router,
     private notification: NotificationService,
@@ -37,17 +23,37 @@ export class AgentConcluderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.columnDefs = [
-      { headerName: 'Account Number', field: 'Account_Number' },
+    this.initForm()
+  }
 
-      { headerName: 'Practice', field: 'Practice' },
-      { headerName: 'Insurance Name', field: 'Insurance_Name' },
-      { headerName: 'CPT', field: 'CPT' },
-      { headerName: 'Charge Amount', field: 'Charge_Amount' },
-      { headerName: 'Balance Amount', field: 'Balance_Amount' },
-      { headerName: 'DOB', field: 'DOB' },
-      { headerName: 'DOS', field: 'DOS' },
-    ];
-    this.rowData = [];
+  
+
+  initForm() {
+    this.concludedForm = this.fb.group({
+      "Id": [0], "Client_Id": [null],
+      "Concluder_Id": [null],
+      "Original_Claim_Billed_Date": [null],
+      "Latest_Claim_Billed_Date": [null],
+      "Provider": [null],
+      "Rejection": [null],
+      "Rejection_Reason": [null],
+      "EOB_Available": [true],
+      "Status": [null],
+      "EOB_Posted_in_Sys": [false],
+      "Denial_1": [null],
+      "Denial_2": [null],
+      "Denial_3": [null],
+      "Denial_4": [null],
+      "Denial_5": [null],
+      "Denial_Reason": [null],
+      "Remarks": [null],
+      "Denial_Date": [null],
+      "Employee_Code": [null],
+      "Conclusion": [null]
+    })
+    // SAMPLE CODE
+    /*
+    {"Id":0,"Client_Id":9064,"Concluder_Id":3,"Original_Claim_Billed_Date":"07/06/2010","Latest_Claim_Billed_Date":"08/06/2010","Provider":"abc","Rejection":"false","Rejection_Reason":"","EOB_Available":true,"Status":"Denied","EOB_Posted_in_Sys":"false","Denial_1":"CO147","Denial_2":"B11","Denial_3":"003","Denial_4":"004","Denial_5":"005","Denial_Reason":"Rejections","Remarks":"fail","Denial_Date":"09/06/2010","Employee_Code":"5000","Conclusion":""}
+    */
   }
 }

@@ -20,6 +20,8 @@ import * as moment from 'moment'
 import * as $ from 'jquery'
 
 import * as _ from 'lodash';
+import { ClientService } from 'src/app/service/client-configuration/client.service';
+
 
 @Component({
   selector: 'app-agent',
@@ -28,6 +30,11 @@ import * as _ from 'lodash';
   providers: [dropDownFields]
 })
 export class AgentComponent implements OnInit {
+  to_be_concluded_bucket = {
+    Count: 0,
+    Display_Name: "To Be Concluded",
+    Name: "To Be Concluded"
+  }
   instructionCount: Number = 0;
   Title = "Agent";
   /* utility*/
@@ -103,9 +110,11 @@ export class AgentComponent implements OnInit {
   Is_New_Line = false;
   showAddPCNModal = false;
   inventoryDetails = {};
+  userdata: any;
+  clientObj = {};
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
-    private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
+    private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService) { }
 
   ngOnInit() {
 
@@ -113,10 +122,10 @@ export class AgentComponent implements OnInit {
     sessionStorage.removeItem('lastPCN');
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
-    var userdata = token.GetUserData();
-    this.UserId = userdata.UserId;
-    this.ClientId = userdata.Clients[0].Client_Id;
-    this.Client_Name = userdata.Clients[0].Client_Name;
+    this.userdata = token.GetUserData();
+    this.UserId = this.userdata.UserId;
+    this.ClientId = this.userdata.Clients[0].Client_Id;
+    this.Client_Name = this.userdata.Clients[0].Client_Name;
     this.GetBucketsWithCount();
     this.CreateActionForm();
     sessionStorage.removeItem("Accounts");
@@ -125,7 +134,8 @@ export class AgentComponent implements OnInit {
 
     setTimeout(() => {
       $('.utility-menu').hide();
-    }, 1000)
+    }, 1000);
+    this.getClientID();
   }
 
   toggleMenu() {
@@ -601,6 +611,15 @@ export class AgentComponent implements OnInit {
   ToggleClientModal() {
     this.DisplayClientUpdate = !this.DisplayClientUpdate
   }
+  getClientID() {
+    this.clientService.getClient(this.userdata.TokenValue, this.ClientId).subscribe((res) => {
+      console.log('getClientUpdate : ', res.json());
+      this.clientObj = res.json().Data;
+    }, (error) => {
+      this.clientObj = {};
+      console.log('getClientUpdate error: ', error);
+    })
+  }
   showClientUpdate() {
     this.agentservice.getClientUpdate(this.ClientId).pipe(finalize(() => {
 
@@ -713,6 +732,10 @@ export class AgentComponent implements OnInit {
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
+      else if (bucket.Name == 'To Be Concluded') {
+        // call concluder to be done service
+        this.toBeConcluded();
+      }
       else {
         if (!this.CheckPendingAccount(bucket.Name)) {
           this.GetAccountList(bucket, false);
@@ -745,6 +768,29 @@ export class AgentComponent implements OnInit {
     else {
       this.OpenAccountsModal = !this.OpenAccountsModal;
     }
+  }
+
+  toBeConcluded() {
+    this.agentservice.checkIfConcluder().subscribe((response) => {
+      console.log('checkIfConcluder : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
+      this.concluderInventoryData();
+    }, (error) => {
+      console.log('checkIfConcluder error: ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.concluderInventoryData();
+    });
+  }
+
+  concluderInventoryData() {
+    console.log('concluderInventoryData() : ');
+    this.agentservice.getConcluderInventoryData().subscribe((response) => {
+      console.log('concluderInventoryData response : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('concluderInventoryData error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+    })
   }
 
   ChangeWorkingStatusInLocal(bucketname: string) {

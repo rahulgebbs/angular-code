@@ -181,4 +181,24 @@ export class AgentService {
     {
         return this.http.post(environment.ApiUrl + '/api/Save_Add_New_Line_Inventory_Details_For_Agent', body, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
     }
+
+    checkIfConcluder()
+    {
+        // api/Check_Concluder_Process
+        let headers: any = new Headers({
+            'Access_Token': this.TokenCls.GetToken()
+        });
+        console.log('addNewLine() service : ');
+        return this.http.get(environment.ApiUrl + `/api/Check_Concluder_Process`, { headers: headers }).map(res => res.json());
+    }
+
+    getConcluderInventoryData()
+    {
+        // api/Get_Concluder_Inventory_data
+        let headers: any = new Headers({
+            'Access_Token': this.TokenCls.GetToken()
+        });
+        console.log('addNewLine() service : ');
+        return this.http.get(environment.ApiUrl + `/api/Get_Concluder_Inventory_data`, { headers: headers }).map(res => res.json());
+    }
 }
