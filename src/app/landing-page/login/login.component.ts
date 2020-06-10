@@ -122,18 +122,15 @@ export class LoginComponent implements OnInit {
         console.log('this.checkIfValid : ',validCaptcha);
         if(validCaptcha==false)
         {
-          // control.setErrors({invalidCaptcha : true})
           return {'invalidCaptcha': true}
-          // return null
         }
       }
       else{
-        // control.setErrors({captChaRequired : true})
-        // return null
+
         return {'captchaRequired': true}
       }
       control.setErrors(null);
-      // return null;
+
       };
     this.MyForm = new FormGroup({
       username: new FormControl('', [Validators.required

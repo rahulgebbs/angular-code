@@ -26,7 +26,7 @@ export class AgentConcluderComponent implements OnInit {
     this.initForm()
   }
 
-  
+
 
   initForm() {
     this.concludedForm = this.fb.group({
@@ -55,5 +55,9 @@ export class AgentConcluderComponent implements OnInit {
     /*
     {"Id":0,"Client_Id":9064,"Concluder_Id":3,"Original_Claim_Billed_Date":"07/06/2010","Latest_Claim_Billed_Date":"08/06/2010","Provider":"abc","Rejection":"false","Rejection_Reason":"","EOB_Available":true,"Status":"Denied","EOB_Posted_in_Sys":"false","Denial_1":"CO147","Denial_2":"B11","Denial_3":"003","Denial_4":"004","Denial_5":"005","Denial_Reason":"Rejections","Remarks":"fail","Denial_Date":"09/06/2010","Employee_Code":"5000","Conclusion":""}
     */
+  }
+
+  submitForm() {
+    console.log('submitForm() : ', this.concludedForm.value)
   }
 }
