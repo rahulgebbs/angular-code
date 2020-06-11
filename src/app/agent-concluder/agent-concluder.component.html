@@ -3,10 +3,9 @@
   <form [formGroup]="concludedForm" class="row mt-10 p-0" (ngSubmit)="submitForm()">
 
 
-    <div *ngIf="concludedForm && concludedForm.value as formValue"
-      class="col-md-12 col-xs-4 p-0 ueser-crt blue-seprator serpartion-htg">
+    <div *ngIf="concludedForm && concludedForm.value as formValue" class="col-md-12 col-xs-4 p-0">
 
-      <div class="col-md-12 col-xs-12 p-0 box-heightLG">
+      <div class="col-md-12 col-xs-12 p-0">
 
 
         <div class="col-md-4 col-xs-4 p-0 mb-5">
@@ -90,7 +89,8 @@
             </div>
           </div>
         </div>
-        <div *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false" class="col-md-4 col-xs-4 p-0 mb-5">
+        <div *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false"
+          class="col-md-4 col-xs-4 p-0 mb-5">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status</label>
             <select class="form-control" formControlName="Status">
@@ -99,7 +99,8 @@
           </div>
         </div>
 
-        <div class="col-md-4 col-xs-4 p-0 mb-5" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
+        <div class="col-md-4 col-xs-4 p-0 mb-5"
+          *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">EOB Posted in Sys</label>
             <div class="radioBorder">
@@ -114,7 +115,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-xs-4 p-0 mb-5" style="min-height: 100px;" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
+        <div class="col-md-4 col-xs-4 p-0 mb-5" style="min-height: 100px;"
+          *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
             <input type="text" class="form-control denialInput" placeholder="denial_1" formControlName="Denial_1">
@@ -126,14 +128,16 @@
 
           </div>
         </div>
-        <div class="col-md-4 col-xs-4 p-0 mb-5" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
+        <div class="col-md-4 col-xs-4 p-0 mb-5"
+          *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Reason (Remark Code)</label>
             <textarea class="form-control" name="denialReason" id="" cols="30" rows="3"
               formControlName="Denial_Reason"></textarea>
           </div>
         </div>
-        <div class="col-md-4 col-xs-4 p-0 mb-5" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
+        <div class="col-md-4 col-xs-4 p-0 mb-5"
+          *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
           <div class="form-group mh-15 mr-5">
             <label class="label-std  control-label p-0 b-600">Denial Date</label>
             <div class='input-group date' id='denialDateCalendar'>
@@ -148,7 +152,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-xs-4 p-0 mb-5" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
+        <div class="col-md-4 col-xs-4 p-0 mb-5"
+          *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==false">
           <div class="form-group mh-15 mr-5">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Remarks (Max Char 100)</label>
             <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"></textarea>

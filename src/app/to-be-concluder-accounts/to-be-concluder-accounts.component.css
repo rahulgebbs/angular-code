@@ -1,6 +1,5 @@
 .pop-bg {
   background: #000000b8;
-  /* position: absolute; */
   position: fixed;
   top: 0;
   right: 0;
@@ -12,25 +11,13 @@
   overflow-x: hidden;
   z-index: 1000;
   overflow-y: inherit;
-  /* z-index: 1050; */
 }
 .pop-position {
-  /* height: 570px;
-    background: white;
-    margin: auto;
-    width: 65%;
-    position: absolute;
-    -webkit-transform: translate(0, 50%);
-    z-index: 20000;
-    left: 0px;
-    right: 0;
-    bottom: 326px; */
   height: auto;
   background: white;
   margin: auto;
   width: 80%;
   position: fixed;
-  /* -webkit-transform: translate(0, 50%); */
   z-index: 1000;
   left: 0px;
   right: 0;
@@ -116,11 +103,4 @@ input {
 
 .grid-w {
   height: 100%;
-}
-
-#bucketContainer {
-  min-height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }

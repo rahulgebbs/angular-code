@@ -172,7 +172,7 @@
         </div>
       </div>
       <!-- Input Fields Started -->
-      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==null"
+      <div *ngIf="ActiveBucket!='To Be Concluded'"
         [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
@@ -358,7 +358,7 @@
       </div>
       <!--Appeal Ends-->
       <!-- Action Form Started -->
-      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==null" class="col-md-3 p-0">
+      <div *ngIf="ActiveBucket!='To Be Concluded'" class="col-md-3 p-0">
         <div class="col-md-12 p-0">
           <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
             <div class="col-md-12 col-sm-12 p-0">
@@ -473,8 +473,7 @@
       </div>
       <!-- Action Form ended -->
       <!-- Concluder Fields Started -->
-      <div *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null"
-        class="p-0 blue-seprator serpartion-h col-md-9">
+      <div *ngIf="ActiveBucket=='To Be Concluded'" class="p-0 col-md-9">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
             <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Concluder Fields</span>
@@ -567,3 +566,8 @@
 <app-add-pcn-modal [AllFields]="AllFields" [inventory]="inventoryDetails" [SaagLookup]="SaagLookup"
   *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
 </app-add-pcn-modal>
+<!-- <app-concluder-accounts [ClientId]="ClientId"></app-concluder-accounts> -->
+
+<app-to-be-concluder-accounts *ngIf="openToBeConcludedBucketModal" [(WorkingAccountId)]="concluderId"
+  (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"
+  (CloseConcluderModal)="CloseConcluderModal($event)"></app-to-be-concluder-accounts>

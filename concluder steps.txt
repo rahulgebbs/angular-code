@@ -1,0 +1,4 @@
+* ) disbale button
+* ) Assign accounts list
+* ) assign inventory_log_id
+* ) save accounts into local

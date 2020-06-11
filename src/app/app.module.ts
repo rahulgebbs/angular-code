@@ -153,6 +153,7 @@ import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-das
 import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-count-modal/allocated-count-modal.component';
 import { PcnReportComponent } from './landing-page/pcn-report/pcn-report.component';
 import { ConcluderAccountsComponent } from './child-components/agent/concluder-accounts/concluder-accounts.component';
+import { ToBeConcluderAccountsComponent } from './to-be-concluder-accounts/to-be-concluder-accounts.component';
 
 
 @NgModule({
@@ -291,7 +292,8 @@ import { ConcluderAccountsComponent } from './child-components/agent/concluder-a
     ConcluderDashboardComponent,
     AllocatedCountModalComponent,
     PcnReportComponent,
-    ConcluderAccountsComponent
+    ConcluderAccountsComponent,
+    ToBeConcluderAccountsComponent
   ],
   imports: [
     BrowserModule,

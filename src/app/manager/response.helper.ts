@@ -4,7 +4,7 @@ export class ResponseHelper {
     constructor(private notification: NotificationService) { }
 
     GetSuccessResponse(httpres): number {
-        console.log('GetSuccessResponse httpres : ', httpres);
+        // console.log('GetSuccessResponse httpres : ', httpres);
         let notifydata = httpres.Message ? httpres.Message : httpres.json().Message;
         switch (httpres.status) {
             case 200: notifydata != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Successful", Type: "SUCCESS" }])

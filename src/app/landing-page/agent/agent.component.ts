@@ -42,7 +42,7 @@ export class AgentComponent implements OnInit {
   /* utility*/
   showHighPriorityAccounts = false;
   callreferenceAcccounts = false;
-  ResponseHelper: ResponseHelper
+  ResponseHelper: ResponseHelper;
   AllFields = [];
   ActionForm: FormGroup;
   Validated = false;
@@ -114,6 +114,10 @@ export class AgentComponent implements OnInit {
   inventoryDetails = {};
   userdata: any;
   clientObj = {};
+
+  // concluder section 
+  openToBeConcludedBucketModal = false;
+  concluderId = null;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
@@ -772,111 +776,33 @@ export class AgentComponent implements OnInit {
     }
   }
 
-  toBeConcluded() {
-    this.concluderService.checkIfConcluder(this.ClientId).subscribe((response) => {
-      console.log('checkIfConcluder : ', response);
-      if (response.Data == true) {
-        this.concluderInventoryData();
-        this.ResponseHelper.GetSuccessResponse(response);
-      }
-    }, (error) => {
-      console.log('checkIfConcluder error: ', error);
-      this.ResponseHelper.GetFaliureResponse(error);
-      this.concluderInventoryData();
-    });
+  openConcludedBucketModal() {
+
   }
 
+  toBeConcluded() {
+    this.openToBeConcludedBucketModal = true;
+    // this.concluderService.checkIfConcluder(this.ClientId).subscribe((response) => {
+    //   console.log('checkIfConcluder : ', response);
+    //   if (response.Data == true) {
+    //     this.concluderInventoryData();
+    //     this.ResponseHelper.GetSuccessResponse(response);
+    //   }
+    // }, (error) => {
+    //   console.log('checkIfConcluder error: ', error);
+    //   this.ResponseHelper.GetFaliureResponse(error);
+    //   this.concluderInventoryData();
+    // });
+  }
+
+  CloseConcluderModal(event) {
+    console.log('CloseConcluderModal : ', event);
+    this.openToBeConcludedBucketModal = false;
+  }
   concluderInventoryData() {
     console.log('concluderInventoryData() : ');
     this.concluderService.getConcluderInventoryData().subscribe((response) => {
       console.log('concluderInventoryData response : ', response);
-      this.AccountsList = [
-        {
-          "Id": 1,
-          "Inventory_Id": 39,
-          "Dollar_Value": 6900,
-          "Bucket_Name": null,
-          "Group_By_Field_Header": "Payer",
-          "Group_By_Field_Value": "Aetna",
-          "Days": "-2162",
-          "Voice_NonVoice": "NON-VOICE",
-          "TFL_Status": "OTFL",
-          "Inventory_Log_Id": 141,
-          "Allocated_To": "3102546",
-          "Allocated_On": "2020-06-09T14:54:13.953",
-          "Completion_Date": null,
-          "Account_Number": "123456-01362",
-          "Encounter_Number": null
-        },
-        {
-          "Id": 2,
-          "Inventory_Id": 40,
-          "Dollar_Value": 6900,
-          "Bucket_Name": null,
-          "Group_By_Field_Header": "Payer",
-          "Group_By_Field_Value": "Aetna",
-          "Days": "-2162",
-          "Voice_NonVoice": "NON-VOICE",
-          "TFL_Status": "OTFL",
-          "Inventory_Log_Id": 142,
-          "Allocated_To": "3102546",
-          "Allocated_On": "2020-06-09T14:54:13.953",
-          "Completion_Date": null,
-          "Account_Number": "123456-01363",
-          "Encounter_Number": null
-        },
-        {
-          "Id": 3,
-          "Inventory_Id": 41,
-          "Dollar_Value": 6900,
-          "Bucket_Name": null,
-          "Group_By_Field_Header": "Payer",
-          "Group_By_Field_Value": "Aetna",
-          "Days": "-2162",
-          "Voice_NonVoice": "NON-VOICE",
-          "TFL_Status": "OTFL",
-          "Inventory_Log_Id": null,
-          "Allocated_To": "3102546",
-          "Allocated_On": "2020-06-09T14:54:13.953",
-          "Completion_Date": null,
-          "Account_Number": "123456-01364",
-          "Encounter_Number": null
-        },
-        {
-          "Id": 4,
-          "Inventory_Id": 42,
-          "Dollar_Value": 6900,
-          "Bucket_Name": null,
-          "Group_By_Field_Header": "Payer",
-          "Group_By_Field_Value": "Aetna",
-          "Days": "-2162",
-          "Voice_NonVoice": "NON-VOICE",
-          "TFL_Status": "OTFL",
-          "Inventory_Log_Id": null,
-          "Allocated_To": "3102546",
-          "Allocated_On": "2020-06-09T14:54:13.953",
-          "Completion_Date": null,
-          "Account_Number": "123456-01365",
-          "Encounter_Number": null
-        },
-        {
-          "Id": 5,
-          "Inventory_Id": 43,
-          "Dollar_Value": 6900,
-          "Bucket_Name": null,
-          "Group_By_Field_Header": "Payer",
-          "Group_By_Field_Value": "Aetna",
-          "Days": "-2162",
-          "Voice_NonVoice": "NON-VOICE",
-          "TFL_Status": "OTFL",
-          "Inventory_Log_Id": null,
-          "Allocated_To": "3102546",
-          "Allocated_On": "2020-06-09T14:54:13.953",
-          "Completion_Date": null,
-          "Account_Number": "123456-01366",
-          "Encounter_Number": null
-        }
-      ];
       this.OpenAccountsModal = true;
       if (this.AccountsList[0].Inventory_Log_Id) {
         this.InventoryLogId = this.AccountsList[0].Inventory_Log_Id;
@@ -892,6 +818,23 @@ export class AgentComponent implements OnInit {
     })
   }
 
+
+  concluderRowClick(event) {
+    console.log('concluderRowClick : ', event);
+    if (event) {
+      this.AllFields = event.fields;
+      this.DisplayMain = true;
+      this.ActiveBucket = event.Bucket_Name;
+      this.concluderId = event.concluderId;
+    }
+    if (event.closePopup == true) {
+      this.openToBeConcludedBucketModal = false;
+    }
+  }
+
+  saveConcluderAcountsIntoLocal() {
+
+  }
   ChangeWorkingStatusInLocal(bucketname: string) {
     this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
     this.LocalAccounts.forEach(e => {
