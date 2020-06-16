@@ -4,15 +4,49 @@
 }
 
 .denialInput {
-  width: 25%;
+  width: 25% !important;
   float: left;
 }
 
 .radioBorder {
-  border: 1px solid #dfdfdf;
+  /* border: 1px solid #dfdfdf; */
+  padding-left: 1rem;
+  min-height: 25px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  /* border: 1px solid #dfdfdf;
   padding: 0.1rem 1rem 1rem 1rem;
   min-height: 70px;
   display: flex;
   justify-content: left;
+  align-items: center; */
+}
+
+.field {
+  width: 30%;
+  float: left;
+  /* border: 1px solid; */
+  /* min-height: 120px; */
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: row;
+  margin: 0 2rem 2rem 0;
+}
+
+.form-group {
+  width: 100% !important;
+  float: left;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.input-group {
+  width: 100% !important;
+}
+.input-group-addon {
+  width: none !important;
 }

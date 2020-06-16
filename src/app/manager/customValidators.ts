@@ -303,7 +303,10 @@ export class customValidation {
             return null
         }
     }
-
+    // static setConcluderValidations(form: AbstractControl) {
+    //     console.log('form : ', form);
+    //     return null;
+    // }
 
 
 

@@ -20,7 +20,7 @@ export class ConcluderService {
     let headers: any = new Headers({
       'Access_Token': this.TokenCls.GetToken()
     });
-    console.log('addNewLine() service : ');
+    console.log('checkIfConcluder() service : ');
     return this.http.get(environment.ApiUrl + `/api/Check_Concluder_Process?Client_Id=${clientId}`, { headers: headers }).map(res => res.json());
   }
 
@@ -29,7 +29,7 @@ export class ConcluderService {
     let headers: any = new Headers({
       'Access_Token': this.TokenCls.GetToken()
     });
-    console.log('addNewLine() service : ');
+    console.log('getConcluderInventoryData() service : ');
     return this.http.get(environment.ApiUrl + `/api/Get_Concluder_Inventory_data`, { headers: headers }).map(res => res.json());
   }
 
@@ -38,7 +38,7 @@ export class ConcluderService {
     let headers: any = new Headers({
       'Access_Token': this.TokenCls.GetToken()
     });
-    console.log('addNewLine() service : ');
+    console.log('getConcludedBucketCount() service : ');
     return this.http.get(environment.ApiUrl + `api/Get_Conclusion_Bucket_Count?client_Id=${clientId}`, { headers: headers }).map(res => res.json());
   }
 
@@ -52,5 +52,21 @@ export class ConcluderService {
 
   updateConcluderTime(formbody) {
     return this.http.post(environment.ApiUrl + '/api/Update_Concluder_Time_Management', formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
-  }  // api/Get_Conclusion_Bucket_Count?client_Id=9064
+  }
+
+  saveToBeConcluderData(formbody) {
+    return this.http.post(environment.ApiUrl + '/api/Insert_Concluder_Details', formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  }
+
+  getDropDownStatus(clientId) {
+    // Get_Concluder_Inventory_data
+    return this.http.get(environment.ApiUrl + `/api/Get_Concluder_Details_Status?Client_Id=${clientId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  submitToBeConcludedForm(formbody) {
+    // Get_Concluder_Inventory_data
+    return this.http.post(environment.ApiUrl + `/api/Insert_Concluder_Details`, formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  }
+
+  // Insert_Concluder_Details
 }

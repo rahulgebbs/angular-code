@@ -148,7 +148,6 @@ export class ChangePasswordComponent implements OnInit {
     }
     else {
       return false;
-      // alert('Incorrect')
     }
   }
 }

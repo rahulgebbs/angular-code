@@ -32,7 +32,7 @@
         </div>
       </li>
     </ul>
-    <ul>
+    <ul title="To Be Concluded">
       <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
         [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
         <!-- class="active-li" -->
@@ -481,7 +481,8 @@
         </div>
         <div class="col-md-12 p-0  auto-scroll-section">
           <div class="col-md-12 p-0">
-            <app-agent-concluder></app-agent-concluder>
+            <app-agent-concluder (assignInventory)="concluderRowClick($event)" [concluderId]="concluderId"
+              [ClientId]="ClientId"></app-agent-concluder>
           </div>
         </div>
       </div>

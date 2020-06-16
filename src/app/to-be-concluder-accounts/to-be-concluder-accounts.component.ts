@@ -155,7 +155,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   }
 
   OnRowClicked(e) {
-    console.log('OnRowClicked : ', e);
+    // console.log('OnRowClicked : ', e);
     let standardFields = [];
     const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
     fieldList.forEach((field) => {
@@ -186,6 +186,6 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     }
   }
   saveIntoLocal() {
-    sessionStorage.setItem('concluderAccounts', JSON.stringify(this.AccountsList));
+    sessionStorage.setItem('concluderAccounts', JSON.stringify(this.allData));
   }
 }

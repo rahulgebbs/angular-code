@@ -782,17 +782,6 @@ export class AgentComponent implements OnInit {
 
   toBeConcluded() {
     this.openToBeConcludedBucketModal = true;
-    // this.concluderService.checkIfConcluder(this.ClientId).subscribe((response) => {
-    //   console.log('checkIfConcluder : ', response);
-    //   if (response.Data == true) {
-    //     this.concluderInventoryData();
-    //     this.ResponseHelper.GetSuccessResponse(response);
-    //   }
-    // }, (error) => {
-    //   console.log('checkIfConcluder error: ', error);
-    //   this.ResponseHelper.GetFaliureResponse(error);
-    //   this.concluderInventoryData();
-    // });
   }
 
   CloseConcluderModal(event) {
@@ -822,7 +811,7 @@ export class AgentComponent implements OnInit {
   concluderRowClick(event) {
     console.log('concluderRowClick : ', event);
     if (event) {
-      this.AllFields = event.fields;
+      this.AllFields = JSON.parse(JSON.stringify(event.fields));
       this.DisplayMain = true;
       this.ActiveBucket = event.Bucket_Name;
       this.concluderId = event.concluderId;
@@ -830,10 +819,14 @@ export class AgentComponent implements OnInit {
     if (event.closePopup == true) {
       this.openToBeConcludedBucketModal = false;
     }
-  }
 
-  saveConcluderAcountsIntoLocal() {
-
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.concluderId = null;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+    }
+    // this.cdr
   }
   ChangeWorkingStatusInLocal(bucketname: string) {
     this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
