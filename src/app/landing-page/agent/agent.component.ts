@@ -32,7 +32,7 @@ import { ConcluderService } from 'src/app/service/concluder.service';
   providers: [dropDownFields]
 })
 export class AgentComponent implements OnInit {
-  to_be_concluded_bucket = {
+  to_be_concluded_bucket: any = {
     Count: 0,
     Display_Name: "To Be Concluded",
     Name: "To Be Concluded"
@@ -123,7 +123,6 @@ export class AgentComponent implements OnInit {
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
 
   ngOnInit() {
-
     sessionStorage.removeItem('localPCN');
     sessionStorage.removeItem('lastPCN');
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
@@ -472,7 +471,7 @@ export class AgentComponent implements OnInit {
 
   ClearForm() {
     this.Validated = false;
-    this.Is_New_Line = false;
+    // this.Is_New_Line = false;
     this.CreateActionForm();
   }
 

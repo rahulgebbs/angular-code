@@ -19,7 +19,7 @@ import { Token } from 'src/app/manager/token';
   styleUrls: ['./add-pcn-modal.component.scss']
 })
 export class AddPcnModalComponent implements OnInit, OnChanges {
-  addPCNForm: FormGroup;
+  addPCNForm: any;
   @Input() inventory;
   @Input() SaagLookup;
   @Input() AllFields;

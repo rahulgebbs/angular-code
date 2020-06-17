@@ -48,8 +48,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     if (this.ClientId != null) {
       this.initForm();
     }
-    this.getStatusDropdownList();
-    this.setFields();
+
   }
 
   setFields() {
@@ -81,11 +80,18 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       "Employee_Code": [null],
       "Conclusion": [null]
     });
+    this.getStatusDropdownList();
+    this.setFields();
+  }
 
+  clearForm() {
+    this.initForm();
+    console.log('clearForm() : ', this.concludedForm);
   }
 
   BlockInput(event) {
-    if (event.key == 'Backspace' || event.key == 'Tab') {
+    if (event.key == 'Tab') {
+      // if (event.key == 'Backspace' || event.key == 'Tab') {
       return true;
     }
     else {

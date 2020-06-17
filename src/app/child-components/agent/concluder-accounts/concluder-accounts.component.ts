@@ -9,10 +9,12 @@ import { ConcluderService } from 'src/app/service/concluder.service';
 })
 export class ConcluderAccountsComponent implements OnInit {
   @Input() ClientId;
+  @Input() UserId;
   AccountsList = [];
+  RowSelection = "single";
   columnDefs = []
   constructor(private concluderService: ConcluderService) { }
-
+  bucketList = []
   ngOnInit() {
     this.columnDefs = [
       { field: 'Inventory_Id', hide: true, rowGroupIndex: null },
@@ -34,9 +36,20 @@ export class ConcluderAccountsComponent implements OnInit {
 
     this.concluderService.getConcludedBucketCount(this.ClientId).subscribe((response) => {
       console.log('response : ', response);
+      this.bucketList = response.Data;
     }, (error) => {
       console.log('error : ', error);
     })
   }
 
+  getDataByBucketName(bucketName) {
+    this.concluderService.getConclusionDataByBucket(this.ClientId,this.UserId,bucketName).subscribe((response) => {
+      console.log('getConcludedBucketCount response : ', response);
+    }, (error) => {
+      console.log('getConcludedBucketCount error : ', error);
+    })
+  }
+  Close() {
+
+  }
 }

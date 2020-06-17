@@ -567,7 +567,7 @@
 <app-add-pcn-modal [AllFields]="AllFields" [inventory]="inventoryDetails" [SaagLookup]="SaagLookup"
   *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
 </app-add-pcn-modal>
-<!-- <app-concluder-accounts [ClientId]="ClientId"></app-concluder-accounts> -->
+<app-concluder-accounts [ClientId]="ClientId" [UserId]="UserId"></app-concluder-accounts>
 
 <app-to-be-concluder-accounts *ngIf="openToBeConcludedBucketModal" [(WorkingAccountId)]="concluderId"
   (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"

@@ -68,7 +68,7 @@
                 <tr *ngFor="let item of InventoryData; let i=index">
                   <td>
                     <input class="form-control" maxlength="200" [disabled]="!item.Is_New" name="Column_Name-{{i}}"
-                      type="text" [(ngModel)]="item.Header_Name" #Header_Name="ngModel">
+                      type="text" [id]="item.Header_Name" [(ngModel)]="item.Header_Name" #Header_Name="ngModel">
                     <div class="error" *ngIf="CheckDuplicateHeaderName(Header_Name,i) == i && DisplayHeaderError">
                       duplicate header
                       {{f.form.setErrors({ 'invalid': true })}}

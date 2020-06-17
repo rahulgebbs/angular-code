@@ -1,7 +1,7 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="col-md-12 p-0 grey">
+  <div class="col-md-12 p-0 grey row" style="margin: 0">
     <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span class="text-sm text-ellipsis heading-txt flex">
@@ -16,21 +16,21 @@
   <div class="col-md-12 p-0" id="bucketContainer">
     <!-- <h1>Concluder buckets</h1> -->
     <div class="col-md-12 col-sm-12 mb-5 p-0">
-      <button (click)="GetInventories(a)" *ngFor="let a of [{},{},{},{},{},{},{},{}]"
-        [ngClass]="[SelectedAging == a ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
-        {{a.Ageing_Bucket_Name ||"Reason"}}
+      <button (click)="getDataByBucketName(bucket.Bucket_Name)" *ngFor="let bucket of bucketList"
+        [ngClass]="[SelectedAging == bucket ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
+        {{bucket.Bucket_Name || "N/A"}}
         <span class="buckets-list-cl d-unset">
-          <b class="badge circle-buget  badge-sm badge-pill">{{a.Ageing_Bucket_Count || 0}}</b>
+          <b class="badge circle-buget  badge-sm badge-pill">{{bucket.Bucket_Count || 0}}</b>
         </span>
       </button>
     </div>
   </div>
   <div class="col-md-12 p-0">
     <div class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-      <ag-grid-angular [enableSorting]="true" [enableColResize]="true"
-        [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
-        [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
-        [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true">
+      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+        [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"
+        [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection"
+        [suppressColumnVirtualisation]="true">
       </ag-grid-angular>
       <!-- 
              <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true"
