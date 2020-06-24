@@ -125,3 +125,14 @@ input {
   justify-content: center;
   align-items: center;
 }
+
+.disableBtn {
+  /* user-select: none; */
+  pointer-events: none;
+  /* cursor: not-allowed; */
+}
+
+
+.reasonBucket {
+  margin-bottom: 1rem;
+}

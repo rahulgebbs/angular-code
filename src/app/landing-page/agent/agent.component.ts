@@ -4,7 +4,7 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AgentService } from 'src/app/service/agent.service';
-import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError, last } from 'rxjs/operators';
+import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError, last, retry } from 'rxjs/operators';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalInsuranceService } from 'src/app/service/global-insurance.service';
@@ -36,6 +36,11 @@ export class AgentComponent implements OnInit {
     Count: 0,
     Display_Name: "To Be Concluded",
     Name: "To Be Concluded"
+  }
+  conclusion_bucket: any = {
+    Count: 0,
+    Display_Name: "Conclusion",
+    Name: "Conclusion"
   }
   instructionCount: Number = 0;
   Title = "Agent";
@@ -113,10 +118,11 @@ export class AgentComponent implements OnInit {
   showAddPCNModal = false;
   inventoryDetails = {};
   userdata: any;
-  clientObj = {};
+  clientObj: any = {};
 
   // concluder section 
   openToBeConcludedBucketModal = false;
+  openConclusionBucketModal = false;
   concluderId = null;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
@@ -502,6 +508,7 @@ export class AgentComponent implements OnInit {
       objs["Bucket_Name"] = this.ActiveBucket;
       objs["Status"] = this.ActionForm.controls['Status'].value;
       objs["Sub-Status"] = this.ActionForm.controls['SubStatus'].value;
+      objs["Sub_Status"] = this.ActionForm.controls['SubStatus'].value;
       objs["Action_Code"] = this.ActionForm.controls['ActionCode'].value;
       objs["Account_Status"] = this.ActionForm.controls['WorkStatus'].value;
 
@@ -519,6 +526,13 @@ export class AgentComponent implements OnInit {
         this.submitAddNewLine(obj);
         return true;
       }
+      if (this.ActiveBucket == 'Conclusion') {
+        console.log('Conclusion : ', obj);
+        this.DisableSubmit = false;
+        this.submitConclusion(obj);
+        return true;
+      }
+      // return true
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -618,7 +632,7 @@ export class AgentComponent implements OnInit {
   }
   getClientID() {
     this.clientService.getClient(this.userdata.TokenValue, this.ClientId).subscribe((res) => {
-      console.log('getClientUpdate : ', res.json());
+      console.log('getClient data : ', res.json());
       this.clientObj = res.json().Data;
     }, (error) => {
       this.clientObj = {};
@@ -733,13 +747,16 @@ export class AgentComponent implements OnInit {
       });
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
-      this.ActiveBucket = bucket.Name;
+      this.ActiveBucket = bucket.Name == 'Conclusion' ? this.ActiveBucket : bucket.Name;
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
       else if (bucket.Name == 'To Be Concluded') {
         // call concluder to be done service
         this.toBeConcluded();
+      }
+      else if (bucket.Name == 'Conclusion') {
+        this.conclusionBucket();
       }
       else {
         if (!this.CheckPendingAccount(bucket.Name)) {
@@ -783,9 +800,26 @@ export class AgentComponent implements OnInit {
     this.openToBeConcludedBucketModal = true;
   }
 
+  conclusionBucket() {
+    this.openConclusionBucketModal = true;
+    console.log('conclusionBucket() : ', this.ActiveBucket);
+    // this.ActiveBucket = null;
+  }
+
+  closeConclusionModal(event) {
+    this.openConclusionBucketModal = false;
+
+    // this.DisplayMain = false;
+    // this.DisplayMessage = "Please click on Bucket to continue";
+    // this.ActiveBucket = '';
+  }
+
   CloseConcluderModal(event) {
     console.log('CloseConcluderModal : ', event);
     this.openToBeConcludedBucketModal = false;
+    // this.DisplayMain = false;
+    // this.DisplayMessage = "Please click on Bucket to continue";
+    // this.ActiveBucket = '';
   }
   concluderInventoryData() {
     console.log('concluderInventoryData() : ');
@@ -821,12 +855,28 @@ export class AgentComponent implements OnInit {
 
     if (this.AllFields && this.AllFields.length == 0) {
       this.DisplayMain = false;
-      this.concluderId = null;
       this.DisplayMessage = "Please click on Bucket to continue";
       this.ActiveBucket = '';
+      this.concluderId = null;
     }
     // this.cdr
   }
+
+  conclusionRowClick(data) {
+    console.log('conclusionRowClick(data) : ', data);
+    this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+    if (data && data.AccountsList && data.AccountsList.length > 0) {
+      this.DisplayMain = true;
+      this.ActiveBucket = 'Conclusion';
+      this.AllFields = data.AccountsList;
+    }
+    this.concluderId = data.concluderId;
+    if (data.status == true) {
+      this.openConclusionBucketModal = false;
+    }
+    this.setStatus();
+  }
+
   ChangeWorkingStatusInLocal(bucketname: string) {
     this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
     this.LocalAccounts.forEach(e => {
@@ -1124,10 +1174,9 @@ export class AgentComponent implements OnInit {
                 var d = new Date(e.FieldValue);
                 e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
               }
-              // else {
-              //   e.FieldValue = "NA";
-              // }
-
+              else{
+                e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
+              }
             }
             break;
         }
@@ -1481,5 +1530,103 @@ export class AgentComponent implements OnInit {
     this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
     // console.log('setActionFormFields : ', this.ActionForm.value, this.SubStatus, this.ActionCode);
   }
+
+  // concluder section
+  setStatus() {
+    this.saagservice.getSaagLookup(this.ClientId).subscribe((response: any) => {
+      console.log('getSaagLookup : ', response);
+      this.SaagLookup = response.json().Data.SAAG_Lookup;;
+      this.Status = this.SaagLookup.map(function (obj) { return obj.Status; });
+      this.Status = _.uniq(this.Status);
+      console.log('setStatus : ', this.Status, this.SaagLookup);
+    }, (error) => {
+      console.log('error : ', error)
+    })
+  }
+
+  submitConclusion(obj) {
+    console.log('submitConclusion(obj): ', obj);
+    obj.Fields['Concluder_Id'] = this.concluderId;
+    obj.Fields["PCn_ids"] = obj.Fields["PCn_ids"] ? obj.Fields["PCn_ids"] : [];
+    this.concluderService.saveConclusionData(obj).subscribe((response) => {
+      console.log('saveConclusionData response : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
+      this.asigNextConclusionInventory();
+      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      this.Validated = false;
+    }, (error) => {
+      this.ResponseHelper.GetFaliureResponse(error);
+      console.log('saveConclusionData response : ', error);
+      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      this.Validated = false;
+    });
+    // this.asigNextConclusionInventory();
+  }
+
+  asigNextConclusionInventory() {
+    const localStr = sessionStorage.getItem('concluderAccounts');//JSON.parse(sessionStorage.getItem('concluderAccounts'));
+    // let fieldList = [];
+    if (localStr != null) {
+      var concluderAccouts = JSON.parse(localStr);
+      console.log('asigNextConclusionInventory before concluderAccouts : ', concluderAccouts.length);
+      concluderAccouts.forEach((list, listIndex) => {
+        list.forEach((field, index) => {
+          field.FieldValue = field.Field_Value;
+          console.log('asigNextConclusionInventory field : ', field.Header_Name, field.FieldValue, this.concluderId);
+          if (field.Header_Name == 'Concluder_Id' && this.concluderId == field.FieldValue) {
+            // fieldList = list;
+            concluderAccouts.splice(listIndex, 1);
+            return false;
+          }
+        });
+      });
+    }
+    console.log('asigNextConclusionInventory After concluderAccouts : ', concluderAccouts.length);
+    if (concluderAccouts && concluderAccouts.length > 0) {
+      concluderAccouts[0].forEach((field) => {
+        field.Is_Standard_Field = true;
+        field['Display_Name'] = field.Header_Name;
+        field['Is_View_Allowed_Agent'] = true;
+        field['FieldValue'] = field.Field_Value;
+      });
+      const matchedObj = concluderAccouts[0].find((ele) => {
+        return ele.Header_Name == "Concluder_Id";
+      });
+      console.log('this.concluderId, matchedObj.FieldValue : ', this.concluderId, matchedObj.FieldValue)
+      this.concluderService.getConclusionDataByConcludeID(this.ClientId, matchedObj.FieldValue, this.ActiveBucket).subscribe((response) => {
+        console.log('getConclusionDataByConcludeID response : ', response);
+        this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: matchedObj.FieldValue, fields: response.Data, closePopup: false });
+      }, (error) => {
+        console.log('getConclusionDataByConcludeID error : ', error);
+      })
+      // this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+    }
+    else {
+      this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: null, fields: [], closePopup: false });
+    }
+    sessionStorage.setItem('concluderAccounts', JSON.stringify(concluderAccouts));
+  }
+
+  setConcluderFields(event) {
+    if (event) {
+      event.fields.forEach(element => {
+        // element.Is_Edit_Allowed_Agent = true;
+        element['Is_View_Allowed_Agent'] = true;
+      });
+      this.AllFields = JSON.parse(JSON.stringify(event.fields));
+      this.DisplayMain = true;
+      this.ActiveBucket = event.Bucket_Name;
+      this.concluderId = event.concluderId;
+    }
+    // if (event.closePopup == true) {
+    //   this.openToBeConcludedBucketModal = false;
+    // }
+
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.concluderId = null;
+    }
+  }
 }
-// };

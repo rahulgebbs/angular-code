@@ -11,14 +11,18 @@
                         Original Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='originalBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="originalBilledDateCalendar" class="owl-dp form-control" name="originalBilledDateCalendar" [owlDateTime]="originalBilledDateCalendar" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                            [max]="maxDate" formControlName="Original_Claim_Billed_Date">
+                        <input placeholder="mm/dd/yyyy" autocomplete="off"
+                            [owlDateTimeTrigger]="originalBilledDateCalendar" class="owl-dp form-control"
+                            name="originalBilledDateCalendar" [owlDateTime]="originalBilledDateCalendar"
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate"
+                            formControlName="Original_Claim_Billed_Date">
                         <span class="input-group-addon" [owlDateTimeTrigger]="originalBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #originalBilledDateCalendar></owl-date-time>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('Original_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('Original_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
                         Original Claim Billed Date is required.
                     </div>
                 </div>
@@ -30,14 +34,17 @@
                         Last Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='lastBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="lastBilledDateCalendar" class="owl-dp form-control" name="lastBilledDateCalendar" [owlDateTime]="lastBilledDateCalendar" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                            [max]="maxDate" formControlName="Latest_Claim_Billed_Date">
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="lastBilledDateCalendar"
+                            class="owl-dp form-control" name="lastBilledDateCalendar"
+                            [owlDateTime]="lastBilledDateCalendar" (keydown)="BlockInput($event)"
+                            (keypress)="BlockInput($event)" [max]="maxDate" formControlName="Latest_Claim_Billed_Date">
                         <span class="input-group-addon" [owlDateTimeTrigger]="lastBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #lastBilledDateCalendar></owl-date-time>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
                         Latest Claim Billed Date is required.
                     </div>
                 </div>
@@ -47,7 +54,8 @@
             <div class="field">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Provider</label>
-                    <input placeholder="Enter Provider" type="text" class="form-control" name="provider" id="" cols="30" rows="3" formControlName="Provider">
+                    <input placeholder="Enter Provider" type="text" class="form-control" name="provider" id="" cols="30"
+                        rows="3" formControlName="Provider">
                 </div>
             </div>
 
@@ -67,19 +75,23 @@
                             No
                         </label>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('Rejection').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('Rejection').hasError('required') && (submitStatus==true)">
                         Rejection is required.
                     </div>
                 </div>
 
             </div>
 
-            <div class="field" *ngIf="formValue['Rejection']==null || formValue['Rejection'].length==0 || formValue['Rejection']==true">
+            <div class="field"
+                *ngIf="formValue['Rejection']==null || formValue['Rejection'].length==0 || formValue['Rejection']==true">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Rejection Reason <span
                             class="asteric">*</span></label>
-                    <textarea class="form-control" name="provider" id="" cols="30" rows="3" formControlName="Rejection_Reason"></textarea>
-                    <div class="error" *ngIf="concludedForm.get('Rejection_Reason').hasError('required') && (submitStatus==true)">
+                    <textarea class="form-control" name="provider" id="" cols="30" rows="3"
+                        formControlName="Rejection_Reason"></textarea>
+                    <div class="error"
+                        *ngIf="concludedForm.get('Rejection_Reason').hasError('required') && (submitStatus==true)">
                         Rejection Reason is required.
                     </div>
                 </div>
@@ -103,7 +115,8 @@
                             No
                         </label>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('EOB_Available').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('EOB_Available').hasError('required') && (submitStatus==true)">
                         EOB Available is required.
                     </div>
                 </div>
@@ -140,48 +153,62 @@
                             No
                         </label>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('EOB_Posted_in_Sys').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('EOB_Posted_in_Sys').hasError('required') && (submitStatus==true)">
                         EOB Posted In Sys is required.
                     </div>
                 </div>
             </div>
 
-            <div class="field" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
+            <div class="field"
+                *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
-                    <input type="text" class="form-control denialInput" placeholder="denial_1" formControlName="Denial_1">
-                    <input type="text" class="form-control denialInput" placeholder="denial_2" formControlName="Denial_2">
-                    <input type="text" class="form-control denialInput" placeholder="denial_3" formControlName="Denial_3">
-                    <input type="text" class="form-control denialInput" placeholder="denial_4" formControlName="Denial_4">
-                    <input type="text" class="form-control denialInput" placeholder="denial_5" formControlName="Denial_5">
+                    <input type="text" class="form-control denialInput" placeholder="denial_1"
+                        formControlName="Denial_1">
+                    <input type="text" class="form-control denialInput" placeholder="denial_2"
+                        formControlName="Denial_2">
+                    <input type="text" class="form-control denialInput" placeholder="denial_3"
+                        formControlName="Denial_3">
+                    <input type="text" class="form-control denialInput" placeholder="denial_4"
+                        formControlName="Denial_4">
+                    <input type="text" class="form-control denialInput" placeholder="denial_5"
+                        formControlName="Denial_5">
 
 
                 </div>
             </div>
 
-            <div class="field" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true  && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
+            <div class="field"
+                *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true  && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Reason (Remark Code)
                         <span class="asteric">*</span></label>
-                    <textarea class="form-control" name="denialReason" id="" cols="30" rows="3" formControlName="Denial_Reason"></textarea>
-                    <div class="error" *ngIf="concludedForm.get('Denial_Reason').hasError('required') && (submitStatus==true)">
+                    <textarea class="form-control" name="denialReason" id="" cols="30" rows="3"
+                        formControlName="Denial_Reason"></textarea>
+                    <div class="error"
+                        *ngIf="concludedForm.get('Denial_Reason').hasError('required') && (submitStatus==true)">
                         Denial Reason is required.
                     </div>
                 </div>
             </div>
 
-            <div class="field" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true  && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
+            <div class="field"
+                *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true  && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
                 <div class="form-group">
                     <label class="label-std  control-label p-0 b-600">Denial Date <span class="asteric">*</span></label>
                     <div class='input-group date' id='denialDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="denialDateCalendar" class="owl-dp form-control" name="denialDateCalendar" [owlDateTime]="denialDateCalendar" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate"
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="denialDateCalendar"
+                            class="owl-dp form-control" name="denialDateCalendar" [owlDateTime]="denialDateCalendar"
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate"
                             formControlName="Denial_Date">
                         <span class="input-group-addon" [owlDateTimeTrigger]="denialDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #denialDateCalendar></owl-date-time>
                     </div>
-                    <div class="error" *ngIf="concludedForm.get('Denial_Date').hasError('required') && (submitStatus==true)">
+                    <div class="error"
+                        *ngIf="concludedForm.get('Denial_Date').hasError('required') && (submitStatus==true)">
                         Denial Date is required.
                     </div>
                 </div>
@@ -191,7 +218,8 @@
             <div class="field">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Remarks (Max Char 100)</label>
-                    <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"></textarea>
+                    <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"
+                        maxlength="100"></textarea>
                 </div>
             </div>
 
@@ -202,8 +230,11 @@
             <!-- EOB Posted in Sys -->
             <div class="col-md-12 col-xs-12" style="margin-bottom: 2rem;">
                 <div class="col-md-12 col-xs-12 text-center p-0">
-                    <button [disabled]="disableBtn==true" type="button" class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51" (click)="clearForm()">Clear</button>
-                    <button [disabled]="disableBtn==true" type="submit" class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51">Submit</button>
+                    <button [disabled]="disableBtn==true" type="button"
+                        class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51"
+                        (click)="clearForm()">Clear</button>
+                    <button [disabled]="disableBtn==true" type="submit"
+                        class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51">Submit</button>
                 </div>
             </div>
         </div>

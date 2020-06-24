@@ -32,7 +32,7 @@
         </div>
       </li>
     </ul>
-    <ul title="To Be Concluded">
+    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null" title="To Be Concluded">
       <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
         [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
         <!-- class="active-li" -->
@@ -41,6 +41,18 @@
           <!-- <span class="buckets-list-cl">
             <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
           </span> -->
+        </div>
+      </li>
+    </ul>
+    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==true" title="Conclusion">
+      <li (click)="ToggleAccountsModal(conclusion_bucket)"
+        [ngClass]="{'active-li':ActiveBucket == conclusion_bucket.Name, 'disableBtn': conclusion_bucket.disableBtn==true}">
+        <!-- class="active-li" -->
+        <div>
+          <span>{{conclusion_bucket.Display_Name}}</span>
+          <!-- <span class="buckets-list-cl">
+              <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+            </span> -->
         </div>
       </li>
     </ul>
@@ -186,9 +198,9 @@
               <div
                 [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-md-6 h-48']"
                 *ngIf="!f.Is_Standard_Field && !f.Is_Appeal && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
-                <div class="form-group"
+                <div class="form-group" *ngIf="f.Display_Name!=null"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' || f.Is_Exception ? 'border-b' : '']">
-                  <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else otherNames">
+                  <ng-container *ngIf="f.Display_Name == 'Reference_File_Name' ; else otherNames">
                     <label for="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
                   </ng-container>
                   <ng-template #otherNames>
@@ -207,7 +219,8 @@
                         </ng-container>
                         <ng-template #textinput>
                           <ng-container *ngIf="f.SetFormula; else elseTemplate">
-                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                            <label for="f.Id"
+                              class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
                           </ng-container>
                           <ng-template #elseTemplate>
                             <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
@@ -229,7 +242,7 @@
                         </div>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Formula'">
-                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
                       </ng-container>
                     </ng-container>
                   </ng-container>
@@ -244,7 +257,7 @@
                       </ng-template>
                     </ng-container>
                     <ng-template #readOnly>
-                      <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                      <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue  || "N/A"}}</label>
                     </ng-template>
                   </ng-template>
 
@@ -482,7 +495,7 @@
         <div class="col-md-12 p-0  auto-scroll-section">
           <div class="col-md-12 p-0">
             <app-agent-concluder (assignInventory)="concluderRowClick($event)" [concluderId]="concluderId"
-              [ClientId]="ClientId"></app-agent-concluder>
+              [ClientId]="ClientId" [Employee_Code]="userdata.Employee_Code"></app-agent-concluder>
           </div>
         </div>
       </div>
@@ -567,7 +580,9 @@
 <app-add-pcn-modal [AllFields]="AllFields" [inventory]="inventoryDetails" [SaagLookup]="SaagLookup"
   *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
 </app-add-pcn-modal>
-<app-concluder-accounts [ClientId]="ClientId" [UserId]="UserId"></app-concluder-accounts>
+<app-concluder-accounts *ngIf="openConclusionBucketModal==true" [ClientId]="ClientId" [UserId]="UserId"
+  (CloseModal)="closeConclusionModal($event)" (conclusionRowClick)="conclusionRowClick($event)">
+</app-concluder-accounts>
 
 <app-to-be-concluder-accounts *ngIf="openToBeConcludedBucketModal" [(WorkingAccountId)]="concluderId"
   (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"

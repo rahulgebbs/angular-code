@@ -77,5 +77,17 @@ export class ConcluderService {
     // /api/Get_Conclusion_Bucket_data?client_Id=9064&Employee_Code=5000&Bucket_Name=Denials_Provider_Issue
     return this.http.get(environment.ApiUrl + `api/Get_Conclusion_Bucket_Count?client_Id=${clientId}`, { headers: headers }).map(res => res.json());
   }
-  // Insert_Concluder_Details
+
+  getConclusionDataByConcludeID(clientId, Concluder_ID, Bucket_Name) {
+    // Get_Data_By_Concluder_Id
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `api/Get_Data_By_Concluder_Id?client_Id=${clientId}&Concluder_ID=${Concluder_ID}&Bucket_Name=${Bucket_Name}`, { headers: headers }).map(res => res.json());
+  }
+
+  saveConclusionData(formBody) {
+    // "http://localhost:63482/api/Insert_Concluder_INto_Inventory
+    return this.http.post(environment.ApiUrl + `/api/Insert_Concluder_INto_Inventory`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  }
 }

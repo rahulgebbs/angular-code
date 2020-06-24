@@ -114,30 +114,30 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    const self=this;
-    function customValidator (control){
-      console.log('customValidator : ',control);
-      if( control.value !=null && control.value.length>0) {
-        const validCaptcha = self.checkIfValid(control.value);
-        console.log('this.checkIfValid : ',validCaptcha);
-        if(validCaptcha==false)
-        {
-          return {'invalidCaptcha': true}
-        }
-      }
-      else{
+    // const self=this;
+    // function customValidator (control){
+    //   console.log('customValidator : ',control);
+    //   if( control.value !=null && control.value.length>0) {
+    //     const validCaptcha = self.checkIfValid(control.value);
+    //     console.log('this.checkIfValid : ',validCaptcha);
+    //     if(validCaptcha==false)
+    //     {
+    //       return {'invalidCaptcha': true}
+    //     }
+    //   }
+    //   else{
 
-        return {'captchaRequired': true}
-      }
-      control.setErrors(null);
+    //     return {'captchaRequired': true}
+    //   }
+    //   control.setErrors(null);
 
-      };
+    //   };
     this.MyForm = new FormGroup({
       username: new FormControl('', [Validators.required
       ]),
       password: new FormControl('', [Validators.required
       ]),
-      captchaModel:new FormControl('', [customValidator])
+      // captchaModel:new FormControl('', [customValidator])
     });
     console.log('myForm : ',this.MyForm);
   }

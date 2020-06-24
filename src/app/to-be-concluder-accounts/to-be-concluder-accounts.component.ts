@@ -1,10 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { ColumnGroup } from 'ag-grid-community';
-import { parseIntAutoRadix } from '@angular/common/src/i18n/format_number';
-import { ConcluderService } from '../service/concluder.service';
-import { ResponseHelper } from 'src/app/manager/response.helper';
-import { NotificationService } from '../service/notification.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as _ from 'lodash';
+import { ResponseHelper } from 'src/app/manager/response.helper';
+import { ConcluderService } from '../service/concluder.service';
+import { NotificationService } from '../service/notification.service';
 
 @Component({
   selector: 'app-to-be-concluder-accounts',
@@ -36,6 +34,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('toBeConcluded : ', this.UserId)
     this.toBeConcluded();
     this.oldConcluderId = this.WorkingAccountId;
   }
@@ -64,8 +63,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     this.concluderService.getConcluderInventoryData().subscribe((response) => {
       console.log('concluderInventoryData response : ', response);
       this.allData = response.Data;
-      // this.OpenAccountsModal = true;
-      // if (this.AccountsList[0].Inventory_Log_Id) {
+      // this.OpenAccountsModal = true      // if (this.AccountsList[0].Inventory_Log_Id) {
       //   this.InventoryLogId = this.AccountsList[0].Inventory_Log_Id;
       // }
       // else {
@@ -96,7 +94,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
       return column.headerName;
     });
     this.AccountsList = list;
-    this.setFirstAccount(this.AccountsList[0], "To Be Concluded")
+    this.setFirstAccount(this.AccountsList[0], "To Be Concluded");
   }
 
   OnGridReady(event) {
@@ -123,10 +121,14 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     }
     const fieldList = this.allData && this.allData.length > 0 ? this.allData[0] : [];
     fieldList.forEach((field) => {
-      field.Is_Standard_Field = true;
-      field['Display_Name'] = field.Header_Name;
-      field['Is_View_Allowed_Agent'] = true;
-      field['FieldValue'] = field.Field_Value;
+      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On')
+        field.Is_Standard_Field = false;
+      else
+        field.Is_Standard_Field = true;
+      // field['Column_DataType'] = fieldColumn_DataType
+      field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
+      field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
+      field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
     });
     this.insertConcluderTime(account.Concluder_Id);
     this.GetFieldsFromAccount(Bucket_Name, account.Concluder_Id, fieldList, false);

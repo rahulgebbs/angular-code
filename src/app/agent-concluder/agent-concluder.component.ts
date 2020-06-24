@@ -21,7 +21,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   statusList = [];
   @Input() ClientId;
   @Input() concluderId;
-  @Output() assignInventory = new EventEmitter<any>();;
+  @Output() assignInventory = new EventEmitter<any>();
+  @Input() Employee_Code;
   submitStatus = false;
   disableBtn = false;
   constructor(
@@ -82,6 +83,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     });
     this.getStatusDropdownList();
     this.setFields();
+
+    this.concludedForm.patchValue({ Employee_Code: this.Employee_Code });
   }
 
   clearForm() {
