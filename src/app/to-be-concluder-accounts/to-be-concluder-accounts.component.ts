@@ -13,7 +13,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
 
   @Output() CloseConcluderModal = new EventEmitter<any>();
   @Output() concluderRowClick = new EventEmitter<any>();
-  AccountsList = [];
+  AccountsList = null;
   @Input() WorkingAccountId: number;
   @Input() ClientId;
   @Input() UserId;
@@ -45,8 +45,12 @@ export class ToBeConcluderAccountsComponent implements OnInit {
       console.log('checkIfConcluder : ', response);
       if (response.Data == true) {
         this.concluderInventoryData();
-        this.ResponseHelper.GetSuccessResponse(response);
       }
+      else {
+        this.AccountsList = [];
+      }
+      this.ResponseHelper.GetSuccessResponse(response);
+
     }, (error) => {
       console.log('checkIfConcluder error: ', error);
       this.ResponseHelper.GetFaliureResponse(error);
@@ -63,13 +67,6 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     this.concluderService.getConcluderInventoryData().subscribe((response) => {
       console.log('concluderInventoryData response : ', response);
       this.allData = response.Data;
-      // this.OpenAccountsModal = true      // if (this.AccountsList[0].Inventory_Log_Id) {
-      //   this.InventoryLogId = this.AccountsList[0].Inventory_Log_Id;
-      // }
-      // else {
-      //   this.InventoryLogId = 0;
-      // }
-      // this.SaveAccountsInLocal("To Be Concluded", this.AccountsList[0].Inventory_Id);
       this.formatInventory();
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
@@ -121,10 +118,12 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     }
     const fieldList = this.allData && this.allData.length > 0 ? this.allData[0] : [];
     fieldList.forEach((field) => {
-      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On')
+      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
         field.Is_Standard_Field = false;
-      else
+      }
+      else {
         field.Is_Standard_Field = true;
+      }
       // field['Column_DataType'] = fieldColumn_DataType
       field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
       field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
@@ -161,10 +160,16 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     let standardFields = [];
     const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
     fieldList.forEach((field) => {
-      field.Is_Standard_Field = true;
-      field['Display_Name'] = field.Header_Name;
-      field['Is_View_Allowed_Agent'] = true;
-      field['FieldValue'] = field.Field_Value;
+      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+        field.Is_Standard_Field = false;
+      }
+      else {
+        field.Is_Standard_Field = true;
+      }
+      // field['Column_DataType'] = fieldColumn_DataType
+      field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
+      field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
+      field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
     });
 
     this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Concluder_Id, fieldList, true);
@@ -173,7 +178,8 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   GetFieldsFromAccount(bucketname, concluderId, fieldList, closePopup) {
     sessionStorage.removeItem('localPCN');
     sessionStorage.removeItem('lastPCN');
-    console.log('bucketname, concluderId, fieldList, closePopup : ', bucketname, concluderId, fieldList, closePopup);
+    // console.log('bucketname, concluderId, fieldList, closePopup : ', bucketname, concluderId, fieldList, closePopup);
+    console.log('final fieldList : ', fieldList);
     if (this.WorkingAccountId != concluderId) {
       this.WorkingAccountId = concluderId;
       if (closePopup == true) {

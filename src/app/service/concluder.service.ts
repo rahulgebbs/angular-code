@@ -88,6 +88,6 @@ export class ConcluderService {
 
   saveConclusionData(formBody) {
     // "http://localhost:63482/api/Insert_Concluder_INto_Inventory
-    return this.http.post(environment.ApiUrl + `/api/Insert_Concluder_INto_Inventory`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.post(environment.ApiUrl + `/api/Insert_Concluder_INto_Inventory`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
   }
 }

@@ -232,7 +232,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       concluderAccouts.forEach((list, listIndex) => {
         // console.log('list : ', list)
         list.forEach((field, index) => {
-          // console.log('field : ', field);
+          console.log('assignNextInventory field : ', field);
+
           if (field.Header_Name == 'Concluder_Id' && this.concluderId == field.FieldValue) {
             fieldList = list;
             concluderAccouts.splice(listIndex, 1);
@@ -243,7 +244,12 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     }
     if (concluderAccouts && concluderAccouts.length > 0) {
       concluderAccouts[0].forEach((field) => {
-        field.Is_Standard_Field = true;
+        if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+          field.Is_Standard_Field = false;
+        }
+        else {
+          field.Is_Standard_Field = true;
+        }
         field['Display_Name'] = field.Header_Name;
         field['Is_View_Allowed_Agent'] = true;
         field['FieldValue'] = field.Field_Value;

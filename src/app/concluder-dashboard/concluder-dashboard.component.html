@@ -48,7 +48,7 @@
               <tr class="t-bold">
                 <ng-container *ngFor="let key of keyList">
                   <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id'"
-                    [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none'}"
+                    [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none','color':key!='Buckets' && data.Buckets=='Allocated ##' ? 'blue':'#000'}"
                     class="">{{data[key]}}</td>
                 </ng-container>
               </tr>

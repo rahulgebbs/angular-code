@@ -85,7 +85,7 @@ export class AgentComponent implements OnInit {
   MinDate: Date;
   statCalucualted: boolean = false
   DisplayMessage: string = "Please click on the Bucket to continue.";
-  viewUtil: boolean = false;
+  viewUtil: boolean = true;
   DisplayAppeal: boolean = false;
   AppealType = '';
   CurrentPayerName = '';
@@ -165,7 +165,6 @@ export class AgentComponent implements OnInit {
     // sessionStorage.removeItem('localPCN');
     // sessionStorage.removeItem('lastPCN');
     this.agentservice.GetBucketsWithCount(this.ClientId).pipe(finalize(() => {
-
     })).subscribe(
       res => {
         this.ClientId = res.json().Data.ClientId;
@@ -205,7 +204,7 @@ export class AgentComponent implements OnInit {
             // this.GetAllFields(bucketname, this.AccountsList[0].Inventory_Id, false);
           }
           // this.MapInventoryLogId();
-          this.viewUtil = true;
+          // this.viewUtil = true;
         }
 
         if (fromsubmit == false) {
@@ -798,10 +797,12 @@ export class AgentComponent implements OnInit {
 
   toBeConcluded() {
     this.openToBeConcludedBucketModal = true;
+    this.concluderId = null;
   }
 
   conclusionBucket() {
     this.openConclusionBucketModal = true;
+    this.concluderId = null;
     console.log('conclusionBucket() : ', this.ActiveBucket);
     // this.ActiveBucket = null;
   }
@@ -1174,7 +1175,7 @@ export class AgentComponent implements OnInit {
                 var d = new Date(e.FieldValue);
                 e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
               }
-              else{
+              else {
                 e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
               }
             }
@@ -1551,28 +1552,37 @@ export class AgentComponent implements OnInit {
     this.concluderService.saveConclusionData(obj).subscribe((response) => {
       console.log('saveConclusionData response : ', response);
       this.ResponseHelper.GetSuccessResponse(response);
-      this.asigNextConclusionInventory();
+      this.assigNextConclusionInventory();
       this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
       this.Validated = false;
     }, (error) => {
       this.ResponseHelper.GetFaliureResponse(error);
+      // const Messages = error.Message;
+      console.log('error Messages : ', error);
+      const httpResponse = error.json();
+      console.log('httpResponse : ', httpResponse);
+      if (httpResponse && httpResponse.Message[0]) {
+        if (httpResponse.Message[0].Message == 'Unique Key already exists.') {
+          this.assigNextConclusionInventory();
+        }
+      }
       console.log('saveConclusionData response : ', error);
       this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
       this.Validated = false;
     });
-    // this.asigNextConclusionInventory();
+    // this.assigNextConclusionInventory();
   }
 
-  asigNextConclusionInventory() {
+  assigNextConclusionInventory() {
     const localStr = sessionStorage.getItem('concluderAccounts');//JSON.parse(sessionStorage.getItem('concluderAccounts'));
     // let fieldList = [];
     if (localStr != null) {
       var concluderAccouts = JSON.parse(localStr);
-      console.log('asigNextConclusionInventory before concluderAccouts : ', concluderAccouts.length);
+      console.log('assigNextConclusionInventory before concluderAccouts : ', concluderAccouts.length);
       concluderAccouts.forEach((list, listIndex) => {
         list.forEach((field, index) => {
           field.FieldValue = field.Field_Value;
-          console.log('asigNextConclusionInventory field : ', field.Header_Name, field.FieldValue, this.concluderId);
+          console.log('assigNextConclusionInventory field : ', field.Header_Name, field.FieldValue, this.concluderId);
           if (field.Header_Name == 'Concluder_Id' && this.concluderId == field.FieldValue) {
             // fieldList = list;
             concluderAccouts.splice(listIndex, 1);
@@ -1581,9 +1591,15 @@ export class AgentComponent implements OnInit {
         });
       });
     }
-    console.log('asigNextConclusionInventory After concluderAccouts : ', concluderAccouts.length);
+    console.log('assigNextConclusionInventory After concluderAccouts : ', concluderAccouts.length);
     if (concluderAccouts && concluderAccouts.length > 0) {
       concluderAccouts[0].forEach((field) => {
+        if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+          field.Is_Standard_Field = false;
+        }
+        else {
+          field.Is_Standard_Field = true;
+        }
         field.Is_Standard_Field = true;
         field['Display_Name'] = field.Header_Name;
         field['Is_View_Allowed_Agent'] = true;
@@ -1628,5 +1644,7 @@ export class AgentComponent implements OnInit {
       this.ActiveBucket = '';
       this.concluderId = null;
     }
+    this.GetBucketsWithCount();
   }
+
 }

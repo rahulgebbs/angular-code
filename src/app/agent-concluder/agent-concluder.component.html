@@ -164,7 +164,7 @@
                 *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
-                    <input type="text" class="form-control denialInput" placeholder="denial_1"
+                    <input type="text" class="form-control denialInput" placeholder="Primary Denial"
                         formControlName="Denial_1">
                     <input type="text" class="form-control denialInput" placeholder="denial_2"
                         formControlName="Denial_2">
@@ -217,7 +217,7 @@
             <!-- <div class="field" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true"> -->
             <div class="field">
                 <div class="form-group">
-                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Remarks (Max Char 100)</label>
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Additional Comment Box (Max Char 100)</label>
                     <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"
                         maxlength="100"></textarea>
                 </div>

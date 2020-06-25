@@ -25,6 +25,7 @@
           <b class="badge circle-buget  badge-sm badge-pill">{{bucket.Bucket_Count || 0}}</b>
         </span>
       </button>
+      <h1 *ngIf="bucketList!=null && bucketList.length==0" style="text-align: center;">No Records to show</h1>
     </div>
   </div>
   <div class="col-md-12 p-0" style="min-height: 350px;">
@@ -40,15 +41,6 @@
         [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
         [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true"
         [gridOptions]="gridOptions" (rowClicked)="getAllFields($event.data,true)"></ag-grid-angular>
-      <!-- 
-             <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true"
-          [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
-          class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"
-          [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection"
-          (firstDataRendered)="OnGridReady($event)"
-          (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"
-          (cellClicked)="OnCellClicked($event)" [suppressColumnVirtualisation]="true"></ag-grid-angular>
-           -->
     </div>
   </div>
 </div>

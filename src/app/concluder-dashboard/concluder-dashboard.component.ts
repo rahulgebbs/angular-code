@@ -113,7 +113,7 @@ export class ConcluderDashboardComponent implements OnInit {
   opeAllocatedCount(obj, key) {
     console.log('opeAllocatedCount() : ', obj, key, this.allocatedCountList);
     this.activeAllocatedCount = [];
-    this.allocatedCountList.every((element) => {
+    this.allocatedCountList.forEach((element) => {
       if (element && element.Bucket_Name.toLowerCase() == key.toLowerCase()) {
         this.activeAllocatedCount = element.allocated_Counts;
         return true;
