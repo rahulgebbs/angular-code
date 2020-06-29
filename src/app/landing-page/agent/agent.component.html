@@ -32,30 +32,23 @@
         </div>
       </li>
     </ul>
-    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null" title="To Be Concluded">
+    <!-- <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null" title="To_be_Concluded">
       <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
         [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
-        <!-- class="active-li" -->
+        
         <div>
           <span>{{to_be_concluded_bucket.Display_Name}}</span>
-          <!-- <span class="buckets-list-cl">
-            <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
-          </span> -->
         </div>
       </li>
     </ul>
-    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==true" title="Conclusion">
+    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==true" title="Concluded">
       <li (click)="ToggleAccountsModal(conclusion_bucket)"
         [ngClass]="{'active-li':ActiveBucket == conclusion_bucket.Name, 'disableBtn': conclusion_bucket.disableBtn==true}">
-        <!-- class="active-li" -->
         <div>
           <span>{{conclusion_bucket.Display_Name}}</span>
-          <!-- <span class="buckets-list-cl">
-              <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
-            </span> -->
         </div>
       </li>
-    </ul>
+    </ul> -->
   </ul>
   <div class="uitlites-nav">
     <ul class="pull-right dark">
@@ -184,7 +177,7 @@
         </div>
       </div>
       <!-- Input Fields Started -->
-      <div *ngIf="ActiveBucket!='To Be Concluded'"
+      <div *ngIf="ActiveBucket!='To_be_Concluded'"
         [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
@@ -369,7 +362,7 @@
       </div>
       <!--Appeal Ends-->
       <!-- Action Form Started -->
-      <div *ngIf="ActiveBucket!='To Be Concluded'" class="col-md-3 p-0">
+      <div *ngIf="ActiveBucket!='To_be_Concluded'" class="col-md-3 p-0">
         <div class="col-md-12 p-0">
           <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
             <div class="col-md-12 col-sm-12 p-0">
@@ -484,7 +477,7 @@
       </div>
       <!-- Action Form ended -->
       <!-- Concluder Fields Started -->
-      <div *ngIf="ActiveBucket=='To Be Concluded'" class="p-0 col-md-9">
+      <div *ngIf="ActiveBucket=='To_be_Concluded'" class="p-0 col-md-9">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
             <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Concluder Fields</span>

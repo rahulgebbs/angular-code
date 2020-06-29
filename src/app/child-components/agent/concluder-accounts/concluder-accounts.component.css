@@ -134,5 +134,7 @@ input {
 
 
 .reasonBucket {
+  font-size: 1.3rem;
   margin-bottom: 1rem;
+  min-width: 170px !important;
 }

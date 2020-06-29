@@ -48,6 +48,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
       }
       else {
         this.AccountsList = [];
+        this.concluderRowClick.emit({ Bucket_Name: "To_Be_Concluded", concluderId: null, AccountsList: this.AccountsList, fields: [], closePopup: false });
       }
       this.ResponseHelper.GetSuccessResponse(response);
 
@@ -84,14 +85,14 @@ export class ToBeConcluderAccountsComponent implements OnInit {
         this.columnDefs.push({ headerName: field.Header_Name, field: field.Header_Name });
         obj[field.Header_Name] = field.Field_Value;
       });
-      obj["Bucket_Name"] = "To Be Concluded";
+      obj["Bucket_Name"] = "To_be_Concluded";
       list.push(obj)
     });
     this.columnDefs = _.uniqBy(this.columnDefs, (column) => {
       return column.headerName;
     });
     this.AccountsList = list;
-    this.setFirstAccount(this.AccountsList[0], "To Be Concluded");
+    this.setFirstAccount(this.AccountsList[0], "To_be_Concluded");
   }
 
   OnGridReady(event) {

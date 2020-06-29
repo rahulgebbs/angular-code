@@ -47,9 +47,23 @@
             <ng-container *ngFor="let data of dashboardData">
               <tr class="t-bold">
                 <ng-container *ngFor="let key of keyList">
-                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id'"
+                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Buckets!='Allocated ##'" class="">
+                    <span *ngIf="key=='Buckets' || data[key]>0">
+                      {{data[key]}}
+                    </span>
+                    <span *ngIf="data[key]==0">
+                      {{"-"}}
+                    </span>
+                  </td>
+                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Buckets=='Allocated ##'"
                     [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none','color':key!='Buckets' && data.Buckets=='Allocated ##' ? 'blue':'#000'}"
-                    class="">{{data[key]}}</td>
+                    class="">
+                    {{data[key]}}
+                  </td>
+                  <!-- <td (click)="opeAllocatedCount(data,key)"
+                    *ngIf="key!='Id' && data.Buckets=='Allocated ##' && data[key]==0">
+                    {{"-"}}
+                  </td> -->
                 </ng-container>
               </tr>
             </ng-container>

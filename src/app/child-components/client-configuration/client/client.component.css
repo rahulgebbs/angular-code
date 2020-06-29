@@ -1,17 +1,25 @@
-.grid-w{
-    height: 100%;
+.grid-w {
+  height: 100%;
 }
-.label-status{
-    position: relative;
-    top: -2px;
-    FONT-SIZE: 14px;
-    font-weight: bold;
-    color: #000;
+.label-status {
+  position: relative;
+  top: -2px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
 }
- 
-@media only screen and (min-width:1024px) and (max-width: 1279px) {
-    .lg-midd {
-        width: 100% !important;
-    }
+
+@media only screen and (min-width: 1024px) and (max-width: 1279px) {
+  .lg-midd {
+    width: 100% !important;
+  }
 }
-  
+
+.radioBorder {
+    border: 1px solid #dfdfdf;
+    padding-left: 1rem;
+    min-height: 35px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}

@@ -138,12 +138,11 @@
                       <label for="ac-active1" class="label-status">Activate Appeal Process</label>
                     </label>
                   </span>
-                  <span class="mr-10 text-left">
+                  <!-- <span class="mr-10 text-left">
                     <label style="display: inline-block;float-left">
                       <input type="radio" name="Is_Super_Concluder_Process" id="semi-concluder" [value]="false"
                         formControlName="Is_Super_Concluder_Process"
                         [(ngModel)]="clientData.Is_Super_Concluder_Process">
-                      <!-- Inventory -->
                       <label for="semi-concluder" class="label-status">Semi Concluder</label>
                     </label>
                   </span>
@@ -152,10 +151,9 @@
                       <input type="radio" id="super-concluder" name="Is_Super_Concluder_Process" [value]="true"
                         formControlName="Is_Super_Concluder_Process"
                         [(ngModel)]="clientData.Is_Super_Concluder_Process">
-                      <!-- Concluder -->
                       <label for="super-concluder" class="label-status">Super Concluder</label>
                     </label>
-                  </span>
+                  </span> -->
                   <!-- <span class="mr-10 text-left">
                     <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
                     <label class="custom-control client-conf">
@@ -171,6 +169,23 @@
                       </label>
                     </label>
                   </span> -->
+                </div>
+              </div>
+              <div class="form-group">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Concluder</label>
+                <div class="radioBorder">
+                  <label class="radio-inline">
+                    <input type="radio" name="Is_Super_Concluder_Process" id="semi-concluder" [value]="false"
+                      formControlName="Is_Super_Concluder_Process" [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                    Semi Concluder
+                    <!-- <label for="semi-concluder" class="label-status">Semi Concluder</label> -->
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" id="super-concluder" name="Is_Super_Concluder_Process" [value]="true"
+                      formControlName="Is_Super_Concluder_Process" [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                    Super Concluder
+                    <!-- <label for="super-concluder" class="label-status"></label> -->
+                  </label>
                 </div>
               </div>
             </div>

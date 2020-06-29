@@ -36,7 +36,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('ngOnInit() AgentConcluderComponent : ');
+    // console.log('ngOnInit() AgentConcluderComponent : ');
     // if (this.ClientId != null) {
     //   this.initForm();
     // }
@@ -45,8 +45,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log('ngOnChanges AgentConcluderComponent : ', changes)
-    if (this.ClientId != null) {
+    console.log('ngOnChanges : ', this.ClientId, this.concluderId, changes)
+    if (this.ClientId != null && this.concluderId != null) {
       this.initForm();
     }
 
@@ -54,6 +54,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
 
   setFields() {
     this.concludedForm.patchValue({ 'Client_Id': this.ClientId, 'Concluder_Id': this.concluderId });
+    console.log('setFields', this.concludedForm.value);
     // const Concluder_Id = this.
   }
 
@@ -79,7 +80,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       "Remarks": [null],
       "Denial_Date": [null],
       "Employee_Code": [null],
-      "Conclusion": [null]
+      "Concluded": [null]
     });
     this.getStatusDropdownList();
     this.setFields();
@@ -115,18 +116,18 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       Rejection_Reason.setValidators(null);
       Rejection_Reason.setErrors(null)
       // form.patchValue({ EOB_Available: null, Rejection_Reason: null });
-      form.patchValue({ Status: null, EOB_Posted_in_Sys: false, Denial_Reason: null, Denial_Date: null, EOB_Available: false, Rejection_Reason: null });
+      form.patchValue({ Status: null, EOB_Posted_in_Sys: null, Denial_Reason: null, Denial_Date: null, EOB_Available: null, Rejection_Reason: null, Denial_1: null });
     }
     else {
       EOB_Available.setValidators(null);
       EOB_Available.setErrors(null);
       Rejection_Reason.setValidators(Validators.required);
-      form.patchValue({ EOB_Posted_in_Sys: false, EOB_Available: false });
+      form.patchValue({ EOB_Posted_in_Sys: null, EOB_Available: null });
     }
   }
 
   handleEOBAvailabe() {
-    console.log('handleRejection : ', this.concludedForm);
+    console.log('handleEOBAvailabe : ', this.concludedForm);
     let form = this.concludedForm;
 
     let EOB_Available = form.get('EOB_Available');
@@ -134,7 +135,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     let EOB_Posted_in_Sys = form.get('EOB_Posted_in_Sys');
     let Denial_Reason = form.get('Denial_Reason');
     let Denial_Date = form.get('Denial_Date');
-
+    let primary_denial = form.get('Denial_1');
     if (EOB_Available.value == true) {
       Status.setValidators(Validators.required);
       EOB_Posted_in_Sys.setValidators(Validators.required);
@@ -146,35 +147,40 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       EOB_Posted_in_Sys.setValidators(null);
       Denial_Reason.setValidators(null);
       Denial_Date.setValidators(null);
+      primary_denial.setValidators(null);
 
       Status.setErrors(null);
       EOB_Posted_in_Sys.setErrors(null);
       Denial_Reason.setErrors(null);
       Denial_Date.setErrors(null);
-      form.patchValue({ Status: null, Denial_Reason: null, Denial_Date: null });
-      // form.patchValue({ Status: null, EOB_Posted_in_Sys: null, Denial_Reason: null, Denial_Date: null });
-      form.patchValue({ EOB_Posted_in_Sys: false, EOB_Available: false });
-    }
+      primary_denial.setErrors(null);
 
+      form.patchValue({ Status: null, Denial_Reason: null, Denial_Date: null, Denial_1: null });
+      form.patchValue({ EOB_Posted_in_Sys: null, EOB_Available: false });
+    }
     form.updateValueAndValidity();
   }
 
   handleStatus() {
     let form = this.concludedForm;
-    console.log('form : ', form);
+    console.log('handleStatus form : ', form);
     let Status = form.get('Status');
     let Denial_Reason = form.get('Denial_Reason');
     let Denial_Date = form.get('Denial_Date');
+    let primary_denial = form.get('Denial_1');
     if (Status.value == 'Paid') {
       Denial_Reason.setValidators(null);
       Denial_Date.setValidators(null);
+      primary_denial.setValidators(null);
       Denial_Reason.setErrors(null);
       Denial_Date.setErrors(null);
-      form.patchValue({ Denial_Reason: null, Denial_Date: null });
+      primary_denial.setErrors(null);
+      form.patchValue({ Denial_Reason: null, Denial_Date: null, Denial_1: null });
     }
     if (Status.value == 'Denied' || Status.value == 'Partially Denied') {
       Denial_Reason.setValidators(Validators.required);
       Denial_Date.setValidators(Validators.required);
+      primary_denial.setValidators(Validators.required);
     }
 
   }
@@ -188,6 +194,12 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       this.disableBtn = true;
       // "Original_Claim_Billed_Date": [null, Validators.required],
       // "Latest_Claim_Billed_Date": [null, Validators.required],
+      if (this.concludedForm.value['EOB_Available'] == null) {
+        this.concludedForm.patchValue({ EOB_Available: false });
+      }
+      if (this.concludedForm.value['EOB_Posted_in_Sys'] == null) {
+        this.concludedForm.patchValue({ EOB_Posted_in_Sys: false });
+      }
       if (this.concludedForm.value['Denial_Date'] == null) {
         this.concludedForm.patchValue({ Denial_Date: "01/01/1990" });
       }
@@ -257,10 +269,10 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       const matchedObj = concluderAccouts[0].find((ele) => {
         return ele.Header_Name == "Concluder_Id";
       });
-      this.assignInventory.emit({ Bucket_Name: "To Be Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+      this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
     }
     else {
-      this.assignInventory.emit({ Bucket_Name: "To Be Concluded", concluderId: null, fields: [], closePopup: false });
+      this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: null, fields: [], closePopup: false });
     }
     sessionStorage.setItem('concluderAccounts', JSON.stringify(concluderAccouts));
     // this.concluderRowClick.emit({ Bucket_Name: bucketname, concluderId: concluderId, AccountsList: this.AccountsList, fields: fieldList, closePopup: closePopup });

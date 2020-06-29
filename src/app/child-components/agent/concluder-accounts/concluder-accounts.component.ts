@@ -80,7 +80,7 @@ export class ConcluderAccountsComponent implements OnInit {
         this.columnDefs.push({ headerName: field.Header_Name, field: field.Header_Name });
         obj[field.Header_Name] = field.Field_Value;
       });
-      obj["Bucket_Name"] = "Conclusion";
+      obj["Bucket_Name"] = "Concluded";
       list.push(obj);
     });
     this.columnDefs = _.uniqBy(this.columnDefs, (column) => {
@@ -96,6 +96,7 @@ export class ConcluderAccountsComponent implements OnInit {
   getAllFields(data, status) {
     this.concluderId = data.Concluder_Id;
     console.log('getAllFields() : ', data.Concluder_Id, this.concluderId);
+    sessionStorage.setItem('conclusionBucket', this.activeBucket);
     this.concluderService.getConclusionDataByConcludeID(this.ClientId, this.concluderId, this.activeBucket).subscribe((response) => {
       console.log('getConclusionDataByConcludeID response : ', response);
       this.activeFieldList = response.Data;

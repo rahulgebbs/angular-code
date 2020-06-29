@@ -35,12 +35,12 @@ export class AgentComponent implements OnInit {
   to_be_concluded_bucket: any = {
     Count: 0,
     Display_Name: "To Be Concluded",
-    Name: "To Be Concluded"
+    Name: "To_be_Concluded"
   }
   conclusion_bucket: any = {
     Count: 0,
-    Display_Name: "Conclusion",
-    Name: "Conclusion"
+    Display_Name: "Concluded",
+    Name: "Concluded"
   }
   instructionCount: Number = 0;
   Title = "Agent";
@@ -525,9 +525,9 @@ export class AgentComponent implements OnInit {
         this.submitAddNewLine(obj);
         return true;
       }
-      if (this.ActiveBucket == 'Conclusion') {
+      if (this.ActiveBucket == "Concluded") {
         console.log('Conclusion : ', obj);
-        this.DisableSubmit = false;
+        // this.DisableSubmit = false;
         this.submitConclusion(obj);
         return true;
       }
@@ -746,15 +746,15 @@ export class AgentComponent implements OnInit {
       });
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
-      this.ActiveBucket = bucket.Name == 'Conclusion' ? this.ActiveBucket : bucket.Name;
+      this.ActiveBucket = bucket.Name == "Concluded" ? this.ActiveBucket : bucket.Name;
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
-      else if (bucket.Name == 'To Be Concluded') {
+      else if (bucket.Name == 'To_be_Concluded') {
         // call concluder to be done service
         this.toBeConcluded();
       }
-      else if (bucket.Name == 'Conclusion') {
+      else if (bucket.Name == "Concluded") {
         this.conclusionBucket();
       }
       else {
@@ -833,7 +833,7 @@ export class AgentComponent implements OnInit {
       else {
         this.InventoryLogId = 0;
       }
-      this.SaveAccountsInLocal("To Be Concluded", this.AccountsList[0].Inventory_Id)
+      this.SaveAccountsInLocal("To_be_Concluded", this.AccountsList[0].Inventory_Id)
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('concluderInventoryData error : ', error);
@@ -853,14 +853,13 @@ export class AgentComponent implements OnInit {
     if (event.closePopup == true) {
       this.openToBeConcludedBucketModal = false;
     }
-
     if (this.AllFields && this.AllFields.length == 0) {
       this.DisplayMain = false;
       this.DisplayMessage = "Please click on Bucket to continue";
       this.ActiveBucket = '';
       this.concluderId = null;
     }
-    // this.cdr
+    this.GetBucketsWithCount();
   }
 
   conclusionRowClick(data) {
@@ -868,7 +867,7 @@ export class AgentComponent implements OnInit {
     this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
     if (data && data.AccountsList && data.AccountsList.length > 0) {
       this.DisplayMain = true;
-      this.ActiveBucket = 'Conclusion';
+      this.ActiveBucket = "Concluded";
       this.AllFields = data.AccountsList;
     }
     this.concluderId = data.concluderId;
@@ -1555,6 +1554,7 @@ export class AgentComponent implements OnInit {
       this.assigNextConclusionInventory();
       this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
       this.Validated = false;
+      this.DisableSubmit = false;
     }, (error) => {
       this.ResponseHelper.GetFaliureResponse(error);
       // const Messages = error.Message;
@@ -1569,6 +1569,7 @@ export class AgentComponent implements OnInit {
       console.log('saveConclusionData response : ', error);
       this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
       this.Validated = false;
+      this.DisableSubmit = false;
     });
     // this.assigNextConclusionInventory();
   }
@@ -1611,14 +1612,14 @@ export class AgentComponent implements OnInit {
       console.log('this.concluderId, matchedObj.FieldValue : ', this.concluderId, matchedObj.FieldValue)
       this.concluderService.getConclusionDataByConcludeID(this.ClientId, matchedObj.FieldValue, this.ActiveBucket).subscribe((response) => {
         console.log('getConclusionDataByConcludeID response : ', response);
-        this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: matchedObj.FieldValue, fields: response.Data, closePopup: false });
+        this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: response.Data, closePopup: false });
       }, (error) => {
         console.log('getConclusionDataByConcludeID error : ', error);
       })
-      // this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+      // this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
     }
     else {
-      this.setConcluderFields({ Bucket_Name: "Conclusion", concluderId: null, fields: [], closePopup: false });
+      this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: null, fields: [], closePopup: false });
     }
     sessionStorage.setItem('concluderAccounts', JSON.stringify(concluderAccouts));
   }

@@ -126,8 +126,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status <span
                             class="asteric">*</span></label>
-                    <select class="form-control" formControlName="Status">
-                        <option [ngValue]="undefined" disabled>Select Status</option>
+                    <select class="form-control" formControlName="Status" (change)="handleStatus()">
+                        <option [ngValue]="" disabled>Select Status</option>
                         <option [ngValue]="undefined" *ngFor="let option of statusList" [value]="option.Status_Name">
                             {{option.Status_Name}}</option>
                     </select>
@@ -160,20 +160,29 @@
                 </div>
             </div>
 
-            <div class="field"
+            <div class="field width-60"
                 *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true && (formValue['Status']=='Denied' || formValue['Status']=='Partially Denied')">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
-                    <input type="text" class="form-control denialInput" placeholder="Primary Denial"
-                        formControlName="Denial_1">
-                    <input type="text" class="form-control denialInput" placeholder="denial_2"
-                        formControlName="Denial_2">
-                    <input type="text" class="form-control denialInput" placeholder="denial_3"
-                        formControlName="Denial_3">
-                    <input type="text" class="form-control denialInput" placeholder="denial_4"
-                        formControlName="Denial_4">
-                    <input type="text" class="form-control denialInput" placeholder="denial_5"
-                        formControlName="Denial_5">
+                    <div class="denialInput">
+                        <input type="text" class="form-control" placeholder="Primary Denial *"
+                            formControlName="Denial_1">
+                        <div class="error" *ngIf="concludedForm.get('Denial_1').hasError('required') && (submitStatus==true)">
+                            Primary Denial is required.
+                        </div>
+                    </div>
+                    <div class="denialInput">
+                        <input type="text" class="form-control" placeholder="denial_2" formControlName="Denial_2">
+                    </div>
+                    <div class="denialInput">
+                        <input type="text" class="form-control" placeholder="denial_3" formControlName="Denial_3">
+                    </div>
+                    <div class="denialInput">
+                        <input type="text" class="form-control" placeholder="denial_4" formControlName="Denial_4">
+                    </div>
+                    <div class="denialInput">
+                        <input type="text" class="form-control" placeholder="denial_5" formControlName="Denial_5">
+                    </div>
 
 
                 </div>
@@ -217,7 +226,8 @@
             <!-- <div class="field" *ngIf="formValue['Rejection']==false && formValue['EOB_Available']==true"> -->
             <div class="field">
                 <div class="form-group">
-                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Additional Comment Box (Max Char 100)</label>
+                    <label for="inputEmail3" class="label-std  control-label p-0 b-600">Additional Comment Box (Max Char
+                        100)</label>
                     <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"
                         maxlength="100"></textarea>
                 </div>

@@ -4,8 +4,11 @@
 }
 
 .denialInput {
-  width: 25% !important;
+  width: 30% !important;
+  margin-bottom: 1rem;
   float: left;
+  min-height: 50px;
+  margin-right: 1rem;
 }
 
 .radioBorder {
@@ -49,4 +52,8 @@
 }
 .input-group-addon {
   width: none !important;
+}
+
+.width-60 {
+  width: 60% !important;
 }
