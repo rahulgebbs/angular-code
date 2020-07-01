@@ -24,7 +24,7 @@
     </span>
   </div>
   <div class="col-md-12 supervisor-dash-tbl">
-    <label class="error" *ngIf="submitStatus!=null && (dashboardData==null || dashboardData.length==0)">There is no Data
+    <label class="error" *ngIf="submitStatus==false && (dashboardData==null || dashboardData.length==0)">There is no Data
       for Client :-
       {{ Client_Name}}</label>
     <div class="" style="border:0px solid #ddd;">

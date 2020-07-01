@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/service/notification.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { Token } from '../manager/token';
 import { PcnService } from '../service/pcn.service';
+
+
 
 @Component({
   selector: 'app-concluder-dashboard',
@@ -71,7 +73,8 @@ export class ConcluderDashboardComponent implements OnInit {
   }
 
   getConcluderDashboard(ClientId) {
-    this.dashboardData = []
+    this.dashboardData = [];
+    this.submitStatus = true;
     this.pcnService.getConcluderDashboard(ClientId).subscribe((response) => {
       console.log('getConcluderDashboard response : ', response);
       this.dashboardData = response.Data;
@@ -87,13 +90,17 @@ export class ConcluderDashboardComponent implements OnInit {
 
   getClientName() {
     const { value } = this.dashboard;
-    this.ClientList.find((client) => {
-      if (client.ClientId == value.Client_Id) {
+    this.clientName = null;
+    this.ClientList.forEach((client) => {
+      console.log('check in loop : ', client, value);
+      if (client.Client_Id.toString() == value.ClientId) {
         // return client.Client_Name;
         this.clientName = client.Client_Name;
-        return true
+        // this.dashboard.patchValue({ Client_Id: value.Client_Id });
+        // return true;
       }
     });
+    // this.dashboardData = JSON.parse(JSON.stringify(this.dashboardData));
     console.log('this.clientName : ', this.clientName, this.ClientList);
   }
 
@@ -117,6 +124,16 @@ export class ConcluderDashboardComponent implements OnInit {
       if (element && element.Bucket_Name.toLowerCase() == key.toLowerCase()) {
         this.activeAllocatedCount = element.allocated_Counts;
         return true;
+      }
+      else {
+        if (element && element.Bucket_Name == 'Paid_Without_EOB' && key == 'Paid_NO_EOB') {
+          this.activeAllocatedCount = element.allocated_Counts;
+          return true;
+        }
+        if (element && element.Bucket_Name == 'Paid_With_EOB' && key == 'Paid_EOB_Availble') {
+          this.activeAllocatedCount = element.allocated_Counts;
+          return true;
+        }
       }
     });
 

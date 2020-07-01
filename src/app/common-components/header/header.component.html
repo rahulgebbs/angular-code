@@ -2,7 +2,8 @@
   <span class="brand-logo">
     <img src="../../../assets/images/logo_156.png" class="logo-img">
   </span>
-  <span class="text-center page-title grey-text">{{title}}</span>
+  <span class="text-center page-title grey-text">{{title}} <span
+      *ngIf="activeReasonBucket">{{activeReasonBucket}}</span></span>
 
   <!-- <div class="utilitySection">
     <i (click)="Logout()" title="Log Out" class="fa fa-power-off fa-2x" style="margin: 0 1rem" aria-hidden="true"></i>

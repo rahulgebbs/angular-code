@@ -803,7 +803,7 @@ a:hover {
 .m-leftsidebar .menu-small {
   /* height: auto;
   overflow-y: unset; */
-  height: 55vh;
+  height: 65vh;
   overflow-y: auto;
 }
 

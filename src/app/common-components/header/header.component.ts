@@ -14,6 +14,7 @@ import { Token } from 'src/app/manager/token';
 })
 export class HeaderComponent implements OnInit {
   @Input('title') title: string;
+  @Input('activeReasonBucket') activeReasonBucket: string;
   showHeader = true;
   showExitMessage = false;
   ResponseHelper: ResponseHelper;
@@ -44,6 +45,13 @@ export class HeaderComponent implements OnInit {
     else {
       this.showHeader = true;
     }
+    // const bucket = sessionStorage.getItem('conclusionBucket');
+    // if (bucket != null) {
+    //   this.activeReasonBucket = bucket;
+    // }
+    // else {
+    //   this.activeReasonBucket = null;
+    // }
     // document.removeEventListener("keydown", function () { });
     // setTimeout(() => {
     // const self = this;

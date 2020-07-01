@@ -1,7 +1,6 @@
 <!-- <app-header [title]="Title"></app-header> -->
 <div class="container-fluid">
-    <form [formGroup]="concludedForm" class="form-inline" (ngSubmit)="submitForm()">
-
+    <form *ngIf="concludedForm" [formGroup]="concludedForm" class="form-inline" (ngSubmit)="submitForm()">
 
         <div *ngIf="concludedForm && concludedForm.value as formValue" class="">
 
@@ -167,7 +166,8 @@
                     <div class="denialInput">
                         <input type="text" class="form-control" placeholder="Primary Denial *"
                             formControlName="Denial_1">
-                        <div class="error" *ngIf="concludedForm.get('Denial_1').hasError('required') && (submitStatus==true)">
+                        <div class="error"
+                            *ngIf="concludedForm.get('Denial_1').hasError('required') && (submitStatus==true)">
                             Primary Denial is required.
                         </div>
                     </div>

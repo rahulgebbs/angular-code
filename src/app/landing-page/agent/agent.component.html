@@ -1,4 +1,4 @@
-<app-header [title]="Title"></app-header>
+<app-header [title]="Title" [activeReasonBucket]="activeReasonBucket"></app-header>
 <!-- top-navigation -->
 <div class="top-navigation buckets-list dark col-md-12 col-sm-12 p-0">
   <ul>
@@ -177,7 +177,7 @@
         </div>
       </div>
       <!-- Input Fields Started -->
-      <div *ngIf="ActiveBucket!='To_be_Concluded'"
+      <div *ngIf="(ActiveBucket!='To_be_Concluded')"
         [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
@@ -455,7 +455,7 @@
                     (click)="addNewLine()" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt mr-10"><i class="fa fa-plus"></i>
                     New Line </button>
-                  <button title="Add PCN" style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button"
+                  <button title="Add PCN" style="margin-top: 1rem;" *ngIf="clientObj.Is_PCN==true" type="button"
                     (click)="openAddPCNModal()" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt">
                     <i class="fa fa-plus"></i> PCN

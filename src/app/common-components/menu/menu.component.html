@@ -2,8 +2,8 @@
 
 
 </div>
-<div [@fadeInOut] class="model-menu bg-color" style="display: block;bottom: 42px;">
-  <div class="model-m-body" style="margin-top: 50px;">
+<div [@fadeInOut] class="model-menu bg-color" style="display: block;bottom: 0px;">
+  <div class="model-m-body" style="margin-top: 00px;">
     <aside class="sidebar2">
 
       <div class="col-md-12 p-0">
@@ -31,7 +31,8 @@
       </div>
 
       <div class="col-md-12 p-0 mt-10">
-        <div class="m-leftsidebar bdr-t pt-0" style="margin-top: 28%;">
+        <div class="m-leftsidebar bdr-t pt-0" style="margin-top: 5%;">
+        <!-- <div class="m-leftsidebar bdr-t pt-0"> -->
 
           <div class="menu">
             <div *ngIf="UserData.Role!='Client User' && UserData.Role!='Client Supervisor'"
@@ -265,8 +266,8 @@
                           [ngClass]="[MenuName == '/citra-audit-report' ? 'menu-active1': '']">Citra Audit Report</a>
                       </li>
                       <li><a (click)="OpenMenu('pcn-report')"
-                        [ngClass]="[MenuName == '/pcn-report' ? 'menu-active1': '']">PCN Report</a>
-                    </li>
+                          [ngClass]="[MenuName == '/pcn-report' ? 'menu-active1': '']">PCN Report</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -307,19 +308,22 @@
                 </div>
               </div>
 
-              <div *ngIf="checkMenu('concluder-dashboard') || checkMenu('concluder-report')" class="panel panel-default">
+              <div *ngIf="checkMenu('concluder-dashboard') || checkMenu('concluder-report')"
+                class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingThree">
                   <h4 class="acc-title">
-                    <a [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? '' : 'collapsed']" role="button"
-                      data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
+                    <a [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu" href="#collapseFileConcluder"
                       aria-controls="collapseThree"
                       [attr.aria-expanded]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'true' : 'false']">
                       Concluder
                     </a>
                   </h4>
                 </div>
-                <div [attr.aria-expanded]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'true' : 'false']"
-                  id="collapseFileConcluder" [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'in' : '']"
+                <div
+                  [attr.aria-expanded]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'true' : 'false']"
+                  id="collapseFileConcluder"
+                  [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'in' : '']"
                   class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
                   <div class="accordianbody">
                     <ul class="nav">

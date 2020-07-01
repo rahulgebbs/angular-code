@@ -124,6 +124,7 @@ export class AgentComponent implements OnInit {
   openToBeConcludedBucketModal = false;
   openConclusionBucketModal = false;
   concluderId = null;
+  activeReasonBucket = null;
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
@@ -201,7 +202,7 @@ export class AgentComponent implements OnInit {
             else {
               this.InventoryLogId = 0;
             }
-            // this.GetAllFields(bucketname, this.AccountsList[0].Inventory_Id, false);
+            this.GetAllFields(bucket, this.AccountsList[0].Inventory_Id, false);
           }
           // this.MapInventoryLogId();
           // this.viewUtil = true;
@@ -413,7 +414,7 @@ export class AgentComponent implements OnInit {
   }
 
   MarkLocalAccountComplete() {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Bucket_Name == this.ActiveBucket && e.Inventory_Id == this.InventoryId && e.Processed == 'Working') {
         e.Processed = "Complete";
@@ -723,10 +724,12 @@ export class AgentComponent implements OnInit {
 
   ToggleAccountsModal(bucket) {
     console.log('ToggleAccountsModal bucket : ', bucket);
+    this.activeReasonBucket = null;
     if (bucket && bucket.Name != false && bucket.Name != true) {
       sessionStorage.removeItem('Accounts');
       const highPriority = sessionStorage.getItem('highPriporityAccount');
       const callReference = localStorage.getItem('callReference');
+      sessionStorage.removeItem('conclusionBucket');
       if (highPriority != undefined) {
         this.GetAccountList(bucket, false);
         sessionStorage.removeItem('highPriporityAccount');
@@ -736,9 +739,7 @@ export class AgentComponent implements OnInit {
         localStorage.removeItem('callReference');
 
       }
-      // remove PCN local info
-      // sessionStorage.removeItem('localPCN');
-      // sessionStorage.removeItem('lastPCN');
+
       this.analyticsService.logEvent(bucket.Name + ' Click').subscribe((response) => {
         console.log('logEvent : ', response);
       }, (error) => {
@@ -844,6 +845,8 @@ export class AgentComponent implements OnInit {
 
   concluderRowClick(event) {
     console.log('concluderRowClick : ', event);
+    this.activeReasonBucket = null;
+    sessionStorage.removeItem('conclusionBucket');
     if (event) {
       this.AllFields = JSON.parse(JSON.stringify(event.fields));
       this.DisplayMain = true;
@@ -864,6 +867,13 @@ export class AgentComponent implements OnInit {
 
   conclusionRowClick(data) {
     console.log('conclusionRowClick(data) : ', data);
+    const bucket = sessionStorage.getItem('conclusionBucket');
+    if (bucket != null) {
+      this.activeReasonBucket = bucket;
+    }
+    else {
+      this.activeReasonBucket = null;
+    }
     this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
     if (data && data.AccountsList && data.AccountsList.length > 0) {
       this.DisplayMain = true;
@@ -878,7 +888,7 @@ export class AgentComponent implements OnInit {
   }
 
   ChangeWorkingStatusInLocal(bucketname: string) {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Processed != "Complete" && e.Bucket_Name == bucketname) {
         e.Processed = "Working";
@@ -891,7 +901,7 @@ export class AgentComponent implements OnInit {
 
   GetAllFields(bucket, obj, fromPopup) {
     this.Is_New_Line = false;
-    // console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
     // console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     // sessionStorage.removeItem('localPCN');
@@ -902,6 +912,7 @@ export class AgentComponent implements OnInit {
       bucket.Name = obj.Bucket_Name;
       bucket.Inventory_Log_Id = obj.Inventory_Log_Id ? obj.Inventory_Log_Id : null;
       this.InventoryId = obj.Inventory_Id;
+      // this.concluderId = null;
       // this.InventoryLogId = bucket.Inventory_Log_Id ? bucket.Inventory_Log_Id : 0;
     }
     else {
@@ -920,10 +931,7 @@ export class AgentComponent implements OnInit {
         formobj = { Client_Id: this.ClientId, Bucket_Name: bucket.Name, Inventory_Id: this.InventoryId, Old_Inventory_Log_Id: oldinvenlogid, New_Inventory_Log_Id: existinglogid, Insert_Log: false };
       }
       this.UpdateInventoryTime(bucket, formobj, fromPopup, this.InventoryId);
-      // }
-      // else {
-      //   this.GetAllFieldsApiCall(bucketname, this.InventoryId, fromPopup);
-      // }
+
     }
     else {
       console.log('In Else bucket : ', bucket);
@@ -1035,7 +1043,7 @@ export class AgentComponent implements OnInit {
   }
 
   RemoveAccountFromLocal() {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     var thisref = this;
     this.LocalAccounts = this.LocalAccounts.filter(function (item) {
       return (item.Inventory_Id != thisref.InventoryId);
@@ -1045,7 +1053,7 @@ export class AgentComponent implements OnInit {
 
   GetLogFromInventoryId(oldinvenid: number): number {
     var res = 0;
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == oldinvenid) {
         if (e.Inventory_Log_Id != null) {
@@ -1058,7 +1066,7 @@ export class AgentComponent implements OnInit {
 
   InventoryLogCheck(bucketname) {
     var res = 0;
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Bucket_Name == bucketname) {
         if (e.Inventory_Log_Id != null) {
@@ -1105,7 +1113,7 @@ export class AgentComponent implements OnInit {
   }
 
   MapInventoryLogId(bucketname) {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Bucket_Name == bucketname && e.Processed != 'Complete') {
         if (e.Inventory_Log_Id == null) {
@@ -1119,7 +1127,7 @@ export class AgentComponent implements OnInit {
 
   ManageNullFields() {
     this.AllFields.forEach(e => {
-      console.log('label value ', e.FieldValue, e.Display_Name)
+      // console.log('label value ', e.FieldValue, e.Display_Name)
       if (e.Display_Name.indexOf('Payer') != -1) {
         this.CurrentPayerName = e.FieldValue;
       }
@@ -1644,6 +1652,7 @@ export class AgentComponent implements OnInit {
       this.DisplayMessage = "Please click on Bucket to continue";
       this.ActiveBucket = '';
       this.concluderId = null;
+      this.activeReasonBucket = null;
     }
     this.GetBucketsWithCount();
   }

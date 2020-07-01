@@ -47,7 +47,7 @@ export class AccountsModalComponent implements OnInit {
         date = new Date(e.Completion_Date);
         e.Completion_Date = + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       }
-      e[this.PayerName] = e.Group_By_Field_Value
+      e[this.PayerName] = e.Group_By_Field_Value;
     });
 
     this.columnDefs = [
@@ -63,13 +63,11 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       { headerName: 'Account No', field: 'Account_Number' }
     ]
-    if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
-
+    if (this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
     }
-
     console.log('this.columnDefs : ', this.columnDefs);
     this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
     this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
@@ -128,6 +126,7 @@ export class AccountsModalComponent implements OnInit {
 
 
   GetFieldsFromAccount(bucketname, inventoryid) {
+    console.log('bucketname, inventoryid : ', bucketname, inventoryid)
     if (this.WorkingAccountId != inventoryid) {
       this.WorkingAccountId = inventoryid;
       sessionStorage.removeItem('localPCN');
