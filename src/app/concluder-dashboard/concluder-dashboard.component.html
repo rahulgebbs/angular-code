@@ -24,17 +24,20 @@
     </span>
   </div>
   <div class="col-md-12 supervisor-dash-tbl">
-    <label class="error" *ngIf="submitStatus==false && (dashboardData==null || dashboardData.length==0)">There is no Data
+    <label class="error" *ngIf="submitStatus==false && (dashboardData==null || dashboardData.length==0)">There is no
+      Data
       for Client :-
       {{ Client_Name}}</label>
-    <div class="" style="border:0px solid #ddd;">
+    <div class="" style="border:0px solid #000;">
 
+      <!-- <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table"
+        *ngIf="dashboardData!=null && dashboardData.length>0"> -->
       <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table"
         *ngIf="dashboardData!=null && dashboardData.length>0">
-        <table class="table" cellspacing="0" cellpadding="0">
+        <!-- <table class="table" cellspacing="0" cellpadding="0">
           <thead>
             <tr>
-              <th class="clientnames " colspan="7" width="250">Client Name : {{clientName || "N/A"}}
+              <th class="clientnames " colspan="7" width="250">Client Name : {{clientName  }}
               </th>
             </tr>
             <tr class="border-t">
@@ -47,28 +50,99 @@
             <ng-container *ngFor="let data of dashboardData">
               <tr class="t-bold">
                 <ng-container *ngFor="let key of keyList">
-                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Buckets!='Allocated ##'" class="">
-                    <span *ngIf="key=='Buckets' || data[key]>0">
+                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Bucket_Label!='Allocated ##'"
+                    class="">
+                    <span *ngIf="key=='Bucket_Label' || (data[key]!=null && data[key]!=0)">
                       {{data[key]}}
                     </span>
                     <span *ngIf="data[key]==0">
                       {{"-"}}
                     </span>
                   </td>
-                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Buckets=='Allocated ##'"
-                    [ngStyle]="{'text-decoration':key!='Buckets' && data.Buckets=='Allocated ##' ? 'underline':'none','color':key!='Buckets' && data.Buckets=='Allocated ##' ? 'blue':'#000'}"
+                  <td (click)="opeAllocatedCount(data,key)" *ngIf="key!='Id' && data.Bucket_Label=='Allocated ##'"
+                    [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}"
                     class="">
                     {{data[key]}}
                   </td>
-                  <!-- <td (click)="opeAllocatedCount(data,key)"
-                    *ngIf="key!='Id' && data.Buckets=='Allocated ##' && data[key]==0">
-                    {{"-"}}
-                  </td> -->
                 </ng-container>
               </tr>
             </ng-container>
 
           </tbody>
+        </table> -->
+        <table>
+          <tr>
+            <th rowspan="2">Buckets</th>
+            <th rowspan="2">To Be Concluded</th>
+            <th rowspan="2">Rejections</th>
+            <th colspan="2">Paid</th>
+            <th colspan="4">Denials</th>
+            <th colspan="4">No Response</th>
+          </tr>
+          <tr>
+            <th>EOB Available</th>
+            <th>No EOB</th>
+
+
+            <th>Provider Issue</th>
+            <th>Payer Issue</th>
+            <th>Patient Issue</th>
+            <th>Coding Issue</th>
+
+
+            <th>Website</th>
+            <th>IVR</th>
+            <th>Fax</th>
+            <th>Calling</th>
+          </tr>
+
+          <tr class="t-bold" *ngFor="let data of dashboardData">
+            <td> {{data.Bucket_Label  }} </td>
+
+            <td (click)="opeAllocatedCount(data,'To_Be_Concluded')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.To_Be_Concluded  }} </td>
+
+            <td (click)="opeAllocatedCount(data,'Rejections')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Rejections  }} </td>
+
+            <td (click)="opeAllocatedCount(data,'Paid_EOB_Availble')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Paid_EOB_Availble  }}
+            </td>
+
+            <td (click)="opeAllocatedCount(data,'Paid_NO_EOB')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Paid_NO_EOB  }}
+            </td>
+
+            <td (click)="opeAllocatedCount(data,'Denials_Provider_Issue')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Denials_Provider_Issue  }} </td>
+
+            <td (click)="opeAllocatedCount(data,'Denials_Payer_Issue')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Denials_Payer_Issue  }} </td>
+            <td (click)="opeAllocatedCount(data,'Denials_Patient_Issue')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Denials_Patient_Issue  }} </td>
+            <td (click)="opeAllocatedCount(data,'Denials_Coding_Issue')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.Denials_Coding_Issue  }} </td>
+            <td (click)="opeAllocatedCount(data,'No_Response_Website')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.No_Response_Website  }} </td>
+            <td (click)="opeAllocatedCount(data,'No_Response_IVR')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.No_Response_IVR  }} </td>
+            <td (click)="opeAllocatedCount(data,'No_Response_Fax')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.No_Response_Fax  }} </td>
+            <td (click)="opeAllocatedCount(data,'No_Response_Calling')"
+              [ngStyle]="{'text-decoration': data.Bucket_Label=='Allocated ##' ? 'underline':'none','color': data.Bucket_Label=='Allocated ##' ? 'blue':'#000'}">
+              {{data.No_Response_Calling  }} </td>
+          </tr>
         </table>
       </div>
     </div>

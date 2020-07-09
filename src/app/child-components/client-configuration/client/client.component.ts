@@ -63,7 +63,7 @@ export class ClientComponent implements OnInit {
       "DB_Password": ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       "Is_Active": [""],
       "Is_PCN": [false],
-      "Is_Super_Concluder_Process": [true],
+      "Is_Super_Concluder_Process": [null],
       "Updated_Date": [""],
       "Is_Aging_Report": [""],
       "Original_Client_Name": ["", Validators.compose([Validators.required])],
@@ -305,7 +305,7 @@ export class ClientComponent implements OnInit {
     this.addClient.patchValue({ "Is_Aging_Report": null, "File_Location": "C:/" });
 
     // setTimeout(() => {
-    this.addClient.patchValue({ "Is_Super_Concluder_Process": true });
+    this.addClient.patchValue({ "Is_Super_Concluder_Process": null });
     // })
     // this.addClient.patchValue({ "Is_Aging_Report": null, "File_Location": "C:/" })
 

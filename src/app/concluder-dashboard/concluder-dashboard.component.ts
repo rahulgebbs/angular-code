@@ -19,7 +19,7 @@ export class ConcluderDashboardComponent implements OnInit {
   ClientList: any[] = [];
   userdata: any;
   ResponseHelper: ResponseHelper;
-  keyList = ["Id", "Buckets",
+  keyList = ["Id", "Bucket_Label",
     "To_Be_Concluded",
     "Rejections",
     "Paid_EOB_Availble",
@@ -41,8 +41,6 @@ export class ConcluderDashboardComponent implements OnInit {
   showAllocatedCountModal = false;
   constructor(private router: Router, private notification: NotificationService, public fb: FormBuilder, private pcnService: PcnService) {
     this.ResponseHelper = new ResponseHelper(this.notification);
-
-
     this.dashboard = this.fb.group({
       "ClientId": [null, Validators.required]
     })
@@ -78,6 +76,8 @@ export class ConcluderDashboardComponent implements OnInit {
     this.pcnService.getConcluderDashboard(ClientId).subscribe((response) => {
       console.log('getConcluderDashboard response : ', response);
       this.dashboardData = response.Data;
+
+      this.setBucketListName();
       this.submitStatus = false;
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
@@ -87,7 +87,46 @@ export class ConcluderDashboardComponent implements OnInit {
       this.ResponseHelper.GetFaliureResponse(error);
     })
   }
+  setBucketListName() {
+    this.dashboardData.forEach((data) => {
+      if (data.Buckets == '%%_$$') {
+        data.Bucket_Label = 'Pending % ($ Value)';
+        this.setPercentageValue(data);
+      }
+      else if (data.Buckets == '%%%_##') {
+        data.Bucket_Label = 'Pending % Count';
+        this.setPercentageValue(data);
+      }
+      else {
+        data.Bucket_Label = data.Buckets;
+        if (data.Bucket_Label != 'Allocated ##') {
+          this.keyList.forEach((key) => {
+            if (key != "Id" && key != "Bucket_Label" && key != "Bucket_Label") {
+              data[key] = data[key] != null && data[key] > 0 ? data[key] : "-";
+            }
+          })
+        }
+      }
 
+    })
+  }
+
+  setPercentageValue(data) {
+    this.keyList.forEach((key) => {
+      if (key != 'Id' && key != 'Bucket_Label') {
+        console.log('Before : ', data[key]);
+        // if (data[key]) {
+        data[key] = data[key] > 0 ? (data[key] * 100) + '%' : '0%'
+        // }
+        console.log('After : ', data[key]);
+      }
+      else {
+        console.log('ELSE setPercentageValue : ', key);
+      }
+    })
+
+
+  }
   getClientName() {
     const { value } = this.dashboard;
     this.clientName = null;
@@ -120,6 +159,9 @@ export class ConcluderDashboardComponent implements OnInit {
   opeAllocatedCount(obj, key) {
     console.log('opeAllocatedCount() : ', obj, key, this.allocatedCountList);
     this.activeAllocatedCount = [];
+    if (obj && obj.Buckets != 'Allocated ##') {
+      return true;
+    }
     this.allocatedCountList.forEach((element) => {
       if (element && element.Bucket_Name.toLowerCase() == key.toLowerCase()) {
         this.activeAllocatedCount = element.allocated_Counts;

@@ -46,7 +46,7 @@ export const Access = {
   /* concluder menus*/
   "concluder-dashboard": ["Supervisor"],
   "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
-  "concluder-report": ["Supervisor", "Agent", "Admin"] //,
+  "concluder-report": ["Supervisor", "Admin"] //,
   // "deallocate-concluder": ["Supervisor", "Admin"],
   // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
 };

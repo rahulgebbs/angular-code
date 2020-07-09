@@ -15,7 +15,6 @@ import { ExcelService } from 'src/app/service/client-configuration/excel.service
   templateUrl: './simple-report.component.html',
   styleUrls: ['./simple-report.component.css'],
   providers: [ExcelService, dropDownFields]
-
 })
 export class SimpleReportComponent implements OnInit {
   validationError: boolean = false

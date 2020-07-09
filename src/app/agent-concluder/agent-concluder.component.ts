@@ -57,6 +57,26 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     console.log('setFields', this.concludedForm.value);
     // const Concluder_Id = this.
   }
+  changeBillDate(event) {
+    // console.log('changeBillDate event : ', this.concludedForm);
+    // const { value } = this.concludedForm;
+    // if (value.Original_Claim_Billed_Date != null && value.Latest_Claim_Billed_Date != null) {
+    //   var startDate = moment(value.Latest_Claim_Billed_Date, 'MM-DD-YYYY');
+    //   var endDate = moment(value.Original_Claim_Billed_Date, 'MM-DD-YYYY');
+    //   var result = Number(endDate.diff(startDate, 'days'));
+    //   console.log('result : ', result);
+    //   if (result > 0) {
+    //     // this.concludedForm.controls.Original_Claim_Billed_Date.setErrors({ invalidDate: true });
+    //   }
+    //   else {
+    //     // this.concludedForm.controls.Original_Claim_Billed_Date.setErrors(null);
+    //   }
+    // }
+    // else {
+    //   // this.concludedForm.controls.Original_Claim_Billed_Date.setErrors(null);
+    // }
+    console.log('changeBillDate event : ', this.concludedForm.controls.Original_Claim_Billed_Date.errors);
+  }
 
   initForm() {
     const self = this;

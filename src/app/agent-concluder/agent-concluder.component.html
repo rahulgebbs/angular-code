@@ -13,8 +13,9 @@
                         <input placeholder="mm/dd/yyyy" autocomplete="off"
                             [owlDateTimeTrigger]="originalBilledDateCalendar" class="owl-dp form-control"
                             name="originalBilledDateCalendar" [owlDateTime]="originalBilledDateCalendar"
-                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate"
-                            formControlName="Original_Claim_Billed_Date">
+                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                            [max]="concludedForm.value.Latest_Claim_Billed_Date"
+                            formControlName="Original_Claim_Billed_Date" (dateTimeChange)="changeBillDate($event)">
                         <span class="input-group-addon" [owlDateTimeTrigger]="originalBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -24,6 +25,11 @@
                         *ngIf="concludedForm.get('Original_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
                         Original Claim Billed Date is required.
                     </div>
+                    <div class="error"
+                        *ngIf="concludedForm.controls.Original_Claim_Billed_Date.errors && concludedForm.controls.Original_Claim_Billed_Date.errors.owlDateTimeMax">
+                        Original claim billed date should not be greater than last claim billed date.
+                    </div>
+                    <!-- owlDateTimeMax -->
                 </div>
             </div>
 
@@ -36,7 +42,8 @@
                         <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="lastBilledDateCalendar"
                             class="owl-dp form-control" name="lastBilledDateCalendar"
                             [owlDateTime]="lastBilledDateCalendar" (keydown)="BlockInput($event)"
-                            (keypress)="BlockInput($event)" [max]="maxDate" formControlName="Latest_Claim_Billed_Date">
+                            (keypress)="BlockInput($event)" formControlName="Latest_Claim_Billed_Date"
+                            (dateTimeChange)="changeBillDate($event)">
                         <span class="input-group-addon" [owlDateTimeTrigger]="lastBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
