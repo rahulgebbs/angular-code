@@ -10,25 +10,35 @@
                         Original Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='originalBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off"
-                            [owlDateTimeTrigger]="originalBilledDateCalendar" class="owl-dp form-control"
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
                             name="originalBilledDateCalendar" [owlDateTime]="originalBilledDateCalendar"
-                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
+                            (keyup)="BlockInput('Original_Claim_Billed_Date',$event)"
+                            (dateTimeChange)="BlockInput('Original_Claim_Billed_Date',$event)"
                             [max]="concludedForm.value.Latest_Claim_Billed_Date"
-                            formControlName="Original_Claim_Billed_Date" (dateTimeChange)="changeBillDate($event)">
+                            formControlName="Original_Claim_Billed_Date">
                         <span class="input-group-addon" [owlDateTimeTrigger]="originalBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #originalBilledDateCalendar></owl-date-time>
                     </div>
-                    <div class="error"
-                        *ngIf="concludedForm.get('Original_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
-                        Original Claim Billed Date is required.
+                    <div *ngIf="(concludedForm.get('Original_Claim_Billed_Date').dirty==true || submitStatus==true)">
+                        <div class="error" *ngIf="concludedForm.get('Original_Claim_Billed_Date').hasError('required')">
+                            Original Claim Billed Date is required.
+                        </div>
+                        <div class="error"
+                            *ngIf="concludedForm.controls.Original_Claim_Billed_Date.errors as dateError">
+                            <span *ngIf="dateError.owlDateTimeMax!=null">
+                                Original claim billed date should not be greater than last claim billed date.
+                            </span>
+                            <span *ngIf="dateError.dateFormat!=null">
+                                Original claim billed Date format is Invalid.
+                            </span>
+                            <span *ngIf="dateError.invalidDate!=null">
+                                Original claim billed date is not a valid date
+                            </span>
+                        </div>
                     </div>
-                    <div class="error"
-                        *ngIf="concludedForm.controls.Original_Claim_Billed_Date.errors && concludedForm.controls.Original_Claim_Billed_Date.errors.owlDateTimeMax">
-                        Original claim billed date should not be greater than last claim billed date.
-                    </div>
+
                     <!-- owlDateTimeMax -->
                 </div>
             </div>
@@ -39,19 +49,35 @@
                         Last Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='lastBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="lastBilledDateCalendar"
-                            class="owl-dp form-control" name="lastBilledDateCalendar"
-                            [owlDateTime]="lastBilledDateCalendar" (keydown)="BlockInput($event)"
-                            (keypress)="BlockInput($event)" formControlName="Latest_Claim_Billed_Date"
-                            (dateTimeChange)="changeBillDate($event)">
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
+                            name="lastBilledDateCalendar" [owlDateTime]="lastBilledDateCalendar"
+                            (keyup)="BlockInput('Latest_Claim_Billed_Date',$event)"
+                            (dateTimeChange)="BlockInput('Latest_Claim_Billed_Date',$event)"
+                            formControlName="Latest_Claim_Billed_Date">
                         <span class="input-group-addon" [owlDateTimeTrigger]="lastBilledDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #lastBilledDateCalendar></owl-date-time>
                     </div>
-                    <div class="error"
-                        *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required') && (submitStatus==true)">
+                    <!-- <div class="error"
+                        *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required') && (concludedForm.get('Latest_Claim_Billed_Date').touched==true || concludedForm.get('Latest_Claim_Billed_Date').dirty==true || submitStatus==true)">
                         Latest Claim Billed Date is required.
+                    </div> -->
+                    <div *ngIf="(concludedForm.get('Latest_Claim_Billed_Date').dirty==true || submitStatus==true)">
+                        <div class="error" *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required')">
+                            Latest Claim Billed Date Billed Date is required.
+                        </div>
+                        <div class="error" *ngIf="concludedForm.controls.Latest_Claim_Billed_Date.errors as dateError">
+                            <span *ngIf="dateError.owlDateTimeMax!=null">
+                                Latest Claim Billed Date should not be greater than last claim billed date.
+                            </span>
+                            <span *ngIf="dateError.dateFormat!=null">
+                                Latest Claim Billed Date format is Invalid.
+                            </span>
+                            <span *ngIf="dateError.invalidDate!=null">
+                                Latest Claim Billed Date is not a valid date
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -60,8 +86,8 @@
             <div class="field">
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Provider</label>
-                    <input placeholder="Enter Provider" type="text" class="form-control" name="provider" id="" cols="30"
-                        rows="3" formControlName="Provider">
+                    <input placeholder="Enter Provider" type="text" class="form-control" name="provider" id="Provider"
+                        cols="30" rows="3" formControlName="Provider">
                 </div>
             </div>
 
@@ -71,13 +97,13 @@
                             class="asteric">*</span></label>
                     <div class="radioBorder">
                         <label class="radio-inline">
-                            <input type="radio" name="Rejection" [value]="true" formControlName="Rejection"
-                                (change)="handleRejection()">
+                            <input type="radio" name="Rejection" id="Rejection_Yes" [value]="true"
+                                formControlName="Rejection" (change)="handleRejection()">
                             Yes
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="Rejection" [value]="false" formControlName="Rejection"
-                                (change)="handleRejection()">
+                            <input type="radio" name="Rejection" id="Rejection_No" [value]="false"
+                                formControlName="Rejection" (change)="handleRejection()">
                             No
                         </label>
                     </div>
@@ -94,7 +120,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Rejection Reason <span
                             class="asteric">*</span></label>
-                    <textarea class="form-control" name="provider" id="" cols="30" rows="3"
+                    <textarea class="form-control" name="Rejection_Reason" id="Rejection_Reason" cols="30" rows="3"
                         formControlName="Rejection_Reason"></textarea>
                     <div class="error"
                         *ngIf="concludedForm.get('Rejection_Reason').hasError('required') && (submitStatus==true)">
@@ -111,13 +137,13 @@
                     </label>
                     <div class="radioBorder">
                         <label class="radio-inline">
-                            <input type="radio" name="EOB_Available" [value]="true" formControlName="EOB_Available"
-                                (change)="handleEOBAvailabe()">
+                            <input type="radio" name="EOB_Available" [value]="true" id="EOB_Available_Yes"
+                                formControlName="EOB_Available" (change)="handleEOBAvailabe()">
                             Yes
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="EOB_Available" [value]="false" formControlName="EOB_Available"
-                                (change)="handleEOBAvailabe()">
+                            <input type="radio" name="EOB_Available" [value]="false" id="EOB_Available_No"
+                                formControlName="EOB_Available" (change)="handleEOBAvailabe()">
                             No
                         </label>
                     </div>
@@ -132,7 +158,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Status <span
                             class="asteric">*</span></label>
-                    <select class="form-control" formControlName="Status" (change)="handleStatus()">
+                    <select class="form-control" id="Status" formControlName="Status" (change)="handleStatus()">
                         <option [ngValue]="" disabled>Select Status</option>
                         <option [ngValue]="undefined" *ngFor="let option of statusList" [value]="option.Status_Name">
                             {{option.Status_Name}}</option>
@@ -149,12 +175,12 @@
                             class="asteric">*</span></label>
                     <div class="radioBorder">
                         <label class="radio-inline">
-                            <input type="radio" name="EOB_Posted_in_Sys" [value]="true"
+                            <input type="radio" name="EOB_Posted_in_Sys" id="EOB_Posted_in_Sys_Yes" [value]="true"
                                 formControlName="EOB_Posted_in_Sys">
                             Yes
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="EOB_Posted_in_Sys" [value]="false"
+                            <input type="radio" name="EOB_Posted_in_Sys" id="EOB_Posted_in_Sys_No" [value]="false"
                                 formControlName="EOB_Posted_in_Sys">
                             No
                         </label>
@@ -172,23 +198,27 @@
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial</label>
                     <div class="denialInput">
                         <input type="text" class="form-control" placeholder="Primary Denial *"
-                            formControlName="Denial_1">
+                            formControlName="Denial_1" id="Denial_1">
                         <div class="error"
                             *ngIf="concludedForm.get('Denial_1').hasError('required') && (submitStatus==true)">
                             Primary Denial is required.
                         </div>
                     </div>
                     <div class="denialInput">
-                        <input type="text" class="form-control" placeholder="denial_2" formControlName="Denial_2">
+                        <input type="text" class="form-control" id="Denial_2" placeholder="denial_2"
+                            formControlName="Denial_2">
                     </div>
                     <div class="denialInput">
-                        <input type="text" class="form-control" placeholder="denial_3" formControlName="Denial_3">
+                        <input type="text" class="form-control" id="Denial_3" placeholder="denial_3"
+                            formControlName="Denial_3">
                     </div>
                     <div class="denialInput">
-                        <input type="text" class="form-control" placeholder="denial_4" formControlName="Denial_4">
+                        <input type="text" class="form-control" id="Denial_4" placeholder="denial_4"
+                            formControlName="Denial_4">
                     </div>
                     <div class="denialInput">
-                        <input type="text" class="form-control" placeholder="denial_5" formControlName="Denial_5">
+                        <input type="text" class="form-control" id="Denial_5" placeholder="denial_5"
+                            formControlName="Denial_5">
                     </div>
 
 
@@ -200,7 +230,7 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Denial Reason (Remark Code)
                         <span class="asteric">*</span></label>
-                    <textarea class="form-control" name="denialReason" id="" cols="30" rows="3"
+                    <textarea class="form-control" name="denialReason" id="Denial_Reason" cols="30" rows="3"
                         formControlName="Denial_Reason"></textarea>
                     <div class="error"
                         *ngIf="concludedForm.get('Denial_Reason').hasError('required') && (submitStatus==true)">
@@ -214,18 +244,34 @@
                 <div class="form-group">
                     <label class="label-std  control-label p-0 b-600">Denial Date <span class="asteric">*</span></label>
                     <div class='input-group date' id='denialDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" [owlDateTimeTrigger]="denialDateCalendar"
-                            class="owl-dp form-control" name="denialDateCalendar" [owlDateTime]="denialDateCalendar"
-                            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [max]="maxDate"
-                            formControlName="Denial_Date">
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
+                            name="denialDateCalendar" [owlDateTime]="denialDateCalendar" [max]="maxDate"
+                            formControlName="Denial_Date" (keyup)="BlockInput('Denial_Date',$event)"
+                            (dateTimeChange)="BlockInput('Denial_Date',$event)">
                         <span class="input-group-addon" [owlDateTimeTrigger]="denialDateCalendar">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #denialDateCalendar></owl-date-time>
                     </div>
-                    <div class="error"
+                    <!-- <div class="error"
                         *ngIf="concludedForm.get('Denial_Date').hasError('required') && (submitStatus==true)">
                         Denial Date is required.
+                    </div> -->
+                    <div *ngIf="(concludedForm.get('Denial_Date').dirty==true || submitStatus==true)">
+                        <div class="error" *ngIf="concludedForm.get('Latest_Claim_Billed_Date').hasError('required')">
+                            Denial Date Billed Date is required.
+                        </div>
+                        <div class="error" *ngIf="concludedForm.controls.Denial_Date.errors as dateError">
+                            <span *ngIf="dateError.owlDateTimeMax!=null">
+                                Denial Date should not be greater than last claim billed date.
+                            </span>
+                            <span *ngIf="dateError.dateFormat!=null">
+                                Denial Date format is Invalid.
+                            </span>
+                            <span *ngIf="dateError.invalidDate!=null">
+                                Denial Date is not a valid date
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,8 +281,8 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="label-std  control-label p-0 b-600">Additional Comment Box (Max Char
                         100)</label>
-                    <textarea class="form-control" name="Remarks" id="" cols="30" rows="3" formControlName="Remarks"
-                        maxlength="100"></textarea>
+                    <textarea class="form-control" name="Remarks" id="Remarks" cols="30" rows="3"
+                        formControlName="Remarks" maxlength="100"></textarea>
                 </div>
             </div>
 
@@ -255,9 +301,5 @@
                 </div>
             </div>
         </div>
-
-
-
     </form>
-
 </div>

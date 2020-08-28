@@ -22,6 +22,7 @@ import * as $ from 'jquery'
 import * as _ from 'lodash';
 import { ClientService } from 'src/app/service/client-configuration/client.service';
 import { ConcluderService } from 'src/app/service/concluder.service';
+import { ClientInstructionService } from 'src/app/service/client-instruction.service';
 
 
 
@@ -32,6 +33,7 @@ import { ConcluderService } from 'src/app/service/concluder.service';
   providers: [dropDownFields]
 })
 export class AgentComponent implements OnInit {
+  clientInstructionInfoModal = false;
   to_be_concluded_bucket: any = {
     Count: 0,
     Display_Name: "To Be Concluded",
@@ -125,8 +127,10 @@ export class AgentComponent implements OnInit {
   openConclusionBucketModal = false;
   concluderId = null;
   activeReasonBucket = null;
+
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
+    private clientInstructionService: ClientInstructionService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
 
   ngOnInit() {
@@ -148,6 +152,21 @@ export class AgentComponent implements OnInit {
       $('.utility-menu').hide();
     }, 1000);
     this.getClientID();
+    this.getClientInstructionInformation();
+  }
+
+  getClientInstructionInformation() {
+    this.clientInstructionService.getClientInstructionInformation(this.ClientId).subscribe((response: any) => {
+      console.log('getClientInstructionInformation response : ', response);
+      if (response.Data && response.Data.InstructionCheck == true) {
+        this.clientInstructionInfoModal = true;
+      }
+      // this.clientInstructionInfoModal = response && response.InstructionCheck ? response.InstructionCheck : false;
+    }, (error) => {
+      this.clientInstructionInfoModal = false;
+      console.log('getClientInstructionInformation error : ', error);
+    })
+
   }
 
   toggleMenu() {
@@ -498,7 +517,13 @@ export class AgentComponent implements OnInit {
         }
         else if (e.Column_Datatype == 'Date') {
           // moment().utcOffset(0, true).format()
-          objs[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+          if (e && e.FieldValue != null) {
+
+            objs[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+          }
+          else {
+            objs[e.Header_Name] = moment().utcOffset(0, true).format();
+          }
         }
         else {
           objs[e.Header_Name] = e.FieldValue;
@@ -514,7 +539,7 @@ export class AgentComponent implements OnInit {
 
       var obj = new Object();
       obj['Fields'] = objs;
-
+      console.log('obj : ', obj['Fields']);
       this.DisableSubmit = true;
       // console.log('SubmitForm obj : ', JSON.stringify(obj));
       localStorage.removeItem('callReference');
@@ -532,7 +557,7 @@ export class AgentComponent implements OnInit {
         this.submitConclusion(obj);
         return true;
       }
-      // return true
+
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -748,6 +773,9 @@ export class AgentComponent implements OnInit {
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
       this.ActiveBucket = bucket.Name == "Concluded" ? this.ActiveBucket : bucket.Name;
+      if (bucket.Name != 'To_be_Concluded') {
+        this.concluderId = null;
+      }
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
       }
@@ -798,7 +826,7 @@ export class AgentComponent implements OnInit {
 
   toBeConcluded() {
     this.openToBeConcludedBucketModal = true;
-    this.concluderId = null;
+    // this.concluderId = null;
   }
 
   conclusionBucket() {
@@ -1494,7 +1522,12 @@ export class AgentComponent implements OnInit {
     this.AllFields.forEach(e => {
       // console.log('loop ele : ', e.Header_Name, e);
       if (e.Column_Datatype == 'Date') {
-        this.inventoryDetails[e.Display_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+        if (e && e.FieldValue != null) {
+          this.inventoryDetails[e.Display_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+        }
+        else {
+          this.inventoryDetails[e.Display_Name] = moment().utcOffset(0, true).format();
+        }
       }
       else {
         this.inventoryDetails[e.Display_Name] = e.FieldValue;
@@ -1564,8 +1597,9 @@ export class AgentComponent implements OnInit {
       this.Validated = false;
       this.DisableSubmit = false;
     }, (error) => {
+      this.Validated = false;
+      this.DisableSubmit = false;
       this.ResponseHelper.GetFaliureResponse(error);
-      // const Messages = error.Message;
       console.log('error Messages : ', error);
       const httpResponse = error.json();
       console.log('httpResponse : ', httpResponse);
@@ -1576,8 +1610,7 @@ export class AgentComponent implements OnInit {
       }
       console.log('saveConclusionData response : ', error);
       this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
-      this.Validated = false;
-      this.DisableSubmit = false;
+
     });
     // this.assigNextConclusionInventory();
   }
@@ -1655,6 +1688,12 @@ export class AgentComponent implements OnInit {
       this.activeReasonBucket = null;
     }
     this.GetBucketsWithCount();
+  }
+
+  closeInstructionModal(event) {
+    console.log('closeInstructionModal event : ', event);
+    this.clientInstructionInfoModal = false;
+    this.showClientUpdate();
   }
 
 }

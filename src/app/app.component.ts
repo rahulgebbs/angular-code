@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
+// import * as moment from 'moment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -30,6 +31,8 @@ export class AppComponent implements OnInit {
   Token: Token;
   resumeBreak;
   showTimeoutModal = false;
+  timeoutStart = new Date();
+  warningInterval: any;
   constructor(private router: Router,
     private idle: Idle, private keepalive: Keepalive,
     private ts: Title,
@@ -48,67 +51,69 @@ export class AppComponent implements OnInit {
     }, (error) => {
       console.log('logEvent : ', error);
     });
-    // alert('before unload');
-    // return false
-    /// remove above comment to show popup to user on page refresh or close
+
   }
 
 
   ngOnInit(): void {
-    // this.initiateTimer();
     this.Getcount();
+    this.initiateTimer();
   }
 
   initiateTimer() {
-    // sets an idle timeout of 5 seconds, for testing purposes.
-    this.idle.setIdle(5);
-    // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-    this.idle.setTimeout(5);
+    const sessionTime = sessionStorage.getItem('sessionTime');
+    if (sessionTime != null) {
+      this.idle.setIdle(Number(sessionTime));
+    }
+    else {
+      this.idle.stop();
+    }
+    // sets a timeout period of 10 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+    this.idle.setTimeout(10);
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
-
+    // let timeOutInterval = null;
     this.idle.onIdleEnd.subscribe(() => {
       this.idleState = 'No longer idle.'
-      console.log(this.idleState);
-      // this.reset();
+      console.log("onIdleEnd : ", this.idleState);
     });
-
-    this.idle.onTimeout.subscribe(() => {
-      // this.childModal.hide();
-      this.showTimeoutModal = false;
-      this.idleState = 'Timed out!';
-      this.timedOut = true;
-      console.log('onTimeout : ', this.idleState);
-      // sessionStorage.clear();
-      this.router.navigate(['/']);
-      console.log('onPing : ', this.lastPing);
-    });
-
     this.idle.onIdleStart.subscribe(() => {
-      this.idleState = 'You\'ve gone idle!'
+      // this.idleState = 'You\'ve gone idle!'
       console.log('onIdleStart : ', this.idleState);
-      this.showTimeoutModal = true;
-      // this.childModal.show();
-    });
-
-    this.idle.onTimeoutWarning.subscribe((countdown) => {
-      this.idleState = 'You will time out in ' + countdown + ' seconds!'
-      console.log('onTimeoutWarning : ', this.idleState);
-    });
-
-    // sets the ping interval to 15 seconds
-    this.keepalive.interval(15);
-
-    this.keepalive.onPing.subscribe(() => {
-      console.log('onPing : ', this.lastPing);
-      this.lastPing = new Date();
-      return this.lastPing;
+      if (this.showTimeoutModal == false) {
+        this.startInterval(10);
+      }
     });
     this.chekIfUserLoggedIn();
   }
+
+  startInterval(countdown) {
+    let timer = Number(countdown);
+    this.idleState = (timer) + ' seconds!';
+    this.showTimeoutModal = true;
+    const self = this;
+    // countdown = countdown - 1;
+    this.warningInterval = setInterval(() => {
+      if (timer <= 1) {
+        clearInterval(self.warningInterval);
+        self.idle.stop();
+        this.showTimeoutModal = false;
+        this.idleState = 'Timed out!';
+        this.timedOut = true;
+        console.log('onTimeout : ', this.idleState);
+        sessionStorage.clear();
+        localStorage.clear();
+        this.router.navigate(['/']);
+      }
+      else {
+        timer = timer - 1;
+        this.idleState = (timer) + ' seconds!'
+      }
+      console.log('onTimeoutWarning : ', this.idleState);
+    }, 1000);
+  }
   reset() {
     this.idle.watch();
-    //xthis.idleState = 'Started.';
     this.timedOut = false;
   }
   chekIfUserLoggedIn() {
@@ -164,6 +169,9 @@ export class AppComponent implements OnInit {
         case '/login':
           this.ShowElement = false;
           break;
+          case '/reset-password':
+          this.ShowElement = false;
+          break;
         case '/two-factor-auth':
           this.ShowElement = false;
           break;
@@ -207,6 +215,7 @@ export class AppComponent implements OnInit {
 
   stay() {
     this.showTimeoutModal = false;
+    clearInterval(this.warningInterval);
     this.reset();
   }
 }

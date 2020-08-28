@@ -125,6 +125,13 @@
             PCN Configuration
           </div>
         </li>
+        <li (click)="navigation('special_project')"
+          [ngClass]="[ShowTabName == 'special_project' ? 'active' :'',clientData.Is_Special_Project_Uploaded ? 'completed':'']">
+          <div class="li-title">
+            Special Project
+          </div>
+        </li>
+        <!--  -->
         <li (click)="navigation('appeal')"
           [ngClass]="[ShowTabName == 'appeal' ? 'active' :'',clientData.Is_Appeal_Uploaded ? 'completed':'']">
           <div class="li-title">
@@ -154,6 +161,8 @@
     </app-formula>
     <app-pcn-configuration (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'pcn'">
     </app-pcn-configuration>
+    <app-special-project (next_page)="next_page($event)" [(ClientData)]="clientData"
+      *ngIf="ShowTabName == 'special_project'"></app-special-project>
     <app-appeal (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName=='appeal'"></app-appeal>
 
   </div>

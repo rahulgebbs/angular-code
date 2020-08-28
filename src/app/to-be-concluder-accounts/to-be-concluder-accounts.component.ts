@@ -26,7 +26,6 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   CreateTemplate = '<b>hhhh</b>';
   ResponseHelper: ResponseHelper;
   allData = [];
-
   activeConcluderId = null;
   oldConcluderId = null;
   constructor(private concluderService: ConcluderService, private notificationservice: NotificationService) {
@@ -34,7 +33,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('toBeConcluded : ', this.UserId)
+    console.log('toBeConcluded : ', this.UserId, this.WorkingAccountId)
     this.toBeConcluded();
     this.oldConcluderId = this.WorkingAccountId;
   }
@@ -130,7 +129,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
       field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
       field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
     });
-    this.insertConcluderTime(account.Concluder_Id);
+    // this.insertConcluderTime(account.Concluder_Id);
     this.GetFieldsFromAccount(Bucket_Name, account.Concluder_Id, fieldList, false);
   }
 
@@ -177,19 +176,25 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   }
 
   GetFieldsFromAccount(bucketname, concluderId, fieldList, closePopup) {
+    // this.oldConcluderId = concluderId;
     sessionStorage.removeItem('localPCN');
     sessionStorage.removeItem('lastPCN');
     // console.log('bucketname, concluderId, fieldList, closePopup : ', bucketname, concluderId, fieldList, closePopup);
-    console.log('final fieldList : ', fieldList);
+    console.log('final fieldList : ', this.WorkingAccountId, concluderId);
     if (this.WorkingAccountId != concluderId) {
-      this.WorkingAccountId = concluderId;
-      if (closePopup == true) {
+      // if (closePopup == true) {
+      if (this.WorkingAccountId != null && concluderId != null) {
         this.updateConcluderTime(concluderId);
       }
+      else {
+        this.insertConcluderTime(concluderId);
+      }
+      this.WorkingAccountId = concluderId;
       this.concluderRowClick.emit({ Bucket_Name: bucketname, concluderId: concluderId, AccountsList: this.AccountsList, fields: fieldList, closePopup: closePopup });
       this.saveIntoLocal();
     }
     else {
+      this.WorkingAccountId = concluderId;
       if (closePopup == true)
         this.CloseConcluderModal.emit(closePopup);
     }

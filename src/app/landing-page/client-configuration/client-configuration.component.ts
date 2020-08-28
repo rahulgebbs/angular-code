@@ -59,6 +59,11 @@ export class ClientConfigurationComponent implements OnInit {
     else if (e == "pcn") {
       this.clientData.Is_PCN_Uploaded = true;
       // location.reload()
+      this.ShowTabName = 'special_project';
+    }
+    else if (e == "special_project") {
+      this.clientData.Is_Special_Project_Uploaded = true;
+      // location.reload()
       this.ShowTabName = 'appeal';
     }
     else if (e == "appeal") {

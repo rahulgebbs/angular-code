@@ -59,7 +59,7 @@ export class ForgotPasswordComponent implements OnInit {
       username: new FormControl('', [Validators.required
       ]),
       captchaModel: new FormControl('', [customValidator])
-    })
+    });
   }
 
   ForgotSubmit() {
@@ -73,9 +73,9 @@ export class ForgotPasswordComponent implements OnInit {
         data => {
           this.ResponseHelper.GetSuccessResponse(data)
           this.CreateResetForm();
-          setTimeout(() => {
-            this.SwitchToReset = true;
-          }, 2000);
+          // setTimeout(() => {
+          this.SwitchToReset = true;
+          // }, 2000);
         }, err => {
           this.ResponseHelper.GetFaliureResponse(err)
         })
@@ -115,7 +115,7 @@ export class ForgotPasswordComponent implements OnInit {
       ]),
       captchaModel: new FormControl('', [customValidator])
     }, { validators: customValidation.MatchPassword });
-    this.makeid();
+    this.captchaForResetPassword();
   }
 
   ResetPassword() {
@@ -146,6 +146,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.randomGradientColor();
     this.captchaArray = [];
     var result = '';
+    const { value } = this.MyForm;
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
     for (var i = 0; i < 6; i++) {
@@ -153,13 +154,39 @@ export class ForgotPasswordComponent implements OnInit {
       result += randomChar;
       this.captchaArray.push(randomChar)
     }
-    console.log('makeid : ', result, this.captchaArray)
-    // return result;
+    if (value && value.captchaModel != null && value.captchaModel.length > 0) {
+      console.log('this.MyForm : ', this.MyForm);
+      const result = this.checkIfValid(value.captchaModel);
+      if (result == false) {
+        this.MyForm.controls.captchaModel.setErrors({ invalidCaptcha: true })
+      }
+    }
+  }
+
+  captchaForResetPassword()
+  {
+    this.randomGradientColor();
+    this.captchaArray = [];
+    var result = '';
+    const { value } = this.ResetForm;
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < 6; i++) {
+      const randomChar = characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += randomChar;
+      this.captchaArray.push(randomChar)
+    }
+    if (value && value.captchaModel != null && value.captchaModel.length > 0) {
+      console.log('this.ResetForm : ', this.ResetForm);
+      const result = this.checkIfValid(value.captchaModel);
+      if (result == false) {
+        this.ResetForm.controls.captchaModel.setErrors({ invalidCaptcha: true })
+      }
+    }
+
   }
 
   randomGradientColor() {
-
-
     var hexValues = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e"];
 
     function populate(a) {
@@ -180,6 +207,7 @@ export class ForgotPasswordComponent implements OnInit {
     // document.getElementById("container").style.background = gradient;
     // document.getElementById("output").innerHTML = gradient;
   }
+
   checkIfValid(value) {
     console.log('checkIfValid() : ', value.split(''), this.captchaArray);
     const answerStr: any = value.split('');

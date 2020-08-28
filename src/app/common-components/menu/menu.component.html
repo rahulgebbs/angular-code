@@ -32,7 +32,7 @@
 
       <div class="col-md-12 p-0 mt-10">
         <div class="m-leftsidebar bdr-t pt-0" style="margin-top: 5%;">
-        <!-- <div class="m-leftsidebar bdr-t pt-0"> -->
+          <!-- <div class="m-leftsidebar bdr-t pt-0"> -->
 
           <div class="menu">
             <div *ngIf="UserData.Role!='Client User' && UserData.Role!='Client Supervisor'"
@@ -321,9 +321,9 @@
                   </h4>
                 </div>
                 <div
-                  [attr.aria-expanded]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'true' : 'false']"
+                  [attr.aria-expanded]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' || MenuName=='/concluder-deallocation' ? 'true' : 'false']"
                   id="collapseFileConcluder"
-                  [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' ? 'in' : '']"
+                  [ngClass]="[MenuName == '/concluder-dashboard' || MenuName == '/concluder-report' || MenuName=='/concluder-deallocation' ? 'in' : '']"
                   class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
                   <div class="accordianbody">
                     <ul class="nav">
@@ -335,10 +335,10 @@
                           [ngClass]="[MenuName == '/concluder-report' ? 'menu-active1': '']">
                           Concluder Report</a>
                       </li>
-                      <!-- <li *ngIf="checkMenu('deallocate-concluder')"><a (click)="OpenMenu('deallocate-concluder')"
-                          [ngClass]="[MenuName == '/deallocate-concluder' ? 'menu-active1': '']">
+                      <li *ngIf="checkMenu('concluder-deallocation')"><a (click)="OpenMenu('concluder-deallocation')"
+                          [ngClass]="[MenuName == '/concluder-deallocation' ? 'menu-active1': '']">
                           De-Allocate Concluder</a>
-                      </li> -->
+                      </li>
 
                     </ul>
                   </div>

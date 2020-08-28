@@ -265,17 +265,6 @@ export class customValidation {
         }
     }
 
-    static MatchPassword(AC: AbstractControl) {
-        let password = AC.get('New_Password').value; // to get value in input tag
-        let confirmPassword = AC.get('confirmnewpass').value; // to get value in input tag
-        if (password != confirmPassword) {
-            AC.get('confirmnewpass').setErrors({ notMatch: true })
-        } else {
-            AC.get('confirmnewpass').setErrors(null);
-            return null
-        }
-    }
-
     static validFollowupDays(followupvalues, followupcondition) {
 
         if (followupcondition == 'true' && (followupvalues == 0 || followupvalues == undefined)) {
@@ -291,6 +280,17 @@ export class customValidation {
             return false;
         } else {
             return true;
+        }
+    }
+
+    static MatchPassword(AC: AbstractControl) {
+        let password = AC.get('New_Password').value; // to get value in input tag
+        let confirmPassword = AC.get('confirmnewpass').value; // to get value in input tag
+        if (password != confirmPassword) {
+            AC.get('confirmnewpass').setErrors({ notMatch: true })
+        } else {
+            AC.get('confirmnewpass').setErrors(null);
+            return null
         }
     }
 

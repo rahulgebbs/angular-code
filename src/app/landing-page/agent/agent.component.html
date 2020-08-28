@@ -145,12 +145,12 @@
               <div class="form-group mh-15 "
                 [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
                 *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
-                <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
+                <label [for]="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
                 <span *ngIf="f.editableInput==null || f.editableInput==false"
                   [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
-                  <label *ngIf="f.Column_Datatype!='Date'" for="f.Id"
+                  <label *ngIf="f.Column_Datatype!='Date'" [for]="f.Id"
                     class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
-                  <label *ngIf="f.Column_Datatype=='Date'" for="f.Id" class="control-label w-80 label-s text-color">
+                  <label *ngIf="f.Column_Datatype=='Date'" [for]="f.Id" class="control-label w-80 label-s text-color">
                     {{f.FieldValue | date:'MM/dd/yyyy'}}</label>
                   <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
                     title="Insurance Master" (click)="ToggleInsuranceMaster()">
@@ -194,10 +194,10 @@
                 <div class="form-group" *ngIf="f.Display_Name!=null"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' || f.Is_Exception ? 'border-b' : '']">
                   <ng-container *ngIf="f.Display_Name == 'Reference_File_Name' ; else otherNames">
-                    <label for="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
+                    <label [for]="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
                   </ng-container>
                   <ng-template #otherNames>
-                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                    <label [for]="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                   </ng-template>
 
 
@@ -212,12 +212,12 @@
                         </ng-container>
                         <ng-template #textinput>
                           <ng-container *ngIf="f.SetFormula; else elseTemplate">
-                            <label for="f.Id"
-                              class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
+                            <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}
+                              {{f.Id || "NO ID"}}</label>
                           </ng-container>
                           <ng-template #elseTemplate>
-                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
-                              [(ngModel)]="f.FieldValue">
+                            <input type="text" class="form-control" [id]="f.Id" [maxlength]="f.Field_Limit"
+                              placeholder="" [(ngModel)]="f.FieldValue">
                           </ng-template>
                         </ng-template>
                       </ng-container>
@@ -233,14 +233,15 @@
                         </div>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Formula'">
-                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
+                        <label [for]="f.Id"
+                          class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                   <ng-template #readonly>
                     <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else readOnly">
                       <ng-container *ngIf="!f.FieldValue; else showButton">
-                        <label for="f.Id" class="control-label label-s text-color p-0">No File Uploaded</label>
+                        <label [for]="f.Id" class="control-label label-s text-color p-0">No File Uploaded</label>
                       </ng-container>
                       <ng-template #showButton>
                         <button type="button" class="btn blue square-btn blue-hover btn-txt"
@@ -248,7 +249,8 @@
                       </ng-template>
                     </ng-container>
                     <ng-template #readOnly>
-                      <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue  || "N/A"}}</label>
+                      <label [for]="f.Id"
+                        class="control-label label-s text-color p-0">{{f.FieldValue  || "N/A"}}</label>
                     </ng-template>
                   </ng-template>
 
@@ -258,8 +260,8 @@
             </ng-container>
             <!--Comment History-->
             <div class="col-md-6 h-48" *ngIf="ActiveBucket == 'TL_Deny' || ActiveBucket == 'Client_Response'">
-              <div class="form-group border-b">
-                <label for="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
+              <div *ngIf="f && f.Id" class="form-group border-b">
+                <label [for]="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
                 <button type="button" class="btn blue square-btn blue-hover btn-txt"
                   (click)="ViewCommentHistory()">View</button>
               </div>
@@ -282,7 +284,7 @@
               <div class="col-md-12" *ngIf="f.Is_Appeal && f.Is_View_Allowed_Agent">
                 <div class="form-group"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' ? 'border-b' : '']">
-                  <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                  <label [for]="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                   <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
                     <ng-container [ngSwitch]="f.Column_Datatype">
                       <ng-container *ngSwitchCase="'Text'">
@@ -305,10 +307,11 @@
                             </ng-container>
                             <ng-template #textinput>
                               <ng-container *ngIf="f.SetFormula; else elseTemplate">
-                                <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                                <label [for]="f.Id"
+                                  class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                               </ng-container>
                               <ng-template #elseTemplate>
-                                <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit"
+                                <input type="text" class="form-control" [id]="f.Id" [maxlength]="f.Field_Limit"
                                   placeholder="" [(ngModel)]="f.FieldValue">
                               </ng-template>
                             </ng-template>
@@ -330,12 +333,12 @@
                         </div>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Formula'">
-                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                        <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                   <ng-template #readonly>
-                    <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                    <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                   </ng-template>
 
 
@@ -488,7 +491,7 @@
         <div class="col-md-12 p-0  auto-scroll-section">
           <div class="col-md-12 p-0">
             <app-agent-concluder (assignInventory)="concluderRowClick($event)" [concluderId]="concluderId"
-              [ClientId]="ClientId" [Employee_Code]="userdata.Employee_Code"></app-agent-concluder>
+              [ClientId]="ClientId" [UserId]="UserId" [Employee_Code]="userdata.Employee_Code"></app-agent-concluder>
           </div>
         </div>
       </div>
@@ -580,3 +583,6 @@
 <app-to-be-concluder-accounts *ngIf="openToBeConcludedBucketModal" [(WorkingAccountId)]="concluderId"
   (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"
   (CloseConcluderModal)="CloseConcluderModal($event)"></app-to-be-concluder-accounts>
+
+<app-client-instruction-info *ngIf="clientInstructionInfoModal==true" (close)="closeInstructionModal($event)">
+</app-client-instruction-info>

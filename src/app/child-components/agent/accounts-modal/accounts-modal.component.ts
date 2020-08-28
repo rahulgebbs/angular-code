@@ -63,14 +63,14 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       { headerName: 'Account No', field: 'Account_Number' }
     ]
-    if (this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
+    if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
     }
     console.log('this.columnDefs : ', this.columnDefs);
-    this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
-    this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
+    // this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
+    // this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
   Close() {
     this.CloseAccountModal.emit(false);

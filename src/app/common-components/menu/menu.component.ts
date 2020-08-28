@@ -240,6 +240,14 @@ export class MenuComponent implements OnInit {
 
   checkMenu(menuName) {
     // console.log('menuName : ', menuName);
+    // const result = true;
+    // if (result == true) {
+    //   if(menuName=='upload-file' || menuName=='view-file')
+    //   {
+    //     return true;
+    //   }
+    //   return false;
+    // }
     // const menus = ['bi-report'];
     // if (this.UserData.Role == 'Client Supervisor') {
     //   return menus.includes(menuName);

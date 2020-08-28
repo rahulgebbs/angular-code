@@ -28,9 +28,6 @@
                       (click)="ToggleCheckAll($event)" [(ngModel)]="AllChecked" />
                     <label for="check-all"></label>
                   </label>
-                  <!-- <input class="d-block w-100" type="checkbox" [(ngModel)]="AllChecked" (change)="ToggleCheckAll()"
-                  id="inlineCheckbox1" value="option1"> -->
-
                 </div>
               </th>
               <th>Action</th>
@@ -64,7 +61,7 @@
               <td>
                 <ng-container *ngIf="TLAction == 'Done'; else readOnlyAction">
                   <select name="action-{{int}}" #Action="ngModel" [(ngModel)]="i.Action" (change)="OnActionChange(int)"
-                    class="form-control w-120">
+                    class="form-control w-120 disabled">
                     <option value="">Select</option>
                     <option *ngFor="let a of ActionList" [disabled]="TLAction == a.Value" [value]="a.Value">{{a.Key}}
                     </option>
@@ -80,8 +77,9 @@
               </td>
               <td>
                 <ng-container *ngIf="TLAction == 'Done'; else readOnlyStandardComments">
-                  <select name="Stdcomments-{{int}}" #StdComments="ngModel" [(ngModel)]="i.Standard_Comments"
-                    class="form-control w-120">
+                  label {{i[int].Header_Name}}
+                  <select name="Stdcomments-{{int}}" #StdComments="ngModel"
+                    [(ngModel)]="i.Standard_Comments" class="form-control w-120">
                     <option value="">Select</option>
                     <option *ngFor="let s of StandardComments" [value]="s.Comment">{{s.Comment}}</option>
                   </select>

@@ -7,6 +7,8 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { ConcluderService } from '../service/concluder.service';
 import { customValidation } from '../manager/customValidators';
 import * as moment from 'moment';
+// import { MomentDateTimeAdapter } from 'ng-pick-datetime-moment';
+
 @Component({
   selector: 'app-agent-concluder',
   templateUrl: './agent-concluder.component.html',
@@ -23,6 +25,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   @Input() concluderId;
   @Output() assignInventory = new EventEmitter<any>();
   @Input() Employee_Code;
+  @Input() UserId;
   submitStatus = false;
   disableBtn = false;
   constructor(
@@ -45,7 +48,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log('ngOnChanges : ', this.ClientId, this.concluderId, changes)
+    console.log('ngOnChanges : ', this.ClientId, this.concluderId, changes);
+    this.submitStatus = false;
     if (this.ClientId != null && this.concluderId != null) {
       this.initForm();
     }
@@ -75,7 +79,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     // else {
     //   // this.concludedForm.controls.Original_Claim_Billed_Date.setErrors(null);
     // }
-    console.log('changeBillDate event : ', this.concludedForm.controls.Original_Claim_Billed_Date.errors);
+    // console.log('changeBillDate event : ', this.concludedForm.controls.Original_Claim_Billed_Date.errors);
   }
 
   initForm() {
@@ -113,16 +117,52 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     console.log('clearForm() : ', this.concludedForm);
   }
 
-  BlockInput(event) {
-    if (event.key == 'Tab') {
-      // if (event.key == 'Backspace' || event.key == 'Tab') {
-      return true;
+  BlockInput(field, event) {
+    const fieldCtrl = this.concludedForm.controls[`${field}`];
+    // console.log('BlockInput : ', fieldCtrl.value, fieldCtrl.errors);
+    // console.log('BlockInput event, event.value, event.target : ', event, event.value, event.target);
+    if (fieldCtrl && fieldCtrl.value != null && event != null && event.target != null) {
+      this.setDateError(fieldCtrl, event.target.value);
+      // return false;
     }
     else {
-      return false;
+      if (event && event.value) {
+        const date = moment(event.value).format('MM/DD-YYYY');
+        this.setDateError(fieldCtrl, date);
+      }
+      else {
+        fieldCtrl.setErrors({ 'invalidDate': true });
+      }
     }
+    // console.log('BlockInput : ', fieldCtrl.value, event);
+    this.cdr.detectChanges();
   }
 
+  setDateError(fieldCtrl, value) {
+    console.log('setDateError fieldCtrl : ', fieldCtrl.errors, value);
+    const { errors } = fieldCtrl;
+    const dateStatus = this.isGoodDate(fieldCtrl.value, value);
+    // console.log('dateStatus :')
+    if (dateStatus == false) {
+      fieldCtrl.setErrors({ 'dateFormat': true });
+    }
+    else {
+      if (errors == null || (errors.dateFormat == null && errors.invalidDate == null && errors.owlDateTimeMax == null)) {
+        fieldCtrl.setErrors(null);
+      }
+    }
+    // console.log('dateStatus : ', dateStatus);
+  }
+  isGoodDate(date, value) {
+    // console.log('isGoodDate : ', date)
+    var regexp = /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
+    // console.log('date.length :', date.getMonth(), date.getDate(), date.getFullYear());
+    if (value && (value.length < 8 || value.length > 10)) {
+      return false;
+    }
+    // console.log("moment(date).format('MM-DD-YYYY') : ", moment(date).format('MM-DD-YYYY'));
+    return regexp.test(moment(date).format('MM-DD-YYYY'));
+  }
   handleRejection() {
     console.log('handleRejection : ', this.concludedForm);
     let form = this.concludedForm;
@@ -231,7 +271,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       this.concludedForm.patchValue({ Original_Claim_Billed_Date: value['Original_Claim_Billed_Date'], Latest_Claim_Billed_Date: value['Latest_Claim_Billed_Date'] });
       this.concluderService.submitToBeConcludedForm(this.concludedForm.value).subscribe((response) => {
         console.log('submitToBeConcludedForm response : ', response);
-        this.assignNextInventory();
+        this.assignNextInventory(this.concludedForm.value['Concluder_Id']);
         this.ResponseHelper.GetSuccessResponse(response);
         this.submitStatus = false;
         this.disableBtn = false;
@@ -244,6 +284,32 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     }
   }
 
+  updateConcluderTime(oldConcluderId, obj) {
+    let body = { Client_Id: this.ClientId, Concluder_Id: oldConcluderId, User_Id: this.UserId };
+    this.concluderService.updateConcluderTime(body).subscribe((response) => {
+      console.log('response : ', response);
+      // body.Concluder_Id = newConcluderId;
+      this.insertConcluderTime(obj);
+      //this.assignInventory.emit
+    }, (error) => {
+      console.log('error : ', error);
+    })
+  }
+  insertConcluderTime(obj) {
+    const body = { Client_Id: this.ClientId, Concluder_Id: obj.concluderId, User_Id: this.UserId };
+    // this.oldConcluderId = concluderId;
+    if (obj && obj.concluderId == null) {
+      this.assignInventory.emit(obj);
+      return null;
+    }
+    this.concluderService.insertConcluderTime(body).subscribe((response) => {
+      console.log('response : ', response);
+      this.assignInventory.emit(obj);
+    }, (error) => {
+      console.log('error : ', error);
+      this.assignInventory.emit(obj);
+    })
+  }
   getStatusDropdownList() {
     console.log('getStatusDropdownList : ');
     this.concluderService.getDropDownStatus(this.ClientId).subscribe((response: any) => {
@@ -256,7 +322,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     })
   }
 
-  assignNextInventory() {
+  assignNextInventory(Old_Concluder_Id) {
     const localStr = sessionStorage.getItem('concluderAccounts');//JSON.parse(sessionStorage.getItem('concluderAccounts'));
     let fieldList = [];
     if (localStr != null) {
@@ -289,10 +355,12 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
       const matchedObj = concluderAccouts[0].find((ele) => {
         return ele.Header_Name == "Concluder_Id";
       });
-      this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+      this.updateConcluderTime(Old_Concluder_Id, { Bucket_Name: "To_be_Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+      //this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
     }
     else {
-      this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: null, fields: [], closePopup: false });
+      this.updateConcluderTime(Old_Concluder_Id, { Bucket_Name: "To_be_Concluded", concluderId: null, fields: [], closePopup: false });
+      //this.assignInventory.emit({ Bucket_Name: "To_be_Concluded", concluderId: null, fields: [], closePopup: false });
     }
     sessionStorage.setItem('concluderAccounts', JSON.stringify(concluderAccouts));
     // this.concluderRowClick.emit({ Bucket_Name: bucketname, concluderId: concluderId, AccountsList: this.AccountsList, fields: fieldList, closePopup: closePopup });

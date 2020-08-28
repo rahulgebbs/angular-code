@@ -23,8 +23,8 @@ export class PcnConfigurationComponent implements OnInit {
   disableSave: boolean = false
   addBtnDisable;
   showPopup;
-  @Input() ClientData;
   confirmSave = false;
+  @Input() ClientData;
   @Output() next_page = new EventEmitter<any>();
   // columnDefs = [];
   // gridApi;

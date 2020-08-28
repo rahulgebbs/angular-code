@@ -42,7 +42,7 @@ export class ConcluderService {
   }
 
   updateConcluderTime(formbody) {
-    return this.http.post(environment.ApiUrl + '/api/Update_Concluder_Time_Management', formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.put(environment.ApiUrl + '/api/Update_Concluder_Time_Management', formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
   saveToBeConcluderData(formbody) {
@@ -90,4 +90,40 @@ export class ConcluderService {
     // "http://localhost:63482/api/Insert_Concluder_INto_Inventory
     return this.http.post(environment.ApiUrl + `/api/Insert_Concluder_INto_Inventory`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
   }
+
+  getUnWorkedAccounts(clientId, employee_code, bucket_name) {
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/Get_Unworked_Account_By_Agent_And_Bucket_wise?id=${clientId}&employee_code=${employee_code}&bucket_name=${bucket_name}`, { headers: headers }).map(res => res.json());
+  }
+
+  getAllEmployeeByClient(clientId) {
+    // api/Get_All_Employee_By_Client
+
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/Get_All_Employee_By_Client?id=${clientId}`, { headers: headers }).map(res => res.json());
+  }
+  // Update_Unworked_Account_By_Agent_And_Bucket_wise
+  updateConclusionData(formBody) {
+    // "http://localhost:63482/api/Insert_Concluder_INto_Inventory
+    return this.http.put(environment.ApiUrl + `/api/Update_Unworked_Account_By_Agent_And_Bucket_wise`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getEmployeesByBucket(clientId) {
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/get-buckets-employee?client_id=${clientId}`, { headers: headers }).map(res => res.json());
+  }
+
+  getBucketsByEmployee(clientId) {
+    let headers: any = new Headers({
+      'Access_Token': this.TokenCls.GetToken()
+    });
+    return this.http.get(environment.ApiUrl + `/api/get-employee-buckets?client_id=${clientId}`, { headers: headers }).map(res => res.json());
+  }
 }
+

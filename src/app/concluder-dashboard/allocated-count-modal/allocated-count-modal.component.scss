@@ -1,8 +1,8 @@
-.grid-w{
-  height:490px;
+.grid-w {
+  height: 39vh;
 }
 
-.pop-bg{
+.pop-bg {
   background: #000000b8;
   position: fixed;
   top: 0;
@@ -17,22 +17,22 @@
   overflow-y: inherit;
   /* z-index: 1050; */
 }
-.pop-position{
+.pop-position {
   height: auto;
   background: white;
   margin: auto;
-  width: 28%;
+  width: 80%;
   position: fixed;
   /* -webkit-transform: translate(0, 50%); */
   /* transform: translate(0, 120%); */
   z-index: 10000000;
   left: 0px;
   right: 0;
-  bottom: 42px;
-      /* top: calc(88% - 80%); */
-
+  top: 10%;
+  /* bottom: 42px; */
+  /* top: calc(88% - 80%); */
 }
-.grey{
+.grey {
   background: #ddd;
   color: #000;
 }
@@ -49,7 +49,7 @@
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
 }
 .heading-txt {
   font-size: 18px;
@@ -61,7 +61,52 @@
   padding-bottom: 10px;
 }
 
-
-.pt-7{
+.pt-7 {
   padding-top: 7px;
+}
+
+form {
+  h3 {
+    margin-bottom: 0;
+  }
+}
+.form-group {
+  padding-left: 0;
+}
+h4 {
+  font-weight: 600;
+}
+#allocatedForm {
+  // min-height: 150px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  border: 1px solid #cfcfcf;
+  
+}
+
+.gridView {
+  min-height: 40vh;
+  width: 40%;
+  float: left;
+  margin: 0% 0% 3% 30% !important;
+  // border: 1px solid;
+  // width: 45%;
+  //   margin: auto 8% 5% 8%;
+}
+
+.formView {
+  width: 30%;
+  float: left;
+  // border: 1px solid;
+  margin: 1.2% 0% 3% 0%;
+}
+
+.activeGrid {
+  margin: 1% 10% 3% 10% !important;
+  // border: 1px solid;
+}
+
+.filter-textbox {
+  border: 1px solid #000 !important;
 }
