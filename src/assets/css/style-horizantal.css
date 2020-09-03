@@ -176,7 +176,7 @@ body {
   text-overflow: ellipsis;
 }
 .lg-midd {
-  width: 80% !important;
+  width: 95% !important;
 }
 .ht-20 {
   height: 20px;
@@ -475,8 +475,9 @@ a:hover {
   position: absolute;
   margin: 0 auto;
   text-align: center;
-  width: 100%;
-  left: 0;
+  width: 20%;
+  /* border: 1px solid; */
+  left: 40%;
 }
 /*================================================================================================================================
                                                   Top navigation of css
@@ -800,8 +801,10 @@ a:hover {
   padding-bottom: 0px;
 }
 .m-leftsidebar .menu-small {
-  height: auto;
-  overflow-y: unset;
+  /* height: auto;
+  overflow-y: unset; */
+  height: 62vh;
+  overflow-y: auto;
 }
 
 /*================================================================================================================================

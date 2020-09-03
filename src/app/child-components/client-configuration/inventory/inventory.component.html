@@ -35,7 +35,6 @@
       </div>
       <div class="right-most mr-5">Total Rows:- <b>{{InventoryData == null ? '0' : InventoryData.length}}</b></div>
       <div class="col-md-12 p-0 client-inv-sticky">
-
         <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important">
           <table class="table">
             <thead>
@@ -53,7 +52,6 @@
                 <th width="100">Set Formula</th>
                 <th width="100">Is Appeal</th>
                 <th width="100">Correspondence</th>
-
               </tr>
             </thead>
             <tbody>
@@ -68,7 +66,7 @@
                 <tr *ngFor="let item of InventoryData; let i=index">
                   <td>
                     <input class="form-control" maxlength="200" [disabled]="!item.Is_New" name="Column_Name-{{i}}"
-                      type="text" [(ngModel)]="item.Header_Name" #Header_Name="ngModel">
+                      type="text" [id]="item.Header_Name" [(ngModel)]="item.Header_Name" #Header_Name="ngModel">
                     <div class="error" *ngIf="CheckDuplicateHeaderName(Header_Name,i) == i && DisplayHeaderError">
                       duplicate header
                       {{f.form.setErrors({ 'invalid': true })}}
@@ -152,7 +150,7 @@
                   <td class="yes-w">
                     <select class="form-control" (change)="StandardDropdownChange(i)"
                       [disabled]="item.Is_Standard_Field == 'Yes' && !item.Is_New && !item.Is_Standard_Changed"
-                      name="Is_Standard_Field-{{i}}" type="text" [(ngModel)]="item.Is_Standard_Field">
+                      name="Is_Standard_Field-{{i}}" type="text" [(ngModel)]="item.Is_Standard_Field" title="{{item.Is_Standard_Field}}">
                       <option *ngFor="let it of YesNoList" [value]="it.Name">{{it.Name}}</option>
                     </select>
                   </td>

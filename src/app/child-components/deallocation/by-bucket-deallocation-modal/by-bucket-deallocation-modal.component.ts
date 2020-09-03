@@ -114,7 +114,6 @@ filterEmployees() {
     return result.length > 0;
   }
   Deallocate(event) {   
-
     console.log('Deallocate this.AllBucket : ', _.map(this.AllBucket, 'selectedEmployee'));
     const finalEmployeeList = _.flatten(_.map(this.AllBucket, 'selectedEmployee'));
     console.log('finalBucketList : ', finalEmployeeList);  

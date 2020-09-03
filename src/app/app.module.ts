@@ -42,7 +42,7 @@ import { SimpleReportComponent } from './landing-page/simple-report/simple-repor
 import { EmployeeSelectorModalComponent } from './landing-page/simple-report/employee-selector-modal/employee-selector-modal.component';
 import { MisReportComponent } from './landing-page/mis-report/mis-report.component';
 import { InsuranceModalComponent } from './child-components/client-configuration/insurance/insurance-modal/insurance-modal.component';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { DeAllocationComponent } from './landing-page/de-allocation/de-allocation.component';
 import { DropdownModalComponent } from './child-components/client-configuration/dropdown/dropdown-modal/dropdown-modal.component';
@@ -138,16 +138,33 @@ import { CallReferenceComponent } from './child-components/agent/call-reference/
 import { CallReferenceInfoComponent } from './child-components/agent/call-reference-info/call-reference-info.component';
 import { ConcluderReportComponent } from './concluder-report/concluder-report.component';
 import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-concluder.component';
-import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
+// import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
 import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
 import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
 
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { MomentModule } from 'angular2-moment';
+// import { MomentModule } from 'angular2-moment';
 
 import { ClipboardModule } from 'ngx-clipboard';
+import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
+import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-dashboard.component';
+import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-count-modal/allocated-count-modal.component';
+import { PcnReportComponent } from './landing-page/pcn-report/pcn-report.component';
+import { ConcluderAccountsComponent } from './child-components/agent/concluder-accounts/concluder-accounts.component';
+import { ToBeConcluderAccountsComponent } from './to-be-concluder-accounts/to-be-concluder-accounts.component';
+import { ClientInstructionInfoComponent } from './landing-page/client-instruction/client-instruction-info/client-instruction-info.component';
+import { ResetPasswordComponent } from './landing-page/reset-password/reset-password.component';
+import { SpecialProjectComponent } from './child-components/client-configuration/special-project/special-project.component';
+import { ConcluderDeallocationComponent } from './landing-page/concluder-deallocation/concluder-deallocation.component';
+import { ConcluderDeallocationPageComponent } from './landing-page/concluder-deallocation-page/concluder-deallocation-page.component';
+
+
+
+export const MY_CUSTOM_FORMATS = {
+  datePickerInput: 'MM/DD/YYYY'
+};
 
 
 @NgModule({
@@ -272,8 +289,8 @@ import { ClipboardModule } from 'ngx-clipboard';
     ConcluderReportComponent,
 
     DeallocateConcluderComponent,
-
-    UploadMiniInsuranceComponent,
+    AgentConcluderComponent,
+    // UploadMiniInsuranceComponent,
 
     InventoryUploadComponent,
 
@@ -281,7 +298,18 @@ import { ClipboardModule } from 'ngx-clipboard';
 
     AddPcnConfigurationComponent,
 
-    AddPcnModalComponent
+    AddPcnModalComponent,
+
+    ConcluderDashboardComponent,
+    AllocatedCountModalComponent,
+    PcnReportComponent,
+    ConcluderAccountsComponent,
+    ToBeConcluderAccountsComponent,
+    ClientInstructionInfoComponent,
+    ResetPasswordComponent,
+    SpecialProjectComponent,
+    ConcluderDeallocationComponent,
+    ConcluderDeallocationPageComponent
   ],
   imports: [
     BrowserModule,
@@ -296,7 +324,7 @@ import { ClipboardModule } from 'ngx-clipboard';
     ClipboardModule,
     NgbModule,
     NgIdleKeepaliveModule.forRoot(),
-    MomentModule,
+    // MomentModule,
     AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -304,7 +332,9 @@ import { ClipboardModule } from 'ngx-clipboard';
       { path: 'two-factor-auth', component: TwoFactorAuthComponent },
       { path: 'welcome-page', component: WelcomePageComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard], data: { route: ['change-password'] } },
+
       { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
       // { path: 'client-configuration', component: ClientConfigurationComponent },
       // { path: 'bucket-mapping', component: BucketMappingComponent },
@@ -361,14 +391,20 @@ import { ClipboardModule } from 'ngx-clipboard';
       // ConcluderMiniInsuranceComponent
       { path: 'concluder-report', component: ConcluderReportComponent, canActivate: [AuthGuard], data: { route: ['concluder-report'] } },
       { path: 'deallocate-concluder', component: DeallocateConcluderComponent, canActivate: [AuthGuard], data: { route: ['deallocate-concluder'] } },
-      { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
+      // { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
+      { path: 'concluder', component: AgentConcluderComponent, canActivate: [AuthGuard], data: { route: ['concluder'] } },
+      { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
+      { path: 'pcn-report', component: PcnReportComponent, canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
+      { path: 'concluder-deallocation', component: ConcluderDeallocationComponent, canActivate: [AuthGuard], data: { route: ['concluder-deallocation'] } },
+      // ConcluderDeallocationComponent
       { path: '**', component: NotFoundComponent }
 
-    ]),
+    ], { useHash: true }),
     NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule
   ],
-  providers: [NotificationService, CommonService, ClientUserMappingService],
+  providers: [NotificationService, CommonService, ClientUserMappingService, { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+  ],
   bootstrap: [AppComponent],
   entryComponents: []
 })

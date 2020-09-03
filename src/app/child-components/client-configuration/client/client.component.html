@@ -134,11 +134,58 @@
                   <span class="mr-10 text-left" *ngIf="show_Is_Appeal_Processed">
                     <label class="custom-control client-conf">
                       <input type="checkbox" id="ac-active1" [checked]="clientData.Is_Appeal_Processed"
-                        formControlName="Is_Appeal_Processed" [(ngModel)]="clientData.Is_Appeal_Processed"
-                        class="mr-5 mt-0">
+                        formControlName="Is_Appeal_Processed" [(ngModel)]="clientData.type" class="mr-5 mt-0">
                       <label for="ac-active1" class="label-status">Activate Appeal Process</label>
                     </label>
                   </span>
+                  <!-- <span class="mr-10 text-left">
+                    <label style="display: inline-block;float-left">
+                      <input type="radio" name="Is_Super_Concluder_Process" id="semi-concluder" [value]="false"
+                        formControlName="Is_Super_Concluder_Process"
+                        [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                      <label for="semi-concluder" class="label-status">Semi Concluder</label>
+                    </label>
+                  </span>
+                  <span class="mr-10 text-left">
+                    <label style="display: inline-block;float-left">
+                      <input type="radio" id="super-concluder" name="Is_Super_Concluder_Process" [value]="true"
+                        formControlName="Is_Super_Concluder_Process"
+                        [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                      <label for="super-concluder" class="label-status">Super Concluder</label>
+                    </label>
+                  </span> -->
+                  <!-- <span class="mr-10 text-left">
+                    <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
+                    <label class="custom-control client-conf">
+                      <label class="radio-inline">
+                        <input type="radio" name="type" value="inventory" formControlName="type"
+                          (change)="openModal($event)">
+                        Inventory
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="type" value="concluder" formControlName="type"
+                          (change)="openModal($event)">
+                        Concluder
+                      </label>
+                    </label>
+                  </span> -->
+                </div>
+              </div>
+              <div class="form-group">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Concluder</label>
+                <div class="radioBorder">
+                  <label class="radio-inline">
+                    <input type="radio" name="Is_Super_Concluder_Process" id="semi-concluder" [value]="'False'"
+                      formControlName="Is_Super_Concluder_Process" [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                    Semi Concluder
+                    <!-- <label for="semi-concluder" class="label-status">Semi Concluder</label> -->
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" id="super-concluder" name="Is_Super_Concluder_Process" [value]="'True'"
+                      formControlName="Is_Super_Concluder_Process" [(ngModel)]="clientData.Is_Super_Concluder_Process">
+                    Super Concluder
+                    <!-- <label for="super-concluder" class="label-status"></label> -->
+                  </label>
                 </div>
               </div>
             </div>

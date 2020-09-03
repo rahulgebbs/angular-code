@@ -15,7 +15,6 @@ import { ExcelService } from 'src/app/service/client-configuration/excel.service
   templateUrl: './simple-report.component.html',
   styleUrls: ['./simple-report.component.css'],
   providers: [ExcelService, dropDownFields]
-
 })
 export class SimpleReportComponent implements OnInit {
   validationError: boolean = false
@@ -80,10 +79,7 @@ export class SimpleReportComponent implements OnInit {
       this.ClientId = data[0].Client_Id
       this.singleclient = true;
       this.GetAllEmployees();
-    } else {
-
     }
-
   }
 
   CreateForm() {
@@ -140,10 +136,7 @@ export class SimpleReportComponent implements OnInit {
   }
 
   resetForm() {
-
-
     this.SimpleForm.reset({
-
       ClientId: this.ClientList[0].Client_Id,
       Employee_Ids: '',
       From_Date: this.FromDate,
@@ -151,8 +144,8 @@ export class SimpleReportComponent implements OnInit {
       From_Time: '',
       To_Time: '',
       Is_Only_Worked: false
-    })
-    this.ClientId
+    });
+    // this.ClientId
   }
 
   CloseModal() {

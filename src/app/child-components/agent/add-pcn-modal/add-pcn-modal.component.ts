@@ -7,6 +7,10 @@ import { getPCNData, fixedPCNFields } from './getPCNData';
 import { ClipboardService } from 'ngx-clipboard'
 import { NotificationService } from 'src/app/service/notification.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
+import { Router } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
+import { Token } from 'src/app/manager/token';
+
 
 
 @Component({
@@ -15,9 +19,10 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
   styleUrls: ['./add-pcn-modal.component.scss']
 })
 export class AddPcnModalComponent implements OnInit, OnChanges {
-  addPCNForm: FormGroup;
+  addPCNForm: any;
   @Input() inventory;
   @Input() SaagLookup;
+  @Input() AllFields;
   @Output() close = new EventEmitter();
   // @Output() save = new EventEmitter();
   pcnList: any;
@@ -28,8 +33,14 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   pcnInfo = [];
   submitBtnStatus = false;
   ResponseHelper: ResponseHelper;
-  PCN_IDs = []
-  constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService) { }
+  PCN_IDs = [];
+  UserData;
+  Token;
+
+  constructor(private fb: FormBuilder, private pcnService: PcnService, private _clipboardService: ClipboardService, private notification: NotificationService, private route: Router) {
+    this.Token = new Token(this.route);
+    this.UserData = this.Token.GetUserData();
+  }
 
   ngOnInit() {
   }
@@ -91,11 +102,22 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     }
   }
 
+
   addNewPCN() {
     this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
-    // this.fixedPCNFields.forEach(()=>{
-    // })
+
     this.fixedPCNFields.forEach((pcn: any) => {
+      switch (pcn.Column_Data_Type) {
+        case 'Date': {
+          pcn.FieldValue = new Date().toISOString();
+        }
+        case 'Text': {
+          pcn.FieldValue = null;
+        }
+        default: {
+          pcn.FieldValue = null;
+        }
+      }
       switch (pcn.Display_Header) {
         case 'InventoryId':
           pcn.FieldValue = this.inventory.Inventory_Id;
@@ -104,7 +126,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
           pcn.FieldValue = this.inventory.Inventory_Log_Id;
           break;
         default:
-          pcn.FieldValue = null;
           break;
       }
     })
@@ -144,35 +165,33 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   manageKeyList() {
-    const fixedList = [
-      "Patient Name",
-      "MRN",
-      "Patient Account",
-      "Admit Date",
-      "Payer",
-      "Total Charges",
-      "Claim Amount",
-      "Practice",
-      "Last_billed_date",
-      "CallReference_No"
-    ];
-    const keys = Object.keys(this.inventory);
-    fixedList.forEach((item) => {
-      if (keys.includes(item) == true) {
-        this.keyList.push(item)
+    console.log('AllFields : ', this.AllFields);
+    this.AllFields.forEach((field) => {
+      if (field.Is_Standard_Field == true) {
+        this.keyList.push({ key: field.Header_Name, name: field.Display_Header });;
       }
     });
   }
 
   setFieldType() {
     this.fixedPCNFields.forEach((pcn) => {
-      if (pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
+      switch (pcn.Display_Header) {
+        case 'InventoryId':
+          pcn.FieldValue = this.inventory.Inventory_Id;
+          break;
+        case 'Inventory_Log_Id':
+          pcn.FieldValue = this.inventory.Inventory_Log_Id;
+          break;
+        default:
+          break;
+      }
+      if (pcn.Column_Data_Type == 'Numeric' || pcn.Display_Header == 'Charge' || pcn.Display_Header == 'Balance' || pcn.Display_Header == 'InventoryId' || pcn.Display_Header == 'Inventory_Log_Id') {
         pcn.FieldType = 'Numeric';
       }
       else if (pcn.Display_Header == 'Status' || pcn.Display_Header == 'Sub_Status' || pcn.Display_Header == 'Action_Code') {
         pcn.FieldType = 'Dropdown';
       }
-      else if (pcn.Display_Header == 'DOS') {
+      else if (pcn.Column_Data_Type == 'Date' || pcn.Display_Header == 'DOS') {
         pcn.FieldType = 'Date';
       }
       else {
@@ -253,16 +272,21 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   checkIfAlreadyExist(control, listIndex, itemIndex) {
-    console.log('control, pcnIndex,pcnItemIndex : ', control, listIndex, itemIndex);
+    // console.log('control, pcnIndex,pcnItemIndex : ', control, listIndex, itemIndex);
     const pcnList = this.addPCNForm.get('pcnList') as FormArray;
-    control.FieldValue.setErrors(null);
+    if (control.Display_Header.value == 'PCN_Number') {
+      control.FieldValue.setErrors(null);
+      if (control.FieldValue.value == null || control.FieldValue.value.length == 0) {
+        control.FieldValue.setErrors({ required: true });
+      }
+    }
     pcnList.controls.forEach((pcn, pcnIndex) => {
       if (listIndex !== pcnIndex) {
         const pcnItemList = pcn.get('pcn') as FormArray;
         pcnItemList.controls.forEach((pcnItem: any, index) => {
           // console.log('pcnItem : ', pcnItem)
           if (control.Display_Header.value == 'PCN_Number' && pcnItem.controls.Display_Header.value == 'PCN_Number') {
-            if (control.FieldValue.value == pcnItem.controls.FieldValue.value) {
+            if (control.FieldValue.value.toLowerCase() == pcnItem.controls.FieldValue.value.toLowerCase()) {
               control.FieldValue.setErrors({ incorrect: true });
             }
           }
@@ -295,6 +319,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       "_lstFields": finalArray
     };
     console.log('body : ', JSON.stringify(body));
+
     this.pcnService.savePCN(body).subscribe((response) => {
       console.log('savePCN : ', response);
       this.disableBtn = false;
@@ -343,8 +368,34 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       })
     })
   }
+
+  checkIfExist(control) {
+    // console.log('checkIfExist : ', controls);
+    //Client_Id, PCN_Number, InventoryId, userId
+    // const { Client_Id, Inventory_Id, Inventory_Log_Id } = this.inventory;
+    // if (control.Display_Header.value == 'PCN_Number' && (control.FieldValue.value != null || control.FieldValue.value.length == 0)) {
+    //   this.pcnService.checkIfPCNExist(Client_Id, control.FieldValue.value, Inventory_Id, this.UserData.UserId).subscribe((response) => {
+    //     console.log('checkIfPCNExist response : ', response);
+    //     if (response.Data == true)
+    //       control.FieldValue.setErrors({ incorrect: true });
+    //     else
+    //       control.FieldValue.setErrors(null);
+    //   }, (error) => {
+    //     console.log('error : ', error);
+    //   })
+    // }
+
+
+  }
+
   CloseModal() {
     console.log('CloseModal() :');
+    const value = this.addPCNForm.getRawValue();
+    const localPCNArray = []
+    value.pcnList.forEach((ele) => {
+      localPCNArray.push(ele.pcn)
+    })
+    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
     this.close.emit();
     this.saveFieldsIntoLocal();
     sessionStorage.removeItem('lastPCN');
@@ -423,17 +474,27 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
           const actionCodeList = this.SaagLookup.filter((saag) => {
-            if (saag.Sub_Status == pcnItem.controls.FieldValue.value) {
+            if (saag.Sub_Status == subStatusList[0].Sub_Status) {
               return saag.Action_Code;
             }
           });
           this.setActionCode(pcnItemList, actionCodeList);
+        }
+        else {
+          this.resetSubStatusAndActionCode(pcnItemList)
         }
         return true;
       }
     })
   }
 
+  resetSubStatusAndActionCode(pcnItemList) {
+    pcnItemList.controls.forEach((pcnItem, index) => {
+      if (pcnItem.controls.Display_Header.value == 'Sub_Status' || pcnItem.controls.Display_Header.value == 'Action_Code' || pcnItem.controls.Display_Header.value == 'Effectiveness') {
+        pcnItem.patchValue({ FieldValue: null });
+      }
+    });
+  }
   setActionCode(pcnItemList, actionCodeList) {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {

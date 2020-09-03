@@ -260,4 +260,6 @@ export class BucketModel {
   Coding_Responses = false;
   CEX_Uncollectible = false;
   Manual_Queue = false;
+  To_be_Concluded = false;
+  Concluded = false;
 }

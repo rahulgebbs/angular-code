@@ -33,11 +33,7 @@ export class AuthGuard implements CanActivate {
 
       //uncommet this after verifying api op
       // for testing client functionality you need to comment line no 50 as this.router.navigate(['/login'])
-
-
       // // this.uri = this.commonservice.getUserURILookup();
-
-
       // this.commonservice.getUserURILookup().subscribe(res => {
       //   this.uri = res.json().Data
 

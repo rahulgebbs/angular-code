@@ -148,14 +148,14 @@ a.dropdown-toggle:active + .dropdown-menu {
   // align-items: center;
 }
 
-.btnContainer{
+.btnContainer {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .callImage {
-  // max-height: 70px; 
+  // max-height: 70px;
   /* max-width: 70px; */
   // display: flex;
   cursor: pointer;
@@ -173,4 +173,6 @@ a.dropdown-toggle:active + .dropdown-menu {
   }
 }
 
-
+.agent-field-ht .auto-scroll-section {
+  height: 75vh !important;
+}

@@ -60,7 +60,7 @@ export class ClientInstructionComponent implements OnInit {
   disableDownload: boolean = false;
   selectedRecord: boolean = false;
   truefile: boolean = false;
-
+  defaultColDef:any
   constructor(private selectedFields: dropDownFields,
     private router: Router,
     private excelService: ExcelService,
@@ -114,6 +114,19 @@ export class ClientInstructionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.defaultColDef = {
+      cellRenderer: showOrderCellRenderer,
+      // width: 80
+    };
+    function showOrderCellRenderer(params) {
+      var eGui: any = document.createElement("div");
+      // console.log('params : ', params)
+
+      eGui.innerHTML = `<span title="${params.value}">${params.value}</span>`;
+      // var start = new Date();
+      // while (new Date() - start < 15) { }
+      return eGui;
+    }
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
     var userdata = token.GetUserData();
@@ -131,7 +144,7 @@ export class ClientInstructionComponent implements OnInit {
 
     let val
     val = moment(params.value).format('MM/DD/YYYY');
-    return val
+    return val;
   }
 
 
@@ -386,7 +399,6 @@ export class ClientInstructionComponent implements OnInit {
   }
 
   InsertInstruction() {
-
     this.DisableAll = true;
     this.saveDisable = true;
     this.instructionservice.InsertInstruction(this.InstructionModel).pipe(finalize(() => {
@@ -400,12 +412,10 @@ export class ClientInstructionComponent implements OnInit {
         this.InstructionModel.Client_Id = this.ClientId;
         this.InstructionId = 0;
         this.Validated = false;
-
       },
       err => {
         this.ResponseHelper.GetFaliureResponse(err);
-      }
-    );
+      });
   }
 
   UpdateInstruction() {

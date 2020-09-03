@@ -37,7 +37,7 @@
           <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="card-number">From Date</label>
             <div class='input-group date col-md-12' id='datetimepicker1'>
-              <input (dateTimeInput)="OnFromDateChange($event)" formControlName="From_Date" autocomplete="off"
+              <input (dateTimeInput)="OnFromDateChange($event)" id="From_Date" formControlName="From_Date" autocomplete="off"
                 [min]="MinDate1" [max]="maxDate1" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
                 [owlDateTimeTrigger]="dt1" class="owl-dp" name="date" [owlDateTime]="dt1">
               <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
@@ -50,7 +50,7 @@
             <label class="label-std control-label p-0 b-600 pl-0" for="card-number">To Date</label>
 
             <div class='input-group date col-md-12 ' id='datetimepicker2'>
-              <input (dateTimeInput)="OnToDateChange($event)" autocomplete="off" formControlName="To_Date"
+              <input (dateTimeInput)="OnToDateChange($event)" autocomplete="off" id="To_Date" formControlName="To_Date"
                 [owlDateTimeTrigger]="dt2" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" class="owl-dp"
                 name="date2" [owlDateTime]="dt2" [min]="MinDate2" [max]="maxDate1">
               <span class="input-group-addon" [owlDateTimeTrigger]="dt2">

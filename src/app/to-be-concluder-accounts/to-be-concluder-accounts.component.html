@@ -1,0 +1,29 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span class="text-sm text-ellipsis heading-txt flex">
+          Concluder Account List
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div style="min-height: 300px;text-align: center" class="col-md-12 p-0">
+    <div *ngIf="AccountsList && AccountsList.length>0" class="acc-popup-table sticky-table sticky-ltr-cells border-0">
+      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef"
+        [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
+        [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
+        [rowSelection]="RowSelection" (firstDataRendered)="OnGridReady($event)"
+        (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"
+        [suppressColumnVirtualisation]="true"></ag-grid-angular>
+    </div>
+    <div  *ngIf="AccountsList!=null && AccountsList.length==0">
+      <h1>No records to show</h1>
+    </div>
+  </div>
+</div>

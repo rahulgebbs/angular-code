@@ -1,18 +1,14 @@
 import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { ClientService } from 'src/app/service/client-configuration/client.service';
 import { Token } from 'src/app/manager/token';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-
-import * as XLSX from 'xlsx';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { MenuMappingService } from 'src/app/menu-mapping.service';
 import * as AllCommunityModules from "ag-grid-community";
-
 @Component({
   selector: 'app-user-menu-mapping',
   templateUrl: './user-menu-mapping.component.html',
@@ -23,7 +19,6 @@ export class UserMenuMappingComponent implements OnInit {
   userData;
   token: Token;
   Title = 'User Menu Mapping';
-  UserMenuForm: FormGroup;
   clientUserMenuObj = {};
   roleList = [
     { item_id: 1, item_text: 'Client Supervisor' },
@@ -89,16 +84,13 @@ export class UserMenuMappingComponent implements OnInit {
   };
   editField = false;
   activeClient = null;
-  private gridApi;
-  private gridColumnApi;
-  public modules = AllCommunityModules;
+
   constructor(
     private clientService: ClientService,
     private menuMappingService: MenuMappingService,
     private router: Router,
     private notification: NotificationService,
-    private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private cdr: ChangeDetectorRef
   ) {
     this.token = new Token(this.router);
     this.userData = this.token.GetUserData();

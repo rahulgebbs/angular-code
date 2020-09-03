@@ -16,16 +16,15 @@
             <div class="row">
                 <div class="col-md-11 popup-header">
                     <p>
-                        Session Timeout {{timedOut}}
+                        Session Timeout
                     </p>
-                    <!-- <h3>Session Timeout {{timedOut}}</h3> -->
                 </div>
                 <div class="col-md-1 popup-header closeIcon">
-                    <i class="fa fa-close" (click)="stay()"></i>
-                    <!-- <h3>Session Timeout {{timedOut}}</h3> -->
+                    <i title="Close Session Timeout" class="fa fa-close" (click)="stay()"></i>
                 </div>
                 <div class="col-md-12">
-                    <h3>You will be logged out in : {{idleState}}</h3>
+                    <h3>Your session will expire in : {{idleState}}</h3>
+                    <p>Please close the pop-up within 10 seconnds to avoid session timeout</p>
                 </div>
             </div>
         </div>

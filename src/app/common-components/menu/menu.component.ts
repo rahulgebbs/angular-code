@@ -57,7 +57,7 @@ export class MenuComponent implements OnInit {
     private bireportService: BireportService,
     private logoutService: LogoutService,
     private agentservice: AgentService) {
-    this.Token = new Token(this.route)
+    this.Token = new Token(this.route);
     this.UserData = this.Token.GetUserData();
     this.role = this.UserData.Role;
     this.ClientId = this.UserData.Clients[0].Client_Id;
@@ -138,7 +138,6 @@ export class MenuComponent implements OnInit {
     else {
       this.LogoutFromSystem();
     }
-
 
     this.btndis = false
   }
@@ -241,6 +240,14 @@ export class MenuComponent implements OnInit {
 
   checkMenu(menuName) {
     // console.log('menuName : ', menuName);
+    // const result = true;
+    // if (result == true) {
+    //   if(menuName=='upload-file' || menuName=='view-file')
+    //   {
+    //     return true;
+    //   }
+    //   return false;
+    // }
     // const menus = ['bi-report'];
     // if (this.UserData.Role == 'Client Supervisor') {
     //   return menus.includes(menuName);

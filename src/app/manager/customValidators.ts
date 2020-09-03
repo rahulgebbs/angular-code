@@ -4,38 +4,34 @@ export class customValidation {
     static validRole(editRole, userRole) {
         //
 
-
         if (userRole == 'Admin' && editRole.Role != 'Admin') {
-            return true;
-        }
-        else if (userRole == 'Administrator' && editRole.Role != 'Administrator' && editRole.Role != 'Admin') {
-            return true;
+            return true
         }
         else if (userRole == 'Director' || userRole == 'Controller') {
             // 
-            if (userRole == 'Administrator' || editRole.Role == "Admin" || editRole.Role == "Director" || editRole.Role == 'Controller') {
-                return false;
+            if (editRole.Role == "Admin" || editRole.Role == "Director" || editRole.Role == 'Controller') {
+                return false
             } else {
-                return true;
+                return true
             }
         }
         else if (userRole == 'Manager') {
-            if (userRole == 'Administrator' || editRole.Role == 'Admin' || editRole.Role == 'Director' || editRole.Role == 'Manager' || editRole.Role == 'Controller') {
-                return false;
+            if (editRole.Role == 'Admin' || editRole.Role == 'Director' || editRole.Role == 'Manager' || editRole.Role == 'Controller') {
+                return false
             } else {
-                return true;
+                return true
             }
         } else if (userRole == 'Supervisor') {
-            if (userRole == 'Administrator' || editRole.Role == 'Admin' || editRole.Role == 'Director' || editRole.Role == 'Manager' || editRole.Role == 'Supervisor' || editRole.Role == 'Controller') {
-                return false;
+            if (editRole.Role == 'Admin' || editRole.Role == 'Director' || editRole.Role == 'Manager' || editRole.Role == 'Supervisor' || editRole.Role == 'Controller') {
+                return false
             } else {
-                return true;
+                return true
             }
         } else if (userRole == 'QC') {
             if (editRole.Role == 'Agent') {
-                return true;
+                return true
             } else {
-                return false;
+                return false
             }
         } else if (userRole == 'Client Supervisor') {
             if (editRole.Role == 'Client User') {
@@ -269,16 +265,6 @@ export class customValidation {
         }
     }
 
-    static MatchPassword(AC: AbstractControl) {
-        let password = AC.get('New_Password').value; // to get value in input tag
-        let confirmPassword = AC.get('confirmnewpass').value; // to get value in input tag
-        if (password != confirmPassword) {
-            AC.get('confirmnewpass').setErrors({ notMatch: true })
-        } else {
-            return null
-        }
-    }
-
     static validFollowupDays(followupvalues, followupcondition) {
 
         if (followupcondition == 'true' && (followupvalues == 0 || followupvalues == undefined)) {
@@ -296,5 +282,32 @@ export class customValidation {
             return true;
         }
     }
+
+    static MatchPassword(AC: AbstractControl) {
+        let password = AC.get('New_Password').value; // to get value in input tag
+        let confirmPassword = AC.get('confirmnewpass').value; // to get value in input tag
+        if (password != confirmPassword) {
+            AC.get('confirmnewpass').setErrors({ notMatch: true })
+        } else {
+            AC.get('confirmnewpass').setErrors(null);
+            return null
+        }
+    }
+
+    static NewPasswordMatchWithOld(AC: AbstractControl) {
+        let newPassword = AC.get('New_Password').value; // to get value in input tag
+        let oldPassword = AC.get('Old_Password').value; // to get value in input tag
+        if (newPassword == oldPassword) {
+            AC.get('New_Password').setErrors({ notMatch: true })
+        } else {
+            return null
+        }
+    }
+    // static setConcluderValidations(form: AbstractControl) {
+    //     console.log('form : ', form);
+    //     return null;
+    // }
+
+
 
 }

@@ -22,13 +22,13 @@
 
           <form [formGroup]="addPCNForm" *ngIf="addPCNForm.get('pcnList').controls as pcnList">
             <div class="col-md-12">
-              <div class="keyItem" *ngFor="let key of keyList" (click)="copyText(inventory[key])">
+              <div class="keyItem" *ngFor="let keyObj of keyList" (click)="copyText(inventory[key])">
                 <label for="">
-                  {{key}}
+                  {{keyObj.name || "N/A"}}
                 </label>
                 <br />
-                <h6 *ngIf="key!='Last_billed_date'" for="">{{inventory[key]}}</h6>
-                <h6 *ngIf="key=='Last_billed_date'"> {{inventory[key] | date:'MM/dd/y'}}</h6>
+                <h6 *ngIf="key!='Last_billed_date'" for="">{{inventory[keyObj.key] || "N/A"}}</h6>
+                <h6 *ngIf="key=='Last_billed_date'"> {{inventory[keyObj.key] | date:'MM/dd/y'}}</h6>
               </div>
             </div>
             <div [ngStyle]="{'border-bottom':pcnList.length-1!=pcnIndex? '1px solid #cfcfcf':'none' }"
@@ -61,7 +61,8 @@
                             <input class="form-control" id="field{{pcnIndex}}{{pcnItemIndex}}"
                               formControlName="FieldValue" placeholder="{{item.controls.Display_Header.value}}"
                               [ngClass]="{'input-error' : ((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors && (fieldValueControl.errors.required==true || fieldValueControl.errors.incorrect==true)}"
-                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)">
+                              (keyup)="checkIfAlreadyExist(item.controls, pcnIndex,pcnItemIndex)"
+                              (blur)="checkIfExist(item.controls)">
                             <label
                               *ngIf="((fieldValueControl.dirty==true || fieldValueControl.touched==true) || submitBtnStatus==true) && fieldValueControl.errors"
                               class="error" for="">

@@ -1,4 +1,4 @@
-<app-header [title]="Title"></app-header>
+<app-header [title]="Title" [activeReasonBucket]="activeReasonBucket"></app-header>
 <!-- top-navigation -->
 <div class="top-navigation buckets-list dark col-md-12 col-sm-12 p-0">
   <ul>
@@ -14,15 +14,12 @@
           <span class="buckets-list-cl">
             <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
           </span>
-
         </div>
-
       </li>
       <li *ngIf="b.Display_Name =='TL Deny'">
         <div class="dropdown float-left">
           <a href="#" onclick="javascript:return false;" class="dropdown-a btn btn-link dropdown-toggle"
             data-toggle="dropdown" role="button" aria-haspopup="true">My Rework
-
           </a>
           <ul class="dropdown-menu menu">
             <li class="menu-item" (click)="ToggleAccountsModal(b)">
@@ -31,13 +28,27 @@
                 <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
               </span>
             </li>
-
           </ul>
         </div>
-
       </li>
-
     </ul>
+    <!-- <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null" title="To_be_Concluded">
+      <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
+        [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
+        
+        <div>
+          <span>{{to_be_concluded_bucket.Display_Name}}</span>
+        </div>
+      </li>
+    </ul>
+    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==true" title="Concluded">
+      <li (click)="ToggleAccountsModal(conclusion_bucket)"
+        [ngClass]="{'active-li':ActiveBucket == conclusion_bucket.Name, 'disableBtn': conclusion_bucket.disableBtn==true}">
+        <div>
+          <span>{{conclusion_bucket.Display_Name}}</span>
+        </div>
+      </li>
+    </ul> -->
   </ul>
   <div class="uitlites-nav">
     <ul class="pull-right dark">
@@ -134,12 +145,12 @@
               <div class="form-group mh-15 "
                 [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-i' : 'border-b']"
                 *ngIf="f.Is_Standard_Field && f.Is_View_Allowed_Agent && !f.Is_Appeal && f.Display_Name != 'Notes'">
-                <label for="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
+                <label [for]="f.Id" class="label-std control-label p-0 b-600">{{f.Display_Name}}</label>
                 <span *ngIf="f.editableInput==null || f.editableInput==false"
                   [ngClass]="[f.Display_Name.indexOf('Payer') != -1 ? 'payor-label-t border-b' : '']">
-                  <label *ngIf="f.Column_Datatype!='Date'" for="f.Id"
+                  <label *ngIf="f.Column_Datatype!='Date'" [for]="f.Id"
                     class="control-label w-80 label-s text-color">{{f.FieldValue || "N/A"}}</label>
-                  <label *ngIf="f.Column_Datatype=='Date'" for="f.Id" class="control-label w-80 label-s text-color">
+                  <label *ngIf="f.Column_Datatype=='Date'" [for]="f.Id" class="control-label w-80 label-s text-color">
                     {{f.FieldValue | date:'MM/dd/yyyy'}}</label>
                   <span *ngIf="f.Display_Name.indexOf('Payer') != -1" class="text-right payor-label-ins"
                     title="Insurance Master" (click)="ToggleInsuranceMaster()">
@@ -165,7 +176,9 @@
           </form>
         </div>
       </div>
-      <div [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
+      <!-- Input Fields Started -->
+      <div *ngIf="(ActiveBucket!='To_be_Concluded')"
+        [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
@@ -178,13 +191,13 @@
               <div
                 [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-md-6 h-48']"
                 *ngIf="!f.Is_Standard_Field && !f.Is_Appeal && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
-                <div class="form-group"
+                <div class="form-group" *ngIf="f.Display_Name!=null"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' || f.Is_Exception ? 'border-b' : '']">
-                  <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else otherNames">
-                    <label for="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
+                  <ng-container *ngIf="f.Display_Name == 'Reference_File_Name' ; else otherNames">
+                    <label [for]="f.Id" class="label-std  control-label p-0 b-600">Reference File</label>
                   </ng-container>
                   <ng-template #otherNames>
-                    <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                    <label [for]="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                   </ng-template>
 
 
@@ -199,14 +212,13 @@
                         </ng-container>
                         <ng-template #textinput>
                           <ng-container *ngIf="f.SetFormula; else elseTemplate">
-                            <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                            <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}
+                              {{f.Id || "NO ID"}}</label>
                           </ng-container>
                           <ng-template #elseTemplate>
-                            <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit" placeholder=""
-                              [(ngModel)]="f.FieldValue">
+                            <input type="text" class="form-control" [id]="f.Id" [maxlength]="f.Field_Limit"
+                              placeholder="" [(ngModel)]="f.FieldValue">
                           </ng-template>
-
-
                         </ng-template>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Date'">
@@ -221,14 +233,15 @@
                         </div>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Formula'">
-                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                        <label [for]="f.Id"
+                          class="control-label label-s text-color p-0">{{f.FieldValue || "N/A"}}</label>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                   <ng-template #readonly>
                     <ng-container *ngIf="f.Display_Name == 'Reference_File_Name'; else readOnly">
                       <ng-container *ngIf="!f.FieldValue; else showButton">
-                        <label for="f.Id" class="control-label label-s text-color p-0">No File Uploaded</label>
+                        <label [for]="f.Id" class="control-label label-s text-color p-0">No File Uploaded</label>
                       </ng-container>
                       <ng-template #showButton>
                         <button type="button" class="btn blue square-btn blue-hover btn-txt"
@@ -236,7 +249,8 @@
                       </ng-template>
                     </ng-container>
                     <ng-template #readOnly>
-                      <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                      <label [for]="f.Id"
+                        class="control-label label-s text-color p-0">{{f.FieldValue  || "N/A"}}</label>
                     </ng-template>
                   </ng-template>
 
@@ -246,8 +260,8 @@
             </ng-container>
             <!--Comment History-->
             <div class="col-md-6 h-48" *ngIf="ActiveBucket == 'TL_Deny' || ActiveBucket == 'Client_Response'">
-              <div class="form-group border-b">
-                <label for="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
+              <div *ngIf="f && f.Id" class="form-group border-b">
+                <label [for]="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
                 <button type="button" class="btn blue square-btn blue-hover btn-txt"
                   (click)="ViewCommentHistory()">View</button>
               </div>
@@ -255,6 +269,7 @@
           </div>
         </div>
       </div>
+      <!-- Input Fields ended -->
       <!--Appeal Section-->
       <div *ngIf="ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal'"
         class="col-md-3 p-0 p-0 blue-seprator serpartion-h">
@@ -269,7 +284,7 @@
               <div class="col-md-12" *ngIf="f.Is_Appeal && f.Is_View_Allowed_Agent">
                 <div class="form-group"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' ? 'border-b' : '']">
-                  <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
+                  <label [for]="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                   <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
                     <ng-container [ngSwitch]="f.Column_Datatype">
                       <ng-container *ngSwitchCase="'Text'">
@@ -292,10 +307,11 @@
                             </ng-container>
                             <ng-template #textinput>
                               <ng-container *ngIf="f.SetFormula; else elseTemplate">
-                                <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                                <label [for]="f.Id"
+                                  class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                               </ng-container>
                               <ng-template #elseTemplate>
-                                <input type="text" class="form-control" id="f.Id" [maxlength]="f.Field_Limit"
+                                <input type="text" class="form-control" [id]="f.Id" [maxlength]="f.Field_Limit"
                                   placeholder="" [(ngModel)]="f.FieldValue">
                               </ng-template>
                             </ng-template>
@@ -317,12 +333,12 @@
                         </div>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Formula'">
-                        <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                        <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                       </ng-container>
                     </ng-container>
                   </ng-container>
                   <ng-template #readonly>
-                    <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
+                    <label [for]="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                   </ng-template>
 
 
@@ -348,7 +364,8 @@
         </div>
       </div>
       <!--Appeal Ends-->
-      <div class="col-md-3 p-0">
+      <!-- Action Form Started -->
+      <div *ngIf="ActiveBucket!='To_be_Concluded'" class="col-md-3 p-0">
         <div class="col-md-12 p-0">
           <form [formGroup]="ActionForm" (ngSubmit)="SubmitForm()">
             <div class="col-md-12 col-sm-12 p-0">
@@ -437,12 +454,14 @@
                     class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
                   <button title="Cancel" style="margin-top: 1rem;" type="button" (click)="ClearForm()"
                     [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-10">Clear</button>
-                  <button title="Add New Line" style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button"
-                    (click)="addNewLine()" [disabled]="DisableSubmit"
+                  <button title="Add New Line" style="margin-top: 1rem;"
+                    *ngIf="Is_New_Line==false && ActiveBucket !='To_be_Concluded' && ActiveBucket !='Concluded'"
+                    type="button" (click)="addNewLine()" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt mr-10"><i class="fa fa-plus"></i>
                     New Line </button>
-                  <button title="Add PCN" style="margin-top: 1rem;" *ngIf="Is_New_Line==false" type="button"
-                    (click)="openAddPCNModal()" [disabled]="DisableSubmit"
+                  <button title="Add PCN" style="margin-top: 1rem;"
+                    *ngIf="clientObj.Is_PCN==true && ActiveBucket !='To_be_Concluded' && ActiveBucket !='Concluded'"
+                    type="button" (click)="openAddPCNModal()" [disabled]="DisableSubmit"
                     class="btn blue square-btn blue-hover btn-txt">
                     <i class="fa fa-plus"></i> PCN
                   </button>
@@ -461,6 +480,23 @@
         </div>
 
       </div>
+      <!-- Action Form ended -->
+      <!-- Concluder Fields Started -->
+      <div *ngIf="ActiveBucket=='To_be_Concluded'" class="p-0 col-md-9">
+        <div class="col-md-12 col-sm-12 p-0">
+          <div class="heading-panel sT-hight">
+            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Concluder Fields</span>
+          </div>
+        </div>
+        <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0">
+            <app-agent-concluder (assignInventory)="concluderRowClick($event)" [concluderId]="concluderId"
+              [ClientId]="ClientId" [UserId]="UserId" [Employee_Code]="userdata.Employee_Code"></app-agent-concluder>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concluder Fields ended -->
     </div>
   </div>
 </ng-container>
@@ -537,5 +573,16 @@
   (close)="hideCallReferenceInfo()">
 </app-call-reference-info>
 
-<app-add-pcn-modal [inventory]="inventoryDetails" [SaagLookup]="SaagLookup" *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
+<app-add-pcn-modal [AllFields]="AllFields" [inventory]="inventoryDetails" [SaagLookup]="SaagLookup"
+  *ngIf="showAddPCNModal" (close)="closeAddPCNModal()">
 </app-add-pcn-modal>
+<app-concluder-accounts *ngIf="openConclusionBucketModal==true" [ClientId]="ClientId" [UserId]="UserId"
+  (CloseModal)="closeConclusionModal($event)" (conclusionRowClick)="conclusionRowClick($event)">
+</app-concluder-accounts>
+
+<app-to-be-concluder-accounts *ngIf="openToBeConcludedBucketModal" [(WorkingAccountId)]="concluderId"
+  (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"
+  (CloseConcluderModal)="CloseConcluderModal($event)"></app-to-be-concluder-accounts>
+
+<app-client-instruction-info *ngIf="clientInstructionInfoModal==true" (close)="closeInstructionModal($event)">
+</app-client-instruction-info>

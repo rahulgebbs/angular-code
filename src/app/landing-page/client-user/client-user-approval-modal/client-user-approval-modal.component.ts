@@ -48,6 +48,7 @@ export class ClientUserApprovalModalComponent implements OnInit {
   ngOnInit() {
     this.ResponseHelper = new ResponseHelper(this.notification)
     this.Start_Time = moment().utcOffset(0, true).format();
+    console.log('this.Inventories : ', this.Inventories);
     this.Inventories.forEach(e => {
 
       var Inventory_Log_Id = 0;
@@ -81,7 +82,7 @@ export class ClientUserApprovalModalComponent implements OnInit {
             inventory_Id = inven.Field_Value;
             break;
           case 'Comments':
-            comments = inven.Field_Value;
+            e.Comments = inven.Field_Value;
             break;
           case 'Reference_File_Name':
             refFileName = inven.Field_Value;
@@ -122,12 +123,12 @@ export class ClientUserApprovalModalComponent implements OnInit {
           }
         });
 
-        e.Comments = comments;
+        // e.Comments = comments;
 
       }
       else {
         e.Action = '';
-        e.Comments = '';
+        // e.Comments = '';
       }
     });
     this.GetUsersList();

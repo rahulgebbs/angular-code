@@ -24,16 +24,25 @@
 }
 
 #Password {
-  text-security: disc;
   -webkit-text-security: disc;
-  -mox-text-security: disc;
+  -moz-text-security: disc;
   font-family: "text-security-disc";
 }
 
-html{
+html {
   overflow-x: hidden !important;
 }
 
-.cdk-overlay-container{
+.cdk-overlay-container {
   z-index: 99999999999;
+}
+
+.captchaText {
+  font-family: monospace !important;
+}
+
+.filter-textbox {
+  border: 1px solid #ccc !important;
+  padding: 5px !important;
+  margin: 0px 10px 7px 10px !important;
 }

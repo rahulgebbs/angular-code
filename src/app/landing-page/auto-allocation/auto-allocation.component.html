@@ -31,9 +31,11 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="Group_By" class="label-std  control-label p-0 b-600">Group By</label>
-              <select class="form-control" required formControlName="Group_By"  (change)="GroupbyChange($event)" [(ngModel)]="ClientSettings.Group_By">
+              <select class="form-control" required formControlName="Group_By" (change)="GroupbyChange($event)"
+                [(ngModel)]="ClientSettings.Group_By">
                 <option [selected]="(!ClientSettings.Group_By) " disabled>Select</option>
-                <option *ngFor="let item of GroupByList" [selected]="item.GroupBy_Field==ClientSettings.Group_By" value="{{item.GroupBy_Field}}">{{item.GroupBy_Field}}</option>
+                <option *ngFor="let item of GroupByList" [selected]="item.GroupBy_Field==ClientSettings.Group_By"
+                  value="{{item.GroupBy_Field}}">{{item.GroupBy_Field}}</option>
               </select>
             </div>
           </div>
@@ -129,11 +131,31 @@
                 Please Enter Valid Numeric Value
               </div>
             </div>
-
+          </div>
+          <div *ngIf="SettingsForm && SettingsForm.get('Allocated_Concluder_Accounts_Count')" class="col-md-12">
+            <div class="form-group">
+              <label for="Allocated_Concluder_Accounts_Count" class="label-std  control-label p-0 b-600">Allocated
+                Concluder Accounts Count</label>
+              <input type="number" class="form-control" required formControlName="Allocated_Concluder_Accounts_Count"
+                id="Allocated_Concluder_Accounts_Count" [(ngModel)]="ClientSettings.Allocated_Concluder_Accounts_Count">
+              <div class="error"
+                *ngIf="SettingsForm.get('Allocated_Concluder_Accounts_Count').hasError('required') && Validated ">
+                Allocated Concluder Accounts Count required
+              </div>
+              <div class="error" *ngIf="SettingsForm.get('Allocated_Concluder_Accounts_Count').hasError('invalid')">
+                Please Enter Valid Allocated Concluder Accounts Count</div>
+              <!-- <div class="error" *ngIf="SettingsForm.get('Allocated_Concluder_Accounts_Count').hasError('max')">
+                Maximum 365 days only
+              </div> -->
+              <!-- <div class="error" *ngIf="SettingsForm.get('Allocated_Concluder_Accounts_Count').hasError('pattern')">
+                Please Enter Valid Numeric Value
+              </div> -->
+            </div>
           </div>
           <div class="form-group mh-15">
             <div class="col-md-12 p-0">
-              <button class="btn blue square-btn blue-hover btn-txt mr-10" [disabled]="DisableSettingSave">Save</button>
+              <button class="btn blue square-btn blue-hover btn-txt mr-10"
+                [disabled]="!SettingsForm.valid || DisableSettingSave==true">Save</button>
             </div>
           </div>
         </div>

@@ -1,6 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { DeallocationByAgentByBucketService } from 'src/app/service/deallocation-by-agent-by-bucket.service';
