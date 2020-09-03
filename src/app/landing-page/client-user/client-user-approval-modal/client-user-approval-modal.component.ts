@@ -42,94 +42,102 @@ export class ClientUserApprovalModalComponent implements OnInit {
   UsersList = [];
   DisableDownload = false;
   ToggleCommentHistory = false;
-
+  mainInventory = []
   constructor(private notification: NotificationService, private service: ClientUserApprovalService, private userservice: UserManagementService) { }
 
   ngOnInit() {
     this.ResponseHelper = new ResponseHelper(this.notification)
     this.Start_Time = moment().utcOffset(0, true).format();
     console.log('this.Inventories : ', this.Inventories);
+    this.setInventoryDetails()
+    this.GetUsersList();
+  }
+
+  setInventoryDetails() {
     this.Inventories.forEach(e => {
 
-      var Inventory_Log_Id = 0;
-      var Status = '';
-      var Sub_Status = ''
-      var Action_Code = ''
-      var Effectiveness = '';
-      var comments = '';
-      var inventory_Id = 0;
-      var refFileName = '';
-      var repeat_count = 0;
+      // var Inventory_Log_Id = 0;
+      // var Status = '';
+      // var Sub_Status = ''
+      // var Action_Code = ''
+      // var Effectiveness = '';
+      // var comments = '';
+      // var inventory_Id = 0;
+      // var refFileName = '';
+      // var repeat_count = 0;
+      const newObj: any = {};
+      console.log('newObj : ', newObj);
       e.forEach(inven => {
         switch (inven.Header_Name) {
 
           case 'Id':
-            Inventory_Log_Id = inven.Field_Value;
+            newObj.Inventory_Log_Id = inven.Field_Value;
             break;
           case 'Status':
-            Status = inven.Field_Value;
+            newObj.Status = inven.Field_Value;
             break;
           case 'Sub-Status':
-            Sub_Status = inven.Field_Value;
+            newObj.Sub_Status = inven.Field_Value;
             break;
           case 'Action_Code':
-            Action_Code = inven.Field_Value;
+            newObj.Action_Code = inven.Field_Value;
             break;
           case 'Effectiveness':
-            Effectiveness = inven.Field_Value;
+            newObj.Effectiveness = inven.Field_Value;
             break;
           case 'Inventory_Id':
-            inventory_Id = inven.Field_Value;
+            newObj.inventory_Id = inven.Field_Value;
             break;
           case 'Comments':
-            e.Comments = inven.Field_Value;
+            newObj.Comments = inven.Field_Value;
             break;
           case 'Reference_File_Name':
-            refFileName = inven.Field_Value;
+            newObj.refFileName = inven.Field_Value;
             break;
           case 'Repeat_Count':
-            repeat_count = Number(inven.Field_Value);
+            newObj.repeat_count = Number(inven.Field_Value);
             break;
           case 'Action':
             break;
         }
       });
-      e.Status = Status;
-      e.Sub_Status = Sub_Status;
-      e.Action_Code = Action_Code;
-      e.Effectiveness = Effectiveness;
-      e.Inventory_Log_Id = Inventory_Log_Id;
-      e.IsChecked = false;
-      e.Inventory_Id = inventory_Id;
-      e.Repeat_Count = repeat_count;
+      // e.Status = Status;
+      // e.Sub_Status = Sub_Status;
+      // e.Action_Code = Action_Code;
+      // e.Effectiveness = Effectiveness;
+      // e.Inventory_Log_Id = Inventory_Log_Id;
+      newObj.IsChecked = false;
+      // e.Inventory_Id = inventory_Id;
+      // e.Repeat_Count = repeat_count;
 
       if (this.TLAction == 'Hold' || this.TLAction == 'To Internal') {
         e.FileName = '';
       }
       else {
-        if (refFileName != '') {
-          e.FileName = refFileName;
+        if (newObj.refFileName != '') {
+          newObj.FileName = newObj.refFileName;
         } else {
-          e.FileName = 'No File Uploaded';
+          newObj.FileName = 'No File Uploaded';
         }
         // }
       }
 
       if (this.TLAction != 'Hold' && this.TLAction != 'To Internal') {
-        e.Action = this.TLAction;
+        newObj.Action = this.TLAction;
         this.ActionList.forEach(er => {
           if (er.Value == e.Action) {
-            e.Action = er.Key;
+            newObj.Action = er.Key;
           }
         });
-        e.Comments = comments;
+        // newObj.Comments = comments;
       }
       else {
-        e.Action = '';
-        e.Comments = '';
+        newObj.Action = '';
+        newObj.Comments = '';
       }
+      this.mainInventory.push(newObj);
     });
-    this.GetUsersList();
+    console.log('this.mainInventory : ', this.mainInventory, this.TLAction);
   }
 
   GetUsersList() {
