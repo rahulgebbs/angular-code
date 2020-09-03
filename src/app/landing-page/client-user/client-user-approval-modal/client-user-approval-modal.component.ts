@@ -122,13 +122,11 @@ export class ClientUserApprovalModalComponent implements OnInit {
             e.Action = er.Key;
           }
         });
-
-        // e.Comments = comments;
-
+        e.Comments = comments;
       }
       else {
         e.Action = '';
-        // e.Comments = '';
+        e.Comments = '';
       }
     });
     this.GetUsersList();

@@ -23,8 +23,10 @@
               <th>
                 <div class="mt-0">
                   <label class="custom-control">
-                    <input type="checkbox" id="check-all" [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'"
-                      name="check-all" (click)="ToggleCheckAll($event)" [(ngModel)]="AllChecked" />
+                    <input type="checkbox" id="check-all"
+                      [ngStyle]="{'cursor' : (TLAction != 'Hold' && TLAction != 'To Internal') ? 'not-allowed':'poinnter'}"
+                      [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'" name="check-all"
+                      (click)="ToggleCheckAll($event)" [(ngModel)]="AllChecked" />
                     <label for="check-all"></label>
                   </label>
 

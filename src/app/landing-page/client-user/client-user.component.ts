@@ -23,8 +23,8 @@ export class ClientUserComponent implements OnInit {
   ShowAging = false;
   ShowMain = false;
   MinDate: Date;
-  FromDate: Date;
-  ToDate: Date;
+  FromDate: Date = new Date('01/01/2020');
+  ToDate: Date = new Date();
   Action = "To Internal";
   ActionList = [
     { Key: "Pending", Value: "To Internal" },
