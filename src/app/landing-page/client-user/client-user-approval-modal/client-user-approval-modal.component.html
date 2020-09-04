@@ -70,7 +70,7 @@
                   </div>
                 </ng-container>
                 <ng-template #readOnlyAction>
-                  <label>{{i.Action}}</label>
+                  <label>{{i.Action}} - {{i.Repeat_Count}}</label>
                 </ng-template>
               </td>
               <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
@@ -78,7 +78,7 @@
               </td>
               <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
                 <textarea [disabled]="TLAction != 'Hold' && TLAction != 'To Internal'"
-                  class="form-control textarea-resize w-120" name="comments" [(ngModel)]="i.Comments" rows=""
+                  class="form-control textarea-resize w-120" name="comments{{int}}" [(ngModel)]="i.Comments" rows=""
                   placeholder="Write Comments.."></textarea>
               </td>
               <td [ngClass]="[i.Repeat_Count > 1 ? 'bg-yellow' : '']">
