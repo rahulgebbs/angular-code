@@ -1,0 +1,27 @@
+<div class="pop-bg"></div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span title="Concluder Dashboard Heatmap Calculation" class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <!-- <span class="text-sm text-ellipsis heading-txt flex">Concluder Help Image </span> -->
+        <span class="text-sm text-ellipsis heading-txt flex">Concluder Dashboard Heatmap Logic </span>
+      </div>
+    </span>
+    <span title="close" class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <!-- <div class="col-md-12 p-0"> -->
+  <!-- <img src="assets/images/HeatMapLogic.JPG" alt=""> -->
+  <div class="col-md-3">
+    <label for="">Select Bucket</label>
+    <select name="" id="" (change)="initChart()" [(ngModel)]="activeBucket">
+      <option [value]="null">Please select</option>
+      <option *ngFor="let bucket of bucketList" [value]="bucket">{{bucket}}</option>
+    </select>
+  </div>
+
+  <div id="container" style="width: 80%; height: 300px; margin: auto; border: 1px solid gray">
+  </div>
+  <!-- </div> -->
+</div>

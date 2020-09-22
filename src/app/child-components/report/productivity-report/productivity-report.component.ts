@@ -71,7 +71,7 @@ export class ProductivityReportComponent implements OnInit {
     }
 
     toggleNodes(nodeObj, role) {
-        console.log('nodeObj, role : ', nodeObj, nodeObj[role]);
+        console.log('nodeObj, role : ', nodeObj, nodeObj[role], JSON.stringify(this.treeData));
         const list = nodeObj[role];
         nodeObj.showRow = (nodeObj.showRow != undefined && nodeObj.showRow == true) ? false : true;
         if (list && list.length > 0) {
@@ -319,7 +319,7 @@ export class ProductivityReportComponent implements OnInit {
         this.clientService.getAgentReportByDate(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, 1, this.startDate, this.endDate)
             .subscribe((response) => {
                 console.log('getAgentReport response : ', response);
-      
+
                 this.setAgentsReportDateWise(nodeObj, response.Data.manager_InventoryList_count)
             }, (error) => {
                 console.log('getAgents error : ', error);

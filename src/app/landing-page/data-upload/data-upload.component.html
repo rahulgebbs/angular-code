@@ -3,7 +3,7 @@
   <!-- <form class="" [formGroup]="addException"> -->
   <div class="col-md-12 col-sm-12 white p-0">
     <form [formGroup]="dataUpload" class="" role="form">
-      <div class="sm-report pv-10 mt-10">
+      <div class="pv-10 mt-10">
         <div class="col-md-12 p-0">
           <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="">Client Name</label>
@@ -19,17 +19,76 @@
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
             <div class="radioBorder">
               <label class="radio-inline">
-                <input type="radio" name="type" value="inventory" formControlName="type"
-                  (change)="openModal($event)">
-                  Normal Inventory
+                <input type="radio" name="type" value="inventory" formControlName="type" (change)="openModal($event)">
+                Normal Inventory
               </label>
               <label class="radio-inline">
-                <input type="radio" name="type" value="concluder" formControlName="type"
-                  (change)="openModal($event)">
+                <input type="radio" name="type" value="concluder" formControlName="type" (change)="openModal($event)">
                 Concluder Inventory
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="type" value="project" formControlName="type" (change)="openModal($event)">
+                Project & Priorities
               </label>
             </div>
           </div>
+          <div *ngIf="dataUpload.value as formValue">
+
+            <ng-container *ngIf="dataUpload.value as formValue">
+              <div class="form-group"
+                [ngClass]="{'disableDiv' :formValue.Client_Id==null || formValue.Client_Id.length==0 }"
+                *ngIf="formValue && formValue.type=='project'">
+
+                <label class="label-std control-label p-0 b-600 pl-0" for="">Module List <span class="asteric">*</span>
+                </label>
+                <select formControlName="Module_Name" name="Module_Name" class="form-control">
+                  <option [selected]="true" value="" disabled>Select</option>
+                  <!-- <option [selected]="!ClientList || ClientList.length > 1" value="" disabled>Select</option> -->
+                  <option *ngFor="let project of projectList" [value]="project.Project_Name">{{project.Project_Name}}
+                  </option>
+                </select>
+                <div class="error"
+                  *ngIf="(formValue.Module_Name==null || formValue.Module_Name.length==0) && concluderError==true">
+                  Please select module
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="dataUpload.value as formValue">
+              <div [ngClass]="{'disableDiv' :formValue.Client_Id==null || formValue.Client_Id.length==0 }"
+                class="form-group" *ngIf="formValue && formValue.type=='project'">
+                <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Employee ID
+                  <span class="asteric">*</span>
+                </label>
+                <!-- <div class="col-sm-7 p-0 text-right"> -->
+                <span class="col-md-10 p-0">
+                  <input type="text" class="form-control col-md-4" autocomplete="off" name="card-number"
+                    #EmployeesList="ngModel" id="card-number" (keydown)="BlockInput($event)"
+                    (keyup)="BlockInput($event)" oncontextmenu="return false" (keypress)="BlockInput($event)"
+                    [ngModelOptions]="{standalone: true}" [ngModel]="EmployeeString">
+                  <!-- <div class="error" *ngIf="dataUpload.get('EmpCode').hasError('required') && DisplayError">
+                    Please select employee
+                  </div> -->
+                  <div class="error" *ngIf="formValue.EmpCode && formValue.EmpCode.length==0 && concluderError==true">
+                    Please select employee
+                  </div>
+                  <!-- concluderError -->
+                </span>
+                <span [ngClass]="(formValue.Client_Id==null ||formValue.Client_Id.length==0 ) ? 'disabled' : ''"
+                  class="col-md-2 btn grey square-btn  btn-txt  p-0 h-25"
+                  (click)="!DisableEmployeeSelect && OpenModal()" style="padding: 0.5px 10px !important;">Select</span>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- <ng-container *ngIf="dataUpload.value as formValue">
+            <div class="form-group" *ngIf="formValue && formValue.type=='project'">
+              <label class="label-std control-label p-0 b-600 pl-0" for="">Agent List</label>
+              <select (change)="ClientListOnChange($event)" formControlName="Client_Id" #selectedelem name="Client"
+                class="form-control">
+                <option [selected]="true" value="" disabled>Select</option>
+              </select>
+            </div>
+          </ng-container> -->
 
           <div class=" form-group">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Upload File</label>
@@ -43,7 +102,7 @@
             <div class="error" *ngIf="DisplayFileError">
               Please select the file
             </div>
-          
+
             <button [disabled]="!truefile || DisableUpload" type="button" (click)="FileUpload()"
               class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
               <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
@@ -61,4 +120,5 @@
     </app-inventory-upload> -->
   </div>
 
-  
+  <app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
+    (CloseModal)="CloseModal($event)"></app-employee-selector-modal>

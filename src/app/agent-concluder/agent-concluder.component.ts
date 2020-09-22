@@ -65,8 +65,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     // console.log('changeBillDate event : ', this.concludedForm);
     // const { value } = this.concludedForm;
     // if (value.Original_Claim_Billed_Date != null && value.Latest_Claim_Billed_Date != null) {
-    //   var startDate = moment(value.Latest_Claim_Billed_Date, 'MM-DD-YYYY');
-    //   var endDate = moment(value.Original_Claim_Billed_Date, 'MM-DD-YYYY');
+    //   var startDate = moment(value.Latest_Claim_Billed_Date, 'MM/DD/YYYY');
+    //   var endDate = moment(value.Original_Claim_Billed_Date, 'MM/DD/YYYY');
     //   var result = Number(endDate.diff(startDate, 'days'));
     //   console.log('result : ', result);
     //   if (result > 0) {
@@ -127,7 +127,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     }
     else {
       if (event && event.value) {
-        const date = moment(event.value).format('MM/DD-YYYY');
+        const date = moment(event.value).format('MM/DD/YYYY');
         this.setDateError(fieldCtrl, date);
       }
       else {
@@ -139,7 +139,7 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
   }
 
   setDateError(fieldCtrl, value) {
-    console.log('setDateError fieldCtrl : ', fieldCtrl.errors, value);
+    // console.log('setDateError fieldCtrl : ', fieldCtrl.errors, value);
     const { errors } = fieldCtrl;
     const dateStatus = this.isGoodDate(fieldCtrl.value, value);
     // console.log('dateStatus :')
@@ -151,7 +151,28 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
         fieldCtrl.setErrors(null);
       }
     }
+    var newDate = moment(value).format("MM/DD/YYYY");
+    // var validdate = moment(newDate, "MM/DD/YYYY");
+    // console.log('newDate != value : ', newDate != value)
+    // if (newDate != value) {
+    //   fieldCtrl.setErrors({ 'invalidDate': true });
+    // }
+    if (dateStatus == true) {
+      this.validDate(value, fieldCtrl);
+    }
+    // console.log('fieldCtrl.value : ', value, newDate);
     // console.log('dateStatus : ', dateStatus);
+  }
+
+  validDate(dateStr, fieldCtrl) {
+    const dateArray = dateStr.split('/');
+
+    console.log('dateArray : ', dateStr, dateArray);
+    const daysInMonth = new Date(dateArray[2], dateArray[0], 0).getDate();
+    console.log('validDate : ', daysInMonth, Number(dateArray[1]), Number(dateArray[1]) > daysInMonth);
+    if (Number(dateArray[1]) > daysInMonth) {
+      fieldCtrl.setErrors({ 'invalidDate': true });
+    }
   }
   isGoodDate(date, value) {
     // console.log('isGoodDate : ', date)
@@ -160,8 +181,8 @@ export class AgentConcluderComponent implements OnInit, OnChanges {
     if (value && (value.length < 8 || value.length > 10)) {
       return false;
     }
-    // console.log("moment(date).format('MM-DD-YYYY') : ", moment(date).format('MM-DD-YYYY'));
-    return regexp.test(moment(date).format('MM-DD-YYYY'));
+    // console.log("moment(date).format('MM/DD/YYYY') : ", moment(date).format('MM/DD/YYYY'));
+    return regexp.test(moment(date).format('MM/DD/YYYY'));
   }
   handleRejection() {
     console.log('handleRejection : ', this.concludedForm);

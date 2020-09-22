@@ -18,6 +18,8 @@ import * as _ from 'lodash';
   styleUrls: ['./concluder-dashboard.component.css']
 })
 export class ConcluderDashboardComponent implements OnInit {
+  // 
+  showInfomodal = false;
   dashboard: FormGroup;
   ClientList: any[] = [];
   userdata: any;
@@ -296,6 +298,7 @@ export class ConcluderDashboardComponent implements OnInit {
     //     return false;
     //   }
     const finalArray = [];
+    var chartArray = [];
     // console.log('(row, array) : ', row, array);
     var maxNum = _.maxBy(array, 'value');
     console.log("maxNum : ", maxNum);
@@ -317,6 +320,11 @@ export class ConcluderDashboardComponent implements OnInit {
     var secondHalf = (maxNum.value + mainHalf) / 2;
     // secondHalf = this.sumBetweenTwoNumbers(mainHalf, maxNum.value, array);
     console.log('calc now secondHalf : ', secondHalf, mainHalf);
+    chartArray.push({ value: minNum.value, type: 'smallest' });
+    chartArray.push({ value: firstHalf, type: 'first half' });
+    chartArray.push({ value: mainHalf, type: 'middle' });
+    chartArray.push({ value: secondHalf, type: 'second half' });
+    chartArray.push({ value: maxNum.value, type: 'largest' });
     array.forEach((ele) => {
       // var firstHalf;// = Math.ceil((minNum.value + mainHalf) / 2);
       // firstHalf = this.sumBetweenTwoNumbers(minNum.value, mainHalf, array);
@@ -328,9 +336,9 @@ export class ConcluderDashboardComponent implements OnInit {
         case (ele.value >= minNum.value) && ele.value <= mainHalf: {
           console.log('less than middle : ', row.Buckets, firstHalf);
           if (ele.value > firstHalf) {
-            finalArray.push({ key: ele.key, color: "#FFC200" }); // amber
+            finalArray.push({ key: ele.key, color: "#FFC200", value: ele.value }); // amber
           } else if (ele.value > 0) {
-            finalArray.push({ key: ele.key, color: "#26c281" }); // green
+            finalArray.push({ key: ele.key, color: "#26c281", value: ele.value }); // green
           }
           else {
             //finalArray.push({ key: ele.key, color: "#2ecc71" }); //green
@@ -342,9 +350,9 @@ export class ConcluderDashboardComponent implements OnInit {
           // secondHalf = this.sumBetweenTwoNumbers(mainHalf, maxNum.value, array);
 
           if (ele.value > secondHalf) {
-            finalArray.push({ key: ele.key, color: "#f03434" }); // red
+            finalArray.push({ key: ele.key, color: "#f03434", value: ele.value }); // red
           } else {
-            finalArray.push({ key: ele.key, color: "#FFC200" }); // amber
+            finalArray.push({ key: ele.key, color: "#FFC200", value: ele.value }); // amber
           }
           break;
         }
@@ -355,7 +363,7 @@ export class ConcluderDashboardComponent implements OnInit {
     finalArray.forEach((ele) => {
       row.report[ele.key] = ele.color;
     });
-    // console.log('row : ', row)
+    console.log('chartArray : ', JSON.stringify(chartArray));
   }
 
   sumBetweenTwoNumbers(start, end, array) {
@@ -368,7 +376,13 @@ export class ConcluderDashboardComponent implements OnInit {
       }
     });
     return (sum / total);
+  }
+  closeModal() {
+    this.showInfomodal = false;
+  }
 
+  openModal() {
+    this.showInfomodal = true;
   }
 }
 

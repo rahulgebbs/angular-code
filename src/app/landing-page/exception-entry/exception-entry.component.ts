@@ -14,7 +14,7 @@ import { ExceptionEntryService } from 'src/app/service/exception-entry.service';
 })
 export class ExceptionEntryComponent implements OnInit {
   Title = "Add New Exception";
-  showLoading:boolean=true;
+  showLoading: boolean = true;
   ResponseHelper: ResponseHelper
   UserId = 0;
   ClientList: any[] = [];
@@ -47,30 +47,36 @@ export class ExceptionEntryComponent implements OnInit {
   submitFrom() {
     this.validated = true
     this.addException.valid
-    this.addException.patchValue({ "Reference_File_Name": this.Filename })
+    this.addException.patchValue({ "Reference_File_Name": this.Filename });
+    console.log('check if valid : ', this.addException.valid);
     if (this.addException.valid) {
       let Upload_Request = { "File_Name": this.Filename, "Client_Id": this.ClientId, "File": this.FileBase64 };
-      var obj = {};
+      var obj: any = {};
 
       let Fields = this.addException.value
 
       obj['Upload_Request'] = Upload_Request;
       obj['Fields'] = Fields;
-      // this.addException.patchValue({"Reference_File_Name":""})
-      if (this.Filename != "No File Selected") {
-        this.service.submit(obj).subscribe(res => {
-          this.ResponseHelper.GetSuccessResponse(res);
-          // window.location.reload();
-          this.File = [];
-          this.FileBase64 = [];
-          this.Filename = "No File Selected";
-          this.validated = false
-          this.Getexception()
-          this.uploadBtnDisable = true;
-        }, err => {
-          this.ResponseHelper.GetFaliureResponse(err);
-        })
+      // this.addException.patchValue({"Reference_File_Name":""}) // already
+      if (this.Filename == "No File Selected") {
+        obj.Upload_Request.File_Name = '';
+        obj.Upload_Request.File = '';
+        obj.Fields.Reference_File_Name = '';
       }
+
+      this.service.submit(obj).subscribe(res => {
+        this.ResponseHelper.GetSuccessResponse(res);
+        // window.location.reload();
+        this.File = [];
+        this.FileBase64 = [];
+        this.Filename = "No File Selected";
+        this.validated = false;
+        this.Getexception()
+        this.uploadBtnDisable = true;
+      }, err => {
+        this.ResponseHelper.GetFaliureResponse(err);
+      })
+      // }
     }
   }
 
@@ -88,19 +94,17 @@ export class ExceptionEntryComponent implements OnInit {
     else {
       return false;
     }
-
   }
-
 
   selectedValue(data) {
 
     if (data.length == 1 && data.length) {
       data[0].selected = true;
       this.ClientId = data[0].Client_Id
-      this.Getexception()
-
+      this.Getexception();
     }
   }
+
   Getexception() {
     this.addException = this.fb.group({
       "Client_Id": [this.ClientId],
@@ -111,9 +115,9 @@ export class ExceptionEntryComponent implements OnInit {
       this.exceptioData = data1
       this.createFrom(this.exceptioData)
       this.DisplayMain = true;
-      this.showLoading=false
+      this.showLoading = false
     }, err => {
-      this.showLoading=false
+      this.showLoading = false
       this.ResponseHelper.GetFaliureResponse(err);
     })
   }
@@ -139,7 +143,7 @@ export class ExceptionEntryComponent implements OnInit {
       this.File = event.target.files[0];
       this.Filename = this.File.name;
       this.uploadBtnDisable = false
-      this.ConvertToBase64()
+      this.ConvertToBase64();
     }
     else {
       this.File = null;

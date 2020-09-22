@@ -15,3 +15,23 @@
   justify-content: left;
   align-items: center;
 }
+
+form {
+  width: 35%;
+  margin: auto;
+}
+
+.disableDiv {
+  /* background: transparent !important;
+  pointer-events: none !important;
+  height: 100%;
+  cursor: not-allowed;
+  width: 100%;
+  position: absolute;
+  z-index: 9999;
+  opacity: 0.5;
+  background: #000; */
+  opacity: 0.5;
+  user-select: none;
+  pointer-events: none;
+}

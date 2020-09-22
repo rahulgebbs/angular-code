@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { Token } from '../manager/token';
+import 'rxjs/Rx';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,19 @@ export class DataUploadService {
 
   downloadInventoryTemplate(id) {
     //  api/inventory-data-upload-download-template/client/{id}
-    return this.http.get(environment.ApiUrl + '/api/inventory-data-upload-download-template/client/' + id,
-      {
-        headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() })
-      }
-    )
+    return this.http.get(environment.ApiUrl + '/api/inventory-data-upload-download-template/client/' + id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getModuleList() {
+    return this.http.get(environment.ApiUrl + '/api/PNP_Module_Name', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+  getEmployeeList(id) {
+    return this.http.get(environment.ApiUrl + `/api/PNP-Inventory-Data-Employee/client/${id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  // PNP-inventory-data-upload
+
+  projectAndPriorityUpload(formBody) {
+    return this.http.post(environment.FileApiUrl + '/api/PNP-inventory-data-upload', formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 }

@@ -159,6 +159,8 @@ import { ResetPasswordComponent } from './landing-page/reset-password/reset-pass
 import { SpecialProjectComponent } from './child-components/client-configuration/special-project/special-project.component';
 import { ConcluderDeallocationComponent } from './landing-page/concluder-deallocation/concluder-deallocation.component';
 import { ConcluderDeallocationPageComponent } from './landing-page/concluder-deallocation-page/concluder-deallocation-page.component';
+import { ConcluderHelpImageComponent } from './concluder-help-image/concluder-help-image.component';
+import { ForgotPasswordNewComponent } from './landing-page/forgot-password-new/forgot-password-new.component';
 
 
 
@@ -309,7 +311,9 @@ export const MY_CUSTOM_FORMATS = {
     ResetPasswordComponent,
     SpecialProjectComponent,
     ConcluderDeallocationComponent,
-    ConcluderDeallocationPageComponent
+    ConcluderDeallocationPageComponent,
+    ConcluderHelpImageComponent,
+    ForgotPasswordNewComponent
   ],
   imports: [
     BrowserModule,
@@ -332,9 +336,10 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'two-factor-auth', component: TwoFactorAuthComponent },
       { path: 'welcome-page', component: WelcomePageComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'forgot-password-new/:securityCode', component: ForgotPasswordNewComponent },
       { path: 'reset-password', component: ResetPasswordComponent },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard], data: { route: ['change-password'] } },
-
+      // 
       { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
       // { path: 'client-configuration', component: ClientConfigurationComponent },
       // { path: 'bucket-mapping', component: BucketMappingComponent },
@@ -396,6 +401,8 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
       { path: 'pcn-report', component: PcnReportComponent, canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
       { path: 'concluder-deallocation', component: ConcluderDeallocationComponent, canActivate: [AuthGuard], data: { route: ['concluder-deallocation'] } },
+
+      // 
       // ConcluderDeallocationComponent
       { path: '**', component: NotFoundComponent }
 

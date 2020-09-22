@@ -4,6 +4,8 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { environment } from 'src/environments/environment';
 import { finalize } from 'rxjs/operators';
+// import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appeal-modal',
@@ -198,6 +200,14 @@ export class AppealModalComponent implements OnInit {
 
   Generate() {
     //is appeal non appeal
+    this.AllFields.find((element) => {
+      if (element && element.Display_Name == 'Date of Service') {
+        console.log('Before Date of Service : ', element.FieldValue);
+        element.FieldValue = moment(element.FieldValue).format('MM/DD/YYYY HH:mm:ss a');
+        console.log('After Date of Service : ', element.FieldValue);
+      }
+      // format('MM/DD/YYYY | HH:mm:ss')
+    })
     var formobj = {
       Client_Id: this.ClientId,
       Client_Name: this.Client_Name,
@@ -208,6 +218,7 @@ export class AppealModalComponent implements OnInit {
       GUIDList: this.GUIDList,
       AppealType: this.AppealType
     }
+    console.log('this.AllFields : ', this.AllFields);
     this.DisableAll = true;
     this.agentservice.GeneratePdf(formobj).pipe(finalize(() => {
       this.DisableAll = false;

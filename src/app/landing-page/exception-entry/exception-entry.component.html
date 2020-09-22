@@ -29,19 +29,20 @@
               </div>
               <div *ngIf="item.Display_Name =='Reference_File_Name'">
                 <div class="form-group col-md-6 mb-0">
-                  <label class=" label-std control-label p-0 b-600 pl-0 mb-10" for="">{{item.Display_Name}} <span
-                      class="asteric">*</span></label>
+                  <label class=" label-std control-label p-0 b-600 pl-0 mb-10" for="">{{item.Display_Name}} 
+                    <!-- <span class="asteric">*</span> -->
+                  </label>
                   <span class="col-md-3 p-0 form-group file-exception mt-1 mb-0">
                     <div class="file-upload-wrapper" [attr.data-text]="Filename">
                       <input name="file-upload-field" type="file"
                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        (change)="changeListener($event)" class="file-upload-field" value=""><span
-                        class="asteric">*</span>
+                        (change)="changeListener($event)" class="file-upload-field" value="">
+                        <!-- <span class="asteric">*</span> -->
                     </div>
 
                   </span>
-                  <label *ngIf="Filename=='No File Selected' && validated" class=" error" for="">This field is
-                    required</label>
+                  <!-- <label *ngIf="Filename=='No File Selected' && validated" class=" error" for="">This field is
+                    required</label> -->
                 </div>
               </div>
 

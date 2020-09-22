@@ -72,10 +72,12 @@ export class ForgotPasswordComponent implements OnInit {
       })).subscribe(
         data => {
           this.ResponseHelper.GetSuccessResponse(data)
-          this.CreateResetForm();
-          // setTimeout(() => {
-          this.SwitchToReset = true;
-          // }, 2000);
+          // commented for now
+          // this.CreateResetForm();
+          // this.SwitchToReset = true;
+          setTimeout(() => {
+            this.router.navigate(['/login'])
+          }, 1000);
         }, err => {
           this.ResponseHelper.GetFaliureResponse(err)
         })
@@ -163,8 +165,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  captchaForResetPassword()
-  {
+  captchaForResetPassword() {
     this.randomGradientColor();
     this.captchaArray = [];
     var result = '';

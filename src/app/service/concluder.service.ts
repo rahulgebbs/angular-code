@@ -3,8 +3,6 @@ import { Http, Headers } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { Token } from '../manager/token';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 @Injectable({

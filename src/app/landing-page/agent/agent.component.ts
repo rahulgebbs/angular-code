@@ -801,10 +801,7 @@ export class AgentComponent implements OnInit {
             this.GetAccountList(bucket, false);
             return false;
           }
-
           if (this.ActiveBucket != bucket.Name) {
-            // this.InventoryId = ;
-            // this.InventoryLogId =;
             if (bucket.Name.indexOf('Appeal') == -1) {
               this.GetAllFields(bucket, this.AccountsList[0].Inventory_Id, false);
             }
