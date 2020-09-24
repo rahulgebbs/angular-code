@@ -14,6 +14,8 @@ import { NotificationService } from 'src/app/service/notification.service';
 export class ConcluderAccountsComponent implements OnInit {
   @Input() ClientId;
   @Input() UserId;
+  @Output() conclusionRowClick = new EventEmitter();
+  @Output() CloseModal = new EventEmitter()
   concluderId;
   AccountsList = [];
   RowSelection = "single";
@@ -25,13 +27,11 @@ export class ConcluderAccountsComponent implements OnInit {
       componentParent: this
     }
   };
-  @Output() conclusionRowClick = new EventEmitter();
 
   ResponseHelper: ResponseHelper;
   bucketList = [];
   activeBucket = null;
   activeFieldList = [];
-  @Output() CloseModal = new EventEmitter()
   constructor(private concluderService: ConcluderService, private notificationservice: NotificationService) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }

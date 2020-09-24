@@ -161,6 +161,7 @@ import { ConcluderDeallocationComponent } from './landing-page/concluder-dealloc
 import { ConcluderDeallocationPageComponent } from './landing-page/concluder-deallocation-page/concluder-deallocation-page.component';
 import { ConcluderHelpImageComponent } from './concluder-help-image/concluder-help-image.component';
 import { ForgotPasswordNewComponent } from './landing-page/forgot-password-new/forgot-password-new.component';
+import { AccountsModalProjectAndPriorityComponent } from './project-and-priority/accounts-modal-project-and-priority/accounts-modal-project-and-priority.component';
 
 
 
@@ -313,7 +314,8 @@ export const MY_CUSTOM_FORMATS = {
     ConcluderDeallocationComponent,
     ConcluderDeallocationPageComponent,
     ConcluderHelpImageComponent,
-    ForgotPasswordNewComponent
+    ForgotPasswordNewComponent,
+    AccountsModalProjectAndPriorityComponent
   ],
   imports: [
     BrowserModule,

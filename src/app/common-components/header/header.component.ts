@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { LogoutService } from 'src/app/service/logout.service';
 import { Router } from '@angular/router';
 import { Token } from 'src/app/manager/token';
+import { ProjectandpriorityService } from 'src/app/service/projectandpriority.service';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,8 @@ export class HeaderComponent implements OnInit {
     private route: Router,
     private analyticsService: AnalyticsService,
     private logoutService: LogoutService,
-    private agentservice: AgentService
+    private agentservice: AgentService,
+    private projectandpriorityService: ProjectandpriorityService
   ) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     this.Token = new Token(this.route)
@@ -167,5 +169,8 @@ export class HeaderComponent implements OnInit {
         this.ResponseHelper.GetFaliureResponse(err);
       }
     );
+  }
+  openProjectAndPriorityModal() {
+    this.projectandpriorityService.showProjectModal = true;
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { ColumnGroup } from 'ag-grid-community';
-import { parseIntAutoRadix } from '@angular/common/src/i18n/format_number';
+// import { ColumnGroup } from 'ag-grid-community';
+// import { parseIntAutoRadix } from '@angular/common/src/i18n/format_number';
 
 @Component({
   selector: 'app-accounts-modal',

@@ -32,23 +32,7 @@
         </div>
       </li>
     </ul>
-    <!-- <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process!=null" title="To_be_Concluded">
-      <li (click)="ToggleAccountsModal(to_be_concluded_bucket)"
-        [ngClass]="{'active-li':ActiveBucket == to_be_concluded_bucket.Name, 'disableBtn': to_be_concluded_bucket.disableBtn==true}">
-        
-        <div>
-          <span>{{to_be_concluded_bucket.Display_Name}}</span>
-        </div>
-      </li>
-    </ul>
-    <ul *ngIf="clientObj && clientObj.Is_Super_Concluder_Process==true" title="Concluded">
-      <li (click)="ToggleAccountsModal(conclusion_bucket)"
-        [ngClass]="{'active-li':ActiveBucket == conclusion_bucket.Name, 'disableBtn': conclusion_bucket.disableBtn==true}">
-        <div>
-          <span>{{conclusion_bucket.Display_Name}}</span>
-        </div>
-      </li>
-    </ul> -->
+
   </ul>
   <div class="uitlites-nav">
     <ul class="pull-right dark">
@@ -549,10 +533,8 @@
 
 <!-- Insurance master popup -->
 
-
 <!-- <div class="col-md-12 mb-10 text-center">
-                  
-              </div> -->
+</div> -->
 
 <!-- Account skip popup -->
 
@@ -586,3 +568,9 @@
 
 <app-client-instruction-info *ngIf="clientInstructionInfoModal==true" (close)="closeInstructionModal($event)">
 </app-client-instruction-info>
+
+<!-- project and priority modal -->
+<!-- <app-accounts-modal-project-and-priority [userdata]="userdata"></app-accounts-modal-project-and-priority> -->
+<app-accounts-modal-project-and-priority *ngIf="projectandpriorityService.showProjectModal==true" [userdata]="userdata"
+  (close)="closeInstructionModal($event)">
+</app-accounts-modal-project-and-priority>

@@ -23,6 +23,7 @@ import * as _ from 'lodash';
 import { ClientService } from 'src/app/service/client-configuration/client.service';
 import { ConcluderService } from 'src/app/service/concluder.service';
 import { ClientInstructionService } from 'src/app/service/client-instruction.service';
+import { ProjectandpriorityService } from 'src/app/service/projectandpriority.service';
 
 
 
@@ -127,10 +128,12 @@ export class AgentComponent implements OnInit {
   openConclusionBucketModal = false;
   concluderId = null;
   activeReasonBucket = null;
+  openPAndPModal = false;
 
   constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private clientInstructionService: ClientInstructionService,
+    private projectandpriorityService: ProjectandpriorityService,
     private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
 
   ngOnInit() {
@@ -1693,4 +1696,10 @@ export class AgentComponent implements OnInit {
     this.showClientUpdate();
   }
 
+  openProjectAndPriorityModal() {
+    this.projectandpriorityService.showProjectModal = true;
+  }
+  closeProjectAndPriorityModal() {
+    this.projectandpriorityService.showProjectModal = true;
+  }
 }

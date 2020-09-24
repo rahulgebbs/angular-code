@@ -49,3 +49,34 @@
     text-align: center;
   }
 }
+
+.priorityBtn {
+  margin-top: 0.5rem;
+  min-height: 30px;
+  position: relative;
+  float: left;
+  cursor: pointer;
+  .text {
+    float: left;
+    background: #0078ae;
+    color: #fff;
+    padding: 0.5rem;
+    // border: 2px solid #055f88;
+    border-right: none;
+  }
+  .count {
+    float: right;
+    height: 20px;
+    width: 20px;
+    background: #000;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 0rem;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.1rem;
+  }
+}
