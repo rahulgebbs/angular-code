@@ -13,8 +13,7 @@ import { ProjectandpriorityService } from 'src/app/service/projectandpriority.se
 })
 export class AccountsModalProjectAndPriorityComponent implements OnInit {
   @Input() userdata;
-  // @Input() UserId;
-  @Output() conclusionRowClick = new EventEmitter();
+  @Output() accountClick = new EventEmitter();
   @Output() CloseModal = new EventEmitter()
   concluderId;
   AccountsList = [];
@@ -35,6 +34,8 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   projectList = [];
   gridColumnApi;
   gridApi;
+  projectListStatus = false;
+  PNP_Inventory_Log_Id;
   constructor(
     // private concluderService: ConcluderService,
     private projectandpriorityService: ProjectandpriorityService,
@@ -43,30 +44,26 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   }
   ngOnInit() {
     this.columnDefs = [];
-    this.getConcludedBucketList();
+    this.getPNPProjectList();
     // this.getDataByProjectName('');
   }
 
-  getConcludedBucketList() {
+  getPNPProjectList() {
     console.log('userdata : ', this.userdata);
     const { Clients, Employee_Code } = this.userdata;
+    this.projectListStatus = true;
+    this.projectList = [];
     this.projectandpriorityService.getProjectList(Clients[0].Client_Id, Employee_Code).subscribe((response) => {
       console.log('getProjectList response : ', response);
       this.projectList = response.Data;
-      this.ResponseHelper.GetSuccessResponse(response);
+      this.projectListStatus = false;
+      // this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('error : ', error);
       this.projectList = [];
+      this.projectListStatus = false;
       this.ResponseHelper.GetFaliureResponse(error);
-    })
-    // this.concluderService.getConcludedBucketCount(this.ClientId).subscribe((response) => {
-    //   console.log('response : ', response);
-    //   this.bucketList = response.Data;
-    //   this.ResponseHelper.GetSuccessResponse(response);
-    // }, (error) => {
-    //   console.log('error : ', error);
-    //   this.ResponseHelper.GetFaliureResponse(error);
-    // })
+    });
   }
 
   getDataByProjectName(projectName) {
@@ -85,87 +82,61 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     }, (error) => {
       this.AccountsList = [];
       console.log('getProjectList error : ', error)
-    })
-    // this.concluderService.getConclusionDataByBucket(this.ClientId, this.UserId, bucketName).subscribe((response) => {
-    //   console.log('getConcludedBucketCount response : ', response);
-    //   this.allData = response.Data;
-    //   // setTimeout(() => {
-    //   this.formatInventory();
-    //   this.ResponseHelper.GetSuccessResponse(response);
-    //   // }, 2000);
-    // }, (error) => {
-    //   this.AccountsList = [];
-    //   this.ResponseHelper.GetFaliureResponse(error);
-    //   console.log('getConcludedBucketCount error : ', error);
-    // })
+    });
   }
+
   formatInventory() {
     const list = [];
     console.log('formatInventory : ', this.allData);
     this.columnDefs = [
-      // { field: 'Inventory_Id', hide: true, rowGroupIndex: null },
-      // { headerName: this.PayerName, field: this.PayerName },
-      {
-        headerName: 'TFL Status', field: 'TFL_Status'
-      },
+      { headerName: 'Payer', field: 'Group_By_Field_Value' },
+      { headerName: 'TFL Status', field: 'TFL_Status' },
       { headerName: 'Days', field: 'Days' },
       { headerName: 'Amount ($)', field: 'Dollar_Value' },
       { headerName: 'V/N', field: 'Voice_NonVoice' },
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       { headerName: 'Account No', field: 'Account_Number' }
-    ]
+    ];
     const mainObj = this.allData[0];
-    console.log('mainObj : ', Object.keys(mainObj));
     const keyList = Object.keys(mainObj);
     this.allData.forEach((element) => {
       keyList.forEach((key) => {
         element[key] = element[key] != null ? element[key] : "N/A"
       })
-    })
-    // this.allData.forEach((data) => {
-    //   this.columnDefs.push({ headerName: field.Header_Name, field: field.Header_Name });
-    //   const obj = {};
-    //   // data.forEach((field) => {
-    //   this.columnDefs.push({ headerName: field.Header_Name, field: field.Header_Name });
-    //   // obj[field.Header_Name] = field.Field_Value;
-    //   // });
-    //   // obj["Bucket_Name"] = "Concluded";
-    //   // list.push(obj);
-    // });
-    // this.columnDefs = _.uniqBy(this.columnDefs, (column) => {
-    //   return column.headerName;
-    // });
+    });
     this.AccountsList = JSON.parse(JSON.stringify(this.allData));
-    // this.autoSizeAll(true);
     setTimeout(() => {
-      // this.rowData = JSON.parse(JSON.stringify(this.rowData));
       this.sizeToFit();
     }, 100);
-    // console.log('this.AccountsList : ', this.AccountsList, this.columnDefs);i
+    this.PNP_Inventory_Log_Id = this.AccountsList[0].PNP_Inventory_Log_Id;
     this.getAllFields(this.AccountsList[0], false);
   }
+
   Close() {
     this.CloseModal.emit();
   }
+
   getAllFields(data, status) {
-    // this.concluderId = data.Concluder_Id;
-    // console.log('getAllFields() : ', data.Concluder_Id, this.concluderId);
-    // sessionStorage.setItem('conclusionBucket', this.activeProject);
-    // this.concluderService.getConclusionDataByConcludeID(this.ClientId, this.concluderId, this.activeProject).subscribe((response) => {
-    //   console.log('getConclusionDataByConcludeID response : ', response);
-    //   this.activeFieldList = response.Data;
-    //   this.closeModal(status);
-    // }, (error) => {
-    //   console.log('getConclusionDataByConcludeID error : ', error);
-    // })
+    console.log('getAllFields data : ', data, this.activeProject);
+    const { PNP_Inventory_Id, PNP_Inventory_Log_Id } = data;
+    const { Clients } = this.userdata;
+    this.projectandpriorityService.getPNPFields(Clients[0].Client_Id, PNP_Inventory_Id, PNP_Inventory_Log_Id, this.activeProject)
+      .subscribe((response) => {
+        console.log('getPNPFields response : ', response);
+        this.activeFieldList = response.Data;
+        this.projectandpriorityService.setLocalAccount(this.AccountsList);
+        this.accountClick.emit({ AccountsList: this.activeFieldList, popup: status, Inventory_Id: PNP_Inventory_Id, Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: status });
+      }, (error) => {
+        console.log('getPNPFields error : ', error);
+      });
   }
 
   closeModal() {
     // this.activeFieldList.forEach((field) => {
     //   field['Is_View_Allowed_Agent'] = true;
     // });
-    // this.conclusionRowClick.emit({ status: status, AccountsList: this.activeFieldList, concluderId: this.concluderId, popup: status });
+    this.accountClick.emit({ AccountsList: this.activeFieldList, closePopup: status });
     // this.saveIntoLocal();
     this.projectandpriorityService.showProjectModal = false;
   }
@@ -173,15 +144,12 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   saveIntoLocal() {
     // sessionStorage.setItem('concluderAccounts', JSON.stringify(this.allData));
   }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    // params.columnApi.autoSizeColumns();
-    // params.api.sizeColumnsToFit();
-    // this.sizeToFit()
-    // this.autoSizeAll(false)
   }
+
   autoSizeAll(skipHeader) {
     var allColumnIds = [];
     if (this.gridColumnApi) {
@@ -195,7 +163,27 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   sizeToFit() {
     if (this.gridApi)
       this.gridApi.sizeColumnsToFit();
+  }
+  rowClick(row) {
+    const { PNP_Inventory_Id, PNP_Inventory_Log_Id } = row;
+    const { Clients } = this.userdata;
+    console.log('rowClick event : ', row, this.PNP_Inventory_Log_Id);
+    if (PNP_Inventory_Log_Id == this.PNP_Inventory_Log_Id) {
+      this.getAllFields(row, true);
+      // this.accountClick.emit({ AccountsList: this.activeFieldList, Inventory_Id: PNP_Inventory_Id, Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: true });
+      return true;
+    }
+    // let data = JSON.parse(JSON.stringify(row));
+    this.projectandpriorityService.updatePNPTime(Clients[0].Client_Id, PNP_Inventory_Id, this.PNP_Inventory_Log_Id).subscribe((response: any) => {
+      console.log('updatePNPTime response : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
+      this.PNP_Inventory_Log_Id = response.Data;
+      row.PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
+      this.getAllFields(row, true);
+    }, (error) => {
+      console.log('updatePNPTime error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+    });
 
-    console.log('this.gridApi : ', this.gridApi);
   }
 }

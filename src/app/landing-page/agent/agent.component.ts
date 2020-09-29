@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalInsuranceService } from 'src/app/service/global-insurance.service';
 import { DropdownService } from 'src/app/service/client-configuration/dropdown.service';
 import { of, Observable } from 'rxjs';
-import { LogoutService } from 'src/app/service/logout.service';
+// import { LogoutService } from 'src/app/service/logout.service';
 import { CommonService } from 'src/app/service/common-service';
 import { dropDownFields } from 'src/app/manager/dropdown-feilds';
 import { DenialCodeService } from './../../service/denial-code.service';
@@ -129,12 +129,24 @@ export class AgentComponent implements OnInit {
   concluderId = null;
   activeReasonBucket = null;
   openPAndPModal = false;
-
-  constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
+  PNP_Inventory_Id = null;
+  PNP_Inventory_Log_Id = null;
+  constructor(
+    private router: Router,
+    private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private clientInstructionService: ClientInstructionService,
     private projectandpriorityService: ProjectandpriorityService,
-    private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService, private clientService: ClientService, private concluderService: ConcluderService) { }
+    private agentservice: AgentService,
+    private saagservice: SaagService,
+    private globalservice: GlobalInsuranceService,
+    private dropdownservice: DropdownService,
+    private fb: FormBuilder,
+    
+    private commonservice: CommonService,
+    private denialcodeservice: DenialCodeService,
+    private clientService: ClientService,
+    private concluderService: ConcluderService) { }
 
   ngOnInit() {
     sessionStorage.removeItem('localPCN');
@@ -1701,5 +1713,25 @@ export class AgentComponent implements OnInit {
   }
   closeProjectAndPriorityModal() {
     this.projectandpriorityService.showProjectModal = true;
+  }
+  PNPAccountClick(event) {
+    console.log('PNPAccountClick(event) data : ', event);
+    // this.activePNPBucket = "PNP";
+    // sessionStorage.removeItem('conclusionBucket'); //commented now
+    if (event) {
+      this.AllFields = JSON.parse(JSON.stringify(event.AccountsList));
+      this.DisplayMain = true;
+      this.ActiveBucket = "PNP";
+      // this.concluderId = event.concluderId; //commented now
+    }
+    if (event.closePopup == true) {
+      // this.openToBeConcludedBucketModal = false; //commented now
+      this.projectandpriorityService.showProjectModal = false;
+    }
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+    }
   }
 }

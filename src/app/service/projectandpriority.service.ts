@@ -27,7 +27,30 @@ export class ProjectandpriorityService {
     //  api/inventory-data-upload-download-template/client/{id}
     return this.http.get(environment.ApiUrl + `api/agent-pnp-account/${client_Id}?project_name=${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
-  // projectAndPriorityUpload(formBody) {
-  //   return this.http.post(environment.FileApiUrl + '/api/PNP-inventory-data-upload', formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
-  // }
+
+  getPNPFields(client_Id, inventory_Id, inventory_Log_Id, projectName) {
+    if (inventory_Log_Id == "N/A") {
+      inventory_Log_Id = 0;
+    }
+    return this.http.get(environment.ApiUrl + `api/agent-pnp-fields/${client_Id}/${inventory_Id}/${inventory_Log_Id}?bucket_Name=${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    // api/agent-fields-PNP/{client_Id}/{inventory_Id}/{inventory_Log_Id}
+  }
+
+  updatePNPTime(Client_Id, PNP_Inventory_Id, PNP_Inventory_Log_Id) {
+    const formObj = {
+      "Client_Id": Client_Id,
+      "Bucket_Name": "PNP",
+      "PNP_Inventory_Id": PNP_Inventory_Id,
+      "Old_PNP_Inventory_Log_Id": PNP_Inventory_Log_Id,
+      "Insert_Log": true
+    }
+    return this.http.put(environment.ApiUrl + '/api/agent-pnp-time', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  setLocalAccount(accountList) {
+    sessionStorage.setItem('pnpAccounts', accountList);
+  }
+  removeLocalAccount() {
+    sessionStorage.removeItem('pnpAccounts');
+  }
 }

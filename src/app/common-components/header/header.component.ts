@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit {
   UserData = null;
   Token;
   ClientId = 0;
+  projectList = [];
+  projectListStatus = false;
   constructor(
     private notificationservice: NotificationService,
     private route: Router,
@@ -38,39 +40,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.UserData = this.Token.GetUserData();
     this.ClientId = this.UserData.Clients[0].Client_Id;
+    this.getConcludedBucketList()
     console.log('this.showHeader : ');
-    const localHeader = localStorage.getItem('showHeader');
-    if (localHeader != undefined && localHeader == 'false') {
-      this.showHeader = false;
-      // this.setExitMessage(true);
-    }
-    else {
-      this.showHeader = true;
-    }
-    // const bucket = sessionStorage.getItem('conclusionBucket');
-    // if (bucket != null) {
-    //   this.activeReasonBucket = bucket;
+    // const localHeader = localStorage.getItem('showHeader');
+    // if (localHeader != undefined && localHeader == 'false') {
+    //   this.showHeader = false;
+    //   // this.setExitMessage(true);
     // }
     // else {
-    //   this.activeReasonBucket = null;
+    //   this.showHeader = true;
     // }
-    // document.removeEventListener("keydown", function () { });
-    // setTimeout(() => {
-    // const self = this;
-    // document.addEventListener('keydown', logKey);
-    // function logKey(e) {
-    //   console.log('keydown : ', e.keyCode, self.showHeader);
-    //   if (e.keyCode == 27) {
-    //     if (self.showHeader == false) {
-    //       self.showHeader = true;
-    //       localStorage.removeItem('showHeader');
-    //       self.setExitMessage(false);
-    //     }
-    //   }
-    //   // event.preventDefault()
-    // }
-    // // }, 1000);
-
 
   }
   hideHeader() {
@@ -171,6 +150,27 @@ export class HeaderComponent implements OnInit {
     );
   }
   openProjectAndPriorityModal() {
-    this.projectandpriorityService.showProjectModal = true;
+    if (this.projectListStatus == false) {
+      this.projectandpriorityService.showProjectModal = true;
+    }
+    // {
+    //   this.notificationservice.ChangeNotification([{ Message: "Please wait, data project list is in progress!", Type: "INFO" }])
+    // }
+  }
+  getConcludedBucketList() {
+    console.log('userdata : ', this.UserData);
+    const { Clients, Employee_Code } = this.UserData;
+    this.projectListStatus = true;
+    this.projectandpriorityService.getProjectList(Clients[0].Client_Id, Employee_Code).subscribe((response) => {
+      console.log('getProjectList response : ', response);
+      this.projectList = response.Data;
+      this.projectListStatus = false;
+      // this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('error : ', error);
+      this.projectList = [];
+      this.projectListStatus = false;
+      this.ResponseHelper.GetFaliureResponse(error);
+    });
   }
 }

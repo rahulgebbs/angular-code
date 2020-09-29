@@ -572,5 +572,5 @@
 <!-- project and priority modal -->
 <!-- <app-accounts-modal-project-and-priority [userdata]="userdata"></app-accounts-modal-project-and-priority> -->
 <app-accounts-modal-project-and-priority *ngIf="projectandpriorityService.showProjectModal==true" [userdata]="userdata"
-  (close)="closeInstructionModal($event)">
+  (close)="closeInstructionModal($event)" (accountClick)="PNPAccountClick($event)">
 </app-accounts-modal-project-and-priority>

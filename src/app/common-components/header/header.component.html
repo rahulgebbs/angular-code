@@ -12,7 +12,11 @@
       <div class="text">
         Project & Priorities
         <div class="count">
-          4
+          <i style="background: transparent;color:#fff" *ngIf="projectListStatus==true"
+            class="fa fa-refresh fa-spin"></i>
+          <span *ngIf="projectListStatus==false">
+            {{projectList.length || 0}}
+          </span>
         </div>
       </div>
 

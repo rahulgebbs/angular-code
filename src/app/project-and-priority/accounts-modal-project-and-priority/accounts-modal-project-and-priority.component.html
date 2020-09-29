@@ -24,10 +24,15 @@
           <b class="badge circle-buget  badge-sm badge-pill">{{project.Project_Count || 0}}</b>
         </span>
       </button>
-      <h1 *ngIf="projectList!=null && projectList.length==0" style="text-align: center;">No Records to show</h1>
+      <div style="text-align: center;" *ngIf="projectListStatus==true">
+        <i class="fa fa-refresh fa-spin fa-5x"></i>
+        <p>Getting Project List</p>
+      </div>
+      <h1 *ngIf="projectList!=null && projectList.length==0 && projectListStatus==false" style="text-align: center;">No
+        Records to show</h1>
     </div>
   </div>
-  <div class="col-md-12 p-0" style="min-height: 350px;">
+  <div class="col-md-12 p-0" style="min-height: 300px;">
     <div style="text-align: center;" *ngIf="AccountsList==null">
       <i class="fa fa-refresh fa-spin fa-5x"></i>
       <p>Getting Information</p>
@@ -38,7 +43,7 @@
         [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
         [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
         [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true"
-        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" (rowClicked)="getAllFields($event.data,true)">
+        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" (rowClicked)="rowClick($event.data)">
       </ag-grid-angular>
     </div>
   </div>

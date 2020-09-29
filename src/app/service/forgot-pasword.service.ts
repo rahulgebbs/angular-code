@@ -22,7 +22,7 @@ export class ForgotPaswordService {
     const body = {
       "Security_Code": code
     }
-    return this.http.post(environment.ApiUrl + '/api/password-link', body);
+    return this.http.post(environment.ApiUrl + '/api/password-link', body).map(res => res.json());;
   }
 
 }

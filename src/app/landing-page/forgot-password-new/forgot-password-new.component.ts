@@ -44,25 +44,13 @@ export class ForgotPasswordNewComponent implements OnInit {
   }
 
   valdateCode(code) {
-    this.forgotpasswordservice.validateCode(code).subscribe((response) => {
-      console.log('error: ', response);
-    }, (error) => {
-      console.log('error: ', error);
-      const response = {
-        "Message": [
-          {
-            "Message": "Employee list.",
-            "Type": "SUCCESS"
-          }
-        ],
-        "Data": {
-          "User_Id": 11622,
-          "Mail_Sent_Time": "2020-09-15T13:04:55.703Z"
+    this.forgotpasswordservice.validateCode(code).subscribe((response: any) => {
+      console.log('response: ', response);
 
-        }
-      }
       this.ResetForm.patchValue({ Username: response.Data.User_Id })
-      this.securityCodeTime = moment(response.Data.Mail_Sent_Time).format()
+      this.securityCodeTime = moment(response.Data.Mail_Sent_Time).format();
+    }, (error) => {
+
     });
     this.validteTime();
   }
@@ -72,9 +60,9 @@ export class ForgotPasswordNewComponent implements OnInit {
     }
     this.timeInterval = setInterval(() => {
       var ogDate = moment(this.securityCodeTime);
-      const diff = ogDate.diff(moment(), 'minutes');
+      const diff = moment().diff(ogDate, 'seconds');
       console.log('diff, this.securityCodeTime, moment().format() : ', diff, this.securityCodeTime, moment().format());
-      if (diff && diff <= 0) {
+      if (diff && diff >= diff) {
         clearInterval(this.timeInterval);
         this.notification.ChangeNotification([{ Message: "Link Expired", Type: "ERROR" }])
         this.router.navigate(['/login'])
