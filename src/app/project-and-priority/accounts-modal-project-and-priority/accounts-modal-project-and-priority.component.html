@@ -33,11 +33,15 @@
     </div>
   </div>
   <div class="col-md-12 p-0" style="min-height: 300px;">
-    <div style="text-align: center;" *ngIf="AccountsList==null">
+    <div style="text-align: center;" *ngIf="accountListStatus==true">
       <i class="fa fa-refresh fa-spin fa-5x"></i>
       <p>Getting Information</p>
     </div>
-    <div *ngIf="AccountsList!=null && columnDefs.length>0"
+    <!-- <div style="text-align: center;" *ngIf="AccountsList!=null && AccountsList.length==0">
+      <i class="fa fa-refresh fa-5x"></i>
+      <p>No Accounts to show</p>
+    </div> -->
+    <div *ngIf="AccountsList!=null && activeProject!=null && accountListStatus==false"
       class="acc-popup-table sticky-table sticky-ltr-cells border-0">
       <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef"
         [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"

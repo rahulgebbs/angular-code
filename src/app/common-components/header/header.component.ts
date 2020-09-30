@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { AnalyticsService } from 'src/app/analytics.service';
 import { AgentService } from 'src/app/service/agent.service';
@@ -13,7 +13,7 @@ import { ProjectandpriorityService } from 'src/app/service/projectandpriority.se
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
   @Input('title') title: string;
   @Input('activeReasonBucket') activeReasonBucket: string;
   showHeader = true;
@@ -33,24 +33,21 @@ export class HeaderComponent implements OnInit {
     private projectandpriorityService: ProjectandpriorityService
   ) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
-    this.Token = new Token(this.route)
-
+    this.Token = new Token(this.route);
   }
 
   ngOnInit() {
     this.UserData = this.Token.GetUserData();
-    this.ClientId = this.UserData.Clients[0].Client_Id;
-    this.getConcludedBucketList()
+    if (this.UserData && this.UserData.Clients && this.UserData.Clients.length > 0) {
+      this.ClientId = this.UserData.Clients[0].Client_Id;
+      this.getPNPProjectList();
+    }
     console.log('this.showHeader : ');
-    // const localHeader = localStorage.getItem('showHeader');
-    // if (localHeader != undefined && localHeader == 'false') {
-    //   this.showHeader = false;
-    //   // this.setExitMessage(true);
-    // }
-    // else {
-    //   this.showHeader = true;
-    // }
+  }
 
+  ngOnChanges(changes) {
+    console.log('header component changes : ', changes);
+    this.getPNPProjectList();
   }
   hideHeader() {
     console.log('hideHeader() : ', this.showHeader);
@@ -157,20 +154,23 @@ export class HeaderComponent implements OnInit {
     //   this.notificationservice.ChangeNotification([{ Message: "Please wait, data project list is in progress!", Type: "INFO" }])
     // }
   }
-  getConcludedBucketList() {
+  getPNPProjectList() {
     console.log('userdata : ', this.UserData);
-    const { Clients, Employee_Code } = this.UserData;
-    this.projectListStatus = true;
-    this.projectandpriorityService.getProjectList(Clients[0].Client_Id, Employee_Code).subscribe((response) => {
-      console.log('getProjectList response : ', response);
-      this.projectList = response.Data;
-      this.projectListStatus = false;
-      // this.ResponseHelper.GetSuccessResponse(response);
-    }, (error) => {
-      console.log('error : ', error);
-      this.projectList = [];
-      this.projectListStatus = false;
-      this.ResponseHelper.GetFaliureResponse(error);
-    });
+    if (this.UserData) {
+      const { Clients, Employee_Code } = this.UserData;
+      this.projectListStatus = true;
+      this.projectandpriorityService.getProjectList(Clients[0].Client_Id, Employee_Code).subscribe((response) => {
+        console.log('getProjectList response : ', response);
+        this.projectList = response.Data;
+        this.projectListStatus = false;
+        // this.ResponseHelper.GetSuccessResponse(response);
+      }, (error) => {
+        console.log('error : ', error);
+        this.projectList = [];
+        this.projectListStatus = false;
+        this.ResponseHelper.GetFaliureResponse(error);
+      });
+    }
+
   }
 }

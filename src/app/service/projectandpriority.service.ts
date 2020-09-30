@@ -9,7 +9,6 @@ import 'rxjs/Rx';
   providedIn: 'root'
 })
 export class ProjectandpriorityService {
-
   TokenCls;
   showProjectModal = false;
   constructor(private http: Http, private router: Router) {
@@ -46,11 +45,25 @@ export class ProjectandpriorityService {
     }
     return this.http.put(environment.ApiUrl + '/api/agent-pnp-time', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
+  getLocalAccount() {
+    const result = sessionStorage.getItem('pnpAccounts');
+    if (result != undefined && result.length > 0) {
+      return JSON.parse(result);
+    }
+    return [];
+
+  }
 
   setLocalAccount(accountList) {
-    sessionStorage.setItem('pnpAccounts', accountList);
+    sessionStorage.setItem('pnpAccounts', JSON.stringify(accountList));
   }
+
   removeLocalAccount() {
     sessionStorage.removeItem('pnpAccounts');
+  }
+
+  submitPNPForm(formObj) {
+    // /api/agent-pnp-fields
+    return this.http.put(environment.ApiUrl + '/api/agent-pnp-fields', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 }

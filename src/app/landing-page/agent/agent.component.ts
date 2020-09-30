@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { Token } from 'src/app/manager/token';
@@ -33,7 +33,8 @@ import { ProjectandpriorityService } from 'src/app/service/projectandpriority.se
   styleUrls: ['./agent.component.scss'],
   providers: [dropDownFields]
 })
-export class AgentComponent implements OnInit {
+export class AgentComponent implements OnInit, OnDestroy {
+  amount=0;
   clientInstructionInfoModal = false;
   to_be_concluded_bucket: any = {
     Count: 0,
@@ -142,7 +143,7 @@ export class AgentComponent implements OnInit {
     private globalservice: GlobalInsuranceService,
     private dropdownservice: DropdownService,
     private fb: FormBuilder,
-    
+
     private commonservice: CommonService,
     private denialcodeservice: DenialCodeService,
     private clientService: ClientService,
@@ -169,6 +170,9 @@ export class AgentComponent implements OnInit {
     this.getClientID();
     this.getClientInstructionInformation();
   }
+  ngOnDestroy() {
+    this.projectandpriorityService.showProjectModal = false;
+  }
 
   getClientInstructionInformation() {
     this.clientInstructionService.getClientInstructionInformation(this.ClientId).subscribe((response: any) => {
@@ -176,6 +180,7 @@ export class AgentComponent implements OnInit {
       if (response.Data && response.Data.InstructionCheck == true) {
         this.clientInstructionInfoModal = true;
       }
+      // this.amount = 100;
       // this.clientInstructionInfoModal = response && response.InstructionCheck ? response.InstructionCheck : false;
     }, (error) => {
       this.clientInstructionInfoModal = false;
@@ -572,7 +577,10 @@ export class AgentComponent implements OnInit {
         this.submitConclusion(obj);
         return true;
       }
-
+      if (this.ActiveBucket == "PNP") {
+        this.submitPNPForm(obj);
+        return true;
+      }
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
         this.GetBucketsWithCount();
         this.DisableSubmit = false;
@@ -612,10 +620,92 @@ export class AgentComponent implements OnInit {
           this.ResponseHelper.GetFaliureResponse(err);
         }
       );
-
-
     }
+  }
 
+  submitPNPForm(data) {
+    data.Fields.PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
+    data.Fields.PNP_Inventory_Id = this.PNP_Inventory_Id;
+    delete data.Fields.Inventory_Log_Id;
+    delete data.Fields.Inventory_Id;
+    this.projectandpriorityService.submitPNPForm(data).subscribe((response) => {
+      console.log('submitPNPForm response : ', response);
+      this.assignNextInventory()
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('submitPNPForm error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.Validated = false;
+      this.DisableSubmit = false;
+    })
+    console.log('submitPNPForm(data) : ', data);
+  }
+  assignNextInventory() {
+    let localAccounts = this.projectandpriorityService.getLocalAccount();
+    console.log('assignNextInventory localAccounts : ', localAccounts);
+    console.log('assignNextInventory before', this.PNP_Inventory_Id)
+    const matchedIndex = localAccounts.findIndex((element, index) => {
+      if (element.PNP_Inventory_Id == this.PNP_Inventory_Id) {
+        // localAccounts.splice(index, 1)
+        return element;
+      }
+    });
+    console.log('assignNextInventory matchedIndex : ', matchedIndex);
+    if (matchedIndex != undefined && matchedIndex >= 0) {
+      localAccounts.splice(matchedIndex, 1)
+    }
+    // localAccounts = JSON.parse(JSON.stringify(localAccounts))
+    // console.log('assignNextInventory before', this.PNP_Inventory_Id)
+    if (localAccounts.length > 0) {
+      const { Clients } = this.userdata;
+      const { PNP_Inventory_Id } = localAccounts[0];
+      // this.PNP_Inventory_Id = PNP_Inventory_Id;
+      // this.PNP_Inventory_Log_Id = PNP_Inventory_Log_Id;
+      console.log('assignNextInventory after', PNP_Inventory_Id)
+
+      this.projectandpriorityService.updatePNPTime(Clients[0].Client_Id, PNP_Inventory_Id, this.PNP_Inventory_Log_Id).subscribe((response: any) => {
+        console.log('updatePNPTime response : ', response);
+        this.ResponseHelper.GetSuccessResponse(response);
+        this.PNP_Inventory_Log_Id = response.Data;
+        localAccounts[0].PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
+        // this.projectandpriorityService.setLocalAccount(localAccounts);
+        this.getAllPNPFields(localAccounts[0], true);
+      }, (error) => {
+        console.log('updatePNPTime error : ', error);
+        this.ResponseHelper.GetFaliureResponse(error);
+        this.Validated = false;
+        this.DisableSubmit = false;
+      });
+    }
+    else {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.activeReasonBucket = '';
+    }
+    console.log('assignNextInventory : ', localAccounts);
+  }
+
+  getAllPNPFields(data, status) {
+    console.log('getAllFields data : ', data);
+    const { PNP_Inventory_Id, PNP_Inventory_Log_Id } = data;
+    const { Clients } = this.userdata;
+    this.projectandpriorityService.getPNPFields(Clients[0].Client_Id, PNP_Inventory_Id, PNP_Inventory_Log_Id, this.activeReasonBucket)
+      .subscribe((response) => {
+        console.log('getPNPFields response : ', response);
+        // this.Acc = response.Data;
+        this.projectandpriorityService.setLocalAccount(this.AccountsList);
+        this.PNPAccountClick({ AccountsList: response.Data, PNP_Inventory_Id: PNP_Inventory_Id, PNP_Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: true, activeReasonBucket: this.activeReasonBucket });
+        this.Validated = false;
+        this.DisableSubmit = false;
+        // this.PNPAccountClick(event)
+      }, (error) => {
+        console.log('getPNPFields error : ', error);
+        this.Validated = false;
+        this.DisableSubmit = false;
+        this.ResponseHelper.GetFaliureResponse(error);
+        this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      });
   }
 
   ClearPdfStorage() {
@@ -765,6 +855,10 @@ export class AgentComponent implements OnInit {
   ToggleAccountsModal(bucket) {
     console.log('ToggleAccountsModal bucket : ', bucket);
     this.activeReasonBucket = null;
+    this.projectandpriorityService.removeLocalAccount();
+    this.PNP_Inventory_Id = null;
+    this.PNP_Inventory_Log_Id = null;
+    this.projectandpriorityService.showProjectModal = false;
     if (bucket && bucket.Name != false && bucket.Name != true) {
       sessionStorage.removeItem('Accounts');
       const highPriority = sessionStorage.getItem('highPriporityAccount');
@@ -1612,6 +1706,7 @@ export class AgentComponent implements OnInit {
       this.Validated = false;
       this.DisableSubmit = false;
       this.ResponseHelper.GetFaliureResponse(error);
+      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
       console.log('error Messages : ', error);
       const httpResponse = error.json();
       console.log('httpResponse : ', httpResponse);
@@ -1621,7 +1716,6 @@ export class AgentComponent implements OnInit {
         }
       }
       console.log('saveConclusionData response : ', error);
-      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
 
     });
     // this.assigNextConclusionInventory();
@@ -1662,12 +1756,12 @@ export class AgentComponent implements OnInit {
       const matchedObj = concluderAccouts[0].find((ele) => {
         return ele.Header_Name == "Concluder_Id";
       });
-      console.log('this.concluderId, matchedObj.FieldValue : ', this.concluderId, matchedObj.FieldValue)
+      // console.log('this.concluderId, matchedObj.FieldValue : ', this.concluderId, matchedObj.FieldValue)
       this.concluderService.getConclusionDataByConcludeID(this.ClientId, matchedObj.FieldValue, this.ActiveBucket).subscribe((response) => {
-        console.log('getConclusionDataByConcludeID response : ', response);
+        // console.log('getConclusionDataByConcludeID response : ', response);
         this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: response.Data, closePopup: false });
       }, (error) => {
-        console.log('getConclusionDataByConcludeID error : ', error);
+        // console.log('getConclusionDataByConcludeID error : ', error);
       })
       // this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
     }
@@ -1718,10 +1812,17 @@ export class AgentComponent implements OnInit {
     console.log('PNPAccountClick(event) data : ', event);
     // this.activePNPBucket = "PNP";
     // sessionStorage.removeItem('conclusionBucket'); //commented now
+    this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+    this.DisableSubmit = false;
+    this.Validated = false;
+
     if (event) {
       this.AllFields = JSON.parse(JSON.stringify(event.AccountsList));
       this.DisplayMain = true;
       this.ActiveBucket = "PNP";
+      this.PNP_Inventory_Id = event.PNP_Inventory_Id;
+      this.PNP_Inventory_Log_Id = event.PNP_Inventory_Log_Id;
+      this.activeReasonBucket = event.activeReasonBucket;
       // this.concluderId = event.concluderId; //commented now
     }
     if (event.closePopup == true) {
@@ -1732,6 +1833,7 @@ export class AgentComponent implements OnInit {
       this.DisplayMain = false;
       this.DisplayMessage = "Please click on Bucket to continue";
       this.ActiveBucket = '';
+      this.activeReasonBucket = '';
     }
   }
 }

@@ -18,7 +18,7 @@ export class BreakPopupComponent implements OnInit {
   Break;
   Break_Type;
   Break_Res;
-  token: Token
+  token: Token;
   constructor(public fb: FormBuilder, private agentService: AgentService, private notificationservice: NotificationService, ) {
     localStorage.setItem('BreakStatus', this.BreakStarted.toString())
     this.Break_Type = "0"
@@ -27,7 +27,8 @@ export class BreakPopupComponent implements OnInit {
       "Client_Id": [""],
       "Break_Type": ["", Validators.compose([Validators.required, Validators.pattern('^[^0-9]+$')])],
       "Inventory_Log_Id": [""],
-    })
+    });
+ 
   }
   ngOnInit() {
   }

@@ -3,7 +3,7 @@
     <img src="../../../assets/images/logo_156.png" class="logo-img">
   </span>
   <span class="text-center page-title grey-text">{{title}} <span
-      *ngIf="activeReasonBucket">{{activeReasonBucket}}</span></span>
+      *ngIf="activeReasonBucket && activeReasonBucket.length>0">({{activeReasonBucket}})</span></span>
 
   <div class="utilitySection">
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQLwb629K3S0fWbkdTSQCnE7YacNQLGrm_X6w&usqp=CAU  OLD-->

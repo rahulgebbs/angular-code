@@ -25,17 +25,16 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
       componentParent: this
     }
   };
-
   ResponseHelper: ResponseHelper;
   bucketList = [];
   activeProject = null;
   activeFieldList = [];
-
   projectList = [];
   gridColumnApi;
   gridApi;
   projectListStatus = false;
   PNP_Inventory_Log_Id;
+  accountListStatus = false;
   constructor(
     // private concluderService: ConcluderService,
     private projectandpriorityService: ProjectandpriorityService,
@@ -43,7 +42,16 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
   ngOnInit() {
-    this.columnDefs = [];
+    this.columnDefs = [
+      { headerName: 'Payer', field: 'Group_By_Field_Value' },
+      { headerName: 'TFL Status', field: 'TFL_Status' },
+      { headerName: 'Days', field: 'Days' },
+      { headerName: 'Amount ($)', field: 'Dollar_Value' },
+      { headerName: 'V/N', field: 'Voice_NonVoice' },
+      { headerName: 'Completion Date', field: 'Completion_Date' },
+      { headerName: 'Encounter No', field: 'Encounter_Number' },
+      { headerName: 'Account No', field: 'Account_Number' }
+    ];
     this.getPNPProjectList();
     // this.getDataByProjectName('');
   }
@@ -67,37 +75,32 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   }
 
   getDataByProjectName(projectName) {
-    if (this.AccountsList == null) {
-      return false;
-    }
-    this.AccountsList = null;
+    // if (this.AccountsList == null) {
+    //   return false;
+    // }
+    this.AccountsList = [];
+    this.accountListStatus = true;
     // this.gridOptions.api.showLoadingOverlay();
     this.activeProject = projectName;
     const { Clients, Employee_Code } = this.userdata;
     this.projectandpriorityService.getAccountsByProject(Clients[0].Client_Id, projectName).subscribe((response) => {
-      console.log('getProjectList response : ', response.Data.PNP_Inventory_Info)
+      console.log('getProjectList response : ', response.Data.PNP_Inventory_Info);
+      this.accountListStatus = false;
       this.allData = response.Data.PNP_Inventory_Info;
       this.formatInventory();
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       this.AccountsList = [];
-      console.log('getProjectList error : ', error)
+      this.accountListStatus = false;
+      console.log('getProjectList error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
     });
   }
 
   formatInventory() {
     const list = [];
     console.log('formatInventory : ', this.allData);
-    this.columnDefs = [
-      { headerName: 'Payer', field: 'Group_By_Field_Value' },
-      { headerName: 'TFL Status', field: 'TFL_Status' },
-      { headerName: 'Days', field: 'Days' },
-      { headerName: 'Amount ($)', field: 'Dollar_Value' },
-      { headerName: 'V/N', field: 'Voice_NonVoice' },
-      { headerName: 'Completion Date', field: 'Completion_Date' },
-      { headerName: 'Encounter No', field: 'Encounter_Number' },
-      { headerName: 'Account No', field: 'Account_Number' }
-    ];
+
     const mainObj = this.allData[0];
     const keyList = Object.keys(mainObj);
     this.allData.forEach((element) => {
@@ -126,7 +129,8 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
         console.log('getPNPFields response : ', response);
         this.activeFieldList = response.Data;
         this.projectandpriorityService.setLocalAccount(this.AccountsList);
-        this.accountClick.emit({ AccountsList: this.activeFieldList, popup: status, Inventory_Id: PNP_Inventory_Id, Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: status });
+        this.accountClick.emit({ AccountsList: this.activeFieldList, PNP_Inventory_Id: PNP_Inventory_Id, PNP_Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: status, activeReasonBucket: this.activeProject });
+        this.saveIntoLocal();
       }, (error) => {
         console.log('getPNPFields error : ', error);
       });
@@ -136,13 +140,16 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     // this.activeFieldList.forEach((field) => {
     //   field['Is_View_Allowed_Agent'] = true;
     // });
-    this.accountClick.emit({ AccountsList: this.activeFieldList, closePopup: status });
+    // this.accountClick.emit({ AccountsList: this.activeFieldList, closePopup: status });
     // this.saveIntoLocal();
+
     this.projectandpriorityService.showProjectModal = false;
   }
 
   saveIntoLocal() {
-    // sessionStorage.setItem('concluderAccounts', JSON.stringify(this.allData));
+    this.projectandpriorityService.setLocalAccount(this.AccountsList);
+    // console.log('localAccounts : ', localAccounts);
+    // sessionStorage.setItem('pnpAccounts', JSON.stringify(this.AccountsList));
   }
 
   onGridReady(params) {
