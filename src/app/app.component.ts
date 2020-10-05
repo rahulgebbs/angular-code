@@ -9,6 +9,7 @@ import { AnalyticsService } from './analytics.service';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 // import * as moment from 'moment';
+declare var jQuery: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -58,6 +59,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.Getcount();
     this.initiateTimer();
+    jQuery.ajaxPrefilter(function (s) {
+      console.log('s : ', s);
+      if (s.crossDomain) {
+        s.contents.script = false;
+      }
+    });
   }
 
   initiateTimer() {
@@ -169,7 +176,7 @@ export class AppComponent implements OnInit {
         case '/login':
           this.ShowElement = false;
           break;
-          case '/reset-password':
+        case '/reset-password':
           this.ShowElement = false;
           break;
         case '/two-factor-auth':

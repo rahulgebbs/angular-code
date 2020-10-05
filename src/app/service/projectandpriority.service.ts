@@ -51,7 +51,6 @@ export class ProjectandpriorityService {
       return JSON.parse(result);
     }
     return [];
-
   }
 
   setLocalAccount(accountList) {
