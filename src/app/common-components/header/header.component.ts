@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.UserData = this.Token.GetUserData();
     if (this.UserData && this.UserData.Clients && this.UserData.Clients.length > 0) {
       this.ClientId = this.UserData.Clients[0].Client_Id;
-      this.getPNPProjectList();
+      // this.getPNPProjectList(); // commented for now
     }
     console.log('this.showHeader : ');
   }
@@ -168,7 +168,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         console.log('error : ', error);
         this.projectList = [];
         this.projectListStatus = false;
-        this.ResponseHelper.GetFaliureResponse(error);
+        // this.ResponseHelper.GetFaliureResponse(error);
       });
     }
 

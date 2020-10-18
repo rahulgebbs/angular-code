@@ -65,4 +65,17 @@ export class ProjectandpriorityService {
     // /api/agent-pnp-fields
     return this.http.put(environment.ApiUrl + '/api/agent-pnp-fields', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
+
+  getClientProjectList(client_Id) {
+    return this.http.get(environment.ApiUrl + `/api/PNP_Module_Name/${client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+  addProject(formObj) {
+    // /api/agent-pnp-fields
+    return this.http.post(environment.ApiUrl + '/api/PNP_Module_Name', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  deActivateProject(formObj) {
+    // /api/agent-pnp-fields
+    return this.http.put(environment.ApiUrl + '/api/PNP_Module_Name_Deactive', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
 }

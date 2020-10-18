@@ -63,30 +63,37 @@ export class DataUploadComponent implements OnInit {
       this.getEmployeeList();
       this.getModuleList();
     } else {
-      this.DisableUpload = true
-      this.disableDownload = true
-      this.singleclient = false
+      this.DisableUpload = true;
+      this.disableDownload = true;
+      this.singleclient = false;
     }
   }
 
   getEmployeeList() {
     this.service.getEmployeeList(this.ClientId).subscribe((response) => {
       console.log('getEmployeeList response : ', response);
-      this.Employees = response.Data;
+      this.Employees = (response && response.Data) ? response.Data : [];
+      // this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('getEmployeeList error : ', error)
-    })
+      this.ResponseHelper.GetFaliureResponse(error);
+    });
   }
 
   getModuleList() {
     this.projectList = [];
-    this.service.getModuleList().subscribe((response) => {
-      this.projectList = response.Data;
-      console.log('getModuleList response : ', response);
-    }, (error) => {
-      this.projectList = [];
-      console.log('getModuleList error : ', error);
-    })
+    const { value } = this.dataUpload;
+    if (value && value.Client_Id) {
+      this.service.getModuleList(value.Client_Id).subscribe((response) => {
+        this.projectList = (response && response.Data) ? response.Data : [];
+        console.log('getModuleList response : ', response);
+        // this.ResponseHelper.GetSuccessResponse(response);
+      }, (error) => {
+        this.projectList = [];
+        console.log('getModuleList error : ', error);
+        this.ResponseHelper.GetFaliureResponse(error);
+      });
+    }
   }
 
   selectedValue(data) {

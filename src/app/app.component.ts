@@ -59,12 +59,14 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.Getcount();
     this.initiateTimer();
-    jQuery.ajaxPrefilter(function (s) {
-      console.log('s : ', s);
-      if (s.crossDomain) {
-        s.contents.script = false;
-      }
-    });
+    // jQuery.ajaxPrefilter(function (s) {
+    //   console.log('s : ', s);
+    //   if (s.crossDomain) {
+    //     s.contents.script = false;
+    //   }
+    // }, function (error) {
+    //   console.log('ajaxPrefilte error : ', error)
+    // });
   }
 
   initiateTimer() {

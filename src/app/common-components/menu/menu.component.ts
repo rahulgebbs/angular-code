@@ -72,7 +72,6 @@ export class MenuComponent implements OnInit {
     // this.getBIReportMenu();
     this.UserData = this.Token.GetUserData();
     console.log('this.UserData : ', this.UserData);
-
     /*get menu for user*/
     this.getMenuForUser()
   }

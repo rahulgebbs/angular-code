@@ -1,0 +1,33 @@
+<div>
+  <div class="popup-bg">
+  </div>
+
+  <div class="popup-position container">
+    <div class="white fade mystats in">
+      <div class="row">
+        <div class="col-md-11 popup-header">
+          <p>
+            De-Activate Module - {{client.Client_Name || "N/A"}} ({{client.Id}})
+          </p>
+        </div>
+        <div class="col-md-1 popup-header closeIcon">
+          <i title="Close Session Timeout" class="fa fa-close" (click)="closeModal()"></i>
+        </div>
+        <div class="col-md-12">
+          <span class="form-group file-provider mt-10">
+            <input name="file-upload-field" [(ngModel)]="Deactivate_Reason" type="text" class="form-control"
+              placeholder="Enter Reason">
+          </span>
+          <span>
+            <button type="button"
+              [disabled]="Deactivate_Reason==null || Deactivate_Reason.length==0 || httpStatus==true"
+              (click)="deActivateProject()"
+              class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+              De-Activate Module
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

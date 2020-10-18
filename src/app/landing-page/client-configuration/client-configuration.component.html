@@ -159,11 +159,12 @@
     </app-dropdown>
     <app-formula (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'formula'">
     </app-formula>
-    <app-pcn-configuration (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName == 'pcn'">
+    <app-pcn-configuration (next_page)="next_page($event)" [(ClientData)]="clientData"
+      *ngIf="clientData.Is_PCN==true && ShowTabName == 'pcn'">
     </app-pcn-configuration>
     <app-special-project (next_page)="next_page($event)" [(ClientData)]="clientData"
       *ngIf="ShowTabName == 'special_project'"></app-special-project>
     <app-appeal (next_page)="next_page($event)" [(ClientData)]="clientData" *ngIf="ShowTabName=='appeal'"></app-appeal>
-
+    <!-- <app-deactivate-project></app-deactivate-project> -->
   </div>
 </div>

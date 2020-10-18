@@ -26,8 +26,8 @@ export class DataUploadService {
     return this.http.get(environment.ApiUrl + '/api/inventory-data-upload-download-template/client/' + id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
-  getModuleList() {
-    return this.http.get(environment.ApiUrl + '/api/PNP_Module_Name', { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  getModuleList(client_id) {
+    return this.http.get(environment.ApiUrl + `/api/PNP_Module_Name/${client_id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
   getEmployeeList(id) {
     return this.http.get(environment.ApiUrl + `/api/PNP-Inventory-Data-Employee/client/${id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());

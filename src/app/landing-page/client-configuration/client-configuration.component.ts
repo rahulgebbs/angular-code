@@ -53,8 +53,14 @@ export class ClientConfigurationComponent implements OnInit {
     }
     else if (e == "formula") {
       this.clientData.Is_Formula_Uploaded = true;
-      // location.reload()
-      this.ShowTabName = 'pcn';
+      if (this.clientData.Is_PCN == true) {
+
+        this.ShowTabName = 'pcn';
+      }
+      else {
+        this.ShowTabName = 'special_project';
+      }
+      // location.reload();
     }
     else if (e == "pcn") {
       this.clientData.Is_PCN_Uploaded = true;
@@ -71,7 +77,6 @@ export class ClientConfigurationComponent implements OnInit {
       location.reload()
     }
   }
-
 
   receiveClient(e) {
     this.clientData = e;

@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
   createForm() {
     const self = this;
     function customValidator(control) {
-      console.log('customValidator : ', control);
+      // console.log('customValidator : ', control);
       if (control.value != null && control.value.length > 0) {
         const validCaptcha = self.checkIfValid(control.value);
         console.log('this.checkIfValid : ', validCaptcha);
