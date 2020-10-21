@@ -75,10 +75,16 @@ export class ForgotPasswordComponent implements OnInit {
           // commented for now
           // this.CreateResetForm();
           // this.SwitchToReset = true;
+          this.makeid();
+          this.MyForm.patchValue({ captchaModel: '' })
+          this.MyForm.controls.captchaModel.setErrors(null);
           setTimeout(() => {
             this.router.navigate(['/login'])
           }, 1000);
         }, err => {
+          this.makeid();
+          this.MyForm.patchValue({ captchaModel: '' })
+          this.MyForm.controls.captchaModel.setErrors(null);
           this.ResponseHelper.GetFaliureResponse(err)
         })
     }

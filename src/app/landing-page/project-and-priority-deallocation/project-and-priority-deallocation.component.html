@@ -12,8 +12,8 @@
               <div>
                 <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
                 <select class="form-control" formControlName="ClientId" placeholder="d.ff"
-                  (change)="ClientListOnChange($event)">
-                  <option [value]="" disabled>Select</option>
+                  (change)="ClientListOnChange()">
+                  <option [value]="''" disabled>Select</option>
                   <option *ngFor="let Client of ClientList" [value]="Client.Client_Id">{{Client.Client_Name}}
                   </option>
                 </select>
@@ -23,8 +23,8 @@
               <label class=" label-std control-label p-0 b-600 pl-0" for="">Check Option</label>
               <div class="radioBorder">
                 <label class="radio-inline">
-                  <input type="radio" name="checklist" value="byBucket" formControlName="checklist"
-                    (change)="OpenByBucket($event)"> By Bucket </label>
+                  <input type="radio" name="checklist" value="byModule" formControlName="checklist"
+                    (change)="OpenByModule($event)"> By Module </label>
                 <label class="radio-inline">
                   <input type="radio" name="checklist" value="byAgent" formControlName="checklist"
                     (change)="OpenByAgent($event)"> By Agent</label>
@@ -37,7 +37,9 @@
   </div>
 </div>
 <div *ngIf="AgentdeallocationForm.value as formValue">
-  <app-concluder-deallocation-page [ClientId]="formValue.ClientId" [employeeList]="employeeList" [bucketList]="bucketList"
-    [viewBy]="formValue.checklist" *ngIf="formValue && formValue.checklist!=null" (close)="closeModal($event)">
-  </app-concluder-deallocation-page>
+  <!-- commented for now -->
+  <!-- <app-concluder-deallocation-page [ClientId]="formValue.ClientId" [employeeList]="employeeList"
+    [moduleList]="moduleList" [viewBy]="formValue.checklist" *ngIf="formValue && formValue.checklist!=null"
+    (close)="closeModal($event)">
+  </app-concluder-deallocation-page> -->
 </div>

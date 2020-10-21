@@ -36,7 +36,7 @@ export class ForgotPasswordNewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       console.log('params : ', params);
       if (params && params.securityCode) {
-        this.valdateCode(params.securityCode);
+        // this.valdateCode(params.securityCode);
       }
     })
     // this.makeid();
@@ -46,7 +46,6 @@ export class ForgotPasswordNewComponent implements OnInit {
   valdateCode(code) {
     this.forgotpasswordservice.validateCode(code).subscribe((response: any) => {
       console.log('response: ', response);
-
       this.ResetForm.patchValue({ Username: response.Data.User_Id })
       this.securityCodeTime = moment(response.Data.Mail_Sent_Time).format();
     }, (error) => {

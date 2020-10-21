@@ -47,7 +47,8 @@ export const Access = {
   "concluder-dashboard": ["Supervisor"],
   "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
   "concluder-report": ["Supervisor", "Admin"],
-  "concluder-deallocation": ["Supervisor"] //,
+  "concluder-deallocation": ["Supervisor"],
+  "deallocate-module": ["Admin", "Supervisor"] //,
   // "deallocate-concluder": ["Supervisor", "Admin"],
   // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
 };

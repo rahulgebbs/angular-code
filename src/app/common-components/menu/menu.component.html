@@ -307,6 +307,35 @@
                   </h4>
                 </div>
               </div>
+              <!-- project and priority -->
+              <div *ngIf="checkMenu('project-and-priority') || checkMenu('deallocate-module')"
+                class="panel panel-default">
+                <div class="acc-heading" role="tab" id="headingThree">
+                  <h4 class="acc-title">
+                    <a [ngClass]="[MenuName == '/project-and-priority' || MenuName == '/deallocate-module' ? '' : 'collapsed']"
+                      role="button" data-toggle="collapse" data-parent="#accordionMenu"
+                      href="#collapseFileProjectAndPriority" aria-controls="collapseThree"
+                      [attr.aria-expanded]="[MenuName == '/project-and-priority' || MenuName == '/deallocate-module' ? 'true' : 'false']">
+                      Project & Priority
+                    </a>
+                  </h4>
+                </div>
+                <div
+                  [attr.aria-expanded]="[MenuName == '/project-and-priority' || MenuName=='/deallocate-module' ? 'true' : 'false']"
+                  id="collapseFileProjectAndPriority"
+                  [ngClass]="[MenuName == '/project-and-priority' || MenuName == '/deallocate-module' ? 'in' : '']"
+                  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div class="accordianbody">
+                    <ul class="nav">
+                      <li *ngIf="checkMenu('deallocate-module')"><a
+                          (click)="OpenMenu('deallocate-module')"
+                          [ngClass]="[MenuName == '/deallocate-module' ? 'menu-active1': '']">
+                          De-Allocation Module</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
               <div *ngIf="checkMenu('concluder-dashboard') || checkMenu('concluder-report')"
                 class="panel panel-default">

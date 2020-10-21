@@ -78,4 +78,12 @@ export class ProjectandpriorityService {
     // /api/agent-pnp-fields
     return this.http.put(environment.ApiUrl + '/api/PNP_Module_Name_Deactive', formObj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
+
+  getEmployeesByModule(Client_Id) {
+    return this.http.get(environment.ApiUrl + `/api/get-Project-employee/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getModulesByEmployee(Client_Id) {
+    return this.http.get(environment.ApiUrl + `/api/client_Id/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
 }

@@ -23,7 +23,7 @@ export class SpecialProjectComponent implements OnInit {
   projectName = null;
   columnDefs = [
     { headerName: 'ID', field: 'Id', hide: "false" },
-    { headerName: 'Project Name', field: 'Project_Name' },
+    { headerName: 'Module Name', field: 'Project_Name' },
     { headerName: 'Deactivate Reason', field: 'Deactivate_Reason' },
     { headerName: 'Created Date', field: 'Created_Date' },
     { headerName: 'Status', field: 'Status', cellRenderer: this.statufFormatter },

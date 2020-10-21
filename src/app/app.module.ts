@@ -163,6 +163,7 @@ import { ConcluderHelpImageComponent } from './concluder-help-image/concluder-he
 import { ForgotPasswordNewComponent } from './landing-page/forgot-password-new/forgot-password-new.component';
 import { AccountsModalProjectAndPriorityComponent } from './project-and-priority/accounts-modal-project-and-priority/accounts-modal-project-and-priority.component';
 import { DeactivateProjectComponent } from './child-components/client-configuration/special-project/deactivate-project/deactivate-project.component';
+import { ProjectAndPriorityDeallocationComponent } from './landing-page/project-and-priority-deallocation/project-and-priority-deallocation.component';
 
 
 
@@ -317,7 +318,8 @@ export const MY_CUSTOM_FORMATS = {
     ConcluderHelpImageComponent,
     ForgotPasswordNewComponent,
     AccountsModalProjectAndPriorityComponent,
-    DeactivateProjectComponent
+    DeactivateProjectComponent,
+    ProjectAndPriorityDeallocationComponent
   ],
   imports: [
     BrowserModule,
@@ -405,6 +407,8 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
       { path: 'pcn-report', component: PcnReportComponent, canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
       { path: 'concluder-deallocation', component: ConcluderDeallocationComponent, canActivate: [AuthGuard], data: { route: ['concluder-deallocation'] } },
+      { path: 'deallocate-module', component: ProjectAndPriorityDeallocationComponent, canActivate: [AuthGuard], data: { route: ['deallocate-module'] } },
+      // ProjectAndPriorityDeallocationComponent
 
       // 
       // ConcluderDeallocationComponent
