@@ -84,6 +84,13 @@ export class ProjectandpriorityService {
   }
 
   getModulesByEmployee(Client_Id) {
-    return this.http.get(environment.ApiUrl + `/api/client_Id/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    return this.http.get(environment.ApiUrl + `/api/get-employee-Project/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+  deAllocateByAgent(formBody) {
+    return this.http.put(environment.ApiUrl + `/api/pnp-deallocate-by-agent`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  deAllocateByModule(formBody) {
+    return this.http.put(environment.ApiUrl + `/api/pnp-deallocate-by-project`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 }

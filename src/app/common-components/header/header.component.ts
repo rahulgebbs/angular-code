@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   projectListStatus = false;
   constructor(
     private notificationservice: NotificationService,
-    private route: Router,
+    public route: Router,
     private analyticsService: AnalyticsService,
     private logoutService: LogoutService,
     private agentservice: AgentService,
@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.UserData = this.Token.GetUserData();
     if (this.UserData && this.UserData.Clients && this.UserData.Clients.length > 0) {
       this.ClientId = this.UserData.Clients[0].Client_Id;
-      // this.getPNPProjectList(); // commented for now
+      this.getPNPProjectList(); // commented for now
     }
     console.log('this.showHeader : ');
   }

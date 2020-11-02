@@ -19,7 +19,6 @@ export class SpecialProjectComponent implements OnInit {
   userData;
   rowData = [];
   ResponseHelper;
-
   projectName = null;
   columnDefs = [
     { headerName: 'ID', field: 'Id', hide: "false" },
@@ -42,17 +41,16 @@ export class SpecialProjectComponent implements OnInit {
   ngOnInit() {
     this.getClientProjectList();
   }
+
   statufFormatter(params) {
     console.log('statufFormatter : ', params);
     return params.value == true ? 'Active' : 'De-Active';
   }
 
   getClientProjectList() {
-
     this.projectandpriorityService.getClientProjectList(this.ClientData.Id).subscribe((response) => {
       console.log('getClientProjectList response: ', response);
       this.rowData = response.Data;
-
       this.rowData.forEach((row) => {
         row.Deactivate_Reason = (row.Deactivate_Reason == null || row.Deactivate_Reason.length == 0) ? "N/A" : row.Deactivate_Reason;
       });
@@ -61,6 +59,7 @@ export class SpecialProjectComponent implements OnInit {
       console.log('getClientProjectList error: ', error);
     });
   }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -87,6 +86,7 @@ export class SpecialProjectComponent implements OnInit {
       console.log('addProject error : ', error);
     })
   }
+  
   onCellClicked(event) {
     console.log('onCellClicked : ', event);
     const { data } = event;

@@ -1,6 +1,6 @@
 <div class="container-fluid p-0 white">
   <app-header [title]="title"></app-header>
-
+  <!-- <h1>checklist : {{AgentdeallocationForm.value.checklist }}</h1> -->
   <div class="col-md-12 col-sm-12 col-sm-12 p-0">
     <div class="col-md-12 col-sm-12 p-0 super-deallocation">
       <form class="form-horizontal" role="form" [formGroup]="AgentdeallocationForm" (ngSubmit)="submitFrom()">
@@ -36,8 +36,12 @@
     </div>
   </div>
 </div>
+
 <div *ngIf="AgentdeallocationForm.value as formValue">
   <!-- commented for now -->
+  <app-project-and-priority-deallocation-page [ClientId]="formValue.ClientId" [employeeList]="employeeList"
+    [moduleList]="moduleList" [viewBy]="formValue.checklist" *ngIf="formValue && formValue.checklist!=null"
+    (close)="closeModal($event)"></app-project-and-priority-deallocation-page>
   <!-- <app-concluder-deallocation-page [ClientId]="formValue.ClientId" [employeeList]="employeeList"
     [moduleList]="moduleList" [viewBy]="formValue.checklist" *ngIf="formValue && formValue.checklist!=null"
     (close)="closeModal($event)">

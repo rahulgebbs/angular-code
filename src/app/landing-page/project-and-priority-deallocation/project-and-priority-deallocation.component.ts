@@ -44,12 +44,12 @@ export class ProjectAndPriorityDeallocationComponent implements OnInit {
     this.UserId = this.userdata.UserId;
     //this.ClientList = this.drpService.setSelected(this.userdata.Clients)
     this.ClientList = this.setSelectedDropdown(this.userdata.Clients);
-    // console.log('this.ClientList : ', this.ClientList);
+
     if (this.ClientList[0].selected == true) {
       this.showOptionButtons = true;
-      // this.ClientId = this.ClientList[0].Client_Id
+
       this.AgentdeallocationForm.patchValue({ 'ClientId': this.ClientList[0].Client_Id });
-      // this.ClientSelectDropdown(event)
+
       this.ClientListOnChange();
     }
 
@@ -77,168 +77,12 @@ export class ProjectAndPriorityDeallocationComponent implements OnInit {
   GetModuleList(ClientId) {
     this.moduleList = [];
     this.employeeList = [];
-    this.projectandpriorityService.getModulesByEmployee(ClientId).subscribe(
+    this.projectandpriorityService.getEmployeesByModule(ClientId).subscribe(
       res => {
         console.log('GetModuleList res : ', res);
         this.byModuleInfo = res.Data;
       },
       err => {
-        const response = {
-          "Message": [
-            {
-              "Message": "Employee list.",
-              "Type": "SUCCESS"
-            }
-          ],
-          "Data": {
-            "Project": [
-              {
-                "Project_Name": "PNP_01102020_Rejection_1"
-              },
-              {
-                "Project_Name": "PNP_02102020_Rejection_2"
-              },
-              {
-                "Project_Name": "PNP_15102020_Denial_1"
-              },
-              {
-                "Project_Name": "PNP_15102020_Denial_2"
-              },
-              {
-                "Project_Name": "PNP_15102020_Denial_3"
-              },
-              {
-                "Project_Name": "PNP_15102020_Denial123_1"
-              },
-              {
-                "Project_Name": "PNP_15102020_Denial123_2"
-              },
-              {
-                "Project_Name": "PNP_15102020_Rejection_3"
-              },
-              {
-                "Project_Name": "PNP_15102020_TestingAddModule_1"
-              },
-              {
-                "Project_Name": "PNP_19102020_Rejection_4"
-              },
-              {
-                "Project_Name": "PNP_19102020_test1_1"
-              },
-              {
-                "Project_Name": "PNP_19102020_TestingAddModule_2"
-              }
-            ],
-            "employees": [
-              {
-                "Employee_Code": "11624",
-                "User_Id": 1,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11684",
-                "User_Id": 2,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "AGA Ravi",
-                "Username": "AGA_Ravi"
-              },
-              {
-                "Employee_Code": "11683",
-                "User_Id": 3,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "AG Ravi",
-                "Username": "AG_Ravi"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 4,
-                "Project_Name": "PNP_02102020_Rejection_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 5,
-                "Project_Name": "PNP_15102020_Denial_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 6,
-                "Project_Name": "PNP_15102020_Denial123_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 7,
-                "Project_Name": "PNP_15102020_Denial123_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 8,
-                "Project_Name": "PNP_15102020_Denial_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 9,
-                "Project_Name": "PNP_15102020_Denial_3",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 10,
-                "Project_Name": "PNP_15102020_TestingAddModule_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 11,
-                "Project_Name": "PNP_15102020_Rejection_3",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 12,
-                "Project_Name": "PNP_19102020_Rejection_4",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 13,
-                "Project_Name": "PNP_19102020_TestingAddModule_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 14,
-                "Project_Name": "PNP_19102020_test1_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11684",
-                "User_Id": 15,
-                "Project_Name": "PNP_19102020_test1_1",
-                "Employee_Name": "AGA Ravi",
-                "Username": "AGA_Ravi"
-              }
-            ]
-          }
-        };
-        this.byModuleInfo = response.Data;
         this.moduleList = [];
         this.employeeList = [];
         console.log('GetModuleList err : ', err);
@@ -251,148 +95,12 @@ export class ProjectAndPriorityDeallocationComponent implements OnInit {
     // this.GetEmployeeName = [];
     this.moduleList = [];
     this.employeeList = [];
-    this.projectandpriorityService.getEmployeesByModule(ClientId).subscribe(
+    this.projectandpriorityService.getModulesByEmployee(ClientId).subscribe(
       res => {
         console.log('getEmployeesByBucket res : ', res);
         this.byAgentInfo = res.Data;
       },
       err => {
-        const response = {
-          "Message": [
-            {
-              "Message": "Employee list.",
-              "Type": "SUCCESS"
-            }
-          ],
-          "Data": {
-            "Emp_Info": [
-              {
-                "Employee_Code": "741852",
-                "Full_Name": "Akshay A Aswale"
-              },
-              {
-                "Employee_Code": "442288",
-                "Full_Name": "new agent"
-              },
-              {
-                "Employee_Code": "421302",
-                "Full_Name": "AG Ravi"
-              },
-              {
-                "Employee_Code": "421303",
-                "Full_Name": "AGA Ravi"
-              }
-            ],
-            "ProjectName_By_Emp_Info": [
-              {
-                "Employee_Code": "11624",
-                "User_Id": 1,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11684",
-                "User_Id": 2,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "AGA Ravi",
-                "Username": "AGA_Ravi"
-              },
-              {
-                "Employee_Code": "11683",
-                "User_Id": 3,
-                "Project_Name": "PNP_01102020_Rejection_1",
-                "Employee_Name": "AG Ravi",
-                "Username": "AG_Ravi"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 4,
-                "Project_Name": "PNP_02102020_Rejection_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 5,
-                "Project_Name": "PNP_15102020_Denial_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 6,
-                "Project_Name": "PNP_15102020_Denial123_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 7,
-                "Project_Name": "PNP_15102020_Denial123_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 8,
-                "Project_Name": "PNP_15102020_Denial_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 9,
-                "Project_Name": "PNP_15102020_Denial_3",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 10,
-                "Project_Name": "PNP_15102020_TestingAddModule_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 11,
-                "Project_Name": "PNP_15102020_Rejection_3",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 12,
-                "Project_Name": "PNP_19102020_Rejection_4",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 13,
-                "Project_Name": "PNP_19102020_TestingAddModule_2",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11624",
-                "User_Id": 14,
-                "Project_Name": "PNP_19102020_test1_1",
-                "Employee_Name": "Akshay A Aswale",
-                "Username": "Akshay_Agent"
-              },
-              {
-                "Employee_Code": "11684",
-                "User_Id": 15,
-                "Project_Name": "PNP_19102020_test1_1",
-                "Employee_Name": "AGA Ravi",
-                "Username": "AGA_Ravi"
-              }
-            ]
-          }
-        };
-        this.byAgentInfo = response.Data;
         this.moduleList = [];
         this.employeeList = [];
         // this.ResponseHelper.GetFaliureResponse(err);
@@ -410,7 +118,8 @@ export class ProjectAndPriorityDeallocationComponent implements OnInit {
   }
   OpenByAgent(event) {
     this.moduleList = this.byAgentInfo ? this.byAgentInfo.ProjectName_By_Emp_Info : [];
-    this.employeeList = this.byAgentInfo ? this.byAgentInfo.Emp_Info : []; //_.uniqBy(this.byAgentInfo.employees, 'User_Id');
+    this.employeeList = this.byAgentInfo ? this.byAgentInfo.Emp_Info : [];
+    //_.uniqBy(this.byAgentInfo.employees, 'User_Id');
     console.log('by agent : ', this.byAgentInfo);
   }
   //close Modal

@@ -127,5 +127,6 @@ export class ConcluderService {
   deAllocateCOncluder(formBody) {
     return this.http.post(environment.ApiUrl + `/api/deallocate-by-bucket`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
+  // pnp-deallocate-by-agent
 }
 

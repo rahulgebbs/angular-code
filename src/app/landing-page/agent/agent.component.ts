@@ -34,7 +34,7 @@ import { ProjectandpriorityService } from 'src/app/service/projectandpriority.se
   providers: [dropDownFields]
 })
 export class AgentComponent implements OnInit, OnDestroy {
-  amount=0;
+  amount = 0;
   clientInstructionInfoModal = false;
   to_be_concluded_bucket: any = {
     Count: 0,
@@ -137,7 +137,7 @@ export class AgentComponent implements OnInit, OnDestroy {
     private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
     private clientInstructionService: ClientInstructionService,
-    private projectandpriorityService: ProjectandpriorityService,
+    public projectandpriorityService: ProjectandpriorityService,
     private agentservice: AgentService,
     private saagservice: SaagService,
     private globalservice: GlobalInsuranceService,
@@ -630,45 +630,47 @@ export class AgentComponent implements OnInit, OnDestroy {
     delete data.Fields.Inventory_Id;
     this.projectandpriorityService.submitPNPForm(data).subscribe((response) => {
       console.log('submitPNPForm response : ', response);
-      this.assignNextInventory()
+      this.GetBucketsWithCount();
+      this.assignNextInventory();
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('submitPNPForm error : ', error);
       this.ResponseHelper.GetFaliureResponse(error);
       this.Validated = false;
       this.DisableSubmit = false;
+      this.GetBucketsWithCount();
     })
     console.log('submitPNPForm(data) : ', data);
   }
   assignNextInventory() {
     let localAccounts = this.projectandpriorityService.getLocalAccount();
-    console.log('assignNextInventory localAccounts : ', localAccounts);
-    console.log('assignNextInventory before', this.PNP_Inventory_Id)
+    console.log('submitPNPForm assignNextInventory localAccounts : ', localAccounts);
+    console.log('submitPNPForm assignNextInventory before', this.PNP_Inventory_Id)
     const matchedIndex = localAccounts.findIndex((element, index) => {
       if (element.PNP_Inventory_Id == this.PNP_Inventory_Id) {
         // localAccounts.splice(index, 1)
         return element;
       }
     });
-    console.log('assignNextInventory matchedIndex : ', matchedIndex);
+    console.log('submitPNPForm assignNextInventory matchedIndex : ', matchedIndex);
     if (matchedIndex != undefined && matchedIndex >= 0) {
       localAccounts.splice(matchedIndex, 1)
     }
     // localAccounts = JSON.parse(JSON.stringify(localAccounts))
-    // console.log('assignNextInventory before', this.PNP_Inventory_Id)
+    console.log('submitPNPForm assignNextInventory before', localAccounts)
     if (localAccounts.length > 0) {
       const { Clients } = this.userdata;
       const { PNP_Inventory_Id } = localAccounts[0];
       // this.PNP_Inventory_Id = PNP_Inventory_Id;
       // this.PNP_Inventory_Log_Id = PNP_Inventory_Log_Id;
-      console.log('assignNextInventory after', PNP_Inventory_Id)
+      console.log('submitPNPForm assignNextInventory after', PNP_Inventory_Id)
 
       this.projectandpriorityService.updatePNPTime(Clients[0].Client_Id, PNP_Inventory_Id, this.PNP_Inventory_Log_Id).subscribe((response: any) => {
-        console.log('updatePNPTime response : ', response);
+        console.log('submitPNPForm updatePNPTime response : ', response, localAccounts, localAccounts.length);
         this.ResponseHelper.GetSuccessResponse(response);
         this.PNP_Inventory_Log_Id = response.Data;
         localAccounts[0].PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
-        // this.projectandpriorityService.setLocalAccount(localAccounts);
+        this.projectandpriorityService.setLocalAccount(localAccounts);
         this.getAllPNPFields(localAccounts[0], true);
       }, (error) => {
         console.log('updatePNPTime error : ', error);
@@ -682,6 +684,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       this.DisplayMessage = "Please click on Bucket to continue";
       this.ActiveBucket = '';
       this.activeReasonBucket = '';
+      this.projectandpriorityService.setLocalAccount(localAccounts);
     }
     console.log('assignNextInventory : ', localAccounts);
   }
@@ -694,7 +697,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         console.log('getPNPFields response : ', response);
         // this.Acc = response.Data;
-        this.projectandpriorityService.setLocalAccount(this.AccountsList);
+        // this.projectandpriorityService.setLocalAccount(this.AccountsList);
         this.PNPAccountClick({ AccountsList: response.Data, PNP_Inventory_Id: PNP_Inventory_Id, PNP_Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: true, activeReasonBucket: this.activeReasonBucket });
         this.Validated = false;
         this.DisableSubmit = false;

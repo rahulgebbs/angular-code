@@ -1,0 +1,68 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span *ngIf="viewBy=='byModule'" class="text-sm text-ellipsis heading-txt flex">
+          Modules By EmployeeCode
+        </span>
+        <span *ngIf="viewBy=='byAgent'" class="text-sm text-ellipsis heading-txt flex">
+          Employee Codes By Module
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModal(true)">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+    <div class="col-md-12 p-0 mt-10 border-b">
+      <div class="col-md-6">
+        <label class="custom-control">
+          <label *ngIf="viewBy=='byAgent'" for="selectall">Select Modules Mapped To Employee</label>
+          <label *ngIf="viewBy=='byModule'" for="selectall">Select Employees From Module</label>
+        </label>
+      </div>
+    </div>
+    <div *ngIf="viewBy=='byModule'" class="col-md-12 p-0 code-auto-scroll p-0">
+      <div class="col-md-3 mt-10 border-b deAllocate" *ngFor="let module of moduleList;let k = index;">
+        <label class="custom-control">
+          <label>
+            <input type="radio" name="{{module.Project_Name}}" [id]="module.Project_Name"
+              value="{{module.Project_Name}}" [(ngModel)]="checklist" (change)="manageModuleRadiobutton()">
+            {{module.Project_Name}}
+          </label>
+        </label>
+        <div style="cursor: not-allowed;">
+          <ng-multiselect-dropdown [placeholder]="'Select employee'" [data]="module.employee"
+            [(ngModel)]="module.selectedEmployee" [settings]="dropdownSettings"
+            [disabled]="checklist!=module.Project_Name"></ng-multiselect-dropdown>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="viewBy=='byAgent'" class="col-md-12 p-0 code-auto-scroll p-0">
+      <ng-container *ngFor="let employee of employeeList;let k = index;">
+        <div class="col-md-3 mt-10 border-b deAllocate"
+          *ngIf="employee && employee.modules && employee.modules.length>0">
+          <label>
+            <input type="radio" name="{{employee.Employee_Code}}" [id]="employee.Employee_Code"
+              value="{{employee.Employee_Code}}" [(ngModel)]="checklist" (change)="manageEmployeeRadiobutton()">
+            {{employee.Employee_Code}}
+          </label>
+          <!-- <label class="custom-control">
+            <label for="{{employee.Employee_Code}}">{{employee.Full_Name}} </label>
+          </label> -->
+          <div style="cursor: not-allowed;">
+            <ng-multiselect-dropdown [id]="'dropdown'+employee.Employee_Code" [placeholder]="'Select module'" [data]="employee.modules"
+              [(ngModel)]="employee.selectedModule" [settings]="dropdownSettings"
+              [disabled]="checklist!=employee.Employee_Code" style="cursor: not-allowed"></ng-multiselect-dropdown>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="p-0 deallocateBtn">
+      <button [disabled]="allowDeallocate()==null" (click)="Deallocate()"
+        class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">De-allocate</button>
+    </div>
+  </div>

@@ -35,6 +35,7 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
   projectListStatus = false;
   PNP_Inventory_Log_Id;
   accountListStatus = false;
+  refreshProjectStatus = false;
   constructor(
     // private concluderService: ConcluderService,
     private projectandpriorityService: ProjectandpriorityService,
@@ -52,6 +53,7 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       { headerName: 'Account No', field: 'Account_Number' }
     ];
+    this.projectList = [];
     this.getPNPProjectList();
     // this.getDataByProjectName('');
   }
@@ -60,16 +62,18 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     console.log('userdata : ', this.userdata);
     const { Clients, Employee_Code } = this.userdata;
     this.projectListStatus = true;
-    this.projectList = [];
+    // this.projectList = [];
     this.projectandpriorityService.getProjectList(Clients[0].Client_Id, Employee_Code).subscribe((response) => {
       console.log('getProjectList response : ', response);
       this.projectList = response.Data;
+      this.refreshProjectStatus = false;
       this.projectListStatus = false;
       // this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('error : ', error);
       this.projectList = [];
       this.projectListStatus = false;
+      this.refreshProjectStatus = false;
       this.ResponseHelper.GetFaliureResponse(error);
     });
   }
@@ -79,6 +83,7 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     //   return false;
     // }
     this.AccountsList = [];
+
     this.accountListStatus = true;
     // this.gridOptions.api.showLoadingOverlay();
     this.activeProject = projectName;
@@ -89,10 +94,14 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
       this.allData = response.Data.PNP_Inventory_Info;
       this.formatInventory();
       this.ResponseHelper.GetSuccessResponse(response);
+      this.refreshProjectStatus = true;
+      this.getPNPProjectList();
     }, (error) => {
       this.AccountsList = [];
       this.accountListStatus = false;
       console.log('getProjectList error : ', error);
+      this.refreshProjectStatus = true;
+      this.getPNPProjectList();
       this.ResponseHelper.GetFaliureResponse(error);
     });
   }

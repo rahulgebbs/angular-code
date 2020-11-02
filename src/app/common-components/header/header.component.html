@@ -8,7 +8,8 @@
   <div class="utilitySection">
     <!-- https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQLwb629K3S0fWbkdTSQCnE7YacNQLGrm_X6w&usqp=CAU  OLD-->
     <!-- https://cdn.pixabay.com/photo/2014/03/25/16/54/button-297546_640.png NEW -->
-    <!-- <div class="priorityBtn" title="Project & Priority" (click)="openProjectAndPriorityModal()">
+    <div *ngIf="route && route.url=='/agent'" class="priorityBtn" title="Project & Priority"
+      (click)="openProjectAndPriorityModal()">
       <div class="text">
         Project & Priorities
         <div class="count">
@@ -19,7 +20,7 @@
           </span>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <img (click)="Logout()" title="Log Out" src="../../../assets/images/log-out.png" alt="">
     <!-- <i (click)="Logout()" title="Log Out" class="fa fa-power-off fa-2x" style="margin: 0 1rem" aria-hidden="true"></i> -->
