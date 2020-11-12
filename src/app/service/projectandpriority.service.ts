@@ -93,4 +93,15 @@ export class ProjectandpriorityService {
   deAllocateByModule(formBody) {
     return this.http.put(environment.ApiUrl + `/api/pnp-deallocate-by-project`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
+
+  getProjectListByClientID(Client_Id) {
+    // /api/PNP-report-ProjectName/9132
+    return this.http.get(environment.ApiUrl + `/api/PNP-report-ProjectName/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getPNPReport(formBody)
+  {
+    return this.http.post(environment.ApiUrl + `/api/PNP-report`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    // api/PNP-report
+  }
 }

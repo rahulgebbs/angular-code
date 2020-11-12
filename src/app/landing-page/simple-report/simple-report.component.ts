@@ -110,10 +110,6 @@ export class SimpleReportComponent implements OnInit {
         'Is_Only_Worked': [false, Validators.required],
 
       }
-
-        // {
-        //   validator: Validators.compose([customValidation.CompareTime])
-        // }
       )
     }
   }

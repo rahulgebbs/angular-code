@@ -165,6 +165,11 @@ import { AccountsModalProjectAndPriorityComponent } from './project-and-priority
 import { DeactivateProjectComponent } from './child-components/client-configuration/special-project/deactivate-project/deactivate-project.component';
 import { ProjectAndPriorityDeallocationComponent } from './landing-page/project-and-priority-deallocation/project-and-priority-deallocation.component';
 import { ProjectAndPriorityDeallocationPageComponent } from './landing-page/project-and-priority-deallocation/project-and-priority-deallocation-page/project-and-priority-deallocation-page.component';
+import { ProjectAndPriorityReportComponent } from './landing-page/project-and-priority-report/project-and-priority-report.component';
+import { ProjectSelectorModalComponent } from './landing-page/project-and-priority-report/project-selector-modal/project-selector-modal.component';
+import { ProjectAndPriorityDashboardComponent } from './project-and-priority/project-and-priority-dashboard/project-and-priority-dashboard.component';
+import { ProjectDeactivateConfirmationComponent } from './project-and-priority/project-deactivate-confirmation/project-deactivate-confirmation.component';
+import { ProjectReallocationComponent } from './project-and-priority/project-reallocation/project-reallocation.component';
 
 
 
@@ -321,7 +326,12 @@ export const MY_CUSTOM_FORMATS = {
     AccountsModalProjectAndPriorityComponent,
     DeactivateProjectComponent,
     ProjectAndPriorityDeallocationComponent,
-    ProjectAndPriorityDeallocationPageComponent
+    ProjectAndPriorityDeallocationPageComponent,
+    ProjectAndPriorityReportComponent,
+    ProjectSelectorModalComponent,
+    ProjectAndPriorityDashboardComponent,
+    ProjectDeactivateConfirmationComponent,
+    ProjectReallocationComponent
   ],
   imports: [
     BrowserModule,
@@ -410,6 +420,9 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'pcn-report', component: PcnReportComponent, canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
       { path: 'concluder-deallocation', component: ConcluderDeallocationComponent, canActivate: [AuthGuard], data: { route: ['concluder-deallocation'] } },
       { path: 'deallocate-module', component: ProjectAndPriorityDeallocationComponent, canActivate: [AuthGuard], data: { route: ['deallocate-module'] } },
+      { path: 'project-and-priority-report', component: ProjectAndPriorityReportComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-report'] } },
+      { path: 'project-and-priority-dashboard', component: ProjectAndPriorityDashboardComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-dashboard'] } },
+      // ProjectAndPriorityDashboardComponent
       // ProjectAndPriorityDeallocationComponent
 
       // 

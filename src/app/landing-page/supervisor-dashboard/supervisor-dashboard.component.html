@@ -25,9 +25,6 @@
         </span>
     </div>
     <div class="col-md-12 supervisor-dash-tbl" *ngIf="show">
-        <!-- <label class="error" *ngIf="nodata">There is no Data for Client :- {{ Client_Name}}</label> -->
-        <!-- <div class="" style="border:0px solid #ddd;"> -->
-
         <div class="sticky-table sticky-ltr-cells border-0 table-hight super-dash-table" *ngIf="!nodata">
             <table class="table" cellspacing="0" cellpadding="0">
                 <thead>
@@ -92,35 +89,24 @@
                         </td>
                         <td class="">{{OpeningARdollars?.NeverTouched_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}
                         </td>
-
-
                         <td class="">
                             {{OpeningARdollars?.Collectible_Insurance_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}
                         </td>
                         <td class="">
                             {{OpeningARdollars?.Collectible_Insurance_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}
                         </td>
-
-
                         <td class="">
                             {{OpeningARdollars?.Collectible_Patient_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="">
                             {{OpeningARdollars?.Collectible_Patient_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}
                         </td>
-
-
                         <td class="">{{OpeningARdollars?.Cash_In_Bank_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}
                         </td>
                         <td>{{OpeningARdollars?.Cash_In_Bank_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-
-
                         <td>{{OpeningARdollars?.Call_Backs_Voice | currency : 'USD' : 'symbol' : '1.0-0'}} </td>
                         <td>{{OpeningARdollars?.Call_Backs_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-
-
                         <td>{{OpeningARdollars?.Closed_Voice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td>{{OpeningARdollars?.Closed_NonVoice | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
-
                         <td class="borderright floor ">
                             {{OpeningARdollars?.Special_Queue | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                         <td class="borderright floor ">
@@ -146,8 +132,6 @@
                         <td class="borderright floor ">
                             {{OpeningARdollars?.Total | currency : 'USD' : 'symbol' : '1.0-0'}}</td>
                     </tr>
-
-
                     <tr class="t-bold">
                         <td class="borderright floor ">Opening AR_Count</td>
                         <td class="floright">{{OpeningARcount?.NeverTouched_Voice}}</td>
@@ -168,7 +152,6 @@
                         <td class="borderright floor ">{{OpeningARcount?.Closed_NonVoice}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Special_Queue}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Manual_Queue}}</td>
-
                         <td class="borderright floor ">{{OpeningARcount?.Public_To_Call}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Private_To_Call}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Appeal_Follow_Up}}</td>
@@ -180,9 +163,6 @@
                         <td class="borderright floor ">{{OpeningARcount?.CEX_Uncollectible}}</td>
                         <td class="borderright floor ">{{OpeningARcount?.Total}}</td>
                     </tr>
-
-
-
 
                     <tr class="t-bold">
                         <td class="borderright floor ">Influx$$</td>

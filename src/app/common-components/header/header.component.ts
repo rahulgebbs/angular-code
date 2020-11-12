@@ -40,14 +40,18 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.UserData = this.Token.GetUserData();
     if (this.UserData && this.UserData.Clients && this.UserData.Clients.length > 0) {
       this.ClientId = this.UserData.Clients[0].Client_Id;
-      this.getPNPProjectList(); // commented for now
+      if (this.route && this.route.url == '/agent') {
+        this.getPNPProjectList(); // commented for now
+      }
     }
     console.log('this.showHeader : ');
   }
 
   ngOnChanges(changes) {
     console.log('header component changes : ', changes);
-    this.getPNPProjectList();
+    if (this.route && this.route.url == '/agent') {
+      this.getPNPProjectList();
+    }
   }
   hideHeader() {
     console.log('hideHeader() : ', this.showHeader);

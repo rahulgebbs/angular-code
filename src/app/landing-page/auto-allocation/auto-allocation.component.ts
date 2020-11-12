@@ -85,6 +85,7 @@ export class AutoAllocationComponent implements OnInit {
       'Client_Id': [''],
       'Group_By': ['', Validators.required],
       'Allocated_Concluder_Accounts_Count': ['', Validators.required],
+      'Allocated_PNP_Accounts_Count': ['', Validators.required],
       'DOS_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
       'Last_Work_Date_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
       'Last_Bill_Date_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
@@ -125,6 +126,7 @@ export class AutoAllocationComponent implements OnInit {
         // this.ClientSettings.Group_By =this.GroupByList[0].GroupBy_Field;
 
         this.ClientSettings = res.json().Data.Setting;
+
         this.SettingsForm.patchValue({ "Group_By": this.ClientSettings.Group_By })
 
         this.ClientMatrixData = res.json().Data.Effective_Matrix;

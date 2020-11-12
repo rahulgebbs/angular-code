@@ -122,25 +122,14 @@ export class ConcluderDashboardComponent implements OnInit {
   setPercentageValue(data) {
     this.keyList.forEach((key) => {
       if (key != 'Id' && key != 'Bucket_Label') {
-        // console.log('Before : ', data[key]);
-        // if (data[key]) {
         if (data[key] > 0) {
           const result = (data[key] * 100).toFixed(2);
-          console
-          // data[key] = result != null(result) + '%' : '0%'
           data[key] = Number(result) > 0 ? Number(result) + '%' : '0%'
         }
-        // data[key].toFixed(2);
-        // }
-        // console.log('After : ', data[key]);
       }
-      // else {
-      //   console.log('ELSE setPercentageValue : ', key);
-      // }
-    })
-
-
+    });
   }
+  
   getClientName() {
     const { value } = this.dashboard;
     this.clientName = null;

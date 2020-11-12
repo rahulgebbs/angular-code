@@ -254,10 +254,15 @@ export class DataUploadComponent implements OnInit {
       this.dataUpload.patchValue({ 'type': '', 'EmpCode': [] })
       // this.Is_Special_Queue = false;
     })).subscribe(
-      res => {
-        console.log('ConcluderDataUpload :', res);
+      (response: any) => {
+        console.log('ConcluderDataUpload :', response);
         this.truefile = false;
-        this.ResponseHelper.GetSuccessResponse(res)
+        let notifydata = response.Message ? response.Message : response.json().Message;
+        notifydata.forEach((element) => {
+          element.time = 5000;
+        })
+        this.notificationservice.ChangeNotification(notifydata)
+        // this.ResponseHelper.GetSuccessResponse(res);
       },
       err => {
         this.truefile = false;

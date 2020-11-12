@@ -327,11 +327,19 @@
                   class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
                   <div class="accordianbody">
                     <ul class="nav">
-                      <li *ngIf="checkMenu('deallocate-module')"><a
-                          (click)="OpenMenu('deallocate-module')"
+                      <li *ngIf="checkMenu('project-and-priority-dashboard')"><a (click)="OpenMenu('project-and-priority-dashboard')"
+                          [ngClass]="[MenuName == '/project-and-priority-dashboard' ? 'menu-active1': '']">
+                          P&P Dashboard</a>
+                      </li>
+                      <li *ngIf="checkMenu('deallocate-module')"><a (click)="OpenMenu('deallocate-module')"
                           [ngClass]="[MenuName == '/deallocate-module' ? 'menu-active1': '']">
                           De-Allocate Module</a>
                       </li>
+                      <li *ngIf="checkMenu('project-and-priority-report')"><a (click)="OpenMenu('project-and-priority-report')"
+                          [ngClass]="[MenuName == '/project-and-priority-report' ? 'menu-active1': '']">
+                          P&P Report</a>
+                      </li>
+
                     </ul>
                   </div>
                 </div>
@@ -368,6 +376,7 @@
                           [ngClass]="[MenuName == '/concluder-deallocation' ? 'menu-active1': '']">
                           De-Allocate Concluder</a>
                       </li>
+
 
                     </ul>
                   </div>

@@ -216,6 +216,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       },
       err => {
         this.ResponseHelper.GetFaliureResponse(err);
+        this.GetSaagLookup();
       }
     );
   }
@@ -632,9 +633,11 @@ export class AgentComponent implements OnInit, OnDestroy {
       console.log('submitPNPForm response : ', response);
       this.GetBucketsWithCount();
       this.assignNextInventory();
+      
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('submitPNPForm error : ', error);
+
       this.ResponseHelper.GetFaliureResponse(error);
       this.Validated = false;
       this.DisableSubmit = false;
