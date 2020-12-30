@@ -6,20 +6,18 @@
         <div class="col-md-12 p-0">
           <div class="form-group">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
-            <!-- <div class="col-sm-7 p-0"> -->
-            <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client" #selectedelem
+            <p class="clientName">{{showCLientName()}}</p>
+            <!-- <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client" #selectedelem
               class="form-control" [(ngModel)]="ClientId">
               <option [selected]="ClientList.length >1" value="" disabled>Select</option>
               <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
               </option>
-            </select>
-            <div class="error" *ngIf="SimpleForm.get('Client_Id').hasError('required') && DisplayError">
-              please select a client
-            </div>
+            </select> -->
+
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Employee ID</label>
-            <!-- <div class="col-sm-7 p-0 text-right"> -->
+            
             <span class="col-md-10 p-0">
               <input type="text" class="form-control col-md-4" autocomplete="off" name="card-number"
                 #EmployeesList="ngModel" id="card-number" (keydown)="BlockInput($event)" (keyup)="BlockInput($event)"
@@ -32,7 +30,7 @@
             <span [ngClass]="DisableEmployeeSelect ? 'disabled' : ''"
               class="col-md-2 btn grey square-btn  btn-txt  p-0 h-25" (click)="!DisableEmployeeSelect && OpenModal()"
               style="padding: 0.5px 10px !important;">Select</span>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="card-number">From Date</label>
@@ -60,10 +58,9 @@
               <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
             </div>
           </div>
-          <div class="form-group">
-            <label class="label-std control-label p-0 b-600 pl-0" for="">From Time</label>
-            <!-- <div class="col-sm-7 p-0"> -->
 
+          <!-- <div class="form-group">
+            <label class="label-std control-label p-0 b-600 pl-0" for="">From Time</label>
             <select name="From_Time" id="From_Time" formControlName="From_Time" class="form-control"
               (change)="getFromTime()">
               <option value="">Select Time</option>
@@ -96,9 +93,9 @@
               Please select from time
             </div>
           </div>
+
           <div class="form-group">
             <label class="label-std control-label p-0 b-600 pl-0" for="">To Time</label>
-            <!-- <div class="col-sm-7 p-0"> -->
             <select name="To_Time" id="To_Time" formControlName="To_Time" class="form-control" (change)="getFromTime()">
               <option value="">Select Time</option>
               <option value="0:00">0:00</option>
@@ -129,12 +126,12 @@
             <div class="error" *ngIf="SimpleForm.get('To_Time').hasError('required') && DisplayError && only_worked">
               Please select to time
             </div>
-            <!-- SimpleForm.get('To_Time').hasError('notMatch') && SimpleForm.controls['To_Time'].dirty -->
             <div class="error" *ngIf="validationError">
               From time should be less than to time
             </div>
-          </div>
-          <div class="col-md-12 p-0">
+          </div> -->
+
+          <!-- <div class="col-md-12 p-0">
             <span class="col-md-6 p-0 text-left">
               <label class="custom-control client-conf">
                 <input type="checkbox" name="ac-active" id="ac-active" formControlName="Is_Only_Worked"
@@ -142,7 +139,7 @@
                 <label for="ac-active">Only Worked</label>
               </label>
             </span>
-          </div>
+          </div> -->
 
         </div>
         <div class="col-md-12 p-0 mt-10 text-left">
@@ -151,12 +148,11 @@
           &nbsp;
           <span *ngIf="DonwloadConfig"> <input type="button" value="Download" (click)="GetSimpleReportData()"
               class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" /> </span>
-
         </div>
       </div>
     </form>
   </div>
 </div>
 
-<app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
-  (CloseModal)="CloseModal($event)"></app-employee-selector-modal>
+<!-- <app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)" -->
+<!-- (CloseModal)="CloseModal($event)"></app-employee-selector-modal> -->

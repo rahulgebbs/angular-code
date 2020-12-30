@@ -7,8 +7,6 @@
         </div>
         <div class="col-md-3 p-0">
           <div id="enableTwoFactor">
-
-
             <ng-container *ngIf="activeUser && activeUser.enableTFAuth">
               <div *ngIf="activeUser.enableTFAuth.status=='incomplete'">
                 <h4>
@@ -20,10 +18,7 @@
               </div>
               <div class="alignBarcode"
                 *ngIf="activeUser.enableTFAuth.enable==true && activeUser.enableTFAuth.status=='incomplete'">
-                <!-- <img [src]='URI'> -->
-                <!-- <a title='Manually pair with GEZDGNBVMNXWIZI' href='https://www.authenticatorapi.com'> -->
                 <span [innerHTML]="barCodeURI"></span>
-                <!-- </a> -->
                 <div>
                   <h4>
                     Enter the six-digit code from the application
@@ -52,10 +47,7 @@
             <ng-container *ngIf="activeUser && activeUser.enableTFAuth">
               <div class="alignBarcode"
                 *ngIf="activeUser.enableTFAuth.enable==true && activeUser.enableTFAuth.status=='complete'">
-                <!-- <img [src]='barCodeURI'> -->
-                <!-- <a title='Manually pair with GEZDGNBVMNXWIZI' href='https://www.authenticatorapi.com'> -->
                 <span [innerHTML]="barCodeURI"></span>
-                <!-- </a> -->
                 <div>
                   <h4>
                     Enter the six-digit code from the application
@@ -78,17 +70,4 @@
       </div>
     </div>
   </div>
-  <!-- <div class="col-md-12 text-center">
-      <b>
-        UNAUTHORIZED ACCESS TO THIS SERVICE IS PROHIBITED.<br />
-      </b>
-      <span> iAR is confidential and proprietary, and is for authorized users only. All authorized users are subject
-        to contractual use restrictions and nondisclosure requirements that prevent giving access to third parties.
-        Unauthorized users are subject to prosecution, lawsuits, and penalties under state and federal law. All
-        system
-        activities are monitored, recorded and reviewed by system personnel. Anyone using this system expressly
-        consents to such monitoring and is advised that if such monitoring reveals possible evidence of criminal
-        activity, system personnel may present the evidence to law enforcement officials.
-      </span>
-    </div> -->
 </div>

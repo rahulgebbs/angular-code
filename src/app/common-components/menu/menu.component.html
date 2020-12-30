@@ -227,27 +227,31 @@
                 </div>
               </div>
 
-              <div *ngIf="checkMenu('simple-report') || checkMenu('mis-report') || checkMenu('citra-audit-report')"
+              <div
+                *ngIf="checkMenu('simple-report') || checkMenu('mis-report') || checkMenu('citra-audit-report') || checkMenu('client-simple-report')"
                 class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingTen">
                   <h4 class="acc-title">
-                    <a [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' ? '' : 'collapsed']"
+                    <a [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' || MenuName=='/client-simple-report' ? '' : 'collapsed']"
                       role="button" data-toggle="collapse" data-parent="#accordionMenu" aria-controls="collapseThree"
                       href="#collapseReport"
-                      [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' ? 'true' : 'false']">
+                      [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report' || MenuName =='/citra-audit-report' || MenuName=='/client-simple-report'? 'true' : 'false']">
                       Reports
                     </a>
                   </h4>
                 </div>
                 <div id="collapseReport"
-                  [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report'|| MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' ? 'true' : 'false']"
+                  [attr.aria-expanded]="[MenuName == '/simple-report' || MenuName == '/mis-report' || MenuName =='/tl-deny-report'|| MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' || MenuName == '/client-simple-report'? 'true' : 'false']"
                   class="panel-collapse collapse"
-                  [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report'  || MenuName =='/tl-deny-report' || MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' ? 'in' : '']"
+                  [ngClass]="[MenuName == '/simple-report' || MenuName == '/mis-report'  || MenuName =='/tl-deny-report' || MenuName == '/ageing-dashboard-report' || MenuName =='/citra-audit-report' || MenuName == '/client-simple-report' ? 'in' : '']"
                   role="tabpanel" aria-labelledby="headingReport">
                   <div class="accordianbody">
                     <ul class="nav">
                       <li><a (click)="OpenMenu('simple-report')"
                           [ngClass]="[MenuName == '/simple-report' ? 'menu-active1': '']">Simple Report</a></li>
+                      <li><a (click)="OpenMenu('client-simple-report')"
+                          [ngClass]="[MenuName == '/client-simple-report' ? 'menu-active1': '']">Client Simple
+                          Report</a></li>
                       <li><a (click)="OpenMenu('mis-report')"
                           [ngClass]="[MenuName == '/mis-report' ? 'menu-active1': '']">MIS Report</a></li>
 
@@ -327,7 +331,8 @@
                   class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
                   <div class="accordianbody">
                     <ul class="nav">
-                      <li *ngIf="checkMenu('project-and-priority-dashboard')"><a (click)="OpenMenu('project-and-priority-dashboard')"
+                      <li *ngIf="checkMenu('project-and-priority-dashboard')"><a
+                          (click)="OpenMenu('project-and-priority-dashboard')"
                           [ngClass]="[MenuName == '/project-and-priority-dashboard' ? 'menu-active1': '']">
                           P&P Dashboard</a>
                       </li>
@@ -335,7 +340,8 @@
                           [ngClass]="[MenuName == '/deallocate-module' ? 'menu-active1': '']">
                           De-Allocate Module</a>
                       </li>
-                      <li *ngIf="checkMenu('project-and-priority-report')"><a (click)="OpenMenu('project-and-priority-report')"
+                      <li *ngIf="checkMenu('project-and-priority-report')"><a
+                          (click)="OpenMenu('project-and-priority-report')"
                           [ngClass]="[MenuName == '/project-and-priority-report' ? 'menu-active1': '']">
                           P&P Report</a>
                       </li>
@@ -630,7 +636,8 @@
                     <div class="accordianbody">
                       <ul class="nav">
                         <ng-container *ngFor="let subMenu of menu.subMenus">
-                          <li *ngIf="checkMenu(subMenu.Route)"><a (click)="openDynamicMenu(subMenu)"
+                          <li style="text-transform: capitalize;" *ngIf="checkMenu(subMenu.Route)"><a
+                              (click)="openDynamicMenu(subMenu)"
                               [ngClass]="[MenuName == '/'+subMenu.Route ? 'menu-active1': '']">
                               {{subMenu.Submenu_Name}}
                             </a>

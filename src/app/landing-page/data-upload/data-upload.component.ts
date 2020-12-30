@@ -261,7 +261,7 @@ export class DataUploadComponent implements OnInit {
         notifydata.forEach((element) => {
           element.time = 5000;
         })
-        this.notificationservice.ChangeNotification(notifydata)
+        this.notificationservice.ChangeNotification(notifydata);
         // this.ResponseHelper.GetSuccessResponse(res);
       },
       err => {

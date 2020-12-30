@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as jwt_decode from "jwt-decode";
 import { Router } from "@angular/router"
 import { LoginService } from 'src/app/service/login.service';
-import { qrCode } from './qrcode';
+// import { qrCode } from './qrcode';
 import { RedirectHelper } from 'src/app/manager/redirect';
 import { NotificationService } from 'src/app/service/notification.service';
 
@@ -77,7 +77,7 @@ export class TwoFactorAuthComponent implements OnInit, OnDestroy {
   submit() {
     console.log('submit user : ', this.activeUser);
     if (this.passcode && this.passcode.length > 0) {
-      this.loginService.matchOTP(this.passcode, this.activeUser.User_Id,this.activeUser.Email_Id).subscribe((response) => {
+      this.loginService.matchOTP(this.passcode, this.activeUser.User_Id, this.activeUser.Email_Id).subscribe((response) => {
         console.log('matchOTP response : ', response);
         if (response.Data == true) {
           this.notification.ChangeNotification([{ Message: "Passcode Verified", Type: "SUCCESS" }])

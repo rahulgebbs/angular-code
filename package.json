@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
-    "start:conf":"node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve --prod",
+    "start:aot": "ng serve -o --aot && node--max_old_space_size=8192000",
+    "start:conf": "node --max_old_space_size=8192000 node_modules/@angular/cli/bin/ng serve --prod",
     "build": "ng build",
     "build:prod": "ng build --prod --aot",
     "test": "ng test",
@@ -30,7 +31,6 @@
     "@ng-idle/keepalive": "^8.0.0-beta.4",
     "ag-grid-angular": "^19.1.2",
     "ag-grid-community": "^19.1.4",
-
     "core-js": "^2.5.4",
     "file-saver": "^2.0.0",
     "jquery": "^3.5.0",

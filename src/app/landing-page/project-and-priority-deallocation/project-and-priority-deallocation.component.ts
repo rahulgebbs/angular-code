@@ -29,7 +29,7 @@ export class ProjectAndPriorityDeallocationComponent implements OnInit {
   employeeList;
   byModuleInfo;
   byAgentInfo;
-
+  
   constructor(public fb: FormBuilder, private router: Router, private notification: NotificationService, private projectandpriorityService: ProjectandpriorityService) {
     this.ResponseHelper = new ResponseHelper(this.notification);
 

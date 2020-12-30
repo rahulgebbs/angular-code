@@ -170,6 +170,8 @@ import { ProjectSelectorModalComponent } from './landing-page/project-and-priori
 import { ProjectAndPriorityDashboardComponent } from './project-and-priority/project-and-priority-dashboard/project-and-priority-dashboard.component';
 import { ProjectDeactivateConfirmationComponent } from './project-and-priority/project-deactivate-confirmation/project-deactivate-confirmation.component';
 import { ProjectReallocationComponent } from './project-and-priority/project-reallocation/project-reallocation.component';
+import { ClientSupervisorSimpleReportComponent } from './landing-page/client-supervisor-simple-report/client-supervisor-simple-report.component';
+
 
 
 
@@ -331,7 +333,8 @@ export const MY_CUSTOM_FORMATS = {
     ProjectSelectorModalComponent,
     ProjectAndPriorityDashboardComponent,
     ProjectDeactivateConfirmationComponent,
-    ProjectReallocationComponent
+    ProjectReallocationComponent,
+    ClientSupervisorSimpleReportComponent
   ],
   imports: [
     BrowserModule,
@@ -422,11 +425,7 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'deallocate-module', component: ProjectAndPriorityDeallocationComponent, canActivate: [AuthGuard], data: { route: ['deallocate-module'] } },
       { path: 'project-and-priority-report', component: ProjectAndPriorityReportComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-report'] } },
       { path: 'project-and-priority-dashboard', component: ProjectAndPriorityDashboardComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-dashboard'] } },
-      // ProjectAndPriorityDashboardComponent
-      // ProjectAndPriorityDeallocationComponent
-
-      // 
-      // ConcluderDeallocationComponent
+      { path: 'client-simple-report', component: ClientSupervisorSimpleReportComponent, canActivate: [AuthGuard], data: { route: ['client-simple-report'] } },
       { path: '**', component: NotFoundComponent }
 
     ], { useHash: true }),

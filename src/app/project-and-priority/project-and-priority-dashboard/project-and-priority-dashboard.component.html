@@ -1,19 +1,18 @@
 <app-header [title]="title"></app-header>
 
-<div class="col-md-12 col-sm-12 col-sm-12 p-0 box-heightSD">
+<div class="col-md-12 col-sm-12 col-sm-12 p-0 box-heightSD" *ngIf="dashboardForm.value as formValue">
   <div class="col-md-12 pt-8">
     <span class="col-md-12 pull-left pl-7">
       <form [formGroup]="dashboardForm">
-        <!-- <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Type</span> -->
-        <!-- <span class="pull-left mr-10 pt-3 wt-15">
-          <select class="form-control" formControlName="dashboardType" placeholder="Select Type"
-            (change)="onClientChange($event)">
-            <option [value]="''">Select</option>
-            <option *ngFor="let type of typeList" [value]="type">
-              {{type}}
+        <div class="form-group">
+          <label class="label-std control-label p-0 b-600 pl-0" for="">Select Type</label>
+          <select class="form-control" formControlName="ClientId" (change)="typeChange()">
+            <option disabled [value]="null">Select</option>
+            <option *ngFor="let Client of ClientList" [value]="Client.Client_Id" [selected]="Client.selected">
+              {{Client.Client_Name}}
             </option>
           </select>
-        </span> -->
+        </div>
         <div class="form-group">
           <label class=" label-std control-label p-0 b-600 pl-0" for="">Select Type</label>
           <div class="radioBorder">
@@ -35,12 +34,28 @@
       </form>
     </span>
   </div>
-  <div class="col-md-12 supervisor-dash-tbl" *ngIf="show">
+  <div class="col-md-12 supervisor-dash-tbl" *ngIf="formValue.dashboardType!=null && formValue.dashboardType.length>0">
+    <ag-grid-angular [enableSorting]="true" [enableColResize]="false" [enableFilter]="true" [pagination]="true"
+      [paginationPageSize]="10" class="ag-theme-balham grid-w agGridTable" [rowData]="projectList"
+      [columnDefs]="columnDefs" [gridOptions]="gridOptions" (gridReady)="onGridReady($event)"
+      (cellClicked)="cellClicked($event)">
+    </ag-grid-angular>
 
+    <ag-grid-angular [enableSorting]="true" [enableColResize]="false" [enableFilter]="true" [pagination]="true"
+      [paginationPageSize]="10" class="ag-theme-balham grid-w agGridTable" [rowData]="projectList"
+      [columnDefs]="dollarcolumnDefs" [gridOptions]="dollarDridOptions" (gridReady)="onDollarGridReady($event)"
+      (cellClicked)="cellClicked($event)">
+    </ag-grid-angular>
   </div>
 </div>
 <!-- Project De-activate-->
-<!-- <app-project-deactivate-confirmation></app-project-deactivate-confirmation> -->
+<app-project-deactivate-confirmation [Client_Id]="Client_Id" [projectName]="activeProject" *ngIf="deActivateModal==true"
+  (closeModal)="closeDeactivateModal($event)">
+</app-project-deactivate-confirmation>
 
 <!-- Project Re-allocation  -->
-<!-- <app-project-reallocation></app-project-reallocation> -->
+<app-project-reallocation [Client_Id]="Client_Id" [activeProject]="activeProject" *ngIf="reAllocateModal==true"
+  (close)="closeReAllocateModal($event)"></app-project-reallocation>
+
+<app-employee-selector-modal *ngIf="showAddAgentModal==true" [AllEmployees]="Employees" [title]="employeeModalTitle"
+  (SendSelectedEmp)="SetSelectedEmp($event)" (CloseModal)="CloseModal($event)"></app-employee-selector-modal>

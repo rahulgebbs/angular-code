@@ -85,6 +85,7 @@ export class CallReferenceComponent implements OnInit {
     console.log('closeModel() : ');
     this.close.emit(false);
   }
+  
   rowClick(row) {
     console.log('rowClick row : ', row.data);
     localStorage.setItem('callReference', JSON.stringify(row.data));

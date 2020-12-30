@@ -99,9 +99,42 @@ export class ProjectandpriorityService {
     return this.http.get(environment.ApiUrl + `/api/PNP-report-ProjectName/${Client_Id}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
-  getPNPReport(formBody)
-  {
+  getPNPReport(formBody) {
     return this.http.post(environment.ApiUrl + `/api/PNP-report`, formBody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
     // api/PNP-report
+  }
+
+  getPNPProjectList(query) {
+    return this.http.get(environment.ApiUrl + query, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    // api/PNP-Dashboard-Active/Client/{id}
+  }
+
+  deactivateProjectByName(Client_Id, Project_Name) {
+    // console.log('deactivateProjectByName(projectObj) : ', Client_Id, Project_Name);
+    // http://172.30.52.25:1001/api/deactivate-project
+    return this.http.put(environment.ApiUrl + `/api/deactivate-project`, { "Client_Id": Client_Id, "Project_Name": Project_Name }, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getProjectListCount(Client_Id, Project_Name) {
+    return this.http.get(environment.ApiUrl + `api/pnp-dashboard-allocated-count/client/${Client_Id}/${Project_Name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  getEmployeesAllocatedToProject(clientId, projectName, employeeId) {
+    return this.http.get(environment.ApiUrl + `api/get-all-employee-by-project/client/${clientId}/${projectName}/${employeeId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  // /api/reallocate-pnp-account
+  reallocateProject(body) {
+    // console.log('deactivateProjectByName(projectObj) : ', Client_Id, Project_Name);
+    // http://172.30.52.25:1001/api/deactivate-project
+    return this.http.put(environment.ApiUrl + `/api/reallocate-pnp-account`, body, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+  getEmployeesForProject(clientId, projectName) {
+    return this.http.get(environment.ApiUrl + `api/get-agents-for-client/${clientId}/${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
+  addAgentToProject(body) {
+    // http://172.30.52.25:1001/api/assign-agent-to-project
+    return this.http.put(environment.ApiUrl + `/api/assign-agent-to-project`, body, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 }

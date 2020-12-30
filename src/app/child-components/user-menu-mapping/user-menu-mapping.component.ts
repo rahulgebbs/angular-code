@@ -283,8 +283,6 @@ export class UserMenuMappingComponent implements OnInit {
   }
 
   OnGridReady(event) {
-
-    // if (this.AccountsList != null) {
     var allColumnIds = [];
     event.columnApi.getAllColumns().forEach(function (column) {
       // console.log('column : ', column);
@@ -292,14 +290,5 @@ export class UserMenuMappingComponent implements OnInit {
       allColumnIds.push(column.colId);
     });
     event.columnApi.autoSizeColumns(allColumnIds);
-
-    // var thisref = this;
-    // event.api.forEachNode(function (node) {
-    //   if (node.data.Inventory_Id == thisref.WorkingAccountId) {
-    //     node.setSelected(true, true);
-    //   }
-    // });
-    // }
-
   }
 }

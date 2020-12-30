@@ -1,18 +1,22 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ConcluderService } from 'src/app/service/concluder.service';
+
 import { Router } from '@angular/router';
 import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
+import { ProjectandpriorityService } from 'src/app/service/projectandpriority.service';
+import { ResponseHelper } from 'src/app/manager/response.helper';
+
 @Component({
   selector: 'app-project-reallocation',
   templateUrl: './project-reallocation.component.html',
   styleUrls: ['./project-reallocation.component.scss']
 })
 export class ProjectReallocationComponent implements OnInit {
-  ShowModal = true
-  @Input() AllocatedCountsData = [];
-  @Input() Client_ID;
-  @Input() activeBucket;
+  ShowModal = true;
+  ResponseHelper: ResponseHelper;
+  @Input() Client_Id;
+  @Input() activeProject;
   rowData = [];
   gridApi;
   gridColumnApi
@@ -27,7 +31,7 @@ export class ProjectReallocationComponent implements OnInit {
     closeDropDownOnSelection: true,
     allowSearchFilter: true
   }
-  showReAllocation = true;
+  showReAllocation = null;
   columnDefs = [
     {
       headerName: 'Allocated to', field: 'Allocated_To', suppressSizeToFit: true
@@ -39,77 +43,96 @@ export class ProjectReallocationComponent implements OnInit {
       }
     },
     {
-      headerName: "Action", cellRenderer: this.showCellRenderer, suppressSizeToFit: true
+      headerName: "Status", cellRenderer: this.showCellRenderer, suppressSizeToFit: true
     }
+    // ,
+    // {
+    //   headerName: "Action", cellRenderer: this.showCellRenderer, suppressSizeToFit: true
+    // }
   ];
   token: Token;
   userData: any = null;
   activeAgent = null;
   selectedAgentList = null;
   submitStatus = false;
-  constructor(private concluderService: ConcluderService, public router: Router, private notification: NotificationService) { }
+  activeUserID = null;
+  constructor(private concluderService: ConcluderService, public router: Router, private notification: NotificationService, private projectandpriorityService: ProjectandpriorityService) {
+    this.ResponseHelper = new ResponseHelper(this.notification);
+  }
 
   ngOnInit() {
-    console.log('AllocatedCountsData : ', this.activeBucket);
+    console.log('Client_Id : ', this.Client_Id, this.activeProject);
     this.token = new Token(this.router);
     this.userData = this.token.GetUserData();
-    console.log('this.userData : ', this.userData);
-    this.rowData = this.AllocatedCountsData;
-    this.AllocatedCountsData.forEach(element => {
-      element.Allocated_To = element.Allocated_To && element.Allocated_To.length > 0 ? element.Allocated_To : "N/A";
-    });
-
-    setTimeout(() => {
-      // this.rowData = JSON.parse(JSON.stringify(this.rowData));
-      // this.sizeToFit();
-      this.autoSizeAll(true);
-    }, 500);
-
+    this.getProjectListCount();
   }
+
+  getProjectListCount() {
+    this.rowData = null;
+    this.projectandpriorityService.getProjectListCount(this.Client_Id, this.activeProject).subscribe((response) => {
+      console.log('getProjectListCount response : ', response);
+      setTimeout(() => {
+        this.rowData = response.Data[0].allocated_Counts;
+        this.sizeToFit();
+        setTimeout(() => {
+          this.autoSizeAll(true);
+        }, 500);
+      }, 1000);
+    }, (error) => {
+      setTimeout(() => {
+
+        this.rowData = [];
+        this.sizeToFit();
+        setTimeout(() => {
+          this.autoSizeAll(true);
+        }, 500);
+      }, 1000);
+      console.log('getProjectListCount error : ', error);
+    })
+  }
+
   showCellRenderer(params) {
     var eGui: any = document.createElement("div");
     eGui.innerHTML = `<button  class="btn label gray label-info square-btn cursor" data-action-type="update" title="Re-Allocate">Re-Allocate</button>`;
     return eGui;
   }
-  getData(params) {
-    console.log('params : ', params.colDef.headerName);
-    this.activeAgent = params.data;
-    this.getAllocatedCountList(this.Client_ID, this.activeAgent.Employee_Code, this.activeBucket.replace(/_/g, "_"));
 
+  getData(params) {
+    console.log('cellClicked : ', params);
+    if (this.showReAllocation == true) {
+      return true;
+    }
+    if (params.colDef.headerName == 'Status') {
+      this.activeAgent = params.data;
+      console.log('getData : ', params);
+      this.showReAllocation = true;
+      this.agentList = [];
+      this.activeUserID = params.data.Employee_Id;
+      this.projectandpriorityService.getEmployeesAllocatedToProject(this.Client_Id, this.activeProject, this.activeUserID).subscribe((response) => {
+        console.log('getEmployeesAllocatedToProject response : ', response);
+        this.agentList = response != null && response.Data != null ? response.Data : [];
+        this.showReAllocation = false;
+        response.Data.forEach((element, index) => {
+          if (element.Id == this.activeAgent.Employee_Id) {
+            response.Data.splice(index, 1);
+          }
+        });
+        this.agentList = response != null && response.Data != null ? response.Data : [];
+      }, (error) => {
+        this.agentList = [];
+        this.showReAllocation = false;
+        console.log('getEmployeesAllocatedToProject response : ', error);
+      });
+    }
+    // else {
+    //   this.showReAllocation = false;
+    // }
   }
+
   getAllocatedCountList(clientId, Employee_Code, bucket_name) {
-    console.log('clientId,Employee_Code,bucket_name : ', clientId, Employee_Code, bucket_name);
-    this.agentList = [];
-    this.showReAllocation = true;
-    this.concluderService.getUnWorkedAccounts(clientId, Employee_Code, bucket_name).subscribe((response) => {
-      console.log('response : ', response);
-      if (response && response.Data) {
-        const { Data } = response;
-        if (Data.Account_Count > 0) {
-          this.getAllEmployeeByClient(this.Client_ID);
-        }
-        else {
-          this.notification.ChangeNotification([{ Message: "No Accounts to Re-Allocate", Type: "ERROR" }])
-          this.showReAllocation = false;
-        }
-      }
-    }, (error) => {
-      console.log('response : ', error);
-      this.showReAllocation = false;
-      this.notification.ChangeNotification(error.Message);
-    })
   }
 
   getAllEmployeeByClient(clientId) {
-    this.concluderService.getAllEmployeeByClient(clientId).subscribe((response) => {
-      console.log('getAllEmployeeByClient response : ', response.Data, this.activeAgent);
-      this.showReAllocation = true;
-      this.agentList = JSON.parse(JSON.stringify(response.Data));
-      this.removeAgent();
-    }, (error) => {
-      console.log('getAllEmployeeByClient error : ', error);
-      this.showReAllocation = true;
-    })
   }
 
   removeAgent() {
@@ -126,8 +149,8 @@ export class ProjectReallocationComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     // params.columnApi.autoSizeColumns();
     // params.api.sizeColumnsToFit();
-    // this.sizeToFit()
-    // this.autoSizeAll(false)
+    this.sizeToFit()
+    this.autoSizeAll(true)
   }
 
   dismissModel() {
@@ -147,26 +170,25 @@ export class ProjectReallocationComponent implements OnInit {
       });
       this.gridColumnApi.autoSizeColumns(allColumnIds, skipHeader);
     }
-    console.log('autoSizeAll : ', skipHeader, this.gridColumnApi);
+    // console.log('autoSizeAll : ', skipHeader, this.gridColumnApi);
   }
 
   allocateAccount() {
-    // console.log('allocateAccount() : ', this.activeAgent);
     const finalObj = {
-      "Client_id": this.Client_ID,
-      "Allocated_To": this.activeAgent.Employee_Code,
-      "Account_Count": this.activeAgent.Account_Count,
-      "Bucket_Name": this.activeBucket.replace(/_/g, "_"),
-      "Employee_Codes": this.selectedAgentList.map(agent => Number(agent.Employee_Code))
-
-    };
-    console.log('finalObj : ', finalObj);
-    this.concluderService.updateConclusionData(finalObj).subscribe((response) => {
-      console.log('response :', response)
+      "Client_id": this.Client_Id,
+      "Allocated_To": this.activeUserID,
+      "Project_Name": this.activeProject,
+      "Employee_Codes": this.selectedAgentList.map(a => Number(a.Employee_Code))
+    }
+    console.log('allocateAccount : ', finalObj);
+    this.projectandpriorityService.reallocateProject(finalObj).subscribe((response) => {
+      console.log('reallocateProject response : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
       this.dismissModel();
     }, (error) => {
+      this.ResponseHelper.GetFaliureResponse(error);
       this.dismissModel();
-      console.log('error :', error)
+      console.log('reallocateProject response : ', error);
     });
   }
 }

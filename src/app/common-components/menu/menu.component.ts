@@ -199,31 +199,32 @@ export class MenuComponent implements OnInit {
   }
 
   getBIReportMenu() {
-    console.log('this.biReportMenu : ', this.biReportMenu);
+    // console.log('this.biReportMenu : ', this.biReportMenu);
     let formbody = { "Client_Id": this.ClientId, "Client_Name": this.Client_Name };
-    console.log('formbody : ', formbody, this.Client_Name, this.ClientId);
+    // console.log('formbody : ', formbody, this.Client_Name, this.ClientId);
     this.bireportService.GetBiReport(formbody).subscribe((response) => {
       const json = response.json();
       this.biReportMenu = json.Data;
-      console.log('biReportMenu json : ', this.biReportMenu, this.clientUserMenuList);
-      if (this.biReportMenu) {
-        this.clientUserMenuList.forEach((element) => {
-          if (element.Menu_Name == "BI reports") {
-            let obj = {};
-            // {Id: 5, Submenu_Name: "client instruction report", Route: "client-instruction-report"}
-            this.biReportMenu.forEach((biMenu) => {
-              obj = { Id: Math.random() * 1000, Report_Name: biMenu.Menu_Name, Submenu_Name: biMenu.Menu_Name, Route: "bi-report" };
-              element.subMenus.push(obj)
-            });
-            // const obj = {
-            //   Client_Id: 9,
-            //   Report_Name: "KYI",
-            //   Menu_Name: "KYI"
-            // }
-            console.log('obj : ', obj);
-          }
-        });
-      }
+      // console.log('biReportMenu json : ', this.biReportMenu, this.clientUserMenuList);
+      // if (this.biReportMenu) {
+      this.clientUserMenuList.forEach((element) => {
+        console.log('element menu: ', element)
+        if (this.biReportMenu && element.Menu_Name == "BI reports") {
+          let obj = {};
+          // {Id: 5, Submenu_Name: "client instruction report", Route: "client-instruction-report"}
+          this.biReportMenu.forEach((biMenu) => {
+            obj = { Id: Math.random() * 1000, Report_Name: biMenu.Menu_Name, Submenu_Name: biMenu.Menu_Name, Route: "bi-report" };
+            element.subMenus.push(obj)
+          });
+
+        }
+        // if (element.Menu_Name == 'reports') {
+        //   let newElement = { Id: Math.random() * 1000, Report_Name: 'Client Simple report', Submenu_Name: 'Client Simple report', Route: "client-simple-report" };
+        //   element.subMenus.push(newElement);
+        // }
+      });
+      console.log('this.clientUserMenuList : ', this.clientUserMenuList);
+      // }
     }, (error) => {
       console.log('error : ', error);
     });
@@ -272,7 +273,7 @@ export class MenuComponent implements OnInit {
   }
 
   matchedMenu(subMenus) {
-    // console.log('matchedMenu subMenus : ', this.RouteName);
+    console.log('matchedMenu subMenus : ', this.RouteName, subMenus);
     const menu = subMenus.find((menuObj) => {
       return this.MenuName == '/' + menuObj.Route;
     })

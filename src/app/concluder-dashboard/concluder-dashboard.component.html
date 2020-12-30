@@ -7,18 +7,15 @@
         <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
         <span class="pull-left mr-10 pt-3 wt-15">
           <select class="form-control" formControlName="ClientId" (change)="getClientName()">
-
             <option [selected]="ClientList.length>1" disabled>Select</option>
             <option *ngFor="let Client of ClientList" [value]="Client.Client_Id" [selected]="Client.selected">
               {{Client.Client_Name}}
             </option>
-
           </select>
         </span>
         <span>
           <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" data-toggle="modal"
             data-target=".account-list" (click)="search()" [disabled]="!dashboard.valid">Search</button>
-
         </span>
         <span (click)="openModal()" *ngIf="dashboardData && dashboardData.length>0"
           style="float: right;justify-content: center;align-items: center;">
@@ -133,5 +130,6 @@
   <app-allocated-count-modal *ngIf="showAllocatedCountModal==true" [Client_ID]="dashboard.value['ClientId']"
     [AllocatedCountsData]="activeAllocatedCount" (close)="closeAllocatedCount()" [activeBucket]="activeBucket">
   </app-allocated-count-modal>
-  <app-concluder-help-image *ngIf="showInfomodal" [allData]="dashboardData" (close)="closeModal()"></app-concluder-help-image>
+  <app-concluder-help-image *ngIf="showInfomodal" [allData]="dashboardData" (close)="closeModal()">
+  </app-concluder-help-image>
   <!-- <app-concluder-help-image *ngIf="showInfomodal" (close)="closeModal()"></app-concluder-help-image> -->

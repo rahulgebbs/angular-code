@@ -6,7 +6,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { finalize } from 'rxjs/operators';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ExceptionEntryService } from 'src/app/service/exception-entry.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-exception-entry',
   templateUrl: './exception-entry.component.html',
@@ -48,13 +48,10 @@ export class ExceptionEntryComponent implements OnInit {
     this.validated = true
     this.addException.valid
     this.addException.patchValue({ "Reference_File_Name": this.Filename });
-    console.log('check if valid : ', this.addException.valid);
     if (this.addException.valid) {
       let Upload_Request = { "File_Name": this.Filename, "Client_Id": this.ClientId, "File": this.FileBase64 };
       var obj: any = {};
-
       let Fields = this.addException.value
-
       obj['Upload_Request'] = Upload_Request;
       obj['Fields'] = Fields;
       // this.addException.patchValue({"Reference_File_Name":""}) // already
@@ -63,10 +60,24 @@ export class ExceptionEntryComponent implements OnInit {
         obj.Upload_Request.File = '';
         obj.Fields.Reference_File_Name = '';
       }
+      this.exceptioData.forEach(element => {
+        if (obj.Fields && obj.Fields[element.Header_Name] && element.Column_Datatype == 'Date') {
+          if (obj['Fields'][element.Header_Name]) {
+            obj['Fields'][element.Header_Name] = moment(obj['Fields'][element.Header_Name]).utcOffset(0, true).format();
+          }
+        }
+        // else {
+        //   delete obj.Fields[element.Header_Name];
+        // }
+      });
+      /* commented for now*/
+      // obj['Fields'].DOB = moment(Fields.DOB).utcOffset(0, true).format();
+      // obj['Fields'].DOS = moment(Fields.DOS).utcOffset(0, true).format();
+      // obj['Fields'].Last_billed_date = moment(Fields.Last_billed_date).utcOffset(0, true).format();
+      console.log('final output : ', obj);
 
       this.service.submit(obj).subscribe(res => {
         this.ResponseHelper.GetSuccessResponse(res);
-        // window.location.reload();
         this.File = [];
         this.FileBase64 = [];
         this.Filename = "No File Selected";
@@ -76,7 +87,6 @@ export class ExceptionEntryComponent implements OnInit {
       }, err => {
         this.ResponseHelper.GetFaliureResponse(err);
       })
-      // }
     }
   }
 
@@ -123,9 +133,8 @@ export class ExceptionEntryComponent implements OnInit {
   }
   createFrom(data) {
     for (let i = 0; i < data.length; i++) {
-      this.addException.addControl(data[i].Header_Name, this.fb.control('', Validators.compose([Validators.required, Validators.maxLength(data[i].Field_Limit)])))
+      this.addException.addControl(data[i].Header_Name, this.fb.control('', Validators.compose([Validators.required, Validators.maxLength(data[i].Field_Limit)])));
     }
-
   }
 
   ClientOnChange(e) {
