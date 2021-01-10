@@ -17,7 +17,7 @@
       <div class="">
 
         <ng-container *ngFor="let field of fieldArray; let i = index">
-          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='question'">
+          <div [id]="field.key" class="col-lg-6 form-group" *ngIf="field.type=='question'">
 
             <label>{{field.label || "N/A"}} : </label>
             <select class="form-control" data-live-search="true" [(ngModel)]="field.value"
@@ -35,7 +35,7 @@
 
           </div>
 
-          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Text'"
+          <div [id]="field.key" class="col-lg-6 form-group" *ngIf="field.type=='Text'"
             [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
             <label>{{field.label || "N/A"}} <span *ngIf="field.required==true" style="color: red">*</span></label>
             <input [disabled]="field.editable==false" [ngClass]="{'disableInput':field.required==false ? true:false}"
@@ -46,7 +46,7 @@
             </span>
           </div>
 
-          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Number'"
+          <div [id]="field.key" class="col-lg-6 form-group" *ngIf="field.type=='Number'"
             [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
             <label>{{field.label || "N/A"}} <span *ngIf="field.required==true" style="color: red">*</span></label>
             <input [disabled]="field.editable==false" [ngClass]="{'disableInput':field.required==false ? true:false}"
@@ -57,7 +57,7 @@
             </span>
           </div>
 
-          <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='Drop Down'"
+          <div [id]="field.key" class="col-lg-6 form-group" *ngIf="field.type=='Drop Down'"
             [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0)) ? true:false}">
             <label>{{field.label || "N/A"}}
               <span *ngIf="field.required==true" style="color: red">*</span>

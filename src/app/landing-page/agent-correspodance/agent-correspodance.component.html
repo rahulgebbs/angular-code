@@ -29,7 +29,7 @@
           </div>
 
 
-          <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0 autoScroll">
             <div class="col-md-12 p-0">
               <ng-container *ngFor="let f of AllFields">
                 <div class="form-group mh-15" [ngClass]="[ f.Column_Datatype == 'Formula' ? 'border-b' : '']"
@@ -58,6 +58,9 @@
                             <option *ngFor="let item of f.DropdownList" value="{{item.Dropdown_Value}}">
                               {{item.Dropdown_Value}}</option>
                           </select>
+                          <div class="error" *ngIf="f.FieldValue==null && submitted">
+                            This Field is required
+                          </div>
                         </ng-container>
                         <ng-template #textinput>
                           <ng-container *ngIf="f.SetFormula; else elseTemplate">
@@ -90,7 +93,7 @@
               <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Appeal Fields</span>
             </div>
           </div>
-          <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0  autoScroll">
             <div class="col-md-12 p-0">
               <ng-container *ngFor="let f of AllFields">
                 <div class="form-group mh-15 " [ngClass]="[f.Column_Datatype == 'Formula' ? 'border-b' : '']"
@@ -157,7 +160,7 @@
               <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Correspondence Fields</span>
             </div>
           </div>
-          <div class="col-md-12 p-0  auto-scroll-section">
+          <div class="col-md-12 p-0  autoScroll">
             <div class="col-md-12 p-0">
               <ng-container *ngFor="let f of AllFields">
                 <div class="form-group mh-15 " [ngClass]="[f.Column_Datatype == 'Formula' ? 'border-b' : '']"
@@ -235,8 +238,9 @@
                                                     <i class="mr-5 fa fa-pagelines" aria-hidden="true"></i>iDecision Tree</span> -->
                   </label>
                   <select class="form-control" formControlName="Status" (change)="OnStatusChange($event)">
-                    <option value=""   [selected]="(!Status) || Status.length>1" disabled>Select</option>
-                    <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}</option>
+                    <option value="" [selected]="(!Status) || Status.length>1" disabled>Select</option>
+                    <option value="{{item}}" *ngFor="let item of Status" [selected]="(Status.length==1)">{{item}}
+                    </option>
                   </select>
                   <div class="error" *ngIf="ActionForm.get('Status').hasError('required') && Validated">
                     Status Required
@@ -248,8 +252,9 @@
                     <span class="asteric">*</span>
                   </label>
                   <select class="form-control" formControlName="Sub-Status" (change)="OnSubStatusChange($event)">
-                    <option value=""  [selected]="SubStatus.length == 0 || SubStatus.length>1" disabled>Select</option>
-                    <option value="{{item}}" *ngFor="let item of SubStatus"  [selected]="SubStatus.length==1">{{item}}</option>
+                    <option value="" [selected]="SubStatus.length == 0 || SubStatus.length>1" disabled>Select</option>
+                    <option value="{{item}}" *ngFor="let item of SubStatus" [selected]="SubStatus.length==1">{{item}}
+                    </option>
                   </select>
                   <div class="error" *ngIf="ActionForm.get('Sub-Status').hasError('required') && Validated">
                     Sub Status Required
@@ -262,7 +267,8 @@
                   </label>
                   <select class="form-control" formControlName="Action_Code">
                     <option value="" [selected]=" ActionCode.length==0|| ActionCode.length>1" disabled>Select</option>
-                    <option value="{{item}}" *ngFor="let item of ActionCode"  [selected]="ActionCode.length==1" >{{item}}</option>
+                    <option value="{{item}}" *ngFor="let item of ActionCode" [selected]="ActionCode.length==1">{{item}}
+                    </option>
                   </select>
                   <div class="error" *ngIf="ActionForm.get('Action_Code').hasError('required') && Validated">
                     Action Code Required

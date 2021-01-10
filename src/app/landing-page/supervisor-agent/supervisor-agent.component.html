@@ -71,7 +71,7 @@
         </form>
       </div>
     </div>
-    <div class="col-md-6 p-0 blue-seprator serpartion-h">
+    <div class="col-lg-6 p-0 blue-seprator serpartion-h">
       <div class="col-md-12 col-sm-12 p-0">
         <div class="heading-panel sT-hight">
           <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Input Fields</span>
@@ -80,7 +80,7 @@
       <div class="col-md-12 p-0  auto-scroll-section">
         <div class="col-md-12 p-0">
           <ng-container *ngFor="let f of AllFields">
-            <div class="col-md-6" *ngIf="!f.Is_Standard_Field  && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
+            <div class="col-lg-6" *ngIf="!f.Is_Standard_Field  && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
               <div class="form-group" [ngClass]="[!f.Is_Edit_Allowed_Agent ? 'border-b' : '']">
                 <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                 <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">

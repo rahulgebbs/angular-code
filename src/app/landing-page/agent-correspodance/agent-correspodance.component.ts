@@ -9,8 +9,6 @@ import { CommonService } from 'src/app/service/common-service';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { AgentCorrespodanceService } from './../../service/agent-correspodance.service';
 
-
-
 @Component({
   selector: 'app-agent-correspodance',
   templateUrl: './agent-correspodance.component.html',
@@ -61,7 +59,6 @@ export class AgentCorrespodanceComponent implements OnInit {
   }
 
   GetAllFields() {
-
     this.service.GetAllFields(this.ClientId).pipe(finalize(() => {
       this.Validated = false;
       this.searchBtnDisable = false;
@@ -73,8 +70,7 @@ export class AgentCorrespodanceComponent implements OnInit {
       },
       err => {
         this.ResponseHelper.GetFaliureResponse(err);
-      }
-    );
+      });
   }
 
 
@@ -224,41 +220,34 @@ export class AgentCorrespodanceComponent implements OnInit {
 
     this.submitted = true
     this.Validated = true;
+    const { value, valid } = this.ActionForm;
+    console.log('SubmitForm() : ', value, valid, this.AllFields);
     if (this.ActionForm.valid) {
-      var valid = true;
+      let valid = true;
       this.AllFields.forEach(e => {
-
+        console.log('Column_Datatype,FieldValue', e.Column_Datatype, e.FieldValue);
         if (e.Column_Datatype == "Date" && (e.FieldValue == null || e.FieldValue == "")) {
           valid = false
         }
         else if (e.Column_Datatype == 'Text' && (e.FieldValue == null || e.FieldValue == "")) {
           valid = false;
         }
-
       });
+      console.log('before valid check : ', valid);
 
       if (valid) {
-
-
         var objs = new Object();
-
         objs['Client_Id'] = this.ClientId;
-
         this.AllFields.forEach(e => {
-
           objs[e.Header_Name] = e.FieldValue;
-
         });
         objs['Notes'] = this.ActionForm.controls['Notes'].value;
         objs["Status"] = this.ActionForm.controls['Status'].value;
         objs["Sub-Status"] = this.ActionForm.controls['Sub-Status'].value;
         objs["Action_Code"] = this.ActionForm.controls['Action_Code'].value;
         objs["Account_Status"] = this.ActionForm.controls['Account_Status'].value;
-
         var obj = new Object();
         obj['Fields'] = objs;
-
-
         this.DisableSubmit = true;
         this.service.SaveAllFields(obj).pipe(finalize(() => {
           this.DisableSubmit = false;
@@ -270,21 +259,14 @@ export class AgentCorrespodanceComponent implements OnInit {
             this.AllFields = [];
             this.ResponseHelper.GetSuccessResponse(res);
             this.GetAllFields();
-
           },
           err => {
-
             this.AllFields = [];
             this.ClearForm();
-
-
             this.ResponseHelper.GetFaliureResponse(err);
           }
         );
       }
     }
   }
-
 }
-
-

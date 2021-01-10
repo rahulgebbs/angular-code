@@ -10,7 +10,7 @@
             <div *ngFor="let item of exceptioData; let i = index">
               <div *ngIf="item.Column_Datatype== 'Date'; ">
                 <div class="label-std control-label p-0 b-600 pl-0" id="datetimepicker1">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-lg-6">
                     <label class=" label-std control-label p-0 b-600 pl-0" for="">{{item.Display_Name}}</label>
                     <div class="input-group date col-md-12" id="datetimepicker1">
                       <input type="" formControlName="{{item.Header_Name}}" (keydown)="BlockInput($event)"
@@ -29,7 +29,7 @@
                 </div>
               </div>
               <div *ngIf="item.Display_Name =='Reference_File_Name'">
-                <div class="form-group col-md-6 mb-0">
+                <div class="form-group col-lg-6 mb-0">
                   <label class=" label-std control-label p-0 b-600 pl-0 mb-10" for="">{{item.Display_Name}}
                     <!-- <span class="asteric">*</span> -->
                   </label>
@@ -48,7 +48,7 @@
               </div>
 
               <div *ngIf="item.Display_Name !='Reference_File_Name' && item.Column_Datatype!= 'Date'">
-                <div class="form-group col-md-6">
+                <div class="form-group col-lg-6">
                   <label class=" label-std control-label p-0 b-600 pl-0" for="">{{item.Display_Name}}
                     <span class="asteric">*</span></label>
                   <input class="form-control" type="item.Column_Datatype" formControlName='{{item.Header_Name}}' #i>

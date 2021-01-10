@@ -3,7 +3,7 @@
     <form [formGroup]="addClient" (ngSubmit)="submitFrom()">
       <div class="middle-box lg-midd">
 
-        <div class="col-md-6 pt-10 blue-seprator">
+        <div class="col-lg-6 pt-10 blue-seprator">
           <div class="col-md-12 col-lg-12">
             <div class="right-most">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
           </div>
@@ -19,7 +19,7 @@
             </ag-grid-angular>
           </div>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-lg-6 p-0">
 
           <div class="col-md-12 p-0">
             <div class="col-md-12 col-sm-12">
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="col-md-12 p-0">
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <input type="hidden" class="form-control" placeholder="Id" formControlName="Id"
                   [(ngModel)]="clientData.Id">
                 <label for="Client_Name" class="label-std control-label p-0 b-600">Client Name</label>
@@ -42,7 +42,7 @@
                   Special character not allowed</label>
                 <label class=" error" *ngIf="spaceValidation && validated">Space not allowed in Client Name</label>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Server_Name" class="label-std control-label p-0 b-600">DB Server Name</label>
                 <input type="text" class="form-control" id="DB_Server_Name" placeholder=""
                   formControlName="DB_Server_Name" [(ngModel)]="clientData.DB_Server_Name">
@@ -52,7 +52,7 @@
                 <label class=" error" *ngIf="addClient.get('DB_Server_Name').hasError('maxlength') && validated">Maximum
                   100 character allowed</label>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Name" class="label-std control-label p-0 b-600">DB Name</label>
                 <input type="text" class="form-control" formControlName="DB_Name" [(ngModel)]="DB_Name">
                 <label class=" error" *ngIf="addClient.get('DB_Name').hasError('required') && validated">DB_Name
@@ -60,7 +60,7 @@
                 <label class=" error" *ngIf="addClient.get('DB_Name').hasError('maxlength') && validated">Maximum
                   100 character allowed</label>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Username" class="label-std control-label p-0 b-600">DB User Name</label>
                 <input type="text" class="form-control" placeholder="" formControlName="DB_Username"
                   [(ngModel)]="clientData.DB_Username">
@@ -69,7 +69,7 @@
                 <label class=" error" *ngIf="addClient.get('DB_Username').hasError('maxlength') && validated">Maximum
                   50 character allowed</label>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Password" class="label-std control-label p-0 b-600">DB Password</label>
                 <input type="password" class="form-control" formControlName="DB_Password"
                   [(ngModel)]="clientData.DB_Password">
@@ -80,7 +80,7 @@
               </div>
 
               <!-- Original_Client_Name -->
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Password" class="label-std control-label p-0 b-600">Original Client Name</label>
                 <input type="text" class="form-control" formControlName="Original_Client_Name"
                   [(ngModel)]="clientData.Original_Client_Name">
@@ -91,7 +91,7 @@
          30 character allowed</label> -->
               </div>
               <!-- SubClient_Name -->
-              <div class="form-group col-md-6">
+              <div class="form-group col-lg-6">
                 <label for="DB_Password" class="label-std control-label p-0 b-600">SubClient Name</label>
                 <input type="text" class="form-control" formControlName="SubClient_Name"
                   [(ngModel)]="clientData.SubClient_Name">

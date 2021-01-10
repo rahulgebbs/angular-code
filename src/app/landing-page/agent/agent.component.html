@@ -162,7 +162,7 @@
       </div>
       <!-- Input Fields Started -->
       <div *ngIf="(ActiveBucket!='To_be_Concluded')"
-        [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-md-6']"
+        [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-3' : 'col-lg-6']"
         class="p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
@@ -173,7 +173,7 @@
           <div class="col-md-12 p-0">
             <ng-container *ngFor="let f of AllFields">
               <div
-                [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-md-6 h-48']"
+                [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-lg-6 h-48']"
                 *ngIf="!f.Is_Standard_Field && !f.Is_Appeal && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
                 <div class="form-group" *ngIf="f.Display_Name!=null"
                   [ngClass]="[!f.Is_Edit_Allowed_Agent || f.Column_Datatype == 'Formula' || f.Is_Exception ? 'border-b' : '']">
@@ -243,7 +243,7 @@
               </div>
             </ng-container>
             <!--Comment History-->
-            <div class="col-md-6 h-48" *ngIf="ActiveBucket == 'TL_Deny' || ActiveBucket == 'Client_Response'">
+            <div class="col-lg-6 h-48" *ngIf="ActiveBucket == 'TL_Deny' || ActiveBucket == 'Client_Response'">
               <div *ngIf="f && f.Id" class="form-group border-b">
                 <label [for]="f.Id" class="label-std  control-label p-0 b-600">Comment History</label>
                 <button type="button" class="btn blue square-btn blue-hover btn-txt"
@@ -450,6 +450,10 @@
                     <i class="fa fa-plus"></i> PCN
                   </button>
                   <!-- openAddPCNModal() -->
+                </div>
+                <div class="col-md-12">
+                  <button title="EOB Available" style="margin-top: 0.2rem;" type="button" (click)="openEOBPDF()"
+                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-10">EOB Aailable</button>
                 </div>
               </div>
             </div>

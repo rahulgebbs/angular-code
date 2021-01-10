@@ -524,6 +524,7 @@ export class AgentComponent implements OnInit, OnDestroy {
   SubmitForm() {
 
     this.Validated = true;
+    console.log('SubmitForm() : ', this.ActionForm.value);
     if (this.ActionForm.valid) {
       var objs = new Object();
       objs['Client_Id'] = this.ClientId;
@@ -633,7 +634,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       console.log('submitPNPForm response : ', response);
       this.GetBucketsWithCount();
       this.assignNextInventory();
-      
+
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('submitPNPForm error : ', error);
@@ -1841,5 +1842,10 @@ export class AgentComponent implements OnInit, OnDestroy {
       this.ActiveBucket = '';
       this.activeReasonBucket = '';
     }
+  }
+
+  openEOBPDF() {
+    const url = 'file://172.18.0.183/Share%20Temp/Rahul%2036728/EOB_PDF.pdf'
+    window.open(url, '_blank');
   }
 }

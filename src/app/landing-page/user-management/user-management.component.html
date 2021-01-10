@@ -13,7 +13,7 @@
         <div class="col-md-12 col-xs-12 p-0 box-heightLG">
           <!-- <form> -->
           <div class="col-md-12 col-xs-12 p-0">
-            <div class="col-md-6 col-xs-6 p-0">
+            <div class="col-lg-6 col-xs-6 p-0">
               <div class="form-group mh-15 mr-5">
                 <label for="inputEmail3" class="label-std  control-label p-0 b-600">User Type</label>
                 <select class="form-control" formControlName="User_Type" (change)="seletedUserType($event)"
@@ -26,7 +26,7 @@
 
               </div>
             </div>
-            <div class="col-md-6 col-xs-6 p-0">
+            <div class="col-lg-6 col-xs-6 p-0">
               <div class="form-group mh-15 ml-5">
                 <label for="inputEmail3" class="label-std  control-label p-0 b-600">Role</label>
                 <select class="form-control" formControlName="Role" (change)="seletedUserRole($event)"
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="col-md-12 col-xs-12 p-0">
-            <div class="col-md-6 col-xs-6 p-0">
+            <div class="col-lg-6 col-xs-6 p-0">
               <div class="form-group mh-15 mr-5">
                 <label for="inputEmail3" class="label-std  control-label p-0 b-600">Employee Code</label>
                 <input type="hidden" [(ngModel)]="editUser.Id" formControlName="Id">
@@ -61,7 +61,7 @@
 
               </div>
             </div>
-            <div class="col-md-6 col-xs-6 p-0">
+            <div class="col-lg-6 col-xs-6 p-0">
               <div class="form-group mh-15 ml-5">
                 <label for="inputEmail3" class="label-std  control-label p-0 b-600">User Name</label>
                 <input type="text" class="form-control" id="lastname" placeholder="" [(ngModel)]="editUser.Username"
@@ -101,7 +101,7 @@
           <div class="form-group process-h border-t mt-10 mh-15" *ngIf="editUser.Role =='Agent'">
             <label for="inputEmail3" class="label-std  control-label col-md-12 col-xs-12 p-0 b-600">Expertise</label>
             <div class="col-md-12 col-xs-12 p-0">
-              <div class="col-md-6 col-xs-6 p-0">
+              <div class="col-lg-6 col-xs-6 p-0">
                 <span class="pt-10">
                   <label>Call</label>
                 </span>
@@ -116,7 +116,7 @@
                   </div>
                 </span>
               </div>
-              <div class="col-md-6 col-xs-6 p-0">
+              <div class="col-lg-6 col-xs-6 p-0">
                 <span class="pt-10">
                   <label>Email</label>
                 </span>
@@ -133,7 +133,7 @@
               </div>
             </div>
             <div class="col-md-12 col-xs-12 mt-10 p-0">
-              <div class="col-md-6 col-xs-6 p-0">
+              <div class="col-lg-6 col-xs-6 p-0">
                 <span class="pt-10">
                   <label>Fax</label>
                 </span>
@@ -148,7 +148,7 @@
                   </div>
                 </span>
               </div>
-              <div class="col-md-6 col-xs-6 p-0">
+              <div class="col-lg-6 col-xs-6 p-0">
                 <span class="pt-10">
                   <label>Website</label>
                 </span>
@@ -169,7 +169,7 @@
           </div>
           <div class="col-md-12 col-xs-12 mt-5">
             <div class="col-md-12 col-xs-12 p-0">
-              <span class="col-md-6 col-xs-6 p-0">
+              <span class="col-lg-6 col-xs-6 p-0">
                 <label>User State</label>
               </span>
               <div class="activeswitch">
@@ -182,10 +182,10 @@
               </div>
             </div>
             <div class="col-md-12 col-xs-12 p-0 mt-5">
-              <span class="col-md-6 p-0">
+              <span class="col-lg-6 p-0">
                 <label>Account Lock</label>
               </span>
-              <span class="col-md-6 p-0 text-right">
+              <span class="col-lg-6 p-0 text-right">
                 <div class="lockswitch">
                   <input type="checkbox" name="lockswitch" class="lockswitch-checkbox" id="lockswitch"
                     [(ngModel)]="editUser.Is_Locked" formControlName="Is_Locked">
@@ -197,10 +197,10 @@
               </span>
             </div>
             <div class="col-md-12 col-xs-12 p-0 mt-10">
-              <span class="col-md-6 col-xs-6 p-0">
+              <span class="col-lg-6 col-xs-6 p-0">
                 <label>Terminate</label>
               </span>
-              <span class="col-md-6 col-xs-6 p-0 text-right">
+              <span class="col-lg-6 col-xs-6 p-0 text-right">
                 <div class="yesnoswitch">
                   <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="terminate"
                     [(ngModel)]="editUser.Is_Terminated" formControlName="Is_Terminated">
@@ -214,10 +214,10 @@
           </div>
           <div class="col-md-12 col-xs-12" *ngIf="editClient">
             <div class="col-md-12 col-xs-12 p-0 pb-7"></div>
-            <div class="col-md-6 col-xs-6 p-0">
+            <div class="col-lg-6 col-xs-6 p-0">
               <label for="inputEmail3">Client</label>
             </div>
-            <div class="col-md-6 col-xs-6 text-right p-0" >
+            <div class="col-lg-6 col-xs-6 text-right p-0" >
               <label class="cursor" title="Add Client" (click)="toggelPopup()">
                 <i class="fa fa-plus-square ft-22-50 mr-3 grey-text"></i>
               </label>
