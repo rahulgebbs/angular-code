@@ -53,7 +53,8 @@ ul {
   position: relative;
   top: 1px;
   display: inline-block;
-  font-family: "Glyphicons Halflings";
+  /* font-family: "Glyphicons Halflings"; */
+  font-family: "Font Awesome 5 Free";
   font-style: normal;
   font-weight: 100;
   line-height: 1;
@@ -69,13 +70,15 @@ ul {
 }
 
 .menu .panel-default > .acc-heading a[aria-expanded="true"]:after {
-  content: "\e113";
+  /* content: "\e113"; */
+  content: "\f106";
   font-size: 8px;
   font-weight: 100;
 }
 
 .menu .panel-default > .acc-heading a[aria-expanded="false"]:after {
-  content: "\e114";
+  /* content: "\e114"; */
+  content: "\f106";
   font-size: 8px;
   font-weight: 100;
 }

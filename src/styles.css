@@ -2,6 +2,9 @@
 /* @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css"; */
 @import "../node_modules/ng-pick-datetime/assets/style/picker.min.css";
+html {
+  font-size: 80%;
+}
 .owl-dt-container {
   font-size: 1.5rem !important;
 }
@@ -46,3 +49,58 @@ html {
   padding: 5px !important;
   margin: 0px 10px 7px 10px !important;
 }
+
+/* captcha code CSS */
+.captchaContainer {
+	 width: 70%;
+	 margin: auto;
+}
+ .captchaContainer .captchaText {
+	 height: 10vh;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 color: #fff;
+	 user-select: none;
+	 cursor: not-allowed;
+}
+ .captchaContainer .captchaText .random-char {
+	 display: inline;
+	 float: left;
+	 margin: 0.5rem;
+	 font-weight: bold;
+	 font-style: italic;
+	 font-size: 2.5rem;
+}
+ .captchaContainer .captchaText .random-char p {
+	 margin: 0;
+}
+ .controls {
+	 display: flex;
+	 flex-direction: row;
+	 align-items: center;
+	 justify-content: center;
+	 padding: 10px 0 10px 0;
+}
+ .controls .inputCtrl {
+	 flex: 4;
+	 display: flex;
+	 flex-direction: column;
+	 justify-content: center;
+	 align-content: center;
+}
+ .controls .inputCtrl input {
+	 flex: 1;
+	 width: 90%;
+	 float: left;
+}
+ .controls .inputCtrl .errorSection {
+	 flex: 1;
+}
+ .controls button {
+	 float: left;
+   padding: 0.3rem 0.8rem;     
+   font-size: 1.3rem;
+   
+}
+ 

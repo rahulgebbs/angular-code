@@ -1,22 +1,27 @@
 <div class="white container-fluid">
     <div class="lock-screen">
         <div class="animate fadeIn text-center">
-            <div class="col-md-12 p-0">
+            <!-- added 'row' class -->
+            <div class="row">
                 <div class="col-md-8 blue-seprator">
-                    <img src="../../../assets/images/RCM_1.jpg" class="img-responsive">
+                    <!-- replaced 'img-responsive' class with 'img-fluid' -->
+                    <img src="../../../assets/images/RCM_1.jpg" class="img-fluid img-100">
                 </div>
                 <div class="col-md-4 p-0 bottom-align">
 
                     <div class="col-md-12">
-                        <div class="col-md-12 mb-10 p-0">
-                            <span class="col-md-6 pl-0">
+                        <!-- added 'row' class -->
+                        <div class="row mb-10 ">
+                            <span class="col-md-6 ">
                                 <div>
-                                    <img src="../../../assets/images/logo_156.png" class="img-responsive">
+                                    <!-- replaced 'img-responsive' class with 'img-fluid' -->
+                                    <img src="../../../assets/images/logo_156.png" class="img-fluid img-100">
                                 </div>
                             </span>
-                            <span class="col-md-6 blue-seprator-l pr-0">
+                            <span class="col-md-6 blue-seprator-l">
                                 <div>
-                                    <img src="../../../assets/images/iAR.png" class="img-responsive img-100">
+                                    <!-- replaced 'img-responsive' class with 'img-fluid' -->
+                                    <img src="../../../assets/images/iAR.png" class="img-fluid img-100">
                                 </div>
                             </span>
                         </div>
@@ -87,18 +92,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 text-left">
-                            <div class="col-md-6 pl-0 pr-10">
-                                <button [disabled]="DisableSubmit"
-                                    class="btn blue square-btn blue-hover btn-txt w-100">Sign
-                                    in</button>
-                            </div>
-                            <div class="col-md-6 pr-0 pl-10 plr-0">
-                                <button type="submit" [disabled]="DisableSubmit" routerLink="/forgot-password"
-                                    class="btn blue square-btn blue-hover btn-txt w-100">Forgot
-                                    password?</button>
+                        <!-- added col-md-12 -->
+                        <div class="col-md-12">
+                            <!-- added 'row' class -->
+                            <div class="row text-left">
+                                <!-- removed pl pr classes -->
+                                <div class="col-md-6" style="float: left;">
+                                    <button [disabled]="DisableSubmit"
+                                        class="btn blue square-btn blue-hover btn-txt w-100">Sign
+                                        in</button>
+                                </div>
+                                <!-- removed pl pr classes -->
+                                <div class="col-md-6" style="float: right">
+                                    <button type="submit" [disabled]="DisableSubmit" routerLink="/forgot-password"
+                                        class="btn blue square-btn blue-hover btn-txt w-100">Forgot
+                                        password?</button>
+                                </div>
                             </div>
                         </div>
+
                     </form>
 
                     <div class="col-md-12 mt-15 text-center copy-text">
