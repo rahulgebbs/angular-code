@@ -16,10 +16,21 @@
 }
 
 .radioBorder {
-    border: 1px solid #dfdfdf;
-    padding-left: 1rem;
-    min-height: 35px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
+  border: 1px solid #dfdfdf;
+  padding-left: 1rem;
+  min-height: 35px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+label {
+  padding-left: 1rem;
+}
+/* bootstrap changes*/
+
+.custom-control {
+  display: inline !important;
+  padding-left: 0 !important;
+  padding-right: 1.5rem !important;
+  float: left;
 }

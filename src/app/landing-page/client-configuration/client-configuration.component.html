@@ -1,81 +1,9 @@
 <app-header [title]="title"></app-header>
-
+<!-- bootstrap version changes -->
 <div class="col-md-12 col-sm-12 grid-h">
   <div class="col-md-12 p-0 mt-10">
     <div class="board">
-      <ul class="nav nav-tabs hide">
-        <div class="liner"></div>
-        <li [ngClass]="[ShowTabName == 'client' ? 'active' : ClientComplete ? 'completed' : '']">
-          <a class="btn" (click)="navigation('client')">
-            <span>
-              Client Configuration
-              <!-- <i class="glyphicon glyphicon-user"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="sm-width s-width"
-          [ngClass]="[ShowTabName == 'saag' ? 'active' : clientData.Is_SAAG_Uploaded ? 'completed' : '']">
-          <a class="btn" (click)="navigation('saag')">
-            <span>
-              SAAG Master
-              <!-- <i class="glyphicon glyphicon-ok"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="sm-width-c clt-width"
-          [ngClass]="[ShowTabName == 'insurance' ? 'active' : clientData.Is_Insurance_Uploaded ? 'completed' : '']">
-          <a class="btn" (click)="navigation('insurance')">
-            <span>
-              client Insurance
-              <!-- <i class="glyphicon glyphicon-ok"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="sm-width-c pm-width"
-          [ngClass]="[ShowTabName == 'provider' ? 'active' : clientData.Is_Provider_Uploaded ? 'completed' : '']">
-          <a class="btn" (click)="navigation('provider')">
-            <span>
-              Provider Master
-              <!-- <i class="glyphicon glyphicon-ok"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="sm-width-c"
-          [ngClass]="[ShowTabName == 'inventory' ? 'active' : clientData.Is_Inventory_Uploaded ? 'completed':'']">
-          <a class="btn" (click)="navigation('inventory')">
-            <span>
-              Client Inventory
-              <!-- <i class="glyphicon glyphicon-heart"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="dm-width"
-          [ngClass]="[ShowTabName == 'dropdown' ? 'active' : clientData.Is_Dropdown_Uploaded ? 'completed':'']">
-          <a class="btn" (click)="navigation('dropdown')">
-            <span>
-              Dropdown Management
-              <!-- <i class="glyphicon glyphicon-plus"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="dm-width"
-          [ngClass]="[ShowTabName == 'formula' ? 'active' :'',clientData.Is_Formula_Uploaded ? 'completed':'']">
-          <a class="btn" (click)="navigation('formula')">
-            <span>
-              Formula Management
-              <!-- <i class="glyphicon glyphicon-ok"></i> -->
-            </span>
-          </a>
-        </li>
-        <li class="dm-width"
-          [ngClass]="[ShowTabName == 'appeal' ? 'active' :'',clientData.Is_Appeal_Uploaded ? 'completed':'']">
-          <a class="btn" (click)="navigation('appeal')">
-            <span class="pr-20">
-              Appeal Management
-            </span>
-          </a>
-        </li>
-      </ul>
+      <!-- bootstrap removed nav-tabs HTML -->
       <ul class="steps steps-5">
         <li (click)="navigation('client')"
           [ngClass]="[ShowTabName == 'client' ? 'active' : ClientComplete ? 'completed' : '']">

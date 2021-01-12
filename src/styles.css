@@ -3,7 +3,7 @@
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css"; */
 @import "../node_modules/ng-pick-datetime/assets/style/picker.min.css";
 html {
-  font-size: 80%;
+  font-size: 70%;
 }
 .owl-dt-container {
   font-size: 1.5rem !important;
