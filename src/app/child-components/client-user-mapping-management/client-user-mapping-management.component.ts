@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AddClientUserMappingManagementComponent } from './add-client-user-mapping-management/add-client-user-mapping-management.component';
+// import { AddClientUserMappingManagementComponent } from './add-client-user-mapping-management/add-client-user-mapping-management.component';
 import { ClientService } from 'src/app/service/client-configuration/client.service';
 
 
@@ -113,7 +113,7 @@ export class ClientUserMappingManagementComponent implements OnInit {
     console.log('openEditMappingModal : ', user);
     this.editModal = { random: Math.random() };
     this.activeUser = user;
-    
+
   }
   openDeleteMappingModal(user) {
     console.log('openDeleteMappingModal : ');

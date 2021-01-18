@@ -141,12 +141,9 @@ export class customValidation {
                 control.get('Email_Id').clearValidators()
             }
         } else {
-
         }
 
         if (control.get('User_Type').value == 'GeBBS') {
-
-
             // console.log(control.get('Email_Id').value)
             if (control.get('Email_Id').value == undefined) {
                 control.get('Email_Id').setErrors({ required: true });

@@ -185,3 +185,7 @@ ul {
   pointer-events: none;
   /* cursor: not-allowed !important; */
 }
+
+li {
+  width: 100%;
+}
