@@ -106,3 +106,10 @@ html {
   padding: 0.3rem 0.8rem;
   font-size: 1.3rem;
 }
+
+
+/* Global Bootstrap changes */
+
+.row{
+  margin: 0 !important;
+}
