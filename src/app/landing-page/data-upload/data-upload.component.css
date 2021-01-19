@@ -9,15 +9,24 @@
 
 .radioBorder {
   border: 1px solid #dfdfdf;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
   min-height: 35px;
   display: flex;
+  /* justify-content: left; */
   justify-content: left;
   align-items: center;
 }
+.radio-inline {
+  padding-left: 1rem;
+}
+input[type="radio"] {
+  margin-top: -1px;
+  vertical-align: middle;
+  padding-left: 1rem;
+}
 
 form {
-  width: 35%;
+  width: 30%;
   margin: auto;
 }
 
