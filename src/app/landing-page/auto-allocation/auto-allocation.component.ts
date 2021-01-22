@@ -132,8 +132,10 @@ export class AutoAllocationComponent implements OnInit {
         this.ClientMatrixData = res.json().Data.Effective_Matrix;
         this.ConfigureBucketName();
         this.SettingsForm.patchValue({ 'Id': this.ClientSettings.Id, 'Updated_Date': this.ClientSettings.Updated_Date })
+        this.DisableSearch = false;
       },
       err => {
+        this.DisableSearch = false;
         this.ResponseHelper.GetFaliureResponse(err);
       }
     );
