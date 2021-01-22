@@ -1,7 +1,7 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="col-md-12 p-0 grey">
+  <div class="row p-0 grey">
     <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span class="text-sm text-ellipsis heading-txt flex" *ngIf="title==null">Employee Code
@@ -13,8 +13,8 @@
       <i class="fa fa-times" aria-hidden="true"></i>
     </span>
   </div>
-  <div class="col-md-12 p-0">
-    <div class="col-md-12 p-0 mt-10 border-b">
+  <div class="col-md-12 mt-10">
+    <div class="row p-0 border-b">
       <div class="col-md-3">
         <label class="custom-control">
           <input type="checkbox" id="selectall" [(ngModel)]="SelectAll" (change)="SelectAllToggle($event)" />
