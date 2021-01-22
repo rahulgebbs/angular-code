@@ -1,59 +1,61 @@
 <app-header [title]="Title"></app-header>
 
-<div class="col-md-12 pull-left mt-10 border-b pb-10">
-  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
-  <span class="mr-10 pt-5 pull-left">
-    {{Client_Name}}
-    <!-- <select class="form-control" (change)="ClientListOnChange()" [(ngModel)]="ClientId">
-      <option value="0">Select</option>
-      <option *ngFor="let c of ClientList" [value]="c.Id" [selected]="c.selected">{{c.Client_Name}}
-      </option>
-    </select> -->
-  </span>
-  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Status</span>
-  <span class="pull-left mr-10 pt-3">
-    <select class="form-control" (change)="OnActionChange()" [(ngModel)]="Action">
-      <option *ngFor="let a of ActionList" [value]="a.Value">{{a.Key}}
-      </option>
-    </select>
-  </span>
-  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">From Date</span>
-  <span class="wt-120 pull-left mr-10">
-
-    <div class="input-group date wt-120" id="datetimepicker1">
-      <input autocomplete="off" [min]="MinDate" [(ngModel)]="FromDate" (dateTimeInput)="FromDateOnChange()"
-        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp"
-        name="date" [owlDateTime]="dt1">
-      <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-        <span class="glyphicon glyphicon-calendar"></span>
-      </span>
-      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+<div class="container-fluid pt-10">
+  <form class="form-inline row" name="displayForm">
+    <div class="form-group ">
+      <label for="clientField" class="formLabel" style="font-weight: bold">
+        Client &nbsp;
+      </label>
+      <label id="clientField">{{Client_Name}}</label>
     </div>
-
-  </span>
-  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">To Date</span>
-  <span class="wt-120 pull-left mr-10">
-
-    <div class="input-group date wt-120" id="datetimepicker2">
-      <input autocomplete="off" [min]="MinDate" [(ngModel)]="ToDate" (keydown)="BlockInput($event)"
-        (keypress)="BlockInput($event)" (dateTimeInput)="ToDateOnChange()" [owlDateTimeTrigger]="dt2" class="owl-dp"
-        name="date" [owlDateTime]="dt2">
-      <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
-        <span class="glyphicon glyphicon-calendar"></span>
-      </span>
-      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+    <div class="form-group">
+      <label for="status" class="formLabel" style="font-weight: bold">
+        Status &nbsp;
+      </label>
+      <select id="status" class="form-control" (change)="OnActionChange()" name="Action" [(ngModel)]="Action">
+        <option *ngFor="let a of ActionList" [value]="a.Value">{{a.Key}}
+        </option>
+      </select>
     </div>
-
-  </span>
-  <span>
-    <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
-      (click)="Search()">Search</button>
-  </span>
-  <span>
-    <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
-      (click)="getDataForExcel()">Export To Excel</button>
-  </span>
+    <div class="form-group ">
+      <label for="fromDate" class="formLabel" style="font-weight: bold">
+        From Date &nbsp;
+      </label>
+      <div id="fromDate" class="input-group date row" id="datetimepicker1">
+        <input autocomplete="off" [min]="MinDate" [(ngModel)]="FromDate" (dateTimeInput)="FromDateOnChange()"
+          (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+          class="owl-dp col-md-10" name="date" [owlDateTime]="dt1">
+        <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
+          <span class="fa fa-calendar"></span>
+        </span>
+        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="toDate" class="formLabel" style="font-weight: bold">
+        To Date &nbsp;
+      </label>
+      <div id="toDate" class="input-group date row" id="datetimepicker2">
+        <input autocomplete="off" [min]="MinDate" [(ngModel)]="ToDate" (keydown)="BlockInput($event)"
+          (keypress)="BlockInput($event)" (dateTimeInput)="ToDateOnChange()" [owlDateTimeTrigger]="dt2"
+          class="owl-dp col-md-10" name="date" [owlDateTime]="dt2">
+        <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt2">
+          <span class="fa fa-calendar"></span>
+        </span>
+        <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+      </div>
+    </div>
+    <span>
+      <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
+        (click)="Search()">Search</button>
+    </span>
+    <span>
+      <button class="btn blue square-btn blue-hover btn-txt mr-10 mt-0" [disabled]="DisableSearch || ClientId == 0"
+        (click)="getDataForExcel()">Export To Excel</button>
+    </span>
+  </form>
 </div>
+
 <div *ngIf="ShowMain" class="col-md-3 p-0 client-app blue-seprator serpartion-ht">
   <div class="col-md-12 col-sm-12 p-0">
     <div class="heading-panel ptb-0">
