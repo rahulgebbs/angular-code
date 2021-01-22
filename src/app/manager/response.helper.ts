@@ -4,8 +4,8 @@ export class ResponseHelper {
     constructor(private notification: NotificationService) { }
 
     GetSuccessResponse(httpres): number {
-        // console.log('GetSuccessResponse httpres : ', httpres);
-        let notifydata = httpres.Message ? httpres.Message : httpres.json().Message;
+        console.log('GetSuccessResponse httpres : ', httpres);
+        let notifydata = httpres && httpres.Message ? httpres.Message : httpres.json().Message;
         // console.log('notifydata : ', notifydata, httpres);
         if (notifydata && notifydata.length == 0) {
             return 0;
