@@ -7,3 +7,12 @@
 .input-group.date .input-group-addon{
     cursor:pointer;
 }
+
+.form-group {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .custom-control {
+    padding-left: 0 !important;
+  }
+  
