@@ -2,14 +2,13 @@
 
 <div class="mar">
   <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">From Date</span>
-  <span class="wt-120 pull-left mr-10">
-
-    <div class="input-group date wt-120" id="datetimepicker1">
+  <span class=" pull-left mr-10">
+    <div class="input-group date row" id="datetimepicker1">
       <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="FromDate" (dateTimeInput)=onChange($event)
-        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp"
-        name="date" [owlDateTime]="dt1">
-      <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-        <span class="glyphicon glyphicon-calendar"></span>
+        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
+        class="owl-dp col-md-10" name="date" [owlDateTime]="dt1">
+      <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
+        <span class="fa fa-calendar"></span>
       </span>
       <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
     </div>
@@ -19,19 +18,19 @@
   </span>
 
   <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">To Date</span>
-  <span class="wt-120 pull-left mr-10">
+  <span class=" pull-left mr-10">
 
-    <div class="input-group date wt-120" id="datetimepicker2">
+    <div class="input-group date row" id="datetimepicker2">
       <input autocomplete="off" [min]="MinDate" [max]="maxDate" [(ngModel)]="ToDate" (dateTimeInput)=onChange($event)
-        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp"
+        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp col-md-10"
         name="date" [owlDateTime]="dt2">
-      <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
-        <span class="glyphicon glyphicon-calendar"></span>
+      <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt2">
+        <span class="fa fa-calendar"></span>
       </span>
       <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
     </div>
     <div class="error" *ngIf="disableExport && !ToDate">
-      Please select  To Date
+      Please select To Date
     </div>
   </span>
 
@@ -43,7 +42,7 @@
     Please select From Date and To Date
   </div> -->
 </div>
-<div class="col-md-12 col-sm-12 col-sm-12 p-0">
+<div class="row p-0">
   <div class="col-md-12 col-sm-12 mt-10">
     <div class="table-responcive">
       <div class="client-ins-rep sticky-table sticky-ltr-cells border-0 table-hight">
@@ -58,4 +57,4 @@
     </div>
   </div>
 </div>
-<app-client-dashboard-modal *ngIf="showpopup" (Toggle)="toggleModal()"  [countdata]="count"></app-client-dashboard-modal>
+<app-client-dashboard-modal *ngIf="showpopup" (Toggle)="toggleModal()" [countdata]="count"></app-client-dashboard-modal>
