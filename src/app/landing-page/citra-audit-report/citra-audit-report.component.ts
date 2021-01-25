@@ -163,7 +163,8 @@ export class CitraAuditReportComponent implements OnInit {
   GetAllEmployees() {
     this.citraauditreport.GetAllSupervisors(this.ClientId).subscribe(
       res => {
-        this.Employees = res.json().Data;
+        console.log('GetAllSupervisors res: ', res.json())
+        this.Employees = res && res.json() ? res.json().Data : [];
         this.Employees.forEach(e => {
           e.Is_Selected = false;
 
@@ -253,7 +254,7 @@ export class CitraAuditReportComponent implements OnInit {
   //         this.disablesubmit = true
   //         this.excel.downloadExcel(res)
   //         this.ResponseHelper.GetSuccessResponse(res);
-          
+
   //       },
   //       err => {
   //         console.log('error');
@@ -293,7 +294,7 @@ export class CitraAuditReportComponent implements OnInit {
       this.Employees.forEach(e => {
         e.Is_Selected = false;
       })
-    } 
+    }
     else {
       this.exportFunction()
     }
@@ -314,8 +315,9 @@ export class CitraAuditReportComponent implements OnInit {
         res => {
           this.disablesubmit = true
           this.excel.downloadExcel(res)
-          this.resetForm()
-          this.ResponseHelper.GetSuccessResponse(res);
+          this.resetForm();
+          // commented for error
+          // this.ResponseHelper.GetSuccessResponse(res);
         },
         err => {
           this.ResponseHelper.GetFaliureResponse(err);

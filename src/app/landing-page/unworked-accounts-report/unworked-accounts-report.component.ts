@@ -17,25 +17,25 @@ import { ExcelService } from 'src/app/service/client-configuration/excel.service
   providers: [dropDownFields]
 })
 export class UnworkedAccountsReportComponent implements OnInit {
-  disablesubmit:boolean=true;
+  disablesubmit: boolean = true;
   Title = "Unworked Accounts Report";
   ShowModal = false;
   DisplayError = false;
-  EmployeeString="";
-  SelectedEmployees=[];
-  Employees=[];
-  UnworkedForm:FormGroup;
-  DisableEmployeeSelect=true;
-  ClientId:number=0;
+  EmployeeString = "";
+  SelectedEmployees = [];
+  Employees = [];
+  UnworkedForm: FormGroup;
+  DisableEmployeeSelect = true;
+  ClientId: number = 0;
   ResponseHelper: ResponseHelper;
-  DonwloadConfig:boolean=false;
+  DonwloadConfig: boolean = false;
   UserId: number;
   Role;
-  ClientList:any[]=[];
+  ClientList: any[] = [];
   singleclient: boolean = false;
 
 
-  constructor(private excelService:ExcelService, private unworkedAccountService:UnworkedAccountsReportService,private notification: NotificationService,private router: Router,private selectField: dropDownFields,private fb: FormBuilder) { 
+  constructor(private excelService: ExcelService, private unworkedAccountService: UnworkedAccountsReportService, private notification: NotificationService, private router: Router, private selectField: dropDownFields, private fb: FormBuilder) {
     this.ResponseHelper = new ResponseHelper(this.notification);
   }
 
@@ -74,181 +74,180 @@ export class UnworkedAccountsReportComponent implements OnInit {
       this.ClientId = event.target.value;
       this.DisableEmployeeSelect = false;
       this.GetAllEmployees()
-     // this.ShowDownloadButton(this.ClientId);
+      // this.ShowDownloadButton(this.ClientId);
     }
   }
 
 
-//all methods
-GetAllEmployees() {
-  this.unworkedAccountService.GetAllEmployees(this.ClientId).subscribe(
-    res => {
-      this.Employees = res.json().Data;
-      this.Employees.forEach(e => {
+  //all methods
+  GetAllEmployees() {
+    this.unworkedAccountService.GetAllEmployees(this.ClientId).subscribe(
+      res => {
+        this.Employees = res.json().Data;
+        this.Employees.forEach(e => {
+          e.Is_Selected = false;
+
+        })
+      },
+      err => {
+        this.ResponseHelper.GetFaliureResponse(err)
+      }
+    )
+  }
+
+  // ShowDownloadButton(ClientId)
+  // {
+  // this.unworkedAccountService.ReportDownloadConfig(ClientId).subscribe(
+  // res =>{
+  // //var abc =res.json().Data;
+  // this.DonwloadConfig=res.json().Data.Is_Simple_Report_Download; 
+  // console.log(res.json().Data.Is_Simple_Report_Download); 
+  // },
+  // err=>{
+  // this.ResponseHelper.GetFaliureResponse(err);
+  // } )
+  // }
+
+  selectedValue(data) {
+
+    if (data.length == 1 && data.length) {
+
+      this.DisableEmployeeSelect = false;
+      this.disablesubmit = false
+      data[0].selected = true;
+      this.ClientId = data[0].Client_Id
+      this.singleclient = true;
+      this.GetAllEmployees();
+    } else {
+
+    }
+  }
+
+  CreateForm() {
+    if (!this.singleclient) {
+      this.UnworkedForm = this.fb.group({
+
+        'Client_Id': ['', Validators.required],
+        'Employee_Ids': ['', Validators.required]
+      }
+      )
+    } else {
+      this.UnworkedForm = this.fb.group({
+        'Client_Id': [this.ClientId, Validators.required],
+        'Employee_Ids': ['', Validators.required]
+      }
+      )
+    }
+  }
+
+  resetForm() {
+
+
+    this.UnworkedForm.reset({
+
+      ClientId: this.ClientList[0].Client_Id,
+      Employee_Ids: '',
+
+    })
+    this.ClientId
+  }
+  // SetSelectedEmp(event) {
+  //   this.UnworkedForm.patchValue({ 'Employee_Ids': '' })
+  //   this.EmployeeString = "";
+  //   this.SelectedEmployees = event;
+  //   this.ShowModal = false;
+  //   this.SelectedEmployees.forEach(e => {
+  //     let name = e.Employee_Code + " " + e.Full_Name;
+  //     this.EmployeeString += name;
+  //     this.EmployeeString += (", ");
+
+  //   })
+  // }
+  SetSelectedEmp(event) {
+    this.UnworkedForm.patchValue({ 'Employee_Ids': '' })
+    this.EmployeeString = "";
+    this.SelectedEmployees = event;
+    this.ShowModal = false;
+    this.SelectedEmployees.forEach(e => {
+      let name = e.Employee_Code + " " + e.Full_Name;
+      this.EmployeeString += name;
+      this.EmployeeString += (", ");
+
+    })
+    this.EmployeeString = this.EmployeeString.substring(0, this.EmployeeString.length - 2);
+    let selectedId = [];
+    this.SelectedEmployees.forEach(e => {
+      selectedId.push(e.Employee_Code)
+    });
+    this.UnworkedForm.patchValue({ 'Employee_Ids': selectedId })
+  }
+
+  OpenModal() {
+    this.ShowModal = true;
+  }
+  CloseModal() {
+    this.ShowModal = false;
+    this.Employees.forEach(e => {
+      if (e.Is_Selected && !e.Is_Old) {
         e.Is_Selected = false;
-
-      })
-    },
-    err => {
-      this.ResponseHelper.GetFaliureResponse(err)
-    }
-  )
-}
-
-// ShowDownloadButton(ClientId)
-// {
-// this.unworkedAccountService.ReportDownloadConfig(ClientId).subscribe(
-// res =>{
-// //var abc =res.json().Data;
-// this.DonwloadConfig=res.json().Data.Is_Simple_Report_Download; 
-// console.log(res.json().Data.Is_Simple_Report_Download); 
-// },
-// err=>{
-// this.ResponseHelper.GetFaliureResponse(err);
-// } )
-// }
-
-selectedValue(data) {
-
-  if (data.length == 1 && data.length) {
-
-    this.DisableEmployeeSelect = false;
-    this.disablesubmit = false
-    data[0].selected = true;
-    this.ClientId = data[0].Client_Id
-    this.singleclient = true;
-    this.GetAllEmployees();
-  } else {
-
+      }
+      if (!e.Is_Selected && e.Is_Old) {
+        e.Is_Selected = true;
+      }
+    })
   }
-}
 
-CreateForm() {
-  if (!this.singleclient) {
-    this.UnworkedForm = this.fb.group({
-
-      'Client_Id': ['', Validators.required],
-      'Employee_Ids': ['', Validators.required]   
-    }     
-    )
-  } else {
-    this.UnworkedForm = this.fb.group({
-      'Client_Id': [this.ClientId, Validators.required],
-      'Employee_Ids': ['', Validators.required]   
-    }     
-    )
-  }
-}
-
-resetForm() {
-
-
-  this.UnworkedForm.reset({
-
-    ClientId: this.ClientList[0].Client_Id,
-    Employee_Ids: '',
-  
-  })
-  this.ClientId
-}
-// SetSelectedEmp(event) {
-//   this.UnworkedForm.patchValue({ 'Employee_Ids': '' })
-//   this.EmployeeString = "";
-//   this.SelectedEmployees = event;
-//   this.ShowModal = false;
-//   this.SelectedEmployees.forEach(e => {
-//     let name = e.Employee_Code + " " + e.Full_Name;
-//     this.EmployeeString += name;
-//     this.EmployeeString += (", ");
-
-//   })
-// }
-SetSelectedEmp(event) {
-  this.UnworkedForm.patchValue({ 'Employee_Ids': '' })
-  this.EmployeeString = "";
-  this.SelectedEmployees = event;
-  this.ShowModal = false;
-  this.SelectedEmployees.forEach(e => {
-    let name = e.Employee_Code + " " + e.Full_Name;
-    this.EmployeeString += name;
-    this.EmployeeString += (", ");
-
-  })
-  this.EmployeeString = this.EmployeeString.substring(0, this.EmployeeString.length - 2);
-  let selectedId = [];
-  this.SelectedEmployees.forEach(e => {
-    selectedId.push(e.Employee_Code)
-  });
-  this.UnworkedForm.patchValue({ 'Employee_Ids': selectedId })
-}
-
-OpenModal() {
-  this.ShowModal = true;
-}
-CloseModal() {
-  this.ShowModal = false;
-  this.Employees.forEach(e => {
-    if (e.Is_Selected && !e.Is_Old) {
-      e.Is_Selected = false;
-    }
-    if (!e.Is_Selected && e.Is_Old) {
-      e.Is_Selected = true;
-    }
-  })
-}
-
-ExportToExcel() { 
+  ExportToExcel() {
 
     if (this.UnworkedForm.value.Employee_Ids != "") {
       this.exportFunction()
       this.Employees.forEach(e => {
         e.Is_Selected = false;
-
       })
     } else {
       this.exportFunction()
     }
 
-}
-
-
-exportFunction() {
-  if (this.UnworkedForm.valid) {
-    this.DisplayError = false;   
-    // console.log(this.SimpleForm.value);
-
-    this.unworkedAccountService.GetReport(this.UnworkedForm.value).pipe(finalize(() => {
-      this.EmployeeString = "";
-      this.CreateForm();
-      //this.resetForm();
-    })).subscribe(
-      res => {
-        this.excelService.downloadExcel(res)
-        this.ResponseHelper.GetSuccessResponse(res);
-        this.disablesubmit = true
-        // this.ResponseHelper.GetSuccessResponse(res);
-        // this.disablesubmit = true
-      },
-      err => {
-       // this.ResponseHelper.GetFaliureResponse(err);
-       console.log('error');
-       this.ResponseHelper.GetFaliureResponse(err);
-      }
-    )
-  }
-  else {
-    this.DisplayError = true;
-  }
-}
-
-
-BlockInput(event) {
-  if (event.key == 'Backspace' || event.key == 'Tab') {
-    return true;
-  }
-  else {
-    return false;
   }
 
-}
+
+  exportFunction() {
+    if (this.UnworkedForm.valid) {
+      this.DisplayError = false;
+      // console.log(this.SimpleForm.value);
+
+      this.unworkedAccountService.GetReport(this.UnworkedForm.value).pipe(finalize(() => {
+        this.EmployeeString = "";
+        this.CreateForm();
+        //this.resetForm();
+      })).subscribe(
+        res => {
+          this.excelService.downloadExcel(res)
+          this.ResponseHelper.GetSuccessResponse(res);
+          this.disablesubmit = true
+          // this.ResponseHelper.GetSuccessResponse(res);
+          // this.disablesubmit = true
+        },
+        err => {
+          // this.ResponseHelper.GetFaliureResponse(err);
+          console.log('error');
+          this.ResponseHelper.GetFaliureResponse(err);
+        }
+      )
+    }
+    else {
+      this.DisplayError = true;
+    }
+  }
+
+
+  BlockInput(event) {
+    if (event.key == 'Backspace' || event.key == 'Tab') {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
 }

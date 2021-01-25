@@ -35,14 +35,14 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    const UserID = sessionStorage.getItem('UserID');
-    if (UserID != null) {
-      this.ResetPasswordForm.patchValue({ User_Id: UserID });
-      this.ResponseHelper = new ResponseHelper(this.notificationservice);
-    }
-    else {
-      this.router.navigate(['/login']);
-    }
+    // const UserID = sessionStorage.getItem('UserID');
+    // if (UserID != null) {
+    //   this.ResetPasswordForm.patchValue({ User_Id: UserID });
+    //   this.ResponseHelper = new ResponseHelper(this.notificationservice);
+    // }
+    // else {
+    //   this.router.navigate(['/login']);
+    // }
 
     this.cdr.detectChanges();
   }

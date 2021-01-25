@@ -1,6 +1,6 @@
 <div role="tabpanel" class="tab-pane nav-tab-content" id="step-4">
   <div class="col-md-12 p-0">
-    <div class="provider-process">
+    <div class="provider-process row">
       <div class="col-md-9">
         <span class="form-group file-provider mt-10">
           <div class="file-upload-wrapper" [attr.data-text]="Filename">
@@ -27,7 +27,6 @@
             class="export-btn btn label grey lg-text label-info square-btn cursor mr-10 mtb-10">
             <i class="fa fa-file-excel-o mr-5" aria-hidden="true"></i>Export To Excel</button>
         </span>
-
       </div>
       <div class="col-md-3 p-0">
         <span class="pull-right pt-8  w-auto">
@@ -39,17 +38,21 @@
   </div>
 
   <div class="col-md-12 p-0">
-    <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
-    <div class="col-md-12 p-0">
-      <div class="provider-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
-        <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true" [enableColResize]="true"
-          [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
-          [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection"
-          (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true" (rowClicked)="onRowClicked($event)"
-          (cellClicked)='onCellClicked($event)'>
-        </ag-grid-angular>
+    <div class="row">
+      <div class="col-md-12 right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+      <div class="col-md-12 p-0">
+        <div class="provider-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+          <ag-grid-angular [enableSorting]="true" [enableFilter]="true" [pagination]="true" [enableColResize]="true"
+            [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+            [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection"
+            (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true" (rowClicked)="onRowClicked($event)"
+            (cellClicked)='onCellClicked($event)'>
+          </ag-grid-angular>
+        </div>
       </div>
     </div>
+
+
   </div>
 
   <div class="col-md-12 text-right p-0">

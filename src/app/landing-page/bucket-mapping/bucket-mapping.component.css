@@ -5,3 +5,9 @@
 .ag-body-container{
     width: auto !important;
 }
+.agent-buk-map-sticky .sticky-table {
+    height: 63vh;
+  }
+  .agent-buk-map-sticky .blue-seprator {
+    height: 6vvh;
+  }

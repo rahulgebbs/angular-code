@@ -1,9 +1,8 @@
 .grid-w {
-  height:100%;
+  height: 100%;
 }
 
-
-.pop-bg{
+.pop-bg {
   background: #000000b8;
   position: fixed;
   top: 0;
@@ -18,7 +17,7 @@
   overflow-y: inherit;
   /* z-index: 1050; */
 }
-.pop-position{
+.pop-position {
   height: auto;
   background: white;
   margin: auto;
@@ -31,7 +30,7 @@
   right: 0;
   bottom: 300px;
 }
-.grey{
+.grey {
   background: #ddd;
   color: #000;
 }
@@ -48,7 +47,7 @@
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
 }
 .heading-txt {
   font-size: 18px;
@@ -60,7 +59,10 @@
   padding-bottom: 10px;
 }
 
-
-.pt-7{
+.pt-7 {
   padding-top: 7px;
+}
+
+.right-most {
+  text-align: right;
 }

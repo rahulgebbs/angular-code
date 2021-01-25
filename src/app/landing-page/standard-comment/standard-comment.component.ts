@@ -49,11 +49,12 @@ export class StandardCommentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.CreateStandardCommentForm();
     this.ClientList = this.selectedFields.setSelected(this.userdata.Clients);
     if (this.ClientList[0].selected) {
       this.ClientId = this.ClientList[0].Client_Id;
+      this.AddStandardComment.patchValue({ Client_Id: this.ClientId })
     }
-    this.CreateStandardCommentForm();
   }
 
   CreateStandardCommentForm() {

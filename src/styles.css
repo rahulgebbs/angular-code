@@ -52,55 +52,64 @@ html {
 
 /* captcha code CSS */
 .captchaContainer {
-	 width: 70%;
-	 margin: auto;
+  width: 70%;
+  margin: auto;
 }
- .captchaContainer .captchaText {
-	 height: 10vh;
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 color: #fff;
-	 user-select: none;
-	 cursor: not-allowed;
+.captchaContainer .captchaText {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  user-select: none;
+  cursor: not-allowed;
 }
- .captchaContainer .captchaText .random-char {
-	 display: inline;
-	 float: left;
-	 margin: 0.5rem;
-	 font-weight: bold;
-	 font-style: italic;
-	 font-size: 2.5rem;
+.captchaContainer .captchaText .random-char {
+  display: inline;
+  float: left;
+  margin: 0.5rem;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 2.5rem;
 }
- .captchaContainer .captchaText .random-char p {
-	 margin: 0;
+.captchaContainer .captchaText .random-char p {
+  margin: 0;
 }
- .controls {
-	 display: flex;
-	 flex-direction: row;
-	 align-items: center;
-	 justify-content: center;
-	 padding: 10px 0 10px 0;
+.captchaContainer button {
+  color: #fff !important;
+  background-color: #0078ae !important;
 }
- .controls .inputCtrl {
-	 flex: 4;
-	 display: flex;
-	 flex-direction: column;
-	 justify-content: center;
-	 align-content: center;
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 10px 0;
 }
- .controls .inputCtrl input {
-	 flex: 1;
-	 width: 90%;
-	 float: left;
+.controls .inputCtrl {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
- .controls .inputCtrl .errorSection {
-	 flex: 1;
+.controls .inputCtrl input {
+  flex: 1;
+  width: 90%;
+  float: left;
 }
- .controls button {
-	 float: left;
-   padding: 0.3rem 0.8rem;     
-   font-size: 1.3rem;
-   
+.controls .inputCtrl .errorSection {
+  flex: 1;
 }
- 
+.controls button {
+  float: left;
+  padding: 0.3rem 0.8rem;
+  font-size: 1.3rem;
+}
+
+
+/* Global Bootstrap changes */
+
+.row{
+  margin: 0 !important;
+}

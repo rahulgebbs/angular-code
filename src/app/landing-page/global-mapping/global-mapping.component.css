@@ -1,17 +1,18 @@
-.grid-w{
-    height:100%;
+.grid-w {
+    height: 100%;
 }
 
-.ag-cell{
+.ag-cell {
     white-space: nowrap !important;
 }
 
-.total-p{
+.total-p {
     position: absolute;
     right: 43px;
 }
+
 .formLabel {
     font-weight: bold;
-    padding-left: 1.3rem;
+    /* padding-left: 1.3rem; */
     font-size: 1.3rem;
-  }
+}

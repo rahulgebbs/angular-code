@@ -48,10 +48,12 @@ export class ClientComponent implements OnInit {
     { headerName: 'Status', field: 'Status' },
   ]
   Is_PCN = false;
-  formObj = null
+  formObj = null;
+  clientDropdownObj: any = {}
   constructor(private router: Router, private services: ClientService, public fb: FormBuilder, private notificationservice: NotificationService, ) {
 
-
+    
+    
     this.token = new Token(this.router);
     this.userData = this.token.GetUserData();
     this.addClient = this.fb.group({
@@ -74,13 +76,15 @@ export class ClientComponent implements OnInit {
       //  "Is_Appeal_Processed":[""]
     })
     this.getClientList();
+    
     this.addClient.get('DB_Name').disable();
     console.log('constructor userData : ', this.userData)
 
   }
 
-  ngOnInit() {
-
+   ngOnInit() {
+    this.clientDropdownObj =  this.services.manageClientList();
+    console.log('this.clientDropdownObj : ', this.clientDropdownObj);
     if (this.SelectedClientData) {
 
       this.clientData = this.SelectedClientData;

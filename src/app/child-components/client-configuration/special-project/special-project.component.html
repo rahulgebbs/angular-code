@@ -1,9 +1,8 @@
 <div class="tab-content nav-tab-content">
   <form>
-    <div role="tabpanel" class="tab-pane" id="step-2">
-
+    <div role="tabpanel" class="tab-pane row" id="step-2">
       <div class="col-md-12 p-0">
-        <div class="provider-process">
+        <div class="provider-process row">
           <div class="col-md-9">
             <span class="form-group file-provider mt-10">
               <input name="file-upload-field" [(ngModel)]="projectName" type="text" class="form-control"
@@ -25,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+      <div class="col-md-12 right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
       <div class="col-md-12 p-0">
         <div class="col-md-12">
         </div>

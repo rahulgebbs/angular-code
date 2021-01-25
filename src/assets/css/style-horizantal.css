@@ -19,6 +19,7 @@ body {
 }
 .right-most {
   float: right !important;
+  /* text-align: right; */
 }
 .w-100 {
   width: 100%;
@@ -585,6 +586,7 @@ a:hover {
   margin-left: 1rem;
   font-style: normal;
   z-index: 1;
+  color: #fff;
 }
 .circle-buget {
   min-width: 2px;
@@ -1406,7 +1408,7 @@ input:-ms-input-placeholder {
   background: #fff;
 }
 .sticky-table {
-  /* max-height: 80vh; */
+  /* max-height: 63vh; */
   overflow-y: auto;
 }
 .sticky-table table tr.sticky-header th,
@@ -4057,7 +4059,7 @@ div[role="tabpanel"]:after {
     height: 212px;
   }
   .appeal-auto-h {
-    height: 240px;
+    max-height: 240px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4197,7 +4199,7 @@ div[role="tabpanel"]:after {
     height: 330px;
   }
   .appeal-auto-h {
-    height: 365px;
+    max-height: 365px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4348,7 +4350,7 @@ div[role="tabpanel"]:after {
     height: 380px;
   }
   .appeal-auto-h {
-    height: 410px;
+    max-height: 410px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4476,7 +4478,7 @@ div[role="tabpanel"]:after {
     height: 410px;
   }
   .appeal-auto-h {
-    height: 440px;
+    max-height: 440px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4616,7 +4618,7 @@ div[role="tabpanel"]:after {
     height: 476px;
   }
   .appeal-auto-h {
-    height: 480px;
+    max-height: 480px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4706,7 +4708,7 @@ div[role="tabpanel"]:after {
     height: 510px;
   }
   .appeal-auto-h {
-    height: 65vh;
+    max-height: 65vh;
   }
   .client-inv-sticky .sticky-table {
     height: 520px;
@@ -4856,7 +4858,7 @@ div[role="tabpanel"]:after {
     height: 615px;
   }
   .appeal-auto-h {
-    height: 633px;
+    max-height: 633px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4899,7 +4901,7 @@ div[role="tabpanel"]:after {
     height: 86.3vh;
   }
   .appeal-auto-h {
-    height: 65vh;
+    max-height: 65vh;
   }
   .sagg-sticky-tbl.sticky-table {
     height: 380px;
@@ -4921,7 +4923,7 @@ div[role="tabpanel"]:after {
     height: 380px;
   }
   .appeal-auto-h {
-    height: 400px;
+    max-height: 400px;
     overflow-y: auto;
   }
   .client-inv-sticky .sticky-table {
@@ -4966,6 +4968,7 @@ div[role="tabpanel"]:after {
   }
   .userlist-stickytable .sticky-table .grid-w {
     height: 100%;
+    /* height: 510px; */
   }
   .sagg-sticky-tbl.sticky-table {
     height: 510px;
@@ -4987,7 +4990,7 @@ div[role="tabpanel"]:after {
     height: 510px;
   }
   .appeal-auto-h {
-    height: 65vh;
+    max-height: 65vh;
   }
   .client-inv-sticky .sticky-table {
     height: 520px;
