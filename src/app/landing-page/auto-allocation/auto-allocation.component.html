@@ -1,5 +1,5 @@
 <app-header [title]="Title"></app-header>
-<div class="container-fluid">
+<div class="container-fluid p-0">
   <div class="row">
     <div class="col-md-12 pt-8">
       <form class="form-inline" [formGroup]="testForm" novalidate>
@@ -31,7 +31,7 @@
         </span> -->
       </form>
     </div>
-    <div class="row p-0 border-t">
+    <div class="col-md-12 row p-0 border-t">
       <div class="col-md-3 p-0 blue-seprator serpartion-h">
         <form [formGroup]="SettingsForm" novalidate (ngSubmit)="SettingSubmit()">
           <div class="col-md-12 col-sm-12 p-0">
@@ -195,7 +195,7 @@
       </div>
 
       <div class="col-md-9 p-0">
-        <form #f="ngForm" (ngSubmit)="f.form.valid && MatrixSubmit()" novalidate>
+        <form class="row" #f="ngForm" (ngSubmit)="f.form.valid && MatrixSubmit()" novalidate>
           <div class="col-md-12 col-sm-12 p-0">
             <div class="heading-panel sT-hight">
               <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Effective Matrix </span>

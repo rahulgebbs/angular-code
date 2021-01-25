@@ -10,14 +10,16 @@
         </span>
       </div>
 
-      <app-loading-page *ngIf="showLoading"></app-loading-page>
+      <app-loading-page class="col-md-12" *ngIf="showLoading"></app-loading-page>
+      <!-- <app-loading-page class="col-md-12"></app-loading-page> -->
       <!-- <div class="right-most mr-5">Total Rows:- <b>{{formula == null ? '0' : formula.length}}</b></div> -->
+      <!-- <div class="col-md-12 p-0 appeal-auto-h" *ngIf="!showLoading"> -->
       <div class="col-md-12 p-0 appeal-auto-h" *ngIf="!showLoading">
-        <div class="row">
+        <div class="row appeal-auto-h">
           <div *ngFor="let t of TemplateNameList" class="col-md-4 mb-30">
             <!-- <h3>{{Placeholders.CoverLetter[0].Template_Name}}</h3> -->
-            <span class="appeal-header-style">{{t.split("_").join(" ")}}</span>
-            <div class="sticky-table sticky-ltr-cells border-0 table-hight"
+            <span class="col-md-12 appeal-header-style">{{t.split("_").join(" ")}}</span>
+            <div class="sticky-table sticky-ltr-cells border-0 table-hight col-md-12"
               style="padding-bottom:0px !important;max-height: 25vh !important;">
               <table class="table appeal-mgmt-table" [formArrayName]="t">
                 <thead>
