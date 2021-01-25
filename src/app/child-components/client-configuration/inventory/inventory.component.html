@@ -2,38 +2,42 @@
 <form #f="ngForm" (ngSubmit)="f.form.valid && DisableNext == false &&  submitFrom(f.form)" novalidate>
 
   <div role="tabpanel" class="tab-pane nav-tab-content" id="step-5">
-    <div class="col-md-12 p-0">
+    <div class="row p-0">
       <div class="col-md-12 pr-0">
-        <div class="col-md-9 p-0">
-          <span class="form-group inventory-provider mt-10">
-            <!-- <form class="form"> -->
-            <div *ngIf="!InventoryData " class="file-upload-wrapper" [attr.data-text]="Filename">
-              <input (change)="GetFileData($event)" onclick="this.value = null" name="file-upload-field" type="file"
-                accept=".xlsx" class="file-upload-field" value="">
-            </div>
-            <div class="error" *ngIf="DisplayFileError">
-              Please select the file
-            </div>
-          </span>
-          <button *ngIf="  !InventoryData  " type="button" (click)="FileUpload()"
-            class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
-            <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
-          <button type="button" (click)="DownloadTemplate()" [disabled]="downloadDisable"
-            class="btn mt-10 export-btn label grey lg-text label-info square-btn cursor mr-10">
-            <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
-          <span *ngIf="InventoryData  " class="mt-10 export-btn label grey lg-text label-info square-btn cursor mtb-10"
-            (click)="ToggleModal()">
-            <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</span>
-        </div>
-        <div class="col-md-3 p-0">
-          <span class="pull-right pt-8  w-auto mt-5">
+        <div class="row">
+          <div class="col-md-9 p-0">
+            <span class="form-group inventory-provider mt-10">
+              <!-- <form class="form"> -->
+              <div *ngIf="!InventoryData " class="file-upload-wrapper" [attr.data-text]="Filename">
+                <input (change)="GetFileData($event)" onclick="this.value = null" name="file-upload-field" type="file"
+                  accept=".xlsx" class="file-upload-field" value="">
+              </div>
+              <div class="error" *ngIf="DisplayFileError">
+                Please select the file
+              </div>
+            </span>
+            <button *ngIf="  !InventoryData  " type="button" (click)="FileUpload()"
+              class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
+              <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
+            <button type="button" (click)="DownloadTemplate()" [disabled]="downloadDisable"
+              class="btn mt-10 export-btn label grey lg-text label-info square-btn cursor mr-10">
+              <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
+            <span *ngIf="InventoryData  "
+              class="mt-10 export-btn label grey lg-text label-info square-btn cursor mtb-10" (click)="ToggleModal()">
+              <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</span>
+          </div>
+          <div class="col-md-3 p-0">
+            <span class="pull-right pt-8 w-auto">
 
-            <b>Client Name :- {{ClientData.Client_Name}}</b>
-          </span>
+              <b>Client Name :- {{ClientData.Client_Name}}</b>
+            </span>
+          </div>
         </div>
+
 
       </div>
-      <div class="right-most mr-5">Total Rows:- <b>{{InventoryData == null ? '0' : InventoryData.length}}</b></div>
+      <div class="col-md-12 right-most mr-5">Total Rows:- <b>{{InventoryData == null ? '0' : InventoryData.length}}</b>
+      </div>
       <div class="col-md-12 p-0 client-inv-sticky">
         <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important">
           <table class="table">
@@ -150,7 +154,8 @@
                   <td class="yes-w">
                     <select class="form-control" (change)="StandardDropdownChange(i)"
                       [disabled]="item.Is_Standard_Field == 'Yes' && !item.Is_New && !item.Is_Standard_Changed"
-                      name="Is_Standard_Field-{{i}}" type="text" [(ngModel)]="item.Is_Standard_Field" title="{{item.Is_Standard_Field}}">
+                      name="Is_Standard_Field-{{i}}" type="text" [(ngModel)]="item.Is_Standard_Field"
+                      title="{{item.Is_Standard_Field}}">
                       <option *ngFor="let it of YesNoList" [value]="it.Name">{{it.Name}}</option>
                     </select>
                   </td>

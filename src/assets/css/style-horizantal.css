@@ -19,6 +19,7 @@ body {
 }
 .right-most {
   float: right !important;
+  /* text-align: right; */
 }
 .w-100 {
   width: 100%;
