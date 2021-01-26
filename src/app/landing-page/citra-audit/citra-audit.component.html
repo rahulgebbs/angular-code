@@ -2,10 +2,10 @@
 <div class="pop-bg">
 </div>
 
-<div class="col-md-12 pt-8">
+<div class="row pt-8 mb-10">
   <span class="col-md-12 pull-left pl-7">
     <form [formGroup]="dashboard">
-      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto formLabel">Client List</span>
       <span class="pull-left mr-10 pt-3 wt-15">
         <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff"
           (change)="onClientChange($event)">
@@ -24,8 +24,8 @@
       </span>
       <span>
         <button class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" data-toggle="modal"
-          data-target=".account-list" (click)="selectedClient()" >Search</button>
-          <!-- [disabled]="disablebtn" -->
+          data-target=".account-list" (click)="selectedClient()">Search</button>
+        <!-- [disabled]="disablebtn" -->
       </span>
     </form>
   </span>
@@ -205,8 +205,7 @@
                   <option [value]="'Adjusted'"> Adjusted </option>
                   <option [value]="'Outofscope'"> Out of scope </option>
                 </select>
-                <div class="error"
-                  *ngIf="ActionForm1.controls.drpReRes.touched || formsubmitted == true">
+                <div class="error" *ngIf="ActionForm1.controls.drpReRes.touched || formsubmitted == true">
                   <span *ngIf="ActionForm1.controls.drpReRes.hasError('required')">
                     Please select the Resolved Reason</span>
                 </div>
@@ -220,27 +219,29 @@
                 <textarea rows="4" class="form-control textarea-resize" placeholder="Write RCA.." id="txtRca"
                   formControlName="txtRca"></textarea>
                 <div class="error" *ngIf="ActionForm1.controls.txtRca.touched || formsubmitted == true">
-                    <span *ngIf="ActionForm1.controls.txtRca.hasError('required')">
-                        Please Enter the RCA</span>
-                    </div>
+                  <span *ngIf="ActionForm1.controls.txtRca.hasError('required')">
+                    Please Enter the RCA</span>
+                </div>
               </div>
               <div class="form-group mh-15">
-                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Global Trends Identified<span
-                    class="asteric">*</span>
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Global Trends
+                  Identified<span class="asteric">*</span>
                 </label>
                 <input type="text" class="form-control textarea-resize" id="txtGlobalTrendsIdentified"
                   formControlName="txtGlobalTrendsIdentified">
-                <div class="error" *ngIf="ActionForm1.get('txtGlobalTrendsIdentified').hasError('required') && formsubmitted">
+                <div class="error"
+                  *ngIf="ActionForm1.get('txtGlobalTrendsIdentified').hasError('required') && formsubmitted">
                   Global Trends is required
                 </div>
               </div>
               <div class="form-group mh-15">
-                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Process Trends Identified<span
-                    class="asteric">*</span>
+                <label for="inputEmail3" class="label-std  control-label p-0 b-600 greenLabel">Process Trends
+                  Identified<span class="asteric">*</span>
                 </label>
                 <input type="text" class="form-control textarea-resize" id="txtProcessTrendsIdentified"
                   formControlName="txtProcessTrendsIdentified">
-                <div class="error" *ngIf="ActionForm1.get('txtProcessTrendsIdentified').hasError('required') && formsubmitted">
+                <div class="error"
+                  *ngIf="ActionForm1.get('txtProcessTrendsIdentified').hasError('required') && formsubmitted">
                   Process Trends is required
                 </div>
               </div>

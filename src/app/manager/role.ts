@@ -44,11 +44,11 @@ export const Access = {
   "client-user-mapping-management": ["Controller"],
   "user-menu-mapping": ["Administrator", "Admin"],
   /* concluder menus*/
-  "concluder-dashboard": ["Admin", "Supervisor"],
+  "concluder-dashboard": ["Supervisor"],
   "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
   "concluder-report": ["Supervisor", "Admin"],
   "concluder-deallocation": ["Supervisor"],
-  "deallocate-module": ["Admin", "Supervisor"],
+  "deallocate-module": ["Supervisor"],
   "project-and-priority-report": ["Supervisor", "Admin"],
   "project-and-priority-dashboard": ["Supervisor", "Admin"],
   "client-simple-report": ["Client Supervisor"]

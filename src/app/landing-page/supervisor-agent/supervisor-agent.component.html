@@ -2,7 +2,7 @@
 <div class="col-md-12 col-sm-12 col-sm-12 p-0">
   <div class="col-md-12 pt-8 border-b pb-10">
     <div class="search-grid" [formGroup]="ActionForm">
-      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
+      <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client</span>
       <span class="pull-left mr-10 pt-3 wt-15">
         <select (change)="ClientListOnChange($event)" formControlName='client' [ngModel]="ClientId" #selectedelem
           class="form-control">
@@ -12,7 +12,7 @@
       </span>
     </div>
     <div class="search-grid" [formGroup]="ActionForm">
-      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Standard Field</span>
+      <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Standard Field</span>
       <span class="pull-left mr-10 pt-3 wt-15">
         <select class="form-control" (change)="StandardFieldOnChange($event)" formControlName="standerdField"
           [(ngModel)]="SelectedStandardField">
@@ -23,7 +23,7 @@
       </span>
     </div>
     <div class="search-grid">
-      <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">value</span>
+      <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">value</span>
       <span class="pull-left mr-10 pt-3">
         <input type="text" class="form-control" (keyup)="OnStandardValueChange()" name="StandardValue"
           [(ngModel)]="StandardValue">

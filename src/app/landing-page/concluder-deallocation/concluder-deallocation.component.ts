@@ -27,7 +27,6 @@ export class ConcluderDeallocationComponent implements OnInit {
   showOptionButtons: boolean = false;
   ShowAgentModal: boolean = false;
   ShowBucketModal: boolean = false;
-  // BucketName = [];
   ResponseHelper: ResponseHelper;
   checkevent: boolean = false;
   validated;
@@ -35,11 +34,7 @@ export class ConcluderDeallocationComponent implements OnInit {
   employeeList;
   byBucketInfo;
   byAgentInfo;
-  // empName = [];
-  // GetEmployeeName;
-  // AllBucketByempList;
-  // checklist = "";
-  // showModal = false;
+
   constructor(public fb: FormBuilder, private router: Router, private drpService: dropDownFields, private DeallocationService: DeallocationByAgentByBucketService, private notification: NotificationService, private concluderService: ConcluderService) {
     this.ResponseHelper = new ResponseHelper(this.notification);
 
@@ -47,19 +42,15 @@ export class ConcluderDeallocationComponent implements OnInit {
   ngOnInit() {
     let token = new Token(this.router);
     this.AgentdeallocationForm = this.fb.group({
-      "ClientId": [],
+      "ClientId": [''],
       "checklist": []
     });
     this.userdata = token.GetUserData();
     this.UserId = this.userdata.UserId;
-    //this.ClientList = this.drpService.setSelected(this.userdata.Clients)
     this.ClientList = this.setSelectedDropdown(this.userdata.Clients);
-    // console.log('this.ClientList : ', this.ClientList);
     if (this.ClientList[0].selected == true) {
       this.showOptionButtons = true;
-      // this.ClientId = this.ClientList[0].Client_Id
       this.AgentdeallocationForm.patchValue({ 'ClientId': this.ClientList[0].Client_Id });
-      // this.ClientSelectDropdown(event)
       this.ClientListOnChange(this.AgentdeallocationForm.value.ClientId);
     }
     //this.selectedValue(this.ClientList);

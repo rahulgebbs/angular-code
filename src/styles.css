@@ -107,9 +107,12 @@ html {
   font-size: 1.3rem;
 }
 
-
 /* Global Bootstrap changes */
 
-.row{
+.row {
   margin: 0 !important;
+}
+
+.formLabel {
+  margin-top: 0.75rem !important;
 }

@@ -1,7 +1,7 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="col-md-12 p-0 grey">
+  <div class="row p-0 grey">
     <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span *ngIf="viewBy=='byBucket'" class="text-sm text-ellipsis heading-txt flex">
@@ -27,7 +27,7 @@
         </label>
       </div>
     </div>
-    <div *ngIf="viewBy=='byBucket'" class="col-md-12 p-0 code-auto-scroll p-0">
+    <div *ngIf="viewBy=='byBucket'" class="row p-0 code-auto-scroll p-0">
       <div class="col-md-3 p-0 ml-10 mt-10 border-b deAllocate" *ngFor="let bucket of bucketList;let k = index;">
         <!-- <div class="col-md-3"> -->
         <label class="custom-control">
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div *ngIf="viewBy=='byAgent'" class="col-md-12 p-0 code-auto-scroll p-0">
+    <div *ngIf="viewBy=='byAgent'" class="row p-0 code-auto-scroll p-0">
       <ng-container *ngFor="let employee of employeeList;let k = index;">
         <div class="col-md-3 p-0 ml-10 mt-10 border-b deAllocate"
           *ngIf="employee && employee.bucket && employee.bucket.length>0">

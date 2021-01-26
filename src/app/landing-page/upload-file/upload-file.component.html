@@ -5,7 +5,7 @@
     <div class="">
       <div class="col-md-12 mt-10">
         <div class="search-grid">
-          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto formLabel">Client List</span>
           <span class="pull-left mr-10 pt-3 wt-15">
             <select (change)="ClientListOnChange($event)" #selectedelem class="form-control">
               <option [selected]="ClientList.length >1" disabled >Select</option>
@@ -22,7 +22,7 @@
             <button (click)="GetSelectedReferenceFile(filename.value);"   [disabled]="searchBtnDisable" class="btn blue square-btn blue-hover btn-txt mr-10"
             data-toggle="modal" data-target=".account-list">Search</button>
           </span>
-          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Upload File</span>
+          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto formLabel">Upload File</span>
           <span class="form-group referance-up pt-3">
             <div class="file-upload-wrapper" [attr.data-text]="Filename">
               <input (change)="GetUploadFileData($event)" name="file-upload-field" type="file" accept=".jpeg,.pdf,.xlsx,.png,.doc,.txt"

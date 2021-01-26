@@ -2,16 +2,15 @@
 
 <div class="container-fluid p-0">
 
-
-
-  <div class="col-md-12 col-sm-12 col-sm-12 p-0">
-    <div class="col-md-12 col-sm-12 col-xs-12 mt-10">
+  <div class="row p-0">
+    <div class="row col-md-12 col-sm-12 col-xs-12 mt-10">
       <div class="search-grid">
-        <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
-        <span class="pull-left mr-10 pt-3 wt-15">
+        <span class="pull-left mr-10 pt-3 label-std control-label b-600 w-auto">Client List</span>
+        <span class="pull-left mr-10 pt-3">
           <select (change)="ClientOnChange($event)" [(ngModel)]="ClientId" #selectedelem class="form-control">
             <option value="0" disabled>Select</option>
-            <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}</option>
+            <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
+            </option>
           </select>
           <div class="error" *ngIf="selecterror">
             Please select the client
@@ -19,7 +18,7 @@
         </span>
 
       </div>
-      <div class="search-grid1">
+      <div class="search-grid1 pt-3">
         <button (click)="GetDenialCodeList('Search');" [disabled]="searchBtnDisable"
           class="btn blue square-btn blue-hover btn-txt mr-10">Search</button>
         <button (click)="onAddClicked()" id="openModal" class="btn blue square-btn blue-hover btn-txt">Add Denial
@@ -27,12 +26,12 @@
       </div>
       <!-- data-toggle="modal" data-target=".add-denial-code" -->
 
-      <div class="col-md-9">
+      <div class="offset-md-3 col-md-9">
         <span class="form-group file-provider mt-10">
           <!-- <form class="form"> -->
           <div class="file-upload-wrapper" [attr.data-text]="Filename">
             <input name="file-upload-field" #filedata type="file" accept=".xlsx" class="file-upload-field"
-            (change)="changeListener($event)">
+              (change)="changeListener($event)">
           </div>
           <label class="error" *ngIf="validated && !fileSelected">Please select the file</label>
           <!-- </form> -->
@@ -43,11 +42,10 @@
             class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10" style="border: none;">
             <i class="fa fa-upload mr-5 lg-text" aria-hidden="true"></i>Upload</button>
         </span>
-       
+
         <div class="p-0 mt-10" (click)="downloadTemplate()">
           <button type="button" [disabled]="downloadTemplateDisable"
-            class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10"
-            style="border: none;">
+            class="export-btn btn label grey lg-text label-info square-btn cursor mt-0  mr-10" style="border: none;">
             <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
         </div>
         <span>
@@ -70,9 +68,9 @@
         <div class="table-responcive">
 
           <div class="sticky-table sticky-ltr-cells border-0 table-hight">
-            <ag-grid-angular [enableSorting]="true"[enableColResize]="true" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
-              class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs" [rowSelection]="RowSelection"
-              [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true"
+            <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true"
+              [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs"
+              [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true"
               (firstDataRendered)="autoSizeAll()" [suppressDragLeaveHidesColumns]="true"
               (gridReady)="onGridReady($event)" (rowClicked)="OnRowClicked($event)">
             </ag-grid-angular>

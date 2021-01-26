@@ -10,21 +10,22 @@
               <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
                 <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
                 <select class="form-control" formControlName="ClientId" [(ngModel)]="ClientId" placeholder="d.ff">
-                  <option [selected]="ClientList[0].selected == false || !ClientList" value="" disabled >Select</option>
-                  <option *ngFor="let Client of ClientList" [selected]="Client.selected == true" [value]="Client.Client_Id"  >{{Client.Client_Name}} </option>
+                  <option [selected]="ClientList[0].selected == false || !ClientList" value="" disabled>Select</option>
+                  <option *ngFor="let Client of ClientList" [selected]="Client.selected == true"
+                    [value]="Client.Client_Id">{{Client.Client_Name}} </option>
                 </select>
               </form>
             </div>
 
             <div class="form-group">
-                <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
-              <span class="col-md-12 p-0 text-left">
-                <label class="custom-control client-conf pt-4">
-                  <input type="checkbox"  formControlName="isChecked" id="ac-active" (change)="function($event)" [(ngModel)]="isChecked"
-                    >
-                  <label for="ac-active" class="pt-4">All Deallocate Bucket</label>
-                </label>
-              </span>
+              <form [formGroup]="deallocationForm" (ngSubmit)="submitFrom()">
+                <span class="col-md-12 p-0 text-left">
+                  <label class="custom-control client-conf pt-2">
+                    <input type="checkbox" formControlName="isChecked" id="ac-active" (change)="function($event)"
+                      [(ngModel)]="isChecked">
+                    <label for="ac-active" class="">All Deallocate Bucket</label>
+                  </label>
+                </span>
               </form>
             </div>
             <div class="border-t form-group pt-10  mb-0" (change)="AgentSelectDropdown($event)">
@@ -32,8 +33,10 @@
                 <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Agent</label>
                 <span class="col-md-12 p-0">
                   <select class="form-control" formControlName="AgentId" [(ngModel)]="AgentId" placeholder="d.ff">
-                    <option  value="" [selected]="(!AgentList[0]) ||(AgentList[0] && AgentList[0].selected == false) " disabled>Select</option>
-                    <option *ngFor="let Agent of AgentList"  [selected]='AgentList[0].selected==true' [value]="Agent.Id">{{Agent.Agent_Name}} </option>
+                    <option value="" [selected]="(!AgentList[0]) ||(AgentList[0] && AgentList[0].selected == false) "
+                      disabled>Select</option>
+                    <option *ngFor="let Agent of AgentList" [selected]='AgentList[0].selected==true' [value]="Agent.Id">
+                      {{Agent.Agent_Name}} </option>
                   </select>
                 </span>
               </form>

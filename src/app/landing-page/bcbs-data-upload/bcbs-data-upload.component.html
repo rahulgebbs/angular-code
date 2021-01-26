@@ -6,7 +6,7 @@
         <div class="col-md-12 p-0">
           <div class=" form-group">
             <label class=" label-std control-label p-0 b-600 pl-0" for="">Upload File</label>
-            <span class="col-md-3 p-0 form-group file-provider mt-1">
+            <span class="col-md-12 p-0 form-group file-provider mt-1">
               <div class="file-upload-wrapper" [attr.data-text]="Filename">
                 <input (change)="GetFileData($event)" #file [disabled]="DisableFileInput" name="file-upload-field"
                   type="file" accept=".xlsx" class="file-upload-field" (onclick)="file.value = null">

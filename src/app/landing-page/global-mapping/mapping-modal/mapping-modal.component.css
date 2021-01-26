@@ -92,3 +92,7 @@
 .mb-40{
     margin-bottom: 40px;
 }
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}

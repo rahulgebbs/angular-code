@@ -1,16 +1,26 @@
-.radioBorder {
+/* .radioBorder {
     border: 1px solid #dfdfdf;
     padding: 0.1rem 1rem 1rem 1rem;
-  }
-  
-  .control-label {
-    margin: 1rem auto;
-  }
-  
-  .input-group {
-    width: 100%;
-  }
-  .input-group-addon {
-    width: none;
-  }
-  
+  } */
+.radioBorder {
+  border: 1px solid #dfdfdf;
+  /* padding-left: 1rem; */
+  min-height: 35px;
+  display: flex;
+  /* justify-content: left; */
+  justify-content: left;
+  align-items: center;
+}
+.control-label {
+  margin: 1rem auto;
+}
+
+.input-group {
+  width: 100%;
+}
+.input-group-addon {
+  width: none;
+}
+.radio-inline {
+  padding-left: 1rem !important;
+}
