@@ -22,3 +22,17 @@ form {
   float: left;
   margin: 1%;
 }
+
+.radioBorder {
+  border: 1px solid #dfdfdf;
+  /* padding-left: 1rem; */
+  min-height: 35px;
+  display: flex;
+  /* justify-content: left; */
+  justify-content: left;
+  align-items: center;
+}
+
+.radio-inline {
+  padding-left: 1rem;
+}

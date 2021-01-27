@@ -9,7 +9,7 @@
       <form [formGroup]="submit" (ngSubmit)="submitFrom()">
         <div class="col-md-12 mt-10">
           <div class="search-grid">
-            <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+            <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
             <span class="pull-left mr-10 pt-3 wt-15">
               <select (change)="ClientListOnChange($event)" class="form-control" formControlName="ClientId"
                 [(ngModel)]="data">

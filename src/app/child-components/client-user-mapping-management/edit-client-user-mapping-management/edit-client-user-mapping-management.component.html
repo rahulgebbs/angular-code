@@ -14,7 +14,7 @@
   </div>
   <div id="editFormContainer">
     <div class="container" style="padding-top: 1rem;">
-      <div class="">
+      <div class="row">
         <ng-container *ngFor="let field of fieldArray; let i = index">
           <div [id]="field.key" class="col-md-6 form-group" *ngIf="field.type=='question'"
             [ngClass]="{'text-danger' : (field.required==true && submitted==true && (field.value==null || field.value.length==0 || field.duplicate==true)) ? true:false}">

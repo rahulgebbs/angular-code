@@ -188,3 +188,10 @@ td {
 .lockswitch-checkbox:checked + .lockswitch-label .lockswitch-switch {
   right: 0px;
 }
+
+
+.alignItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

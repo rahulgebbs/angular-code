@@ -73,9 +73,9 @@
 
   .row {
     float: right;
-    margin: 1rem 2rem;
+    margin: 1rem 2rem !important;
     button {
-      margin: 0 0.5rem;
+      margin: 0 0.5rem !important;
     }
   }
 }
@@ -103,4 +103,10 @@
 .form-group {
   min-height: 75px !important;
   margin-bottom: 0 !important;
+}
+
+.alignItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

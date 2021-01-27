@@ -123,3 +123,6 @@ html {
   display: flex;
   justify-content: center;
 }
+input[type="radio"] {
+  vertical-align: middle;
+}
