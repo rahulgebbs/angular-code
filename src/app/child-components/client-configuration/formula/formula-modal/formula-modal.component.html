@@ -36,7 +36,7 @@
               <label class="error" *ngIf="addFormula.get('Expression').hasError('maxlength')">Maximum 200 charcter
                 allowed</label>
               <div class="num-pad mt-10">
-                <div class="col-md-12 p-0 grey">
+                <div class="row col-md-12 p-0 grey">
                   <div class="col-md-2 p-0 operator-seprator">
                     <div class="num">
                       <div class="txt operators-box" (click)="appendExpression('+')" [class.disabled]="disableSymbol">

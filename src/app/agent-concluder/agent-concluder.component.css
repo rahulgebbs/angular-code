@@ -12,18 +12,20 @@
 }
 
 .radioBorder {
-  /* border: 1px solid #dfdfdf; */
-  padding-left: 1rem;
-  min-height: 25px;
+  border: 1px solid #dfdfdf;
+  /* padding-left: 1rem; */
+  min-height: 35px;
   display: flex;
+  /* justify-content: left; */
   justify-content: left;
   align-items: center;
-  /* border: 1px solid #dfdfdf;
-  padding: 0.1rem 1rem 1rem 1rem;
-  min-height: 70px;
-  display: flex;
-  justify-content: left;
-  align-items: center; */
+}
+.radio-inline {
+  padding-left: 1rem;
+  margin: 0;
+}
+input[type="radio"] {
+  vertical-align: middle;
 }
 
 .field {

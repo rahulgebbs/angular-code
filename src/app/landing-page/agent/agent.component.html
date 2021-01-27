@@ -115,8 +115,8 @@
 
 <!-- Midd content -->
 <ng-container *ngIf="DisplayMain;else MessageBox">
-  <div class="col-md-12 col-sm-12 col-sm-12 p-0 mb-45">
-    <div class="col-md-12 p-0 agent-blue-sepration agent-field-ht">
+  <div class="row col-md-12 col-sm-12 col-sm-12 p-0 mb-45">
+    <div class="col-md-12 row p-0 agent-blue-sepration agent-field-ht">
       <div class="col-md-3 p-0 blue-seprator serpartion-h">
         <div class="col-md-12 col-sm-12 p-0">
           <div class="heading-panel sT-hight">
@@ -170,7 +170,7 @@
           </div>
         </div>
         <div class="col-md-12 p-0  auto-scroll-section">
-          <div class="col-md-12 p-0">
+          <div class="row col-md-12 p-0">
             <ng-container *ngFor="let f of AllFields">
               <div
                 [ngClass]="[ActiveBucket == 'Appeal_Follow_Up' || ActiveBucket == 'To_Be_Appeal' ? 'col-md-12' : 'col-md-6 h-48']"
@@ -206,12 +206,12 @@
                         </ng-template>
                       </ng-container>
                       <ng-container *ngSwitchCase="'Date'">
-                        <div class="input-group date col-md-12" id='datetimepicker1'>
+                        <div class="input-group date row" id='datetimepicker1'>
                           <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
                             (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
-                            class="owl-dp" name="date" [owlDateTime]="dt1">
-                          <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                            class="owl-dp col-md-10" name="date" [owlDateTime]="dt1">
+                          <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
+                            <span class="fa fa-calendar"></span>
                           </span>
                           <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                         </div>
@@ -306,12 +306,12 @@
 
                       </ng-container>
                       <ng-container *ngSwitchCase="'Date'">
-                        <div class="input-group date col-md-12" id='datetimepicker1'>
+                        <div class="input-group date row" id='datetimepicker1'>
                           <input autocomplete="off" [min]="MinDate" [(ngModel)]="f.FieldValue"
                             (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
-                            class="owl-dp" name="date" [owlDateTime]="dt1">
-                          <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                            class="owl-dp col-md-10" name="date" [owlDateTime]="dt1">
+                          <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
+                            <span class="fa fa-calendar"></span>
                           </span>
                           <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
                         </div>

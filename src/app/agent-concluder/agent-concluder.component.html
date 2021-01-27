@@ -1,23 +1,23 @@
 <!-- <app-header [title]="Title"></app-header> -->
 <div class="container-fluid">
-    <form *ngIf="concludedForm" [formGroup]="concludedForm" class="form-inline" (ngSubmit)="submitForm()">
+    <form *ngIf="concludedForm" [formGroup]="concludedForm" class="row" (ngSubmit)="submitForm()">
 
-        <div *ngIf="concludedForm && concludedForm.value as formValue" class="">
+        <div *ngIf="concludedForm && concludedForm.value as formValue" class="container-fluid">
 
             <div class="field">
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="label-std control-label p-0 b-600">
                         Original Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='originalBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control col-md-10"
                             name="originalBilledDateCalendar" [owlDateTime]="originalBilledDateCalendar"
                             (keyup)="BlockInput('Original_Claim_Billed_Date',$event)"
                             (dateTimeChange)="BlockInput('Original_Claim_Billed_Date',$event)"
                             [max]="concludedForm.value.Latest_Claim_Billed_Date"
                             formControlName="Original_Claim_Billed_Date">
-                        <span class="input-group-addon" [owlDateTimeTrigger]="originalBilledDateCalendar">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="originalBilledDateCalendar">
+                            <span class="fa fa-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #originalBilledDateCalendar></owl-date-time>
                     </div>
@@ -44,18 +44,18 @@
             </div>
 
             <div class="field">
-                <div class="form-group">
+                <div class="form-group row">
                     <label class="label-std  control-label p-0 b-600">
                         Last Claim Billed Date <span class="asteric">*</span>
                     </label>
                     <div class='input-group date' id='lastBilledDateCalendar'>
-                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
+                        <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control col-md-10"
                             name="lastBilledDateCalendar" [owlDateTime]="lastBilledDateCalendar"
                             (keyup)="BlockInput('Latest_Claim_Billed_Date',$event)"
                             (dateTimeChange)="BlockInput('Latest_Claim_Billed_Date',$event)"
                             formControlName="Latest_Claim_Billed_Date">
-                        <span class="input-group-addon" [owlDateTimeTrigger]="lastBilledDateCalendar">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="lastBilledDateCalendar">
+                            <span class="fa fa-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #lastBilledDateCalendar></owl-date-time>
                     </div>
@@ -249,7 +249,7 @@
                             formControlName="Denial_Date" (keyup)="BlockInput('Denial_Date',$event)"
                             (dateTimeChange)="BlockInput('Denial_Date',$event)">
                         <span class="input-group-addon" [owlDateTimeTrigger]="denialDateCalendar">
-                            <span class="glyphicon glyphicon-calendar"></span>
+                            <span class="fa fa-calendar"></span>
                         </span>
                         <owl-date-time [pickerType]="'calendar'" #denialDateCalendar></owl-date-time>
                     </div>
@@ -291,14 +291,15 @@
             <!-- Denial Reason (Remark Code) -->
             <!-- EOB Posted in Sys -->
             <!-- EOB Posted in Sys -->
-            <div class="col-md-12 col-xs-12" style="margin-bottom: 2rem;">
-                <div class="col-md-12 col-xs-12 text-center p-0">
-                    <button [disabled]="disableBtn==true" type="button"
-                        class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51"
-                        (click)="clearForm()">Clear</button>
-                    <button [disabled]="disableBtn==true" type="submit"
-                        class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51">Submit</button>
-                </div>
+
+        </div>
+        <div class="col-md-12 col-xs-12" style="margin-bottom: 2rem;">
+            <div class="col-md-12 col-xs-12 text-center p-0">
+                <button [disabled]="disableBtn==true" type="button"
+                    class="btn blue square-btn blue-hover btn-txt mr-10 mt-15 mb-5 w-51"
+                    (click)="clearForm()">Clear</button>
+                <button [disabled]="disableBtn==true" type="submit"
+                    class="btn blue square-btn blue-hover btn-txt mt-15 mb-5 w-51">Submit</button>
             </div>
         </div>
     </form>

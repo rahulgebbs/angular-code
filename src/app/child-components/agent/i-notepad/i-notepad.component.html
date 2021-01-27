@@ -1,11 +1,12 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="fade inotepad in" tabindex="-1">
+  <!-- <div class="fade inotepad in" tabindex="-1"> -->
+  <div class="inotepad in" tabindex="-1">
     <div class="" role="document">
       <div class="body">
         <div class=" inote-popup" style="width: 100%;">
-          <div class="col-md-12 border-b p-0 grey">
+          <div class="row col-md-12 border-b p-0 grey">
             <span class="col-md-10 col-sm-10 p-0">
               <div class="heading-panel pl-10">
                 <span class="text-sm text-ellipsis heading-txt flex">iNotepad</span>
@@ -16,7 +17,8 @@
             </span>
           </div>
           <div class="col-md-12 col-sm-12 p-0">
-            <textarea class="form-control textarea-resize" [(ngModel)]="notevalue" rows="8" placeholder="Type note here..."></textarea>
+            <textarea class="form-control textarea-resize" [(ngModel)]="notevalue" rows="8"
+              placeholder="Type note here..."></textarea>
           </div>
           <div class="col-md-12 mt-10 p-0 text-center mb-10">
             <button class="btn btn-txt blue square-btn blue-hover" (click)="clear()">Clear</button>

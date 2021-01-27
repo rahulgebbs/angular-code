@@ -116,3 +116,10 @@ html {
 .formLabel {
   margin-top: 0.75rem !important;
 }
+
+.input-group-addon {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
