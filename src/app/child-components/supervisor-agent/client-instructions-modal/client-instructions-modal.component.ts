@@ -51,10 +51,10 @@ export class ClientInstructionsModalComponent implements OnInit {
     let eDiv = document.createElement('div');
     if (!params.value) {
       val = 'Accept'
-      eDiv.innerHTML = '<button  class="btn label gray label-info square-btn cursor update" data-action-type="update">' + val + '</button>';
+      eDiv.innerHTML = '<button  class="btn label grey label-info square-btn cursor update" data-action-type="update">' + val + '</button>';
     } else {
       val = "Accepted"
-      eDiv.innerHTML = '<button  class="btn label gray label-info square-btn cursor"  disabled="" >' + val + '</button>';
+      eDiv.innerHTML = '<button  class="btn label grey label-info square-btn cursor"  disabled="" >' + val + '</button>';
     }
     return eDiv;
   }

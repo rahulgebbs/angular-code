@@ -134,23 +134,23 @@ export class ViewFileComponent implements OnInit {
   CheckFormat(format: string) {
 
     if (format == 'xlsx') {
-      return 'fa-file-excel';
+      return 'fa-file-excel-o';
 
     }
     else if (format == 'pdf'|| format=='PDF') {
-      return 'fa-file-pdf';
+      return 'fa-file-pdf-o';
     }
     else if (format == "docx"|| format=='DOCX') {
-      return 'fa-file-word';
+      return 'fa-file-word-o';
     }
     else if (format == "png"|| format=='PNG') {
-      return 'fa-file-powerpoint'
+      return 'fa-file-image'
     }
     else if (format == "txt"|| format=='TXT') {
-      return 'fa-file-alt'
+      return 'fa-file'
     }
     else if (format == "jpeg" || format == "jpg"|| format=="JPG"|| format=="JPEG") {
-      return 'fa-file-powerpoint'
+      return 'fa-file-image'
     }
     else {
       return 'fa-file'
