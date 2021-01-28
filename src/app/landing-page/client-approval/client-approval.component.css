@@ -22,3 +22,8 @@
   /* width: 100%; */
   /* width: 70%; */
 }
+
+.formLabel {
+  margin-top: 0 !important;
+  margin-bottom: 0.1rem !important;
+}

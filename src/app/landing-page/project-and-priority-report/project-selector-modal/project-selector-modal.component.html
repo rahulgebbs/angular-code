@@ -13,7 +13,7 @@
     </span>
   </div>
   <div class="col-md-12 p-0">
-    <div class="col-md-12 p-0 mt-10 border-b">
+    <div class="row col-md-12 p-0 mt-10 border-b" style="margin-top:0.5rem !important">
       <div class="col-md-3">
         <label class="custom-control">
           <input type="checkbox" id="selectall" [(ngModel)]="SelectAll" (change)="SelectAllToggle($event)" />
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="col-md-12 code-auto-scroll p-0">
-      <div class="col-md-12 p-0 mt-10">
+      <div class="row col-md-12 p-0 mt-10">
         <div class="col-md-4 mt-10" *ngFor="let project of AllProjects;let k = index;">
           <label class="custom-control">
             

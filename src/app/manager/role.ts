@@ -44,17 +44,16 @@ export const Access = {
   "client-user-mapping-management": ["Controller"],
   "user-menu-mapping": ["Administrator", "Admin"],
   /* concluder menus*/
+  // "concluder-report": ["Supervisor", "Agent", "Admin"],
+  // "deallocate-concluder": ["Supervisor", "Admin"],
+  // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
   "concluder-dashboard": ["Supervisor"],
   "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
   "concluder-report": ["Supervisor", "Admin"],
   "concluder-deallocation": ["Supervisor"],
-  "deallocate-module": ["Supervisor"],
+  "deallocate-module": ["Admin", "Supervisor"],
   "project-and-priority-report": ["Supervisor", "Admin"],
   "project-and-priority-dashboard": ["Supervisor", "Admin"],
   "client-simple-report": ["Client Supervisor"]
-  // project-and-priority-dashboard
-  // "deallocate-concluder": ["Supervisor", "Admin"],
-  // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
 };
-
   //add new role here
