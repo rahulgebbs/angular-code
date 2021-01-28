@@ -400,7 +400,7 @@ export class ProjectAndPriorityDashboardComponent implements OnInit {
     const { node } = params;
     if (node && node.data && node.data.Status == 'ACTIVE') {
       val = "De-Activate";
-      eDiv.innerHTML = '<button  class="btn label gray label-info square-btn cursor " data-action-type="update">' + val + '</button>';
+      eDiv.innerHTML = '<button  class="btn label grey label-info square-btn cursor " data-action-type="update">' + val + '</button>';
     } else {
       val = 'De-Active';
       eDiv.innerHTML = '<button disabled class="btn label square-btn cursor" style="color:#000;font-size: 13px;font-weight: normal;padding: 3px 5px;width: 80px;float: left;border: 1px solid gray;">' + val + '</button>';
@@ -417,7 +417,7 @@ export class ProjectAndPriorityDashboardComponent implements OnInit {
     console.log('node.data : ', node.data.Status)
     if (node && node.data && node.data.Status == 'ACTIVE') {
       val = "De-Activate";
-      eDiv.innerHTML = '<button  class="btn label gray label-info square-btn cursor " data-action-type="update">' + val + '</button>';
+      eDiv.innerHTML = '<button  class="btn label grey label-info square-btn cursor " data-action-type="update">' + val + '</button>';
     } else {
       val = 'De-Active';
       eDiv.innerHTML = '<button disabled class="btn label square-btn cursor" style="color:#000;font-size: 13px;font-weight: normal;padding: 3px 5px;width: 80px;float: left;border: 1px solid gray;">' + val + '</button>';
@@ -461,7 +461,7 @@ export class ProjectAndPriorityDashboardComponent implements OnInit {
 
   addAgentCellRenderer(params) {
     var eGui: any = document.createElement("div");
-    eGui.innerHTML = '<button style="color:#fff;background-color:#0078ae" class="btn label gray label-info square-btn cursor " data-action-type="update">Add Agent</button>';
+    eGui.innerHTML = '<button style="color:#fff;background-color:#0078ae" class="btn label grey label-info square-btn cursor " data-action-type="update">Add Agent</button>';
     return eGui;
   }
 
