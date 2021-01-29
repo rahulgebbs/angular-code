@@ -176,3 +176,12 @@ a.dropdown-toggle:active + .dropdown-menu {
 .agent-field-ht .auto-scroll-section {
   height: 75vh !important;
 }
+
+.not-cl {
+  position: absolute;
+  top: 5px;
+  right: 2px;
+  margin-left: 1rem;
+  font-style: normal;
+  z-index: 1;
+}

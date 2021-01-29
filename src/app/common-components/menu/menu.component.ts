@@ -239,7 +239,7 @@ export class MenuComponent implements OnInit {
   }
 
   checkMenu(menuName) {
-    // console.log('menuName : ', menuName);
+    console.log('checkMenu menuName : ', menuName);
     // const result = true;
     // if (result == true) {
     //   if(menuName=='upload-file' || menuName=='view-file')

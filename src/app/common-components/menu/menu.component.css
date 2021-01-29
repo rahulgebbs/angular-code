@@ -54,7 +54,8 @@ ul {
   top: 1px;
   display: inline-block;
   /* font-family: "Glyphicons Halflings"; */
-  font-family: "Font Awesome 5 Free";
+  /* font-family: "Font Awesome 5 Free"; */
+  font-family: "FontAwesome";
   font-style: normal;
   font-weight: 100;
   line-height: 1;
@@ -74,7 +75,7 @@ ul {
   /* font-family: "Font Awesome 5 Free"; */
   content: "\f106";
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 100;
 }
 
 .menu .panel-default > .acc-heading a[aria-expanded="false"]:after {
@@ -82,7 +83,7 @@ ul {
   /* font-family: "Font Awesome 5 Free"; */
   content: "\f107";
   font-size: 18px;
-  font-weight: 900;
+  font-weight: 100;
 }
 .acc-title {
   margin-top: 0;
