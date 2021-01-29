@@ -17,7 +17,6 @@ declare var jQuery: any;
 })
 
 export class AppComponent implements OnInit {
-
   @HostListener('window:beforeunload', ['$event'])
   idleState = 'Not started.';
   timedOut = false;
