@@ -41,7 +41,7 @@
                 [min]="MinDate1" [max]="maxDate1" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
                 [owlDateTimeTrigger]="dt1" class="owl-dp" name="date" [owlDateTime]="dt1">
               <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
-                <span class="glyphicon glyphicon-calendar"></span>
+                <span class="fa fa-calendar"></span>
               </span>
               <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
             </div>
@@ -54,7 +54,7 @@
                 [owlDateTimeTrigger]="dt2" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" class="owl-dp"
                 name="date2" [owlDateTime]="dt2" [min]="MinDate2" [max]="maxDate1">
               <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
-                <span class="glyphicon glyphicon-calendar"></span>
+                <span class="fa fa-calendar"></span>
               </span>
               <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
             </div>

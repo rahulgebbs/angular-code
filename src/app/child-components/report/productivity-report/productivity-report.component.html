@@ -33,7 +33,7 @@
                   [owlDateTime]="startDate" formControlName="startDate" (keydown)="BlockInput($event)"
                   (keypress)="BlockInput($event)" [max]="maxDate">
                 <span class="input-group-addon" [owlDateTimeTrigger]="startDate">
-                  <span class="glyphicon glyphicon-calendar"></span>
+                  <span class="fa fa-calendar"></span>
                 </span>
                 <owl-date-time [pickerType]="'calendar'" #startDate></owl-date-time>
               </div>
@@ -46,7 +46,7 @@
                   [owlDateTime]="endDate" formControlName="endDate" (keydown)="BlockInput($event)"
                   (keypress)="BlockInput($event)" [max]="maxDate">
                 <span class="input-group-addon" [owlDateTimeTrigger]="endDate">
-                  <span class="glyphicon glyphicon-calendar"></span>
+                  <span class="fa fa-calendar"></span>
                 </span>
                 <owl-date-time [pickerType]="'calendar'" #endDate></owl-date-time>
               </div>
