@@ -7,7 +7,7 @@
     <div class="col-md-12 pt-8">
       <form [formGroup]="Bucket" class="" role="form">
         <span class="col-md-12 pull-left pl-7">
-          <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+          <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
           <span class="pull-left mr-10 pt-3 wt-15">
             <select (change)="ClientListOnChange($event)" formControlName="Client_Id" [(ngModel)]="ClientId"
               #selectedelem class="form-control">

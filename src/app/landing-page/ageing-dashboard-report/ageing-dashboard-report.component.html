@@ -1,7 +1,7 @@
 <app-header [title]="Title"></app-header>
 
 <div class="mar">
-  <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
+  <span class="formLabel pull-left mr-10 pt-5 label-std control-label b-600 w-auto">Client List</span>
   <span class="pull-left mr-10" [formGroup]="submit">
     <select class="form-control" from [(ngModel)]="ClientId" placeholder="d.ff" (change)="onClientChange($event)"
       class="form-control" formControlName="Client_Id">

@@ -71,16 +71,18 @@ ul {
 
 .menu .panel-default > .acc-heading a[aria-expanded="true"]:after {
   /* content: "\e113"; */
+  /* font-family: "Font Awesome 5 Free"; */
   content: "\f106";
-  font-size: 8px;
-  font-weight: 100;
+  font-size: 18px;
+  font-weight: 900;
 }
 
 .menu .panel-default > .acc-heading a[aria-expanded="false"]:after {
   /* content: "\e114"; */
-  content: "\f106";
-  font-size: 8px;
-  font-weight: 100;
+  /* font-family: "Font Awesome 5 Free"; */
+  content: "\f107";
+  font-size: 18px;
+  font-weight: 900;
 }
 .acc-title {
   margin-top: 0;
