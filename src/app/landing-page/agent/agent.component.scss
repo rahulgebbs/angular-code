@@ -172,6 +172,25 @@ a.dropdown-toggle:active+.dropdown-menu {
 }
 
 .callImage {
+    // max-height: 70px; 
+    /* max-width: 70px; */
+    // display: flex;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    /* position: absolute; */
+    /* left: -2rem; */
+    /* top: 0; */
+    // align-items: center;
+    // justify-content: center;
+    img {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.callImage {
     // max-height: 70px;
     /* max-width: 70px; */
     // display: flex;
