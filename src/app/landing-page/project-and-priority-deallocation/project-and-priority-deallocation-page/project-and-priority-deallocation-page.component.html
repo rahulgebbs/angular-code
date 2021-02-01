@@ -5,10 +5,10 @@
     <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span *ngIf="viewBy=='byModule'" class="text-sm text-ellipsis heading-txt flex">
-          Modules By EmployeeCode
+          Projects By EmployeeCode
         </span>
         <span *ngIf="viewBy=='byAgent'" class="text-sm text-ellipsis heading-txt flex">
-          Employee Codes By Module
+          Select Employees From Project
         </span>
       </div>
     </span>
@@ -20,7 +20,7 @@
     <div class="col-md-12 p-0 mt-10 border-b">
       <div class="col-md-6">
         <label class="custom-control">
-          <label *ngIf="viewBy=='byAgent'" for="selectall">Select Modules Mapped To Employee</label>
+          <label *ngIf="viewBy=='byAgent'" for="selectall">Select Projects Mapped To Employee</label>
           <label *ngIf="viewBy=='byModule'" for="selectall">Select Employees From Module</label>
         </label>
       </div>
@@ -54,8 +54,8 @@
             <label for="{{employee.Employee_Code}}">{{employee.Full_Name}} </label>
           </label> -->
           <div style="cursor: not-allowed;">
-            <ng-multiselect-dropdown [id]="'dropdown'+employee.Employee_Code" [placeholder]="'Select module'" [data]="employee.modules"
-              [(ngModel)]="employee.selectedModule" [settings]="dropdownSettings"
+            <ng-multiselect-dropdown [id]="'dropdown'+employee.Employee_Code" [placeholder]="'Select module'"
+              [data]="employee.modules" [(ngModel)]="employee.selectedModule" [settings]="dropdownSettings"
               [disabled]="checklist!=employee.Employee_Code" style="cursor: not-allowed"></ng-multiselect-dropdown>
           </div>
         </div>

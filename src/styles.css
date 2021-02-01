@@ -127,3 +127,11 @@ input[type="radio"] {
   vertical-align: middle;
 }
 
+ag-grid-angular {
+  border: 1px solid #cfcfcf;
+}
+
+.custom-control {
+  font-weight: 700 !important;
+  padding-left: 0 !important;
+}

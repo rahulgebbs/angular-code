@@ -103,50 +103,18 @@
               <label class="error  mt-0" *ngIf="addUser.get('Full_Name').hasError('maxlength') && validated">Maxmium 50
                 charcter allowed</label>
             </div>
-            <div class="form-group process-h border-t mt-10 mh-15" *ngIf="editUser.Role =='Agent'">
+            <div class="col-md-12 form-group" style="border-top: 1px;border-bottom: 1px;" *ngIf="editUser.Role =='Agent'">
               <label for="inputEmail3" class="label-std  control-label col-md-12 col-xs-12 p-0 b-600">Expertise</label>
-
-              <div class="col-md-6 col-xs-6 p-0">
-                <span class="pt-10">
-                  <label>Call</label>
-                </span>
-                <span class="text-right right-spacing">
-                  <div class="yesnoswitch">
-                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="call"
-                      [(ngModel)]="editUser.Expertise_In_Call" formControlName="Expertise_In_Call">
-                    <label class="yesnoswitch-label" for="call">
-                      <span class="yesnoswitch-inner"></span>
-                      <span class="yesnoswitch-switch"></span>
-                    </label>
-                  </div>
-                </span>
-              </div>
-              <div class="col-md-6 col-xs-6 p-0">
-                <span class="pt-10">
-                  <label>Email</label>
-                </span>
-                <span class="text-right">
-                  <div class="yesnoswitch">
-                    <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="email"
-                      [(ngModel)]="editUser.Expertise_In_Email" formControlName="Expertise_In_Email">
-                    <label class="yesnoswitch-label" for="email">
-                      <span class="yesnoswitch-inner"></span>
-                      <span class="yesnoswitch-switch"></span>
-                    </label>
-                  </div>
-                </span>
-              </div>
-
-              <div class="col-md-12 col-xs-12 mt-10 p-0 row">
+              <div class="row">
                 <div class="col-md-6 col-xs-6 p-0">
                   <span class="pt-10">
-                    <label>Fax</label>
+                    <label>Call</label>
                   </span>
                   <span class="text-right right-spacing">
                     <div class="yesnoswitch">
-                      <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="fax"
-                        [(ngModel)]="editUser.Expertise_In_Fax" formControlName="Expertise_In_Fax">
-                      <label class="yesnoswitch-label" for="fax">
+                      <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="call"
+                        [(ngModel)]="editUser.Expertise_In_Call" formControlName="Expertise_In_Call">
+                      <label class="yesnoswitch-label" for="call">
                         <span class="yesnoswitch-inner"></span>
                         <span class="yesnoswitch-switch"></span>
                       </label>
@@ -155,25 +123,59 @@
                 </div>
                 <div class="col-md-6 col-xs-6 p-0">
                   <span class="pt-10">
-                    <label>Website</label>
+                    <label>Email</label>
                   </span>
                   <span class="text-right">
                     <div class="yesnoswitch">
-                      <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="website"
-                        [(ngModel)]="editUser.Expertise_In_Website" formControlName="Expertise_In_Website">
-                      <label class="yesnoswitch-label" for="website">
+                      <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="email"
+                        [(ngModel)]="editUser.Expertise_In_Email" formControlName="Expertise_In_Email">
+                      <label class="yesnoswitch-label" for="email">
                         <span class="yesnoswitch-inner"></span>
                         <span class="yesnoswitch-switch"></span>
                       </label>
                     </div>
                   </span>
                 </div>
-                <label class="error  mt-0" *ngIf="addUser.get('Experties').hasError('required') && validated">Atleast
-                  one
-                  of the expertise is required</label>
+
+                <div class="col-md-12 col-xs-12 mt-10 p-0 row">
+                  <div class="col-md-6 col-xs-6 p-0">
+                    <span class="pt-10">
+                      <label>Fax</label>
+                    </span>
+                    <span class="text-right right-spacing">
+                      <div class="yesnoswitch">
+                        <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="fax"
+                          [(ngModel)]="editUser.Expertise_In_Fax" formControlName="Expertise_In_Fax">
+                        <label class="yesnoswitch-label" for="fax">
+                          <span class="yesnoswitch-inner"></span>
+                          <span class="yesnoswitch-switch"></span>
+                        </label>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col-md-6 col-xs-6 p-0">
+                    <span class="pt-10">
+                      <label>Website</label>
+                    </span>
+                    <span class="text-right">
+                      <div class="yesnoswitch">
+                        <input type="checkbox" name="yesnoswitch" class="yesnoswitch-checkbox" id="website"
+                          [(ngModel)]="editUser.Expertise_In_Website" formControlName="Expertise_In_Website">
+                        <label class="yesnoswitch-label" for="website">
+                          <span class="yesnoswitch-inner"></span>
+                          <span class="yesnoswitch-switch"></span>
+                        </label>
+                      </div>
+                    </span>
+                  </div>
+                  <label class="error  mt-0" *ngIf="addUser.get('Experties').hasError('required') && validated">Atleast
+                    one
+                    of the expertise is required</label>
+                </div>
               </div>
+
             </div>
-            <div class="col-md-12 col-xs-12 mt-1">
+            <div class="col-md-12 col-xs-12 mt-2">
               <div class="col-md-12 col-xs-12 p-0">
                 <span class="col-md-6 col-xs-6 p-0">
                   <label>User State</label>
@@ -334,7 +336,7 @@
           </span>
         </div>
         <div class="col-md-12 p-0 client-list-scroll">
-          <div class="col-md-12 p-0 mt-10">
+          <div class="row p-2">
             <div class="col-md-4 mb-10" *ngFor="let j of client; let k = index;">
               <label class="custom-control">
                 <input type="checkbox" id="{{k}}" [checked]=" ( j.old == true )" (click)="changeCheckbox(k,$event)"

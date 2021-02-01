@@ -20,7 +20,7 @@ export class UploadFileComponent implements OnInit {
   DisplaySizeError = false;
   ResponseHelper;
   UserId: number;
-  ClientList:any[] = [];
+  ClientList: any[] = [];
   selecterror: boolean = false;
   ClientId: number;
   checkRecords: boolean = false;
@@ -29,7 +29,7 @@ export class UploadFileComponent implements OnInit {
   token: Token;
   referencefiles = [];
 
-  constructor( private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
+  constructor(private service: UploadFileService, private router: Router, private notificationservice: NotificationService) { }
 
   ngOnInit() {
 
@@ -45,13 +45,13 @@ export class UploadFileComponent implements OnInit {
   }
 
   selectedValue(data) {
-     
-    if (data.length == 1 && data.length) {       
+
+    if (data.length == 1 && data.length) {
       data[0].selected = true;
-      this.searchBtnDisable= false
+      this.searchBtnDisable = false
       this.ClientId = data[0].Client_Id
       this.GetSelectedReferenceFile('')
-    }else{
+    } else {
 
     }
 
@@ -79,7 +79,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   GetSelectedReferenceFile(name: string) {
-    
+
     if (this.ClientId == undefined || this.ClientId == 0) {
       this.selecterror = true;
     }
@@ -123,24 +123,25 @@ export class UploadFileComponent implements OnInit {
 
 
   CheckFileFormat(format: string) {
+
     if (format == 'xlsx') {
-      return 'fa-file-excel';
+      return 'fa-file-excel-o';
 
     }
-    else if (format == 'pdf'|| format=='PDF') {
-      return 'fa-file-pdf';
+    else if (format == 'pdf' || format == 'PDF') {
+      return 'fa-file-pdf-o';
     }
-    else if (format == "docx"|| format=='DOCX') {
-      return 'fa-file-word';
+    else if (format == "docx" || format == 'DOCX') {
+      return 'fa-file-word-o';
     }
-    else if (format == "png"|| format=='PNG') {
-      return 'fa-file-powerpoint'
+    else if (format == "png" || format == 'PNG') {
+      return 'fa-file-image'
     }
-    else if (format == "txt"|| format=='TXT') {
-      return 'fa fa-file-text'
+    else if (format == "txt" || format == 'TXT') {
+      return 'fa-file'
     }
-    else if (format == "jpeg" || format == "jpg"|| format=="JPG"|| format=="JPEG") {
-      return 'fa-file-powerpoint'
+    else if (format == "jpeg" || format == "jpg" || format == "JPG" || format == "JPEG") {
+      return 'fa-file-image'
     }
     else {
       return 'fa-file'
@@ -159,11 +160,11 @@ export class UploadFileComponent implements OnInit {
       if (this.Size > 5) {
 
         this.DisplaySizeError = true;
-          } else {
-            this.check();
-          // this.uploadBtnDisable = false
-          // this.DisplaySizeError = false;
-                 
+      } else {
+        this.check();
+        // this.uploadBtnDisable = false
+        // this.DisplaySizeError = false;
+
       }
       this.ConvertToBase64()
     }
@@ -174,13 +175,13 @@ export class UploadFileComponent implements OnInit {
     }
   }
 
-  check(){
-    if(this.ClientId && this.File){
-      this.uploadBtnDisable=false
+  check() {
+    if (this.ClientId && this.File) {
+      this.uploadBtnDisable = false
 
-    }else{
-      this.uploadBtnDisable=true
-  
+    } else {
+      this.uploadBtnDisable = true
+
     }
   }
 
@@ -200,7 +201,7 @@ export class UploadFileComponent implements OnInit {
     this.DisplayFileError = false;
 
     if (this.File != null) {
-      
+
       this.uploadBtnDisable = true
       let dataobj = { File: this.FileBase64, File_Name: this.Filename, Client_Id: this.ClientId };
       this.service.ReferenceFileUpload(dataobj).subscribe(
