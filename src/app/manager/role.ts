@@ -47,9 +47,13 @@ export const Access = {
   // "concluder-report": ["Supervisor", "Agent", "Admin"],
   // "deallocate-concluder": ["Supervisor", "Admin"],
   // "upload-mini-insurance": ["Supervisor", "Agent", "Admin"],
-
-
-
+  "concluder-dashboard": ["Supervisor"],
+  "pcn-report": ["Administrator", "Admin", "Director", "Manager", "Supervisor", "Controller"],
+  "concluder-report": ["Supervisor", "Admin"],
+  "concluder-deallocation": ["Supervisor"],
+  "deallocate-module": ["Admin", "Supervisor"],
+  "project-and-priority-report": ["Supervisor", "Admin"],
+  "project-and-priority-dashboard": ["Supervisor", "Admin"],
+  "client-simple-report": ["Client Supervisor"]
 };
-
   //add new role here

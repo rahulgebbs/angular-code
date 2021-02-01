@@ -16,6 +16,7 @@ import { environment } from '../../../../environments/environment';
 export class ClientComponent implements OnInit {
   @Output() next_page = new EventEmitter<any>();
   @Output() messageEvent = new EventEmitter<any>();
+  @Output() managePCN = new EventEmitter<any>();
   clientData: any = new clientInfo();
   @Input() selectClient;
   @Input() SelectedClientData;
@@ -46,6 +47,8 @@ export class ClientComponent implements OnInit {
     { headerName: 'Client Name', field: 'Client_Name' },
     { headerName: 'Status', field: 'Status' },
   ]
+  Is_PCN = false;
+  formObj = null
   constructor(private router: Router, private services: ClientService, public fb: FormBuilder, private notificationservice: NotificationService, ) {
 
 
@@ -59,6 +62,8 @@ export class ClientComponent implements OnInit {
       "DB_Name": [""],
       "DB_Password": ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       "Is_Active": [""],
+      "Is_PCN": [false],
+      "Is_Super_Concluder_Process": [null],
       "Updated_Date": [""],
       "Is_Aging_Report": [""],
       "Original_Client_Name": ["", Validators.compose([Validators.required])],
@@ -194,13 +199,15 @@ export class ClientComponent implements OnInit {
     } else if (this.SelectedClientData.Id != 'undefined' && this.addClient.value.Is_Active && this.click) {
       this.addClient.value.Is_Active = !this.clientData.Is_Active || true
     }
+
     else {
       this.addClient.value.Is_Active = false
     }
-    // }else{
 
-    // }
-
+    if (this.addClient.value.Is_PCN == null || this.addClient.value.Is_PCN == undefined) {
+      // this.addClient.patchValue({ Is_PCN: false });
+      this.addClient.value.Is_PCN = false;
+    }
 
     if (this.addClient.value.Is_Aging_Report == null || this.addClient.value.Is_Aging_Report == undefined) {
       this.addClient.value.Is_Aging_Report = this.clientData.Is_Aging_Report || false
@@ -214,8 +221,10 @@ export class ClientComponent implements OnInit {
     }
 
     if (this.addClient.valid && this.validated && !this.spaceValidation) {
+      console.log('updateClient : ', this.addClient.value);
       if (this.addClient.value.Id) {
         this.DisableButton = true;
+        this.formObj = JSON.parse(JSON.stringify(this.addClient.value));
         this.services.updateClient(this.userData.TokenValue, this.addClient.value).pipe(finalize(() => {
           this.DisableButton = false;
           this.saveBtnDisable = false;
@@ -232,6 +241,7 @@ export class ClientComponent implements OnInit {
           // this.rowData.splice(this.valtoremove,0,res.Data)
           this.getClientList()
           this.clearForm();
+
           // this.messageEvent.emit(this.clientData);
           // this.next_page.emit('client');
         }, err => {
@@ -292,7 +302,12 @@ export class ClientComponent implements OnInit {
     this.addClient.get('Client_Name').enable();
     this.addClient.get('DB_Server_Name').enable();
     this.addClient.reset();
-    this.addClient.patchValue({ "Is_Aging_Report": null, "File_Location": "C:/" })
+    this.addClient.patchValue({ "Is_Aging_Report": null, "File_Location": "C:/" });
+
+    // setTimeout(() => {
+    this.addClient.patchValue({ "Is_Super_Concluder_Process": null });
+    // })
+    // this.addClient.patchValue({ "Is_Aging_Report": null, "File_Location": "C:/" })
 
     this.clientData = new clientInfo();
     this.messageEvent.emit(this.clientData);
@@ -306,11 +321,17 @@ export class ClientComponent implements OnInit {
 
   }
 
+  checkPCN() {
+    console.log('checkPCN() : ', this.addClient.value);
+    this.managePCN.emit(this.addClient.value);
+  }
+
   nextPage() {
 
     if (this.clientData.Client_Name) {
       this.selectClient = false
       this.next_page.emit('client');
+
     } else {
       this.selectClient = true
     }

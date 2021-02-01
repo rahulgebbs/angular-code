@@ -12,6 +12,8 @@ export class DeallocateConcluderComponent implements OnInit {
   gridApi;
   gridColumnApi;
   rowData;
+  submitBtnDisable=false;
+
   columnDefs = [
     {
       headerName: '#', width: 130, checkboxSelection: true, suppressSorting: true,
@@ -51,5 +53,10 @@ export class DeallocateConcluderComponent implements OnInit {
     this.gridColumnApi.autoSizeColumns(allColumnIds);
   }
   onCellClicked(e) { }
+  BlockInput(e) {
 
+  }
+  clearForm() {
+
+  }
 }

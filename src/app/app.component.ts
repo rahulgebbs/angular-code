@@ -6,15 +6,46 @@ import { AgentService } from 'src/app/service/agent.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
-
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
+
 })
 
 export class AppComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
+  idleState = 'Not started.';
+  timedOut = false;
+
+  ResponseHelper: ResponseHelper;
+  breakStatus;
+  title = 'GeBBS : iAR';
+  MenuName: string;
+  DisplayMenu;
+  ShowElement: boolean = false;
+  FirstLogin;
+  Token: Token;
+  resumeBreak;
+  showTimeoutModal = false;
+  timeoutStart = new Date();
+  warningInterval: any;
+  constructor(private router: Router,
+    private ts: Title,
+    private agentService: AgentService,
+    private idle: Idle, private keepalive: Keepalive,
+    private analyticsService: AnalyticsService,
+    private notificationservice: NotificationService,
+  ) {
+    this.ResponseHelper = new ResponseHelper(this.notificationservice);
+    this.breakAction();
+  }
+  ngOnInit(): void {
+    this.initiateTimer();
+    this.Getcount();
+  }
   beforeUnloadHander(event) {
     console.log('beforeUnloadHander event : ', event);
     localStorage.tabCount = localStorage.tabCount - 1;
@@ -28,27 +59,86 @@ export class AppComponent implements OnInit {
     /// remove above comment to show popup to user on page refresh or close
   }
 
-  ngOnInit(): void {
 
-    this.Getcount();
+  initiateTimer() {
+    const sessionTime = sessionStorage.getItem('sessionTime');
+    console.log('sessionTime : ', sessionTime)
+    if (sessionTime != null) {
+      this.idle.setIdle(Number(sessionTime));
+    }
+    else {
+      this.idle.stop();
+      // this.idle.setIdle(5);
+    }
+    // sets a timeout period of 10 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+    this.idle.setTimeout(10);
+    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+    // let timeOutInterval = null;
+    this.idle.onIdleEnd.subscribe(() => {
+      this.idleState = 'No longer idle.'
+      console.log("onIdleEnd : ", this.idleState);
+    });
+
+    this.idle.onIdleStart.subscribe(() => {
+      // this.idleState = 'You\'ve gone idle!'
+      console.log('onIdleStart : ', this.idleState);
+      if (this.showTimeoutModal == false) {
+        this.startInterval(10);
+      }
+    });
+
+
+
+    this.chekIfUserLoggedIn();
   }
-  ResponseHelper: ResponseHelper;
-  breakStatus;
-  title = 'GeBBS : iAR';
-  MenuName: string;
-  DisplayMenu;
-  ShowElement: boolean = false;
-  FirstLogin;
-  Token: Token;
-  resumeBreak;
-  constructor(private router: Router,
-    private ts: Title,
-    private agentService: AgentService,
-    private analyticsService: AnalyticsService,
-    private notificationservice: NotificationService,
-  ) {
-    this.ResponseHelper = new ResponseHelper(this.notificationservice);
-    this.breakAction();
+
+  startInterval(countdown) {
+    let timer = Number(countdown);
+    this.idleState = (timer) + ' seconds!';
+    this.showTimeoutModal = true;
+    const self = this;
+    // countdown = countdown - 1;
+    this.warningInterval = setInterval(() => {
+
+      if (timer <= 1) {
+        clearInterval(self.warningInterval);
+        self.idle.stop();
+        this.showTimeoutModal = false;
+        this.idleState = 'Timed out!';
+        this.timedOut = true;
+        console.log('onTimeout : ', this.idleState);
+        sessionStorage.clear();
+        localStorage.clear();
+        this.router.navigate(['/']);
+        // return true;
+      }
+      else {
+        timer = timer - 1;
+        this.idleState = (timer) + ' seconds!'
+      }
+      console.log('onTimeoutWarning : ', this.idleState);
+    }, 1000);
+  }
+  reset() {
+    this.idle.watch();
+    this.timedOut = false;
+  }
+  stay() {
+    this.showTimeoutModal = false;
+    clearInterval(this.warningInterval);
+    this.reset();
+  }
+
+  chekIfUserLoggedIn() {
+    this.Token = new Token(this.router);
+    console.log('chekIfUserLoggedIn : ', this.Token.GetUserData());
+    if (this.Token && this.Token.GetUserData()) {
+      this.idle.watch();
+    }
+    else {
+      this.idle.stop();
+    }
   }
   breakAction() {
     this.breakStatus = sessionStorage.getItem('BreakStatus');
@@ -90,6 +180,9 @@ export class AppComponent implements OnInit {
 
       switch (event.router.url) {
         case '/login':
+          this.ShowElement = false;
+          break;
+        case '/reset-password':
           this.ShowElement = false;
           break;
         case '/two-factor-auth':

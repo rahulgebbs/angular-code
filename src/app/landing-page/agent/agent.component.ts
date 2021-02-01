@@ -1,23 +1,31 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { Token } from 'src/app/manager/token';
 import { NotificationService } from 'src/app/service/notification.service';
 import { AgentService } from 'src/app/service/agent.service';
-import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
+import { finalize, debounceTime, distinctUntilChanged, tap, switchMap, catchError, last, retry } from 'rxjs/operators';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalInsuranceService } from 'src/app/service/global-insurance.service';
 import { DropdownService } from 'src/app/service/client-configuration/dropdown.service';
 import { of, Observable } from 'rxjs';
-import { LogoutService } from 'src/app/service/logout.service';
+// import { LogoutService } from 'src/app/service/logout.service';
 import { CommonService } from 'src/app/service/common-service';
 import { dropDownFields } from 'src/app/manager/dropdown-feilds';
 import { DenialCodeService } from './../../service/denial-code.service';
 import { AnalyticsService } from 'src/app/analytics.service';
-
+import * as moment from 'moment'
 
 import * as $ from 'jquery'
+
+import * as _ from 'lodash';
+import { ClientService } from 'src/app/service/client-configuration/client.service';
+import { ConcluderService } from 'src/app/service/concluder.service';
+import { ClientInstructionService } from 'src/app/service/client-instruction.service';
+import { ProjectandpriorityService } from 'src/app/service/projectandpriority.service';
+
+
 
 @Component({
   selector: 'app-agent',
@@ -25,13 +33,25 @@ import * as $ from 'jquery'
   styleUrls: ['./agent.component.scss'],
   providers: [dropDownFields]
 })
-export class AgentComponent implements OnInit {
+export class AgentComponent implements OnInit, OnDestroy {
+  amount = 0;
+  clientInstructionInfoModal = false;
+  to_be_concluded_bucket: any = {
+    Count: 0,
+    Display_Name: "To Be Concluded",
+    Name: "To_be_Concluded"
+  }
+  conclusion_bucket: any = {
+    Count: 0,
+    Display_Name: "Concluded",
+    Name: "Concluded"
+  }
   instructionCount: Number = 0;
   Title = "Agent";
   /* utility*/
   showHighPriorityAccounts = false;
   callreferenceAcccounts = false;
-  ResponseHelper: ResponseHelper
+  ResponseHelper: ResponseHelper;
   AllFields = [];
   ActionForm: FormGroup;
   Validated = false;
@@ -69,7 +89,7 @@ export class AgentComponent implements OnInit {
   MinDate: Date;
   statCalucualted: boolean = false
   DisplayMessage: string = "Please click on the Bucket to continue.";
-  viewUtil: boolean = false;
+  viewUtil: boolean = true;
   DisplayAppeal: boolean = false;
   AppealType = '';
   CurrentPayerName = '';
@@ -99,18 +119,45 @@ export class AgentComponent implements OnInit {
   showCallReferenceInfo = false;
   CallReference_No = null;
   Is_New_Line = false;
-  constructor(private selectedFields: dropDownFields, private router: Router, private notificationservice: NotificationService,
+  showAddPCNModal = false;
+  inventoryDetails = {};
+  userdata: any;
+  clientObj: any = {};
+
+  // concluder section 
+  openToBeConcludedBucketModal = false;
+  openConclusionBucketModal = false;
+  concluderId = null;
+  activeReasonBucket = null;
+  openPAndPModal = false;
+  PNP_Inventory_Id = null;
+  PNP_Inventory_Log_Id = null;
+  constructor(
+    private router: Router,
+    private notificationservice: NotificationService,
     private analyticsService: AnalyticsService,
-    private agentservice: AgentService, private saagservice: SaagService, private globalservice: GlobalInsuranceService, private dropdownservice: DropdownService, private fb: FormBuilder, private logoutService: LogoutService, private commonservice: CommonService, private denialcodeservice: DenialCodeService) { }
+    private clientInstructionService: ClientInstructionService,
+    public projectandpriorityService: ProjectandpriorityService,
+    private agentservice: AgentService,
+    private saagservice: SaagService,
+    private globalservice: GlobalInsuranceService,
+    private dropdownservice: DropdownService,
+    private fb: FormBuilder,
+
+    private commonservice: CommonService,
+    private denialcodeservice: DenialCodeService,
+    private clientService: ClientService,
+    private concluderService: ConcluderService) { }
 
   ngOnInit() {
-
+    sessionStorage.removeItem('localPCN');
+    sessionStorage.removeItem('lastPCN');
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
-    var userdata = token.GetUserData();
-    this.UserId = userdata.UserId;
-    this.ClientId = userdata.Clients[0].Client_Id;
-    this.Client_Name = userdata.Clients[0].Client_Name;
+    this.userdata = token.GetUserData();
+    this.UserId = this.userdata.UserId;
+    this.ClientId = this.userdata.Clients[0].Client_Id;
+    this.Client_Name = this.userdata.Clients[0].Client_Name;
     this.GetBucketsWithCount();
     this.CreateActionForm();
     sessionStorage.removeItem("Accounts");
@@ -119,7 +166,27 @@ export class AgentComponent implements OnInit {
 
     setTimeout(() => {
       $('.utility-menu').hide();
-    }, 1000)
+    }, 1000);
+    this.getClientID();
+    this.getClientInstructionInformation();
+  }
+  ngOnDestroy() {
+    this.projectandpriorityService.showProjectModal = false;
+  }
+
+  getClientInstructionInformation() {
+    this.clientInstructionService.getClientInstructionInformation(this.ClientId).subscribe((response: any) => {
+      console.log('getClientInstructionInformation response : ', response);
+      if (response.Data && response.Data.InstructionCheck == true) {
+        this.clientInstructionInfoModal = true;
+      }
+      // this.amount = 100;
+      // this.clientInstructionInfoModal = response && response.InstructionCheck ? response.InstructionCheck : false;
+    }, (error) => {
+      this.clientInstructionInfoModal = false;
+      console.log('getClientInstructionInformation error : ', error);
+    })
+
   }
 
   toggleMenu() {
@@ -135,8 +202,9 @@ export class AgentComponent implements OnInit {
   GetBucketsWithCount() {
     sessionStorage.removeItem('highPriporityAccount');
     localStorage.removeItem('callReference');
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     this.agentservice.GetBucketsWithCount(this.ClientId).pipe(finalize(() => {
-
     })).subscribe(
       res => {
         this.ClientId = res.json().Data.ClientId;
@@ -148,11 +216,13 @@ export class AgentComponent implements OnInit {
       },
       err => {
         this.ResponseHelper.GetFaliureResponse(err);
+        this.GetSaagLookup();
       }
     );
   }
 
   GetAccountList(bucket, fromsubmit) {
+    console.log('debug bucket : ', bucket)
     this.agentservice.GetAccountList(this.ClientId, bucket.Name).pipe(finalize(() => {
       this.GetBucketsWithCount();
     })).subscribe(
@@ -172,10 +242,10 @@ export class AgentComponent implements OnInit {
             else {
               this.InventoryLogId = 0;
             }
-            // this.GetAllFields(bucketname, this.AccountsList[0].Inventory_Id, false);
+            this.GetAllFields(bucket, this.AccountsList[0].Inventory_Id, false);
           }
           // this.MapInventoryLogId();
-          this.viewUtil = true;
+          // this.viewUtil = true;
         }
 
         if (fromsubmit == false) {
@@ -219,9 +289,10 @@ export class AgentComponent implements OnInit {
   }
 
   SaveAccountsInLocal(Bucket_Name, inventoryId) {
+    console.log('SaveAccountsInLocal Bucket_Name : ', Bucket_Name)
     this.AccountsList.forEach(e => {
       e.Processed = "Pending";
-      e.Bucket_Name = Bucket_Name;
+      e.Bucket_Name = Bucket_Name && Bucket_Name.Name ? Bucket_Name.Name : Bucket_Name;
       if (e.Inventory_Id == inventoryId) {
         e.Processed = "Working";
       }
@@ -291,6 +362,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnStatusChange(event) {
+    console.log('OnStatusChange : ', event)
     this.ActionForm.patchValue({ "SubStatus": "" })
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.SubStatus = [];
@@ -322,6 +394,7 @@ export class AgentComponent implements OnInit {
   }
 
   OnSubStatusChange(event) {
+    console.log('OnSubStatusChange : ', event)
     this.ActionForm.patchValue({ "ActionCode": "" })
     this.ActionCode = [];
     let actionCode = [];
@@ -381,7 +454,7 @@ export class AgentComponent implements OnInit {
   }
 
   MarkLocalAccountComplete() {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Bucket_Name == this.ActiveBucket && e.Inventory_Id == this.InventoryId && e.Processed == 'Working') {
         e.Processed = "Complete";
@@ -444,7 +517,7 @@ export class AgentComponent implements OnInit {
 
   ClearForm() {
     this.Validated = false;
-    this.Is_New_Line = false;
+    // this.Is_New_Line = false;
     this.CreateActionForm();
   }
 
@@ -463,26 +536,50 @@ export class AgentComponent implements OnInit {
         if (e.Header_Name == "Notes") {
           e.FieldValue = this.ActionForm.controls['Notes'].value;
         }
+        else if (e.Column_Datatype == 'Date') {
+          // moment().utcOffset(0, true).format()
+          if (e && e.FieldValue != null) {
+
+            objs[e.Header_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+          }
+          else {
+            objs[e.Header_Name] = moment().utcOffset(0, true).format();
+          }
+        }
         else {
           objs[e.Header_Name] = e.FieldValue;
         }
       });
+      console.log('Bucket_Name : ', this.ActiveBucket);
       objs["Bucket_Name"] = this.ActiveBucket;
       objs["Status"] = this.ActionForm.controls['Status'].value;
       objs["Sub-Status"] = this.ActionForm.controls['SubStatus'].value;
+      objs["Sub_Status"] = this.ActionForm.controls['SubStatus'].value;
       objs["Action_Code"] = this.ActionForm.controls['ActionCode'].value;
       objs["Account_Status"] = this.ActionForm.controls['WorkStatus'].value;
 
       var obj = new Object();
       obj['Fields'] = objs;
-
+      console.log('obj : ', obj['Fields']);
       this.DisableSubmit = true;
       // console.log('SubmitForm obj : ', JSON.stringify(obj));
       localStorage.removeItem('callReference');
       sessionStorage.removeItem('highPriporityAccount');
+      sessionStorage.removeItem('localPCN');
+      sessionStorage.removeItem('lastPCN');
 
       if (this.Is_New_Line == true) {
         this.submitAddNewLine(obj);
+        return true;
+      }
+      if (this.ActiveBucket == "Concluded") {
+        console.log('Conclusion : ', obj);
+        // this.DisableSubmit = false;
+        this.submitConclusion(obj);
+        return true;
+      }
+      if (this.ActiveBucket == "PNP") {
+        this.submitPNPForm(obj);
         return true;
       }
       this.agentservice.SaveAllFields(obj).pipe(finalize(() => {
@@ -524,10 +621,95 @@ export class AgentComponent implements OnInit {
           this.ResponseHelper.GetFaliureResponse(err);
         }
       );
-
-
     }
+  }
 
+  submitPNPForm(data) {
+    data.Fields.PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
+    data.Fields.PNP_Inventory_Id = this.PNP_Inventory_Id;
+    delete data.Fields.Inventory_Log_Id;
+    delete data.Fields.Inventory_Id;
+    this.projectandpriorityService.submitPNPForm(data).subscribe((response) => {
+      console.log('submitPNPForm response : ', response);
+      this.GetBucketsWithCount();
+      this.assignNextInventory();
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('submitPNPForm error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.Validated = false;
+      this.DisableSubmit = false;
+      this.GetBucketsWithCount();
+    })
+    console.log('submitPNPForm(data) : ', data);
+  }
+  assignNextInventory() {
+    let localAccounts = this.projectandpriorityService.getLocalAccount();
+    console.log('submitPNPForm assignNextInventory localAccounts : ', localAccounts);
+    console.log('submitPNPForm assignNextInventory before', this.PNP_Inventory_Id)
+    const matchedIndex = localAccounts.findIndex((element, index) => {
+      if (element.PNP_Inventory_Id == this.PNP_Inventory_Id) {
+        // localAccounts.splice(index, 1)
+        return element;
+      }
+    });
+    console.log('submitPNPForm assignNextInventory matchedIndex : ', matchedIndex);
+    if (matchedIndex != undefined && matchedIndex >= 0) {
+      localAccounts.splice(matchedIndex, 1)
+    }
+    // localAccounts = JSON.parse(JSON.stringify(localAccounts))
+    console.log('submitPNPForm assignNextInventory before', localAccounts)
+    if (localAccounts.length > 0) {
+      const { Clients } = this.userdata;
+      const { PNP_Inventory_Id } = localAccounts[0];
+      // this.PNP_Inventory_Id = PNP_Inventory_Id;
+      // this.PNP_Inventory_Log_Id = PNP_Inventory_Log_Id;
+      console.log('submitPNPForm assignNextInventory after', PNP_Inventory_Id)
+
+      this.projectandpriorityService.updatePNPTime(Clients[0].Client_Id, PNP_Inventory_Id, this.PNP_Inventory_Log_Id).subscribe((response: any) => {
+        console.log('submitPNPForm updatePNPTime response : ', response, localAccounts, localAccounts.length);
+        this.ResponseHelper.GetSuccessResponse(response);
+        this.PNP_Inventory_Log_Id = response.Data;
+        localAccounts[0].PNP_Inventory_Log_Id = this.PNP_Inventory_Log_Id;
+        this.projectandpriorityService.setLocalAccount(localAccounts);
+        this.getAllPNPFields(localAccounts[0], true);
+      }, (error) => {
+        console.log('updatePNPTime error : ', error);
+        this.ResponseHelper.GetFaliureResponse(error);
+        this.Validated = false;
+        this.DisableSubmit = false;
+      });
+    }
+    else {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.activeReasonBucket = '';
+      this.projectandpriorityService.setLocalAccount(localAccounts);
+    }
+    console.log('assignNextInventory : ', localAccounts);
+  }
+
+  getAllPNPFields(data, status) {
+    console.log('getAllFields data : ', data);
+    const { PNP_Inventory_Id, PNP_Inventory_Log_Id } = data;
+    const { Clients } = this.userdata;
+    this.projectandpriorityService.getPNPFields(Clients[0].Client_Id, PNP_Inventory_Id, PNP_Inventory_Log_Id, this.activeReasonBucket)
+      .subscribe((response) => {
+        console.log('getPNPFields response : ', response);
+        // this.Acc = response.Data;
+        // this.projectandpriorityService.setLocalAccount(this.AccountsList);
+        this.PNPAccountClick({ AccountsList: response.Data, PNP_Inventory_Id: PNP_Inventory_Id, PNP_Inventory_Log_Id: PNP_Inventory_Log_Id, closePopup: true, activeReasonBucket: this.activeReasonBucket });
+        this.Validated = false;
+        this.DisableSubmit = false;
+        // this.PNPAccountClick(event)
+      }, (error) => {
+        console.log('getPNPFields error : ', error);
+        this.Validated = false;
+        this.DisableSubmit = false;
+        this.ResponseHelper.GetFaliureResponse(error);
+        this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      });
   }
 
   ClearPdfStorage() {
@@ -581,6 +763,15 @@ export class AgentComponent implements OnInit {
 
   ToggleClientModal() {
     this.DisplayClientUpdate = !this.DisplayClientUpdate
+  }
+  getClientID() {
+    this.clientService.getClient(this.userdata.TokenValue, this.ClientId).subscribe((res) => {
+      console.log('getClient data : ', res.json());
+      this.clientObj = res.json().Data;
+    }, (error) => {
+      this.clientObj = {};
+      console.log('getClientUpdate error: ', error);
+    })
   }
   showClientUpdate() {
     this.agentservice.getClientUpdate(this.ClientId).pipe(finalize(() => {
@@ -666,12 +857,17 @@ export class AgentComponent implements OnInit {
   }
 
   ToggleAccountsModal(bucket) {
-
+    console.log('ToggleAccountsModal bucket : ', bucket);
+    this.activeReasonBucket = null;
+    this.projectandpriorityService.removeLocalAccount();
+    this.PNP_Inventory_Id = null;
+    this.PNP_Inventory_Log_Id = null;
+    this.projectandpriorityService.showProjectModal = false;
     if (bucket && bucket.Name != false && bucket.Name != true) {
       sessionStorage.removeItem('Accounts');
-
       const highPriority = sessionStorage.getItem('highPriporityAccount');
       const callReference = localStorage.getItem('callReference');
+      sessionStorage.removeItem('conclusionBucket');
       if (highPriority != undefined) {
         this.GetAccountList(bucket, false);
         sessionStorage.removeItem('highPriporityAccount');
@@ -681,6 +877,7 @@ export class AgentComponent implements OnInit {
         localStorage.removeItem('callReference');
 
       }
+
       this.analyticsService.logEvent(bucket.Name + ' Click').subscribe((response) => {
         console.log('logEvent : ', response);
       }, (error) => {
@@ -688,9 +885,19 @@ export class AgentComponent implements OnInit {
       });
       bucket.disableBtn = true;
       // var bucketname = this.ActiveBucket;
-      this.ActiveBucket = bucket;
+      this.ActiveBucket = bucket.Name == "Concluded" ? this.ActiveBucket : bucket.Name;
+      if (bucket.Name != 'To_be_Concluded') {
+        this.concluderId = null;
+      }
       if (bucket.Name.includes("Appeal") || bucket.Name == "Private_To_Call" || bucket.Name == "TL_Deny") {
         this.GetAccountList(bucket, false);
+      }
+      else if (bucket.Name == 'To_be_Concluded') {
+        // call concluder to be done service
+        this.toBeConcluded();
+      }
+      else if (bucket.Name == "Concluded") {
+        this.conclusionBucket();
       }
       else {
         if (!this.CheckPendingAccount(bucket.Name)) {
@@ -707,10 +914,7 @@ export class AgentComponent implements OnInit {
             this.GetAccountList(bucket, false);
             return false;
           }
-
           if (this.ActiveBucket != bucket.Name) {
-            // this.InventoryId = ;
-            // this.InventoryLogId =;
             if (bucket.Name.indexOf('Appeal') == -1) {
               this.GetAllFields(bucket, this.AccountsList[0].Inventory_Id, false);
             }
@@ -726,8 +930,103 @@ export class AgentComponent implements OnInit {
     }
   }
 
+  openConcludedBucketModal() {
+
+  }
+
+  toBeConcluded() {
+    this.openToBeConcludedBucketModal = true;
+    // this.concluderId = null;
+  }
+
+  conclusionBucket() {
+    this.openConclusionBucketModal = true;
+    this.concluderId = null;
+    console.log('conclusionBucket() : ', this.ActiveBucket);
+    // this.ActiveBucket = null;
+  }
+
+  closeConclusionModal(event) {
+    this.openConclusionBucketModal = false;
+
+    // this.DisplayMain = false;
+    // this.DisplayMessage = "Please click on Bucket to continue";
+    // this.ActiveBucket = '';
+  }
+
+  CloseConcluderModal(event) {
+    console.log('CloseConcluderModal : ', event);
+    this.openToBeConcludedBucketModal = false;
+    // this.DisplayMain = false;
+    // this.DisplayMessage = "Please click on Bucket to continue";
+    // this.ActiveBucket = '';
+  }
+  concluderInventoryData() {
+    console.log('concluderInventoryData() : ');
+    this.concluderService.getConcluderInventoryData().subscribe((response) => {
+      console.log('concluderInventoryData response : ', response);
+      this.OpenAccountsModal = true;
+      if (this.AccountsList[0].Inventory_Log_Id) {
+        this.InventoryLogId = this.AccountsList[0].Inventory_Log_Id;
+      }
+      else {
+        this.InventoryLogId = 0;
+      }
+      this.SaveAccountsInLocal("To_be_Concluded", this.AccountsList[0].Inventory_Id)
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      console.log('concluderInventoryData error : ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+    })
+  }
+
+
+  concluderRowClick(event) {
+    console.log('concluderRowClick : ', event);
+    this.activeReasonBucket = null;
+    sessionStorage.removeItem('conclusionBucket');
+    if (event) {
+      this.AllFields = JSON.parse(JSON.stringify(event.fields));
+      this.DisplayMain = true;
+      this.ActiveBucket = event.Bucket_Name;
+      this.concluderId = event.concluderId;
+    }
+    if (event.closePopup == true) {
+      this.openToBeConcludedBucketModal = false;
+    }
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.concluderId = null;
+    }
+    this.GetBucketsWithCount();
+  }
+
+  conclusionRowClick(data) {
+    console.log('conclusionRowClick(data) : ', data);
+    const bucket = sessionStorage.getItem('conclusionBucket');
+    if (bucket != null) {
+      this.activeReasonBucket = bucket;
+    }
+    else {
+      this.activeReasonBucket = null;
+    }
+    this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+    if (data && data.AccountsList && data.AccountsList.length > 0) {
+      this.DisplayMain = true;
+      this.ActiveBucket = "Concluded";
+      this.AllFields = data.AccountsList;
+    }
+    this.concluderId = data.concluderId;
+    if (data.status == true) {
+      this.openConclusionBucketModal = false;
+    }
+    this.setStatus();
+  }
+
   ChangeWorkingStatusInLocal(bucketname: string) {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Processed != "Complete" && e.Bucket_Name == bucketname) {
         e.Processed = "Working";
@@ -742,13 +1041,17 @@ export class AgentComponent implements OnInit {
     this.Is_New_Line = false;
     console.log('Before GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
     this.InventoryLogId = (obj.Inventory_Log_Id != null && obj.Inventory_Log_Id > 0) ? obj.Inventory_Log_Id : (this.InventoryLogId != null ? this.InventoryLogId : 0);
-    console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // console.log('After GetAllFields bucket : ', bucket, obj, this.InventoryLogId);
+    // sessionStorage.removeItem('localPCN');
+    // sessionStorage.removeItem('lastPCN');
     var oldinvenid = this.InventoryId;
     var oldinvenlogid = this.InventoryLogId;
     if (fromPopup === true) {
       bucket.Name = obj.Bucket_Name;
       bucket.Inventory_Log_Id = obj.Inventory_Log_Id ? obj.Inventory_Log_Id : null;
       this.InventoryId = obj.Inventory_Id;
+      // this.concluderId = null;
+      // this.InventoryLogId = bucket.Inventory_Log_Id ? bucket.Inventory_Log_Id : 0;
     }
     else {
       this.InventoryId = obj;
@@ -766,10 +1069,7 @@ export class AgentComponent implements OnInit {
         formobj = { Client_Id: this.ClientId, Bucket_Name: bucket.Name, Inventory_Id: this.InventoryId, Old_Inventory_Log_Id: oldinvenlogid, New_Inventory_Log_Id: existinglogid, Insert_Log: false };
       }
       this.UpdateInventoryTime(bucket, formobj, fromPopup, this.InventoryId);
-      // }
-      // else {
-      //   this.GetAllFieldsApiCall(bucketname, this.InventoryId, fromPopup);
-      // }
+
     }
     else {
       console.log('In Else bucket : ', bucket);
@@ -881,7 +1181,7 @@ export class AgentComponent implements OnInit {
   }
 
   RemoveAccountFromLocal() {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     var thisref = this;
     this.LocalAccounts = this.LocalAccounts.filter(function (item) {
       return (item.Inventory_Id != thisref.InventoryId);
@@ -891,7 +1191,7 @@ export class AgentComponent implements OnInit {
 
   GetLogFromInventoryId(oldinvenid: number): number {
     var res = 0;
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == oldinvenid) {
         if (e.Inventory_Log_Id != null) {
@@ -904,7 +1204,7 @@ export class AgentComponent implements OnInit {
 
   InventoryLogCheck(bucketname) {
     var res = 0;
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Bucket_Name == bucketname) {
         if (e.Inventory_Log_Id != null) {
@@ -951,7 +1251,7 @@ export class AgentComponent implements OnInit {
   }
 
   MapInventoryLogId(bucketname) {
-    this.LocalAccounts = JSON.parse(sessionStorage.getItem("Accounts"));
+    this.LocalAccounts = sessionStorage.getItem("Accounts") ? JSON.parse(sessionStorage.getItem("Accounts")) : [];
     this.LocalAccounts.forEach(e => {
       if (e.Inventory_Id == this.InventoryId && e.Bucket_Name == bucketname && e.Processed != 'Complete') {
         if (e.Inventory_Log_Id == null) {
@@ -965,10 +1265,11 @@ export class AgentComponent implements OnInit {
 
   ManageNullFields() {
     this.AllFields.forEach(e => {
+      // console.log('label value ', e.FieldValue, e.Display_Name)
       if (e.Display_Name.indexOf('Payer') != -1) {
         this.CurrentPayerName = e.FieldValue;
       }
-      if (e.Is_Standard_Field) {
+      if (e.Is_Standard_Field == true) {
         switch (e.Column_Datatype) {
           case "Text":
             // if (e.FieldValue == null) {
@@ -979,10 +1280,14 @@ export class AgentComponent implements OnInit {
             }
             break;
           case "Date":
-            if (e.FieldValue != null) {
-              var d = new Date(e.FieldValue);
-              e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
-            }
+            // if (e.FieldValue != null) {
+            //   var d = new Date(e.FieldValue);
+            //   e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
+            // }
+            // else {
+            // var d = new Date(e.FieldValue).toISOString();
+            // }
+            e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
             // else {
             //   e.FieldValue = "NA"
             // }
@@ -1015,10 +1320,9 @@ export class AgentComponent implements OnInit {
                 var d = new Date(e.FieldValue);
                 e.FieldValue = (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
               }
-              // else {
-              //   e.FieldValue = "NA";
-              // }
-
+              else {
+                e.FieldValue = e.FieldValue != null ? new Date(e.FieldValue).toISOString() : new Date().toISOString();
+              }
             }
             break;
         }
@@ -1291,6 +1595,7 @@ export class AgentComponent implements OnInit {
       if (field.Is_Standard_Field == true)
         field.editableInput = true;
     });
+    this.ManageNullFields();
   }
 
   submitAddNewLine(body) {
@@ -1313,5 +1618,226 @@ export class AgentComponent implements OnInit {
       this.ResponseHelper.GetFaliureResponse(error);
     })
   }
+  dateTimeChange(event, field) {
+    console.log('dateTimeChange : ', event, field);
+  }
+
+  openAddPCNModal() {
+    this.inventoryDetails = {}
+    this.inventoryDetails['Client_Id'] = this.ClientId;
+    this.inventoryDetails['Inventory_Id'] = this.InventoryId;
+    this.inventoryDetails['Inventory_Log_Id'] = this.InventoryLogId;
+    // this.inventoryDetails['Notes'] = this.ActionForm.controls['Notes'].value;
+    // console.log('Before this.AllFields : ', this.AllFields);
+    this.AllFields.forEach(e => {
+      // console.log('loop ele : ', e.Header_Name, e);
+      if (e.Column_Datatype == 'Date') {
+        if (e && e.FieldValue != null) {
+          this.inventoryDetails[e.Display_Name] = moment(e.FieldValue).utcOffset(0, true).format();
+        }
+        else {
+          this.inventoryDetails[e.Display_Name] = moment().utcOffset(0, true).format();
+        }
+      }
+      else {
+        this.inventoryDetails[e.Display_Name] = e.FieldValue;
+      }
+    });
+    console.log('openAddPCNModal objs :', this.inventoryDetails)
+    this.showAddPCNModal = true;
+  }
+  closeAddPCNModal() {
+    console.log('showAddPCNModal :', this.showAddPCNModal);
+    this.showAddPCNModal = false;
+    var lastPCN: any = sessionStorage.getItem('lastPCN');
+    lastPCN = lastPCN ? JSON.parse(lastPCN) : {}
+    console.log('lastPCN : ', lastPCN);
+    this.setActionFormFields(lastPCN);
+    // this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    // this.OnStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ "SubStatus": lastPCN.Sub_Status });
+    // this.OnSubStatusChange(lastPCN);
+    // this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+  }
+
+  setActionFormFields(lastPCN) {
+    // Set Status
+    this.ActionForm.patchValue({ "Status": lastPCN.Status });
+    // SET Sub_Status
+    const subStatusList = this.SaagLookup.filter((saag) => {
+      if (saag.Status == lastPCN.Status) {
+        return saag.Sub_Status;
+      }
+    });
+    this.SubStatus = _.map(subStatusList, 'Sub_Status');
+    this.ActionForm.patchValue({ SubStatus: lastPCN.Sub_Status });
+    // SET Action_Code
+    const actionCodeList = this.SaagLookup.filter((saag) => {
+      if (saag.Sub_Status == lastPCN.Sub_Status) {
+        return saag.Action_Code;
+      }
+    });
+    this.ActionCode = _.map(actionCodeList, 'Action_Code');
+    this.ActionForm.patchValue({ ActionCode: lastPCN.Action_Code });
+    // console.log('setActionFormFields : ', this.ActionForm.value, this.SubStatus, this.ActionCode);
+  }
+
+  // concluder section
+  setStatus() {
+    this.saagservice.getSaagLookup(this.ClientId).subscribe((response: any) => {
+      console.log('getSaagLookup : ', response);
+      this.SaagLookup = response.json().Data.SAAG_Lookup;;
+      this.Status = this.SaagLookup.map(function (obj) { return obj.Status; });
+      this.Status = _.uniq(this.Status);
+      console.log('setStatus : ', this.Status, this.SaagLookup);
+    }, (error) => {
+      console.log('error : ', error)
+    })
+  }
+
+  submitConclusion(obj) {
+    console.log('submitConclusion(obj): ', obj);
+    obj.Fields['Concluder_Id'] = this.concluderId;
+    obj.Fields["PCn_ids"] = obj.Fields["PCn_ids"] ? obj.Fields["PCn_ids"] : [];
+    this.concluderService.saveConclusionData(obj).subscribe((response) => {
+      console.log('saveConclusionData response : ', response);
+      this.ResponseHelper.GetSuccessResponse(response);
+      this.assigNextConclusionInventory();
+      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      this.Validated = false;
+      this.DisableSubmit = false;
+    }, (error) => {
+      this.Validated = false;
+      this.DisableSubmit = false;
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+      console.log('error Messages : ', error);
+      const httpResponse = error.json();
+      console.log('httpResponse : ', httpResponse);
+      if (httpResponse && httpResponse.Message[0]) {
+        if (httpResponse.Message[0].Message == 'Unique Key already exists.') {
+          this.assigNextConclusionInventory();
+        }
+      }
+      console.log('saveConclusionData response : ', error);
+
+    });
+    // this.assigNextConclusionInventory();
+  }
+
+  assigNextConclusionInventory() {
+    const localStr = sessionStorage.getItem('concluderAccounts');//JSON.parse(sessionStorage.getItem('concluderAccounts'));
+    // let fieldList = [];
+    if (localStr != null) {
+      var concluderAccouts = JSON.parse(localStr);
+      console.log('assigNextConclusionInventory before concluderAccouts : ', concluderAccouts.length);
+      concluderAccouts.forEach((list, listIndex) => {
+        list.forEach((field, index) => {
+          field.FieldValue = field.Field_Value;
+          console.log('assigNextConclusionInventory field : ', field.Header_Name, field.FieldValue, this.concluderId);
+          if (field.Header_Name == 'Concluder_Id' && this.concluderId == field.FieldValue) {
+            // fieldList = list;
+            concluderAccouts.splice(listIndex, 1);
+            return false;
+          }
+        });
+      });
+    }
+    console.log('assigNextConclusionInventory After concluderAccouts : ', concluderAccouts.length);
+    if (concluderAccouts && concluderAccouts.length > 0) {
+      concluderAccouts[0].forEach((field) => {
+        if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+          field.Is_Standard_Field = false;
+        }
+        else {
+          field.Is_Standard_Field = true;
+        }
+        field.Is_Standard_Field = true;
+        field['Display_Name'] = field.Header_Name;
+        field['Is_View_Allowed_Agent'] = true;
+        field['FieldValue'] = field.Field_Value;
+      });
+      const matchedObj = concluderAccouts[0].find((ele) => {
+        return ele.Header_Name == "Concluder_Id";
+      });
+      // console.log('this.concluderId, matchedObj.FieldValue : ', this.concluderId, matchedObj.FieldValue)
+      this.concluderService.getConclusionDataByConcludeID(this.ClientId, matchedObj.FieldValue, this.ActiveBucket).subscribe((response) => {
+        // console.log('getConclusionDataByConcludeID response : ', response);
+        this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: response.Data, closePopup: false });
+      }, (error) => {
+        // console.log('getConclusionDataByConcludeID error : ', error);
+      })
+      // this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: matchedObj.FieldValue, fields: concluderAccouts[0], closePopup: false });
+    }
+    else {
+      this.setConcluderFields({ Bucket_Name: "Concluded", concluderId: null, fields: [], closePopup: false });
+    }
+    sessionStorage.setItem('concluderAccounts', JSON.stringify(concluderAccouts));
+  }
+
+  setConcluderFields(event) {
+    if (event) {
+      event.fields.forEach(element => {
+        // element.Is_Edit_Allowed_Agent = true;
+        element['Is_View_Allowed_Agent'] = true;
+      });
+      this.AllFields = JSON.parse(JSON.stringify(event.fields));
+      this.DisplayMain = true;
+      this.ActiveBucket = event.Bucket_Name;
+      this.concluderId = event.concluderId;
+    }
+    // if (event.closePopup == true) {
+    //   this.openToBeConcludedBucketModal = false;
+    // }
+
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.concluderId = null;
+      this.activeReasonBucket = null;
+    }
+    this.GetBucketsWithCount();
+  }
+
+  closeInstructionModal(event) {
+    console.log('closeInstructionModal event : ', event);
+    this.clientInstructionInfoModal = false;
+    this.showClientUpdate();
+  }
+
+  openProjectAndPriorityModal() {
+    this.projectandpriorityService.showProjectModal = true;
+  }
+  closeProjectAndPriorityModal() {
+    this.projectandpriorityService.showProjectModal = true;
+  }
+  PNPAccountClick(event) {
+    console.log('PNPAccountClick(event) data : ', event);
+    // this.activePNPBucket = "PNP";
+    // sessionStorage.removeItem('conclusionBucket'); //commented now
+    this.ActionForm.patchValue({ Status: '', SubStatus: '', ActionCode: '', WorkStatus: '', Notes: '' });
+    this.DisableSubmit = false;
+    this.Validated = false;
+
+    if (event) {
+      this.AllFields = JSON.parse(JSON.stringify(event.AccountsList));
+      this.DisplayMain = true;
+      this.ActiveBucket = "PNP";
+      this.PNP_Inventory_Id = event.PNP_Inventory_Id;
+      this.PNP_Inventory_Log_Id = event.PNP_Inventory_Log_Id;
+      this.activeReasonBucket = event.activeReasonBucket;
+      // this.concluderId = event.concluderId; //commented now
+    }
+    if (event.closePopup == true) {
+      // this.openToBeConcludedBucketModal = false; //commented now
+      this.projectandpriorityService.showProjectModal = false;
+    }
+    if (this.AllFields && this.AllFields.length == 0) {
+      this.DisplayMain = false;
+      this.DisplayMessage = "Please click on Bucket to continue";
+      this.ActiveBucket = '';
+      this.activeReasonBucket = '';
+    }
+  }
 }
-// };

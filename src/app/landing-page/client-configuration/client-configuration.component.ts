@@ -10,12 +10,6 @@ export class ClientConfigurationComponent implements OnInit {
   clientData;
   ShowTabName = 'client';
   ClientComplete = true;
-  // SaagComplete = false;
-  // InsuranceComplete = false;
-  // ProviderComplete = false;
-  // InventoryComplete = false;
-  // DropdownComplete = false;
-  // FormulaComplete = false;
   TabError = false;
   constructor(private router: Router) {
   }
@@ -33,6 +27,7 @@ export class ClientConfigurationComponent implements OnInit {
   }
 
   next_page(e) {
+    console.log('next_page : ', e);
     if (e == 'client') {
       this.ClientComplete = true;
       this.ShowTabName = 'saag';
@@ -58,6 +53,22 @@ export class ClientConfigurationComponent implements OnInit {
     }
     else if (e == "formula") {
       this.clientData.Is_Formula_Uploaded = true;
+      if (this.clientData.Is_PCN == true) {
+
+        this.ShowTabName = 'pcn';
+      }
+      else {
+        this.ShowTabName = 'special_project';
+      }
+      // location.reload();
+    }
+    else if (e == "pcn") {
+      this.clientData.Is_PCN_Uploaded = true;
+      // location.reload()
+      this.ShowTabName = 'special_project';
+    }
+    else if (e == "special_project") {
+      this.clientData.Is_Special_Project_Uploaded = true;
       // location.reload()
       this.ShowTabName = 'appeal';
     }
@@ -67,9 +78,9 @@ export class ClientConfigurationComponent implements OnInit {
     }
   }
 
-
   receiveClient(e) {
     this.clientData = e;
+    console.log('receiveClient(e) : ', e)
     // this.DropdownComplete = false;
     // if (e.Is_Dropdown_Uploaded) {
     //   this.DropdownComplete = true;
@@ -104,6 +115,13 @@ export class ClientConfigurationComponent implements OnInit {
     else {
       this.ShowTabName = 'client';
       this.TabError = true;
+    }
+  }
+  managePCN(event) {
+    this.clientData.Is_PCN = event.Is_PCN;
+    console.log('managePCN(event) : ', this.clientData);
+    if (this.clientData.Is_PCN == true) {
+      // this.ShowTabName = 'pcn';
     }
   }
 

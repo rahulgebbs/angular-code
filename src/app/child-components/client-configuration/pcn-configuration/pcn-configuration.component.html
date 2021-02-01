@@ -1,0 +1,165 @@
+<div class="tab-content nav-tab-content">
+  <div class="form-container">
+    <div role="tabpanel" class="tab-pane" id="step-2">
+
+      <!-- <div class="col-md-12 p-0">
+        <div class="provider-process">
+          <div class="col-md-9 btnCOntainer">
+            <span>
+              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
+                data-target=".add-saag-master">
+                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+            </span>
+          </div>
+          <div class="col-md-3 p-0">
+
+          </div>
+        </div>
+      </div> -->
+
+      <div style="max-height: 55vh;" class="col-md-12 p-0">
+        <div class="col-md-12">
+        </div>
+        <div class="col-md-offset-2 col-md-8 p-0">
+          <div class="headerInfo">
+            <div *ngIf="rowData && rowData.length==0" class="addBtn">
+              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
+                data-target=".add-saag-master">
+                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+            </div>
+
+            <div class="clientInfo">
+              <p class="w-auto" *ngIf="ClientData">
+                Client Name :-<b>{{ClientData.Client_Name}}</b>
+              </p>
+
+              <p class="w-auto" *ngIf="ClientData">
+                Total Rows:-<b>{{rowData == null ? '0' : rowData.length}}</b>
+              </p>
+            </div>
+
+          </div>
+          <div class="border-0">
+            <div class="col-md-12 p-0 client-inv-sticky">
+
+              <div class="sticky-table sticky-ltr-cells border-0" style="padding-bottom:0px !important">
+                <table class="table">
+                  <thead>
+                    <tr class="sticky-header">
+                      <th>Display Header</th>
+                      <th>Column Data Type</th>
+                      <th>Field Limit</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody [formGroup]="addPCNForm">
+                    <tr formArrayName="pcnList" *ngFor="let item of addPCNForm.get('pcnList').controls; let i = index;">
+                      <ng-container [formGroupName]="i">
+                        <td *ngIf="item.controls.Display_Header as displayHeaderControl">
+                          <input class="form-control" maxlength="200" type="text" placeholder="Enter Display Header"
+                            formControlName="Display_Header" (keyup)="checkIfAlreadyExist(displayHeaderControl, i)">
+                          <label
+                            *ngIf="(displayHeaderControl.dirty==true || displayHeaderControl.touched==true) && displayHeaderControl.errors"
+                            class="error" for="">
+                            <span *ngIf="displayHeaderControl.errors.required==true">
+                              Display Header is required
+                            </span>
+                            <span *ngIf="displayHeaderControl.errors.incorrect==true">
+                              Display Header Already Exists
+                            </span>
+                          </label>
+                        </td>
+                        <td *ngIf="item.controls.Column_Data_Type as columnDataTypeControl">
+                          <select class="form-control" name="" id="" formControlName="Column_Data_Type">
+                            <option [value]="''">Select Column Data Type</option>
+                            <option [value]="'Text'">Text</option>
+                            <option [value]="'Numeric'">Numeric</option>
+                            <option [value]="'Date'">Date</option>
+                          </select>
+                          <label
+                            *ngIf="(columnDataTypeControl.dirty==true || columnDataTypeControl.touched==true) && columnDataTypeControl.errors && columnDataTypeControl.errors.required==true"
+                            class="error" for="">
+                            Column Data Type is required
+                          </label>
+                        </td>
+                        <td *ngIf="item.controls.Field_Limit as fieldLimitControl">
+                          <input class="form-control" min="0" max="1000" type="number" placeholder="Enter FieldLimit"
+                            formControlName="Field_Limit">
+                          <label
+                            *ngIf="(fieldLimitControl.dirty==true || fieldLimitControl.touched==true) && fieldLimitControl.errors"
+                            class="error" for="">
+                            <span *ngIf="fieldLimitControl.errors.required==true">
+                              Field Limit is required
+                            </span>
+                            <span *ngIf="fieldLimitControl.errors.pattern!=null">
+                              Enter Valid Field Limit
+                            </span>
+                          </label>
+                        </td>
+                        <td style="justify-content: center;align-items: center;display: flex;">
+                          <!-- <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10"
+                            (click)="addItem(i)">
+                            <i class="fa fa-plus"></i> </button> -->
+                          <button *ngIf="addPCNForm.get('pcnList').controls.length>1" type="button"
+                            class="btn blue square-btn blue-hover btn-txt" (click)="removeItem(i)">
+                            <i class="fa fa-times"></i> </button>
+                        </td>
+                      </ng-container>
+
+                    </tr>
+                    <tr *ngIf="addPCNForm && addPCNForm.get('pcnList').controls.length==0" style="text-align: center">
+                      <td colspan="4">
+                        NO PCN Configuration found
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-12 text-right p-0">
+              <button *ngIf="rowData && rowData.length==0" type="button" id="step-1-save"
+                class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+                [disabled]="addPCNForm.value.pcnList.length==0" (click)="confirmPCN()">Save</button>
+              <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5"
+                (click)="navigate()">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-add-pcn-configuration *ngIf="showPopup==true" (save)="saveFields($event)" (close)="closePopup($event)">
+</app-add-pcn-configuration>
+
+
+
+<!-- <div> -->
+<div *ngIf="confirmSave==true">
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position pop-w">
+    <div>
+      <div class="col-md-12 p-0 grey">
+        <span class="col-md-10 col-sm-10 p-0">
+          <div class="heading-panel pl-10">
+            <span class="text-sm text-ellipsis heading-txt flex">Confirm PCN Configuration </span>
+          </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="savePCNStatus(false)">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+      <div class="col-md-12 p-0">
+        <h4 style="text-align: center;">Are you sure you want to save these PCN Fields ?</h4>
+        <div class="col-md-2 submitSection p-0">
+          <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10"
+            (click)="savePCNStatus(false)">No</button>
+          <button type="button" class="btn blue square-btn blue-hover btn-txt"
+            (click)="savePCNStatus(true)">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

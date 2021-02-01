@@ -8,12 +8,13 @@ import { ClientInstructionService } from 'src/app/service/client-instruction.ser
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { dropDownFields } from 'src/app/manager/dropdown-feilds';
+import { ExcelService } from 'src/app/service/client-configuration/excel.service';
 
 @Component({
   selector: 'app-client-instruction',
   templateUrl: './client-instruction.component.html',
-  styleUrls: ['./client-instruction.component.css'],
-  providers:[dropDownFields]
+  styleUrls: ['./client-instruction.component.scss'],
+  providers: [dropDownFields]
 })
 export class ClientInstructionComponent implements OnInit {
   Title = "Client Instruction";
@@ -50,8 +51,22 @@ export class ClientInstructionComponent implements OnInit {
   ColumnDefs = []
   RowData = [];
   Role;
+  DisplayFileError = false;
+  Filename = "No File chosen";
+  File = null;
+  FileBase64;
+  DisableFileInput = false;
+  DisableUpload: boolean = false;
+  disableDownload: boolean = false;
   selectedRecord: boolean = false;
-  constructor(private selectedFields:dropDownFields,private router: Router, private fb: FormBuilder, private notificationservice: NotificationService,  private instructionservice: ClientInstructionService) {
+  truefile: boolean = false;
+  defaultColDef:any
+  constructor(private selectedFields: dropDownFields,
+    private router: Router,
+    private excelService: ExcelService,
+    private fb: FormBuilder,
+    private notificationservice: NotificationService,
+    private instructionservice: ClientInstructionService) {
     var token = new Token(this.router);
     var userdata = token.GetUserData();
     this.UserId = userdata.UserId;
@@ -79,18 +94,45 @@ export class ClientInstructionComponent implements OnInit {
         headerName: "Instructions", field: "Instructions", cellClass: "cell-wrap-text",
         autoHeight: true, cellStyle: { 'white-space': 'normal' }
       },
-      { headerName: "Created / Modified Date", field: 'Updated_Date', cellRenderer: this.datecheck },
+      {
+        headerName: "Created By",
+        field: "Created_By"
+      },
+      {
+        headerName: "Modified By",
+        field: "Updated_By"
+      },
+      { headerName: "Modified Date", field: 'Updated_Date', cellRenderer: this.datecheck },
       { headerName: "Status", field: "Type" },
       { headerName: "Count", field: "Read_By_Agent_Count", width: 170, cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' }, hide: this.showCount },
-      { headerName: "GeBBS Action", field: "Read_By", hide: this.showGebbsAction, cellRenderer: this.Action, },
+      { headerName: "GeBBS Action", field: "Read_By", hide: this.showGebbsAction, cellRenderer: this.Action, }
+      //,
+      // {
+      //   headerName: "Action", cellRenderer: this.showOrderCellRenderer
+      // }
     ];
   }
 
   ngOnInit() {
+    this.defaultColDef = {
+      cellRenderer: showOrderCellRenderer,
+      // width: 80
+    };
+    function showOrderCellRenderer(params) {
+      var eGui: any = document.createElement("div");
+      // console.log('params : ', params)
+
+      eGui.innerHTML = `<span title="${params.value}">${params.value}</span>`;
+      // var start = new Date();
+      // while (new Date() - start < 15) { }
+      return eGui;
+    }
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     var token = new Token(this.router);
     var userdata = token.GetUserData();
     this.UserId = userdata.UserId;
+    console.log('userdata : ', userdata)
+    this.ClientId = userdata.Clients[0].Client_Id;
     this.InstructionForm = this.CreateForm();
     // this.GetClientList()
     this.ClientList = this.selectedFields.setSelected(userdata.Clients)
@@ -102,7 +144,7 @@ export class ClientInstructionComponent implements OnInit {
 
     let val
     val = moment(params.value).format('MM/DD/YYYY');
-    return val
+    return val;
   }
 
 
@@ -167,22 +209,52 @@ export class ClientInstructionComponent implements OnInit {
     this.selectedRecord = true
     this.ShowRoleError = false;
     this.InstructionId = event.data.Id;
-    this.GetSingleClientInsurance();
+    console.log('onowClicked : ', event.data)
+    this.GetSingleClientInsurance(event.data);
   }
   onCellClicked(data) {
 
-    if (data.colDef.headerName == "Count") {
-      this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {
-        this.viewCountData = true
-      })).subscribe(res => {
-        this.ResponseHelper.GetSuccessResponse(res)
-        data = res.json()
-        this.readCountData = res.json()
-        //  this.ClientUpdateData = data.Data
-      }, err => {
-        this.ResponseHelper.GetFaliureResponse(err);
+    switch (data.colDef.headerName) {
+      case "Count": {
+        this.instructionservice.getCountData(this.ClientId, data.data.Id).pipe(finalize(() => {
+          this.viewCountData = true
+        })).subscribe(res => {
+          this.ResponseHelper.GetSuccessResponse(res)
+          data = res.json()
+          this.readCountData = res.json()
+          //  this.ClientUpdateData = data.Data
+        }, err => {
+          this.ResponseHelper.GetFaliureResponse(err);
 
-      })
+        })
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  exportToExcel() {
+    var exportData = [];
+    this.RowData.forEach((el) => {
+      console.log('el : ', el);
+      let obj = {};
+      obj['Id'] = el.Id;
+      obj['Client Id'] = el.Client_Id;
+      obj['Payer Name'] = el.Payer_Name;
+      obj['Practice Name'] = el.Practice_Name;
+      obj['Provider Name'] = el.Provider_Name;
+      obj['Instructions'] = el.Instructions;
+      obj['Created / Modified Date'] = el.Updated_Date;
+      obj['Status'] = el.Type;
+      obj['Count'] = el.Read_By_Agent_Count;
+      obj['GeBBS Action'] = el.Read_By;
+
+      exportData.push(obj);
+    });
+    console.log('exportData : ', exportData);
+    if (exportData && exportData.length > 0) {
+      this.excelService.exportAsExcelFile(exportData, 'Client Instruction');
     }
   }
   ToggleModal(e) {
@@ -207,7 +279,6 @@ export class ClientInstructionComponent implements OnInit {
       this.InstructionModel.Client_Id = this.ClientId;
       this.GetAllLookups();
       this.GetClientInstructions();
-
     }
   }
 
@@ -221,7 +292,7 @@ export class ClientInstructionComponent implements OnInit {
 
         this.PayerList = this.selectedFields.setSelected(res.json().Data.Payer);
         this.PracticeList = this.selectedFields.setSelected(res.json().Data.Practice);
-        this.ProviderList =this.selectedFields.setSelected( res.json().Data.Provider);
+        this.ProviderList = this.selectedFields.setSelected(res.json().Data.Provider);
         this.selectedValue(this.PayerList, 'PayerList');
         this.selectedValue(this.PracticeList, 'PracticeList');
         this.selectedValue(this.ProviderList, 'ProviderList');
@@ -246,11 +317,13 @@ export class ClientInstructionComponent implements OnInit {
     );
   }
 
-  GetSingleClientInsurance() {
+  GetSingleClientInsurance(data) {
+    this.ManageForEdit(data);
     this.instructionservice.GetSingleClientInstruction(this.ClientId, this.InstructionId).pipe(finalize(() => {
     })).subscribe(
       res => {
-        this.ManageForEdit(res.json().Data);
+        console.log('GetSingleClientInsurance() : ', res.json().Data)
+        // this.ManageForEdit(res.json().Data);
         //this.InstructionModel = res.json().Data;
       },
       err => {
@@ -269,18 +342,19 @@ export class ClientInstructionComponent implements OnInit {
     } else if (this.Role == "Supervisor" && ins.Is_Client_Created == false) {
       this.canEdit = true
     } else {
-      this.canEdit = false
+      this.canEdit = false;
     }
 
 
-    if (this.Role == "Client Supervisor" && ins.Created_By == this.UserId) {
-      this.ShowRoleError = true;
-      // this.RoleMessage = "Can be edited by Supervisor Only";
-      this.InstructionModel = new InstructionModel();
-      this.InstructionModel.Client_Id = this.ClientId;
-      this.GridApi.deselectAll();
-    }
-    else if (this.Role == "QC" && this.UserId != ins.Created_By) {
+    // if (this.Role == "Client Supervisor" && ins.Created_By == this.UserId) {
+    //   this.ShowRoleError = true;
+    //   // this.RoleMessage = "Can be edited by Supervisor Only";
+    //   this.InstructionModel = new InstructionModel();
+    //   this.InstructionModel.Client_Id = this.ClientId;
+    //   this.GridApi.deselectAll();
+    // }
+    // else
+    if (this.Role == "QC" && this.UserId != ins.Created_By) {
       this.ShowRoleError = true;
       this.RoleMessage = "Your role can edit only self created instructions";
       this.InstructionModel = new InstructionModel();
@@ -294,7 +368,18 @@ export class ClientInstructionComponent implements OnInit {
       this.InstructionModel = ins;
     }
   }
+  showOrderCellRenderer(params) {
+    var cell: any = document.createElement("div");
+    console.log('params : ', params)
 
+    cell.innerHTML = `<button type="button" class="btn blue square-btn blue-hover btn-txt ">Export to excel</button>`;
+    // var start = new Date();
+    // while (new Date() - start < 15) { }
+    return cell;
+  }
+  callMe(params) {
+    console.log('callMe(params) : ', params);
+  }
   FormSubmit() {
 
     this.Validated = true;
@@ -314,7 +399,6 @@ export class ClientInstructionComponent implements OnInit {
   }
 
   InsertInstruction() {
-
     this.DisableAll = true;
     this.saveDisable = true;
     this.instructionservice.InsertInstruction(this.InstructionModel).pipe(finalize(() => {
@@ -328,12 +412,10 @@ export class ClientInstructionComponent implements OnInit {
         this.InstructionModel.Client_Id = this.ClientId;
         this.InstructionId = 0;
         this.Validated = false;
-
       },
       err => {
         this.ResponseHelper.GetFaliureResponse(err);
-      }
-    );
+      });
   }
 
   UpdateInstruction() {
@@ -372,12 +454,12 @@ export class ClientInstructionComponent implements OnInit {
     //  this.ProviderList = [];
     this.InstructionModel = new InstructionModel();
     if (this.singleclient) {
-      this.InstructionModel.Client_Id = this.ClientId
+      this.InstructionModel.Client_Id = this.ClientId;
     } else {
       this.InstructionModel.Client_Id = "0"
     }
-
-    this.RowData = [];
+    // this.ClearFileData()
+    // this.RowData = [];
     this.Validated = false;
   }
   ActionCellRendererClass(params) {
@@ -399,7 +481,79 @@ export class ClientInstructionComponent implements OnInit {
     }
     return val;
   }
+  GetFileData(event) {
 
+    // let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      this.truefile = true
+      this.File = event.target.files[0];
+      this.Filename = this.File.name;
+      this.ConvertToBase64()
+    }
+    else {
+      this.truefile = false
+      this.ClearFileData();
+    }
+  }
+
+  ConvertToBase64() {
+    let reader = new FileReader();
+    reader.readAsDataURL(this.File);
+    reader.onload = () => {
+      this.FileBase64 = reader.result.toString().split(',')[1];
+    }
+  }
+
+  ClearFileData() {
+    this.File = null
+    this.Filename = "No File Chosen";
+    this.FileBase64 = null;
+  }
+  FileUpload() {
+    if (this.File != null) {
+      console.log('this.FileBase64 : ', this.FileBase64);
+      this.DisplayFileError = false;
+      this.DisableUpload = true;
+      this.DisableFileInput = true;
+      let dataobj = { File: this.FileBase64, File_Name: this.Filename, Client_Id: this.ClientId };
+      this.instructionservice.InstructionUpload(dataobj).pipe(finalize(() => {
+        this.DisableUpload = false;
+        this.Filename = null;
+        this.File = null;
+        if (this.ClientList.length == 1) {
+          this.disableDownload = false
+        } else {
+          this.disableDownload = true
+        }
+        this.DisableFileInput = false;
+        this.ClearFileData();
+        if (!this.singleclient) {
+          this.ClientId = "";
+        }
+        // this.Is_Special_Queue = false;
+      })).subscribe(
+        res => {
+          this.truefile = false
+          this.ResponseHelper.GetSuccessResponse(res)
+        },
+        err => {
+          this.truefile = false
+          this.ResponseHelper.GetFaliureResponse(err)
+        }
+      );
+    }
+    else {
+      this.DisplayFileError = true;
+    }
+  }
+
+  downloadTemplate() {
+    this.instructionservice.downLoadTemplate().subscribe(res => {
+      this.excelService.downloadExcel(res);
+    }, err => {
+      this.ResponseHelper.GetFaliureResponse(err);
+    })
+  }
 }
 
 export class InstructionModel {

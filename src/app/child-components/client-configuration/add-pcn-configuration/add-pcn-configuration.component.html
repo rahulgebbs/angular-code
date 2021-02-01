@@ -1,0 +1,69 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position pop-w">
+    <div>
+        <div class="col-md-12 p-0 grey">
+            <span class="col-md-10 col-sm-10 p-0">
+                <div class="heading-panel pl-10">
+                    <span class="text-sm text-ellipsis heading-txt flex">Add PCN Configuration </span>
+        </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="CloseModal()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
+    </div>
+    <div class="col-md-12 p-0">
+        <form [formGroup]="addPCNForm" (ngSubmit)="saveFields()">
+            <ng-container *ngIf="addPCNForm.controls as formControl">
+
+                <div class="col-md-3 fieldCtrl" *ngIf="formControl.Display_Header as displayHeaderControl">
+                    <div class="form-group">
+                        <label for="Header_Name" class="label-std  control-label p-0 b-600">Display Header</label>
+                        <input class="form-control" required type="text" name="Display_Header" formControlName="Display_Header">
+                        <div *ngIf="(displayHeaderControl.dirty==true || displayHeaderControl.touched==true || submitStatus==true) && displayHeaderControl.errors" class="error" for="">
+                            <span *ngIf="displayHeaderControl.errors.required==true">
+                                    Display Header is required
+                                </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 fieldCtrl" *ngIf="formControl.Column_Data_Type as columnDataTypeControl">
+                    <div class="form-group">
+                        <label for="Header_Name" class="label-std  control-label p-0 b-600">Column Data Type</label>
+                        <select class="form-control" name="Column_Data_type" formControlName="Column_Data_Type">
+                                <option [value]="''">Select Column Data Type</option>
+                                <option [value]="'Text'">Text</option>
+                                <option [value]="'Numeric'">Numeric</option>
+                                <option [value]="'Date'">Date</option>
+                            </select>
+                        <div class="error" *ngIf="(columnDataTypeControl.dirty==true || columnDataTypeControl.touched==true || submitStatus==true) && columnDataTypeControl.errors && columnDataTypeControl.errors.required==true">
+                            Column Data Type is required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 fieldCtrl" *ngIf="formControl.Field_Limit as fieldLimitControl">
+                    <div class="form-group">
+                        <label for="Header_Name" class="label-std  control-label p-0 b-600">Field Limit</label>
+                        <input class="form-control" required type="number" name="Field Limit" formControlName="Field_Limit">
+                        <div *ngIf="(fieldLimitControl.dirty==true || fieldLimitControl.touched==true || submitStatus==true) && fieldLimitControl.errors" class="error">
+                            <!-- <label for=""> -->
+                            <span *ngIf="fieldLimitControl.errors.required==true">
+                                    Field Limit is required
+                                </span>
+                            <span *ngIf="fieldLimitControl.errors.pattern!=null">
+                                    Enter Valid Field Limit
+                                </span>
+                            <!-- </label> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 submitSection">
+                    <button type="submit" class="btn blue square-btn blue-hover btn-txt">Submit</button>
+                </div>
+            </ng-container>
+
+        </form>
+    </div>
+</div>
+</div>

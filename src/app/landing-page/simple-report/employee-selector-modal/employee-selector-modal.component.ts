@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class EmployeeSelectorModalComponent implements OnInit {
   @Input() AllEmployees;
+  @Input() title;
   SelectAll = false;
   @Output() CloseModal = new EventEmitter<any>();
   @Output() SendSelectedEmp = new EventEmitter<any>();

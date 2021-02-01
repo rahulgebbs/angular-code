@@ -6,6 +6,9 @@ export class ResponseHelper {
     GetSuccessResponse(httpres): number {
         console.log('GetSuccessResponse httpres : ', httpres);
         let notifydata = httpres.Message ? httpres.Message : httpres.json().Message;
+        if (notifydata && notifydata.length == 0) {
+            return 0;
+        }
         switch (httpres.status) {
             case 200: notifydata != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Successful", Type: "SUCCESS" }])
                 break;
@@ -25,6 +28,9 @@ export class ResponseHelper {
         }
         else {
             notifydata = httpres.Message ? httpres.Message : httpres.json().Message;
+        }
+        if (notifydata && notifydata.length == 0) {
+            return 0;
         }
         switch (httpres.status) {
             case 400:

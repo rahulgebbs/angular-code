@@ -1,0 +1,21 @@
+.radioBorder {
+  /* border: 1px solid #dfdfdf;
+  padding: 0.1rem 1rem 1rem 1rem; */
+  display: flex;
+  justify-content: left;
+  /* align-items: flex-end; */
+}
+
+.radio-inline {
+  padding-top: 0;
+}
+.control-label {
+  margin: 1rem auto;
+}
+
+.input-group {
+  width: 100%;
+}
+.input-group-addon {
+  width: none;
+}

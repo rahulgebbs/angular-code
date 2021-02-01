@@ -17,5 +17,11 @@ export class ForgotPaswordService {
   ResetPassword(formbody): any {
     return this.http.post(environment.ApiUrl + '/api/reset-password', formbody);
   }
+  validateCode(code) {
+    const body = {
+      "Security_Code": code
+    }
+    return this.http.post(environment.ApiUrl + '/api/password-link', body).map(res => res.json());
+  }
 
 }

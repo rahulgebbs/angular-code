@@ -30,9 +30,9 @@ export class ClientDashboardReportComponent implements OnInit {
   // MinDate: Date;
   showpopup: boolean = false
   count = [];
-  FromDate=moment(new Date).subtract(1,'d').format('YYYY-MM-DDT00:00:00');
-  MinDate=moment(new Date).subtract(1,'month').format('YYYY-MM-DDT00:00:00');;
-  maxDate=moment(new Date).format('YYYY-MM-DDT00:00:00')
+  FromDate = moment(new Date).subtract(1, 'd').format('YYYY-MM-DDT00:00:00');
+  MinDate = moment(new Date).subtract(1, 'month').format('YYYY-MM-DDT00:00:00');;
+  maxDate = moment(new Date).format('YYYY-MM-DDT00:00:00')
   ToDate = moment(new Date).format('YYYY-MM-DDT00:00:00');
 
   disableExport: boolean = false
@@ -48,13 +48,13 @@ export class ClientDashboardReportComponent implements OnInit {
       {
         headerName: "Date", field: "Date", width: 200, cellRenderer: this.datecheck,
       },
-      { headerName: "Total Touched", field: "Total_Touched", width: 250, cellRenderer: this.Align },
-      { headerName: "Closed", field: "Client_Close", width: 250 , cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' }},
+      { headerName: "Total Worked", field: "Total_Touched", width: 250, cellRenderer: this.Align },
+      { headerName: "Closed", field: "Client_Close", width: 250, cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' } },
       {
         headerName: "Send To Gebbs", field: "Send_To_Gebbs", width: 250, cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' }
       },
-      { headerName: "Kept On Hold", field: "Client_Hold", width: 250 , cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' }},
-      { headerName: "Send To Internal Team", field: "Client_Internal_Team", width: 250 , cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' }}
+      { headerName: "Kept On Hold", field: "Client_Hold", width: 250, cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' } },
+      { headerName: "Send To Internal Team", field: "Client_Internal_Team", width: 250, cellRenderer: this.ActionCellRendererClass, cellStyle: { cursor: 'pointer' } }
     ];
   }
 
@@ -71,12 +71,12 @@ export class ClientDashboardReportComponent implements OnInit {
     return val
   }
 
-  Align(params){
+  Align(params) {
     let val
     let eDiv = document.createElement('div');
     // if (!params.value) {
     val = params.value
-    eDiv.innerHTML = '<u style="margin-left:40px;">' + val + '</u>';
+    eDiv.innerHTML = '<u style="margin-left:40px;text-decoration:none">' + val + '</u>';
     // } 
     return eDiv;
   }
@@ -94,7 +94,7 @@ export class ClientDashboardReportComponent implements OnInit {
     let eDiv = document.createElement('div');
     // if (!params.value) {
     val = params.value
-    eDiv.innerHTML = '<u data-action-type="getcount" style="margin-left:40px;">' + val + '</u>';
+    eDiv.innerHTML = '<u data-action-type="getcount" style="margin-left:40px;cursor:pointer">' + val + '</u>';
     // } 
     return eDiv;
   }
@@ -159,36 +159,38 @@ export class ClientDashboardReportComponent implements OnInit {
       })
     }
   }
-//'To Gebbs','Hold','Close','To Internal
+  //'To Gebbs','Hold','Close','To Internal
   onCellClicked(event) {
-    
-    let actionType = event.event.target.getAttribute("data-action-type")
-    if (actionType == "getcount") {
-      
-    if(event.colDef.field== 'Client_Internal_Team'){
-      var x='To Internal'
-    }else if(event.colDef.field== 'Client_Close'){
-      var x='Close'
-    }
-    else if(event.colDef.field== 'Send_To_Gebbs'){
-      var x='To Gebbs'
 
-    }else if(event.colDef.field== 'Client_Hold'){
-      var x='Hold'
+    let actionType = event.event.target.getAttribute("data-action-type");
+    console.log('actionType : ', actionType);
+    if (actionType == "getcount") {
+
+      if (event.colDef.field == 'Client_Internal_Team') {
+        var x = 'To Internal'
+      } else if (event.colDef.field == 'Client_Close') {
+        var x = 'Close'
+      }
+      else if (event.colDef.field == 'Send_To_Gebbs') {
+        var x = 'To Gebbs'
+
+      } else if (event.colDef.field == 'Client_Hold') {
+        var x = 'Hold'
+      }
+      this.count = null;
+      this.showpopup = true;
+      this.client_dashboard.getCount(this.ClientID, event.data.Date, x).subscribe(data => {
+
+        this.count = data.json().Data
+
+        this.ResponseHelper.GetSuccessResponse(data);
+        this.showpopup = true;
+      }, err => {
+        this.count = [];
+        this.showpopup = true;
+        this.ResponseHelper.GetFaliureResponse(err);
+      })
     }
-    this.client_dashboard.getCount(this.ClientID, event.data.Date,x).subscribe(data => {
-      
-      this.count = data.json().Data
-      
-      this.ResponseHelper.GetSuccessResponse(data);
-      this.showpopup = true
-    }, err => {
-      
-      
-      this.count = [];
-      this.ResponseHelper.GetFaliureResponse(err);
-    })
-  }
   }
   toggleModal() {
     this.showpopup = false

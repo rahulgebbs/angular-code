@@ -1,0 +1,25 @@
+form {
+    width: 30%;
+    margin: auto;
+    /* border: 1px solid; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* margin-right: 5%; */
+}
+
+.form-group {
+    /* float: left; */
+    width: 100%;
+    display: block;
+    /* display: flex; */
+    /* justify-content: center;
+  align-items: center; */
+}
+
+.agGridTable {
+    height: 65vh;
+    width: 48%;
+    float: left;
+    margin: 1%;
+}

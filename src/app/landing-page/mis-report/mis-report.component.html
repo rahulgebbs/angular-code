@@ -7,8 +7,7 @@
                     <div class="form-group">
                         <label class=" label-std control-label p-0 b-600 pl-0" for="">Client</label>
                         <!-- <div class="col-sm-7 p-0"> -->
-                        <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client"
-                            #selectedelem class="form-control" [(ngModel)]="ClientId">
+                        <select (change)="ClientListOnChange($event)" formControlName="Client_Id" name="Client" #selectedelem class="form-control" [(ngModel)]="ClientId">
                             <option [selected]="ClientList.length >1" value="" disabled>Select</option>
                             <option *ngFor="let c of ClientList" [value]="c.Client_Id"  [selected]="c.selected">{{c.Client_Name}}</option>
                         </select>
@@ -28,16 +27,14 @@
                                 Please select employee
                             </div>
                         </span>
-                        <span [ngClass]="DisableEmployeeSelect ? 'disabled' : ''" class="col-md-2 btn grey square-btn  btn-txt  p-0 h-25"
-                            (click)="!DisableEmployeeSelect && OpenModal()" style="padding: 0.5px 10px !important;">Select</span>
+                        <span [ngClass]="DisableEmployeeSelect ? 'disabled' : ''" class="col-md-2 btn grey square-btn  btn-txt  p-0 h-25" (click)="!DisableEmployeeSelect && OpenModal()" style="padding: 0.5px 10px !important;">Select</span>
                     </div>
 
                     <div class="form-group">
                         <label class="label-std control-label p-0 b-600 pl-0" for="card-number">From Date</label>
                         <div class='input-group date col-md-12' id='datetimepicker1'>
-                            <input (dateTimeInput)="OnFromDateChange($event)" formControlName="From_Date" autocomplete="off"
-                                [min]="MinDate1" [max]="maxDate1" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                                [owlDateTimeTrigger]="dt1" class="owl-dp" name="date" [owlDateTime]="dt1" (focusout)="getFromTime()">
+                            <input (dateTimeInput)="OnFromDateChange($event)" id="From_Date" formControlName="From_Date" autocomplete="off" [min]="MinDate1" [max]="maxDate1" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp"
+                                name="date" [owlDateTime]="dt1" (focusout)="getFromTime()">
                             <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -48,9 +45,8 @@
                         <label class="label-std control-label p-0 b-600 pl-0" for="card-number">To Date</label>
 
                         <div class='input-group date col-md-12 ' id='datetimepicker2'>
-                            <input (dateTimeInput)="OnToDateChange($event)" autocomplete="off" formControlName="To_Date"
-                                [owlDateTimeTrigger]="dt2" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)"
-                                class="owl-dp" name="date2" [owlDateTime]="dt2"   [min]="MinDate2" [max]="maxDate1"  (focusout)="getFromTime()" >
+                            <input (dateTimeInput)="OnToDateChange($event)" autocomplete="off" id="To_Date" formControlName="To_Date" [owlDateTimeTrigger]="dt2" (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" class="owl-dp" name="date2" [owlDateTime]="dt2" [min]="MinDate2"
+                                [max]="maxDate1" (focusout)="getFromTime()">
                             <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -142,13 +138,12 @@
                 <div class="col-md-12 p-0 mt-10 text-left">
                     <button type="submit" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit">Export
                         To Excel</button>&nbsp;
-                        <span *ngIf="DonwloadConfig"> <input type="button" value="Download" (click)="GetMISReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" /> </span>
-                        
+                    <span *ngIf="DonwloadConfig"> <input type="button" value="Download" (click)="GetMISReportData()" class="btn blue square-btn blue-hover btn-txt" [disabled]="disablesubmit" /> </span>
+
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)"
-    (CloseModal)="CloseModal($event)"></app-employee-selector-modal>
+<app-employee-selector-modal *ngIf="ShowModal" [AllEmployees]="Employees" (SendSelectedEmp)="SetSelectedEmp($event)" (CloseModal)="CloseModal($event)"></app-employee-selector-modal>

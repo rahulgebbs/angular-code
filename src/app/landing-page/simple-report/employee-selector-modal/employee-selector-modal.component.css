@@ -1,4 +1,4 @@
-.pop-bg{
+.pop-bg {
     background: #000000b8;
     /* position: absolute; */
     position: fixed;
@@ -14,7 +14,8 @@
     overflow-y: inherit;
     /* z-index: 1050; */
 }
-.pop-position{
+
+.pop-position {
     /* height: 570px;
     background: white;
     margin: auto;
@@ -36,13 +37,16 @@
     right: 0;
     bottom: 43px;
 }
-.grey{
+
+.grey {
     background: #ddd;
     color: #000;
 }
+
 .p-0 {
     padding: 0px !important;
 }
+
 .heading-panel {
     position: relative;
     display: -ms-flexbox;
@@ -55,27 +59,31 @@
     justify-content: space-between;
     padding: .5em 1em;
 }
+
 .heading-txt {
     font-size: 18px;
     font-weight: 600;
     height: 20px;
 }
+
 .pv-10 {
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-
-.pt-7{
+.pt-7 {
     padding-top: 7px;
 }
-.mr-20{
+
+.mr-20 {
     margin-right: 20px;
 }
-.mb-5{
+
+.mb-5 {
     margin-bottom: 5px;
 }
-.map-pos{
+
+.map-pos {
     background: white;
     position: fixed;
     bottom: 37px;
@@ -85,25 +93,29 @@
     width: 66%;
     padding-right: 20px;
 }
-.mb-40{
+
+.mb-40 {
     margin-bottom: 40px;
 }
 
-@media screen and (min-width:768px) and (max-width:1366px){
-    .pop-position{
+@media screen and (min-width:768px) and (max-width:1366px) {
+    .pop-position {
         width: 70%;
     }
 }
-@media screen and (min-width:600px) and (max-width:1280px){
-    .pop-position{
+
+@media screen and (min-width:600px) and (max-width:1280px) {
+    .pop-position {
         width: 75%;
     }
 }
-@media screen and (min-width:768px) and (max-width:1024px){
-    .pop-position{
+
+@media screen and (min-width:768px) and (max-width:1024px) {
+    .pop-position {
         width: 95%;
     }
 }
-.mb-9{
+
+.mb-9 {
     margin-bottom: 9px;
 }

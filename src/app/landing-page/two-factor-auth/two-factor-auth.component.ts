@@ -77,7 +77,7 @@ export class TwoFactorAuthComponent implements OnInit, OnDestroy {
   submit() {
     console.log('submit user : ', this.activeUser);
     if (this.passcode && this.passcode.length > 0) {
-      this.loginService.matchOTP(this.passcode, this.activeUser.User_Id).subscribe((response) => {
+      this.loginService.matchOTP(this.passcode, this.activeUser.User_Id,this.activeUser.Email_Id).subscribe((response) => {
         console.log('matchOTP response : ', response);
         if (response.Data == true) {
           this.notification.ChangeNotification([{ Message: "Passcode Verified", Type: "SUCCESS" }])

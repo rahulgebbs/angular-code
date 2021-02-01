@@ -1,0 +1,66 @@
+.pop-bg {
+  background: #000000b8;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  opacity: 1;
+  padding-right: 6px;
+  overflow-x: hidden;
+  z-index: 100000;
+  overflow-y: inherit;
+}
+.pop-position {
+  height: auto;
+  background: white;
+  margin: auto;
+  width: 35%;
+  position: fixed;
+  z-index: 100000000;
+  left: 0px;
+  right: 0;
+  top: 25%;
+  /* min-height: 300px; */
+}
+.grey {
+  background: #ddd;
+  color: #000;
+}
+.p-0 {
+  padding: 0px !important;
+}
+.heading-panel {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0.5em 1em;
+}
+.heading-txt {
+  font-size: 18px;
+  font-weight: 600;
+  height: 20px;
+}
+
+.submitSection {
+  /* float: right;
+    margin: 1rem 0; */
+  float: right;
+  margin: 1rem 1rem;
+  width: 200px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.disableInput {
+  user-select: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.3 !important;
+}

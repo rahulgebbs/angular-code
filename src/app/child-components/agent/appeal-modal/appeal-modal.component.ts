@@ -4,7 +4,7 @@ import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import { environment } from 'src/environments/environment';
 import { finalize } from 'rxjs/operators';
-
+import * as moment from 'moment'
 @Component({
   selector: 'app-appeal-modal',
   templateUrl: './appeal-modal.component.html',
@@ -198,6 +198,14 @@ export class AppealModalComponent implements OnInit {
 
   Generate() {
     //is appeal non appeal
+    this.AllFields.find((element) => {
+      if (element && element.Column_Datatype == 'Date') {
+        console.log('Before Date of Service : ', element);
+        element.FieldValue = moment(element.FieldValue).format('MM/DD/YYYY HH:mm:ss a');
+        console.log('After Date of Service : ', element.FieldValue);
+      }
+      // format('MM/DD/YYYY | HH:mm:ss')
+    })
     var formobj = {
       Client_Id: this.ClientId,
       Client_Name: this.Client_Name,

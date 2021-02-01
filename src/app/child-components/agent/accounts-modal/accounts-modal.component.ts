@@ -24,21 +24,20 @@ export class AccountsModalComponent implements OnInit {
 
   ngOnInit() {
     this.defaultColDef = {
-      cellRenderer: showOrderCellRenderer,
-      width: 80
+      cellRenderer: showOrderCellRenderer
     };
     function showOrderCellRenderer(params) {
-      var eGui: any = document.createElement("div");
+      var eGui: any = document.createElement("span");
       // console.log('params : ', params)
 
-      eGui.innerHTML = '<span title=' + params.value + '>' + params.value + '</span>';
+      eGui.innerHTML = `<span title='${params.value}'>${params.value}</span>`;
       // var start = new Date();
       // while (new Date() - start < 15) { }
       return eGui;
     }
     this.PayerName = this.AccountsList[0].Group_By_Field_Header;
     console.log('this.PayerName : ', this.PayerName, this.AccountsList);
-    this.AccountsList.forEach((e )=> {
+    this.AccountsList.forEach((e) => {
       if (!e.Completion_Date) {
         e.Completion_Date = "NULL";
       }
@@ -68,12 +67,12 @@ export class AccountsModalComponent implements OnInit {
 
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
-      })
+      });
     }
 
     console.log('this.columnDefs : ', this.columnDefs);
-    this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
-    this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
+    // this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
+    // this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
   Close() {
     this.CloseAccountModal.emit(false);
@@ -131,6 +130,8 @@ export class AccountsModalComponent implements OnInit {
   GetFieldsFromAccount(bucketname, inventoryid) {
     if (this.WorkingAccountId != inventoryid) {
       this.WorkingAccountId = inventoryid;
+      sessionStorage.removeItem('localPCN');
+      sessionStorage.removeItem('lastPCN');
       this.GetAllFields.emit({ Bucket_Name: bucketname, Inventory_Id: inventoryid });
     }
     else {

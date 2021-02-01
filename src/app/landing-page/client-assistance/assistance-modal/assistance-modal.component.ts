@@ -6,6 +6,7 @@ import { ClientAssistanceService } from 'src/app/service/client-assistance.servi
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { finalize } from 'rxjs/operators';
 
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-assistance-modal',
@@ -48,12 +49,14 @@ export class AssistanceModalComponent implements OnInit {
   DisableDownload = false;
 
   Invalid = false;
+  Start_Time = null;
 
   constructor(private standardCommentService: StandardCommentService, private notification: NotificationService, private service: ClientAssistanceService, private saagservice: SaagService) { }
 
   ngOnInit() {
     this.ResponseHelper = new ResponseHelper(this.notification)
-
+    // this.Start_Time = new Date().toISOString();
+    this.Start_Time = moment().utcOffset(0, true).format();
     this.Inventories.forEach(e => {
 
       var Inventory_Log_Id = 0;
@@ -111,7 +114,7 @@ export class AssistanceModalComponent implements OnInit {
       e.IsChecked = false;
 
       if (this.TLAction == 'Done') {
-        e.FileName = 'Upload File';
+        e.FileName = '';
       }
       else {
         if (refFileName != '') {
@@ -387,7 +390,7 @@ export class AssistanceModalComponent implements OnInit {
       this.ConvertToBase64(i);
     }
     else {
-      this.Inventories[i].FileName = 'Upload File';
+      this.Inventories[i].FileName = '';
       this.File = null;
       this.FileBase64 = '';
     }
@@ -419,7 +422,17 @@ export class AssistanceModalComponent implements OnInit {
       this.Inventories.forEach(e => {
         if (e.IsChecked === true) {
           response.push(
-            { Client_Id: this.Client_Id, Inventory_Log_Id: e.Inventory_Log_Id, Action: e.Action, Standard_Comments: e.Standard_Comments, Comments: e.Comments, File: e.File, FileName: e.FileName, Status: e.Status, Sub_Status: e.Sub_Status, Action_Code: e.Action_Code }
+            {
+              Client_Id: this.Client_Id,
+              Inventory_Log_Id: e.Inventory_Log_Id,
+              Action: e.Action,
+              Standard_Comments: e.Standard_Comments,
+              Comments: e.Comments,
+              File: e.File ? e.File : '',
+              FileName: e.FileName,
+              Status: e.Status, Sub_Status: e.Sub_Status, Action_Code: e.Action_Code,
+              Start_Time: this.Start_Time
+            }
           )
         }
       });

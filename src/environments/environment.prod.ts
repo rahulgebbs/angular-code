@@ -13,10 +13,16 @@ export const environment = {
   // FileApiUrl: "https://www.gebbsrcm.com:1009/",// LIVE Server,
   // linkUsed: 'www.gebbsrcm.com'
 
+  // Internal Live server
+  // ApiUrl: "http://172.18.7.2:1001/", // LIVE Server,
+  // FileApiUrl: "http://172.18.7.2:1007/",// LIVE Server,
+  // linkUsed: '172.18.7.2:1002'
+
   // NEW UAT
   FileApiUrl: "http://172.30.52.25:1007",
   ApiUrl: "http://172.30.52.25:1001/",
   linkUsed: '172.30.52.25:1001'
+
   // Local
 
   // FileApiUrl: "http://localhost:63482:1007",

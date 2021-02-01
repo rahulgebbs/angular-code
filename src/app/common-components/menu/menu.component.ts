@@ -57,7 +57,7 @@ export class MenuComponent implements OnInit {
     private bireportService: BireportService,
     private logoutService: LogoutService,
     private agentservice: AgentService) {
-    this.Token = new Token(this.route)
+    this.Token = new Token(this.route);
     this.UserData = this.Token.GetUserData();
     this.role = this.UserData.Role;
     this.ClientId = this.UserData.Clients[0].Client_Id;
@@ -138,7 +138,6 @@ export class MenuComponent implements OnInit {
     else {
       this.LogoutFromSystem();
     }
-
 
     this.btndis = false
   }

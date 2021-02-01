@@ -1,0 +1,65 @@
+<div class="pop-bg">
+</div>
+<div class="pop-position">
+  <div class="col-md-12 p-0 grey">
+    <span class="col-md-10 col-sm-10 p-0">
+      <div class="heading-panel pl-10">
+        <span *ngIf="viewBy=='byBucket'" class="text-sm text-ellipsis heading-txt flex">
+          Buckets By EmployeeCode
+        </span>
+        <span *ngIf="viewBy=='byAgent'" class="text-sm text-ellipsis heading-txt flex">
+          Employee Code By Bucket
+        </span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModal(true)">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </span>
+  </div>
+  <div class="col-md-12 p-0">
+    <div class="col-md-12 p-0 mt-10 border-b">
+      <div class="col-md-6">
+        <label class="custom-control">
+          <!-- <input type="checkbox" id="selectall" [(ngModel)]="SelectAll" (change)="SelectAllToggle($event)" />  -->
+          <label *ngIf="viewBy=='byAgent'" for="selectall">Select Buckets Mapped To Employee</label>
+          <label *ngIf="viewBy=='byBucket'" for="selectall">Select Employees From Bucket</label>
+          <!-- byBucket -->
+        </label>
+      </div>
+    </div>
+    <div *ngIf="viewBy=='byBucket'" class="col-md-12 p-0 code-auto-scroll p-0">
+      <div class="col-md-3 p-0 ml-10 mt-10 border-b deAllocate" *ngFor="let bucket of bucketList;let k = index;">
+        <!-- <div class="col-md-3"> -->
+        <label class="custom-control">
+          <!-- <input *ngIf="Employee && Employee.selectedBucket" type="checkbox" id="{{Employee.Employee_Code}}"
+              [checked]="Employee.selectedBucket.length>0" /> -->
+          <label for="{{bucket.BucketName}}">{{bucket.BucketName}} </label>
+        </label>
+        <ng-multiselect-dropdown [placeholder]="'Select employee'" [data]="bucket.employee"
+          [(ngModel)]="bucket.selectedEmployee" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <div *ngIf="viewBy=='byAgent'" class="col-md-12 p-0 code-auto-scroll p-0">
+      <ng-container *ngFor="let employee of employeeList;let k = index;">
+        <div class="col-md-3 p-0 ml-10 mt-10 border-b deAllocate"
+          *ngIf="employee && employee.bucket && employee.bucket.length>0">
+
+          <label class="custom-control">
+            <!-- <input *ngIf="Employee && Employee.selectedBucket"  type="checkbox" id="{{Employee.Employee_Code}}" [checked]= "Employee.selectedBucket.length>0"  /> -->
+            <label for="{{employee.Employee_Code}}">{{employee.Employee_Name}} </label>
+          </label>
+          <ng-multiselect-dropdown [placeholder]="'Select bucket'" [data]="employee.bucket"
+            [(ngModel)]="employee.selectedBucket" [settings]="dropdownSettings"></ng-multiselect-dropdown>
+          <!-- </div> -->
+        </div>
+      </ng-container>
+
+    </div>
+
+    <div class="p-0 deallocateBtn">
+      <button [disabled]="allowDeallocate()==null" (click)="Deallocate()"
+        class="btn blue square-btn blue-hover btn-txt mr-10 mt-4">De-allocate</button>
+    </div>
+  </div>

@@ -17,4 +17,7 @@ export class ChangePasswordService {
   ChangePassword(formbody): any {
     return this.http.post(environment.ApiUrl + '/api/change-password', formbody, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
+  ResetPasswrd(formbody) {
+    return this.http.post(environment.ApiUrl + 'api/Password_Reset', formbody);
+  }
 }

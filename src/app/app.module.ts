@@ -141,10 +141,45 @@ import { DeallocateConcluderComponent } from './deallocate-concluder/deallocate-
 import { UploadMiniInsuranceComponent } from './upload-mini-insurance/upload-mini-insurance.component';
 import { InventoryUploadComponent } from './inventory-upload/inventory-upload.component';
 
+import { PcnConfigurationComponent } from './child-components/client-configuration/pcn-configuration/pcn-configuration.component';
+import { AddPcnConfigurationComponent } from './child-components/client-configuration/add-pcn-configuration/add-pcn-configuration.component';
+import { AddPcnModalComponent } from './child-components/agent/add-pcn-modal/add-pcn-modal.component'; // optional, provides moment-style pipes for date formatting
+import { ConcluderDashboardComponent } from './concluder-dashboard/concluder-dashboard.component';
+import { PcnReportComponent } from './landing-page/pcn-report/pcn-report.component';
+import { AllocatedCountModalComponent } from './concluder-dashboard/allocated-count-modal/allocated-count-modal.component';
+import { ConcluderAccountsComponent } from './child-components/agent/concluder-accounts/concluder-accounts.component';
+import { ToBeConcluderAccountsComponent } from './to-be-concluder-accounts/to-be-concluder-accounts.component';
+import { AgentConcluderComponent } from './agent-concluder/agent-concluder.component';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { ResetPasswordComponent } from './landing-page/reset-password/reset-password.component';
+
+import { ConcluderDeallocationComponent } from './landing-page/concluder-deallocation/concluder-deallocation.component';
+import { ConcluderDeallocationPageComponent } from './landing-page/concluder-deallocation-page/concluder-deallocation-page.component';
+import { ConcluderHelpImageComponent } from './concluder-help-image/concluder-help-image.component';
+import { ForgotPasswordNewComponent } from './landing-page/forgot-password-new/forgot-password-new.component';
+import { AccountsModalProjectAndPriorityComponent } from './project-and-priority/accounts-modal-project-and-priority/accounts-modal-project-and-priority.component';
+import { ClientInstructionInfoComponent } from './landing-page/client-instruction/client-instruction-info/client-instruction-info.component';
+import { SpecialProjectComponent } from './child-components/client-configuration/special-project/special-project.component';
+import { DeactivateProjectComponent } from './child-components/client-configuration/special-project/deactivate-project/deactivate-project.component';
+import { ProjectAndPriorityDeallocationComponent } from './landing-page/project-and-priority-deallocation/project-and-priority-deallocation.component';
+import { ProjectAndPriorityDeallocationPageComponent } from './landing-page/project-and-priority-deallocation/project-and-priority-deallocation-page/project-and-priority-deallocation-page.component';
+import { ProjectSelectorModalComponent } from './landing-page/project-and-priority-report/project-selector-modal/project-selector-modal.component';
+import { ProjectAndPriorityReportComponent } from './landing-page/project-and-priority-report/project-and-priority-report.component';
+// import { ProjectSelectorModalComponent } from './landing-page/project-and-priority-report/project-selector-modal/project-selector-modal.component';
+import { ProjectAndPriorityDashboardComponent } from './project-and-priority/project-and-priority-dashboard/project-and-priority-dashboard.component';
+import { ProjectDeactivateConfirmationComponent } from './project-and-priority/project-deactivate-confirmation/project-deactivate-confirmation.component';
+import { ProjectReallocationComponent } from './project-and-priority/project-reallocation/project-reallocation.component';
+import { ClientSupervisorSimpleReportComponent } from './landing-page/client-supervisor-simple-report/client-supervisor-simple-report.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AccountsModalProjectAndPriorityComponent,
+    ClientInstructionInfoComponent,
+    ForgotPasswordNewComponent,
+    ConcluderHelpImageComponent,
+    ConcluderDeallocationPageComponent,
+    ConcluderDeallocationComponent,
     LoginComponent,
     ForgotPasswordComponent,
     ChangePasswordComponent,
@@ -258,16 +293,31 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
     InventoryHighPriorityComponent,
     WelcomePageComponent,
     CallReferenceComponent,
-
     CallReferenceInfoComponent,
-
     ConcluderReportComponent,
-
     DeallocateConcluderComponent,
-
     UploadMiniInsuranceComponent,
-
-    InventoryUploadComponent
+    InventoryUploadComponent,
+    PcnConfigurationComponent,
+    AddPcnConfigurationComponent,
+    AddPcnModalComponent,
+    ConcluderDashboardComponent,
+    PcnReportComponent,
+    AllocatedCountModalComponent,
+    ConcluderAccountsComponent,
+    ToBeConcluderAccountsComponent,
+    AgentConcluderComponent,
+    ResetPasswordComponent,
+    SpecialProjectComponent,
+    DeactivateProjectComponent,
+    ProjectAndPriorityDeallocationComponent,
+    ProjectAndPriorityDeallocationPageComponent,
+    ProjectSelectorModalComponent,
+    ProjectAndPriorityReportComponent,
+    ProjectAndPriorityDashboardComponent,
+    ProjectDeactivateConfirmationComponent,
+    ProjectReallocationComponent,
+    ClientSupervisorSimpleReportComponent
   ],
   imports: [
     BrowserModule,
@@ -281,12 +331,15 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
     OwlNativeDateTimeModule,
     NgbModule,
     AgGridModule.withComponents([]),
+    NgIdleKeepaliveModule.forRoot(),
     RouterModule.forRoot([
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'two-factor-auth', component: TwoFactorAuthComponent },
       { path: 'welcome-page', component: WelcomePageComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+      { path: 'forgot-password-new/:securityCode', component: ForgotPasswordNewComponent },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard], data: { route: ['change-password'] } },
       { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard], data: { route: ['user-management'] } },
       // { path: 'client-configuration', component: ClientConfigurationComponent },
@@ -343,8 +396,15 @@ import { InventoryUploadComponent } from './inventory-upload/inventory-upload.co
       { path: 'user-menu-mapping', component: UserMenuMappingComponent, canActivate: [AuthGuard], data: { route: ['user-menu-mapping'] } },      // UserMenuMappingComponent      
       // ConcluderMiniInsuranceComponent
       { path: 'concluder-report', component: ConcluderReportComponent, canActivate: [AuthGuard], data: { route: ['concluder-report'] } },
+      { path: 'project-and-priority-report', component: ProjectAndPriorityReportComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-report'] } },
       { path: 'deallocate-concluder', component: DeallocateConcluderComponent, canActivate: [AuthGuard], data: { route: ['deallocate-concluder'] } },
       { path: 'upload-mini-insurance', component: UploadMiniInsuranceComponent, canActivate: [AuthGuard], data: { route: ['upload-mini-insurance'] } },
+      { path: 'concluder-dashboard', component: ConcluderDashboardComponent, canActivate: [AuthGuard], data: { route: ['concluder-dashboard'] } },
+      { path: 'pcn-report', component: PcnReportComponent, canActivate: [AuthGuard], data: { route: ['pcn-report'] } },
+      { path: 'concluder-deallocation', component: ConcluderDeallocationComponent, canActivate: [AuthGuard], data: { route: ['concluder-deallocation'] } },
+      { path: 'deallocate-module', component: ProjectAndPriorityDeallocationComponent, canActivate: [AuthGuard], data: { route: ['deallocate-module'] } },
+      { path: 'project-and-priority-dashboard', component: ProjectAndPriorityDashboardComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-dashboard'] } },
+      { path: 'client-simple-report', component: ClientSupervisorSimpleReportComponent, canActivate: [AuthGuard], data: { route: ['client-simple-report'] } },
       { path: '**', component: NotFoundComponent }
 
     ]),

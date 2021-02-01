@@ -1,11 +1,11 @@
-import { Component, OnInit,Output,EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-client-dashboard-modal',
   templateUrl: './client-dashboard-modal.component.html',
   styleUrls: ['./client-dashboard-modal.component.css']
 })
-export class ClientDashboardModalComponent implements OnInit {
+export class ClientDashboardModalComponent implements OnInit, OnChanges {
 
   rowData
   columnDefs
@@ -17,28 +17,30 @@ export class ClientDashboardModalComponent implements OnInit {
   @Input() countdata
   @Output() Toggle = new EventEmitter<any>();
 
-  constructor() { 
+  constructor() {
 
     this.ColumnDefs = [
-      {headerName: "Username", field: "Username"},
-      { headerName: "Created_Role_Name", field: "Created_Role_Name"},
-      { headerName: "Count", field: "Count"},
-     ];
+      { headerName: "Username", field: "Username" },
+      { headerName: "Created_Role_Name", field: "Created_Role_Name" },
+      { headerName: "Count", field: "Count" },
+    ];
   }
 
   ngOnInit() {
-    
-  this.rowData=this.countdata
+
+    this.rowData = this.countdata
   }
-  
-toggleModel(){
+  ngOnChanges() {
+    this.rowData = this.countdata;
+  }
+  toggleModel() {
 
-  this.Toggle.emit('')
-}
+    this.Toggle.emit('')
+  }
 
-onGridReady(params) {
-   this.gridApi = params.api;
-   this.gridColumnApi = params.columnApi;
-   params.columnApi.autoSizeColumns()
- }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    params.columnApi.autoSizeColumns()
+  }
 }

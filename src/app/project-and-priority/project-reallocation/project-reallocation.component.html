@@ -1,0 +1,42 @@
+<div class="pop-bg">
+</div>
+
+<div class="pop-position">
+    <div class="col-md-12 grey p-0">
+        <span class="col-md-10 col-sm-10 p-0">
+            <div class="heading-panel">
+                <span class="text-sm text-ellipsis heading-txt flex ">Allocation/Re-Allocation Accounts</span>
+    </div>
+    </span>
+    <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor">
+            <i class="fa fa-times" (click)="dismissModel()"></i>
+        </span>
+</div>
+<div class="body">
+    <div [ngClass]="{'activeGrid' : showReAllocation!=null }" class="gridView p-0">
+        <h4 style="padding-left: 1rem;font-weight: 600;">Allocated Accounts</h4>
+        <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+            <ag-grid-angular [enableSorting]="true" [enableFilter]="true" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs" [rowSelection]="rowSelection" [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true"
+                (gridReady)="onGridReady($event)" (cellClicked)="getData($event)">
+            </ag-grid-angular>
+        </div>
+    </div>
+
+    <div *ngIf="showReAllocation!=null" class="formView">
+        <h2>Re-Allocate Accounts</h2>
+        <form id="allocatedForm" *ngIf="agentList && agentList.length>0">
+            <div class="form-group mt-10">
+                <label class=" label-std control-label p-0 b-600 pl-0" for="">Employee</label>
+                <ng-multiselect-dropdown [placeholder]="'Select Employee'" [data]="agentList" [settings]="clientSetting" [(ngModel)]="selectedAgentList" [ngModelOptions]="{standalone: true}">
+                </ng-multiselect-dropdown>
+            </div>
+            <button type="button" class="mt-3 btn blue square-btn blue-hover btn-txt mr-10" style="margin-left: 40%" (click)="allocateAccount()" [disabled]="selectedAgentList==null || selectedAgentList.length==0 || submitStatus==true">Allocate</button>
+        </form>
+        <h4 style="text-align: center;" *ngIf="showReAllocation==true && agentList.length==0">
+            <i class="fa fa-refresh fa-spin fa-3x"></i><br /> Checking Un-Worked Account List
+        </h4>
+        <h4 *ngIf="showReAllocation==false && agentList.length==0">No Employee exists</h4>
+    </div>
+
+</div>
+</div>

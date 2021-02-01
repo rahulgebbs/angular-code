@@ -84,6 +84,8 @@ export class AutoAllocationComponent implements OnInit {
       'Id': [0],
       'Client_Id': [''],
       'Group_By': ['', Validators.required],
+      'Allocated_Concluder_Accounts_Count': ['', Validators.required],
+      'Allocated_PNP_Accounts_Count': ['', Validators.required],
       'DOS_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
       'Last_Work_Date_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
       'Last_Bill_Date_Days': ['', Validators.compose([Validators.required, Validators.max(365), Validators.pattern('^[0-9]+([0]{365})?$')])],
@@ -109,6 +111,7 @@ export class AutoAllocationComponent implements OnInit {
       this.SettingsForm.patchValue({ 'Client_Id': this.ClientId })
       this.DisableSearch = false;
     }
+    this.GetAutoAllocation();
   }
 
   GetAutoAllocation() {
@@ -146,6 +149,7 @@ export class AutoAllocationComponent implements OnInit {
         case "Public To Call":
         case "Private To Call":
         case "Special Queue":
+        case "Manual Queue":
         case "TL Deny":
           e.Bucket = e.Queue_Name;
           break;

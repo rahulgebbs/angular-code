@@ -5,7 +5,7 @@ import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { finalize } from 'rxjs/operators';
 import { ClientApprovalService } from 'src/app/service/client-approval.service';
 import { UserManagementService } from 'src/app/service/user-management.service';
-
+import * as moment from 'moment'
 @Component({
   selector: 'app-approval-modal',
   templateUrl: './approval-modal.component.html',
@@ -37,18 +37,18 @@ export class ApprovalModalComponent implements OnInit {
     { Key: "To Internal", Value: "To Internal" }
   ]
 
-  HideList = ["Id", "Inventory_Id", "Status", "Sub-Status", "Action_Code", "Effectiveness", "Action", "Reference_File_Name", "Standard_Comments", "Comments","Repeat_Count"];
+  HideList = ["Id", "Inventory_Id", "Status", "Sub-Status", "Action_Code", "Effectiveness", "Action", "Reference_File_Name", "Standard_Comments", "Comments", "Repeat_Count"];
   CommentHistory = [];
   UsersList = [];
   DisableDownload = false;
   ToggleCommentHistory = false;
   Invalid = false;
-
+  Start_Time = null
   constructor(private notification: NotificationService, private service: ClientApprovalService, private userservice: UserManagementService) { }
 
   ngOnInit() {
     this.ResponseHelper = new ResponseHelper(this.notification)
-
+    this.Start_Time = moment().utcOffset(0, true).format();
     this.Inventories.forEach(e => {
 
       var Inventory_Log_Id = 0;
@@ -105,7 +105,7 @@ export class ApprovalModalComponent implements OnInit {
       e.Repeat_Count = Number(repeat_count);
 
       if (this.TLAction == 'Hold' || this.TLAction == 'Approve') {
-        e.FileName = 'Upload File';
+        e.FileName = '';
       }
       else {
         if (refFileName != '') {
@@ -239,7 +239,7 @@ export class ApprovalModalComponent implements OnInit {
       this.ConvertToBase64(i);
     }
     else {
-      this.Inventories[i].FileName = 'Upload File';
+      this.Inventories[i].FileName = '';
       this.File = null;
       this.FileBase64 = '';
     }
@@ -276,9 +276,10 @@ export class ApprovalModalComponent implements OnInit {
               Action: e.Action,
               Standard_Comments: this.Standard_Comment,
               Comments: e.Comments,
-              File: e.File,
+              File: e.File ? e.File : '',
               FileName: e.FileName,
-              Assigned_To_Client_User: e.Client_User
+              Assigned_To_Client_User: e.Client_User,
+              Start_Time: this.Start_Time
               // Status: e.Status,
               // Sub_Status: e.Sub_Status,
               // Action_Code: e.Action_Code

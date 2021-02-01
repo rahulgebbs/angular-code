@@ -1,0 +1,46 @@
+<div class="tab-content nav-tab-content">
+    <form>
+        <div role="tabpanel" class="tab-pane" id="step-2">
+
+            <div class="col-md-12 p-0">
+                <div class="provider-process">
+                    <div class="col-md-9">
+                        <span class="form-group file-provider mt-10">
+              <input name="file-upload-field" [(ngModel)]="projectName" type="text" class="form-control"
+                placeholder="Enter module name">
+            </span>
+                        <span>
+              <button type="button" [disabled]="projectName==null || projectName.length==0 || httpStatus==true"
+                (click)="addProject()" class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-10"
+                style="border: none;">
+                Add module
+              </button>
+            </span>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <span class="pull-right pt-8  w-auto" *ngIf="ClientData">
+              <b>Client Name :-
+                {{ClientData.Client_Name}}</b>
+            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-most mr-5">Total Rows:- <b>{{rowData == null ? '0' : rowData.length}}</b></div>
+            <div class="col-md-12 p-0">
+                <div class="col-md-12">
+                </div>
+                <div class="col-md-12 p-0">
+                    <div class="sagg-sticky-tbl sticky-table sticky-ltr-cells border-0 table-hight">
+                        <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true" [paginationPageSize]="10" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs" (cellClicked)='onCellClicked($event)' [suppressDragLeaveHidesColumns]="true"
+                            [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)" [suppressColumnVirtualisation]="true"></ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right p-0">
+                <button type="button" id="step-2-next" class="btn blue square-btn blue-hover btn-txt mt-10 mb-10 mr-5" (click)="navigate()">Next</button>
+            </div>
+        </div>
+    </form>
+</div>
+<app-deactivate-project [client]="ClientData" [project]="activeProject" (close)="closeModal($event)" *ngIf="openProjectModal==true" class="component html">
+</app-deactivate-project>

@@ -137,10 +137,11 @@ export class customValidation {
                 control.get('Email_Id').setErrors({ required: true });
 
             }
-            else if (myVal.indexOf('@gebbs.com') > -1) {
-                //    
-                control.get('Email_Id').setErrors({ invalidDomain: true })
-            } else {
+            // else if (myVal.indexOf('@gebbs.com') > -1) {
+            //     //    
+            //     control.get('Email_Id').setErrors({ invalidDomain: true })
+            // } 
+            else {
                 // 
                 control.get('Email_Id').clearValidators()
             }
@@ -274,6 +275,17 @@ export class customValidation {
         let confirmPassword = AC.get('confirmnewpass').value; // to get value in input tag
         if (password != confirmPassword) {
             AC.get('confirmnewpass').setErrors({ notMatch: true })
+        } else {
+            AC.get('confirmnewpass').setErrors(null);
+            return null
+        }
+    }
+
+    static NewPasswordMatchWithOld(AC: AbstractControl) {
+        let newPassword = AC.get('New_Password').value; // to get value in input tag
+        let oldPassword = AC.get('Old_Password').value; // to get value in input tag
+        if (newPassword == oldPassword) {
+            AC.get('New_Password').setErrors({ notMatch: true })
         } else {
             return null
         }

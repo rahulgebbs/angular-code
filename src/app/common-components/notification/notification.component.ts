@@ -17,9 +17,13 @@ export class NotificationComponent implements OnInit {
   }
 
   notification() {
-    this.notificationservice.notify.subscribe(res => {
+    let time = 3000;
+    this.notificationservice.notify.subscribe((res: any) => {
       if (Array.isArray(res)) {
-        if (res.length != 0) {
+        if (res.length > 0) {
+          if (res[0] && res[0].time) {
+            time = res[0].time ? res[0].time : 3000;
+          }
           res.forEach(e => {
             this.Notifications.unshift(e)
           });
@@ -30,14 +34,14 @@ export class NotificationComponent implements OnInit {
               this.Notifications.pop();
               if (res[i].Message == "Access Token is invalid, or has been expired.") {
                 this.logOut()
-              }else if(res[i].Message=="You are not authorized."){
+              } else if (res[i].Message == "You are not authorized.") {
                 //this.logOut()
-              }else if(res[i].Message =='Please change your Password to visit this page'){
+              } else if (res[i].Message == 'Please change your Password to visit this page') {
 
               }
             }, i * 3000);
           }
-        }, 1 * 3000);
+        }, 1 * time);
       }
       else {
         let err = [];
@@ -45,7 +49,7 @@ export class NotificationComponent implements OnInit {
         this.Notifications = (err)
         setTimeout(() => {
           this.Notifications = [];
-        }, 1 * 3000);
+        }, 1 * time);
       }
     })
   }

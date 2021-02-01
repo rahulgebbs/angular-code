@@ -1,0 +1,26 @@
+<div>
+  <div class="pop-bg">
+  </div>
+  <div class="pop-position pop-w">
+    <div>
+      <div class="col-md-12 p-0 grey">
+        <span class="col-md-10 col-sm-10 p-0">
+          <div class="heading-panel pl-10">
+            <span class="text-sm text-ellipsis heading-txt flex">Confirm De-Activate Project </span>
+          </div>
+        </span>
+        <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="close(false)">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </span>
+      </div>
+      <div class="col-md-12 p-0">
+        <h4 style="text-align: center;">Are you sure you want to De-Activate project ?</h4>
+        <div class="col-md-2 submitSection p-0">
+          <button type="button" class="btn blue square-btn blue-hover btn-txt mr-10" (click)="close(false)">No</button>
+          <button type="button" class="btn blue square-btn blue-hover btn-txt"
+            (click)="deActivateProject()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
