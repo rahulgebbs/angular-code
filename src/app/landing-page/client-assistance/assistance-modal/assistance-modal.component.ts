@@ -57,7 +57,7 @@ export class AssistanceModalComponent implements OnInit {
     // this.Start_Time = new Date().toISOString();
     this.Start_Time = moment().utcOffset(0, true).format();
     this.ResponseHelper = new ResponseHelper(this.notification)
-
+    console.log('ngOnInit TLAction : ', this.TLAction);
     this.Inventories.forEach(e => {
 
       var Inventory_Log_Id = 0;

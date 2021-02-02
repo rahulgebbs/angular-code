@@ -24,6 +24,10 @@ export class ProjectandpriorityService {
 
   getAccountsByProject(client_Id, projectName) {
     //  api/inventory-data-upload-download-template/client/{id}
+    // const obj = {
+    //   Client_ID: client_Id,
+    //   Project_Name: projectName
+    // }
     return this.http.get(environment.ApiUrl + `api/agent-pnp-account/${client_Id}?project_name=${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
@@ -116,11 +120,15 @@ export class ProjectandpriorityService {
   }
 
   getProjectListCount(Client_Id, Project_Name) {
-    return this.http.get(environment.ApiUrl + `api/pnp-dashboard-allocated-count/client/${Client_Id}/${Project_Name}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    const obj = {
+      Client_ID: Client_Id,
+      Project_Name: Project_Name
+    }
+    return this.http.post(environment.ApiUrl + `api/pnp-dashboard-allocated-count`, obj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
   getEmployeesAllocatedToProject(clientId, projectName, employeeId) {
-    return this.http.get(environment.ApiUrl + `api/get-all-employee-by-project/client/${clientId}/${projectName}/${employeeId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    return this.http.post(environment.ApiUrl + `api/get-all-employee-by-project`, obj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
   // /api/reallocate-pnp-account
@@ -130,6 +138,10 @@ export class ProjectandpriorityService {
     return this.http.put(environment.ApiUrl + `/api/reallocate-pnp-account`, body, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
   getEmployeesForProject(clientId, projectName) {
+    const obj = {
+      Client_ID: clientId,
+      Project_Name: projectName
+    }
     return this.http.get(environment.ApiUrl + `api/get-agents-for-client/${clientId}/${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 

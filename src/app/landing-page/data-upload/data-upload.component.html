@@ -55,13 +55,13 @@
             </ng-container>
             <ng-container *ngIf="dataUpload.value as formValue">
               <div [ngClass]="{'disableDiv' :formValue.Client_Id==null || formValue.Client_Id.length==0 }"
-                class="form-group" *ngIf="formValue && formValue.type=='project'">
+                class="row form-group" *ngIf="formValue && formValue.type=='project'">
                 <label class="label-std control-label p-0 b-600 pl-0" for="card-number">Employee ID
                   <span class="asteric">*</span>
                 </label>
                 <!-- <div class="col-sm-7 p-0 text-right"> -->
                 <span class="col-md-10 p-0">
-                  <input type="text" class="form-control col-md-4" autocomplete="off" name="card-number"
+                  <input type="text" class="form-control col-md-12" autocomplete="off" name="card-number"
                     #EmployeesList="ngModel" id="card-number" (keydown)="BlockInput($event)"
                     (keyup)="BlockInput($event)" oncontextmenu="return false" (keypress)="BlockInput($event)"
                     [ngModelOptions]="{standalone: true}" [ngModel]="EmployeeString">
@@ -111,7 +111,7 @@
               class="btn w-auto pr-upl label grey lg-text label-info square-btn cursor mt-1 mr-5" id="toast-btn">
               <i class="fa fa-download mr-5 lg-text" aria-hidden="true"></i>Download Template</button>
           </div>
-          
+
         </div>
 
       </div>
