@@ -27,5 +27,4 @@ export const environment = {
   // ApiUrl: "http://localhost:63482/",
   // linkUsed:'localhost:63482/'
 };
-
 ///gebbs 192.168.30.28:1001 - webapp, 192.168.30.28:1007 , db username and pass : - iARProject
