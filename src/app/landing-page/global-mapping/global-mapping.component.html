@@ -1,16 +1,18 @@
 <app-header [title]="Title"></app-header>
-<div class="container-fluid">
+<div class="container-fluid p-0">
     <div class="row global-insurance-sticky">
         <div class="col-md-12 pt-8">
             <form [formGroup]="testForm" class="form-inline" role="form">
                 <div class="form-group p-0">
                     <label for="" class="formLabel">Client List &nbsp; </label>
-                    <select [disabled]="DisableClientList" (change)="ClientListOnChange($event)" formControlName="Client_Id" #selectedelem class="form-control" [(ngModel)]="ClientId">
+                    <select [disabled]="DisableClientList" (change)="ClientListOnChange($event)"
+                        formControlName="Client_Id" #selectedelem class="form-control" [(ngModel)]="ClientId">
                         <option [selected]="ClientList.length >1" disabled>Select</option>
                         <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">
                             {{c.Client_Name}}</option>
                     </select>
-                    <button [disabled]="DisableInsuranceSearch" (click)="GetAllDetails(selectedelem.value)" class="btn blue square-btn blue-hover btn-txt ml-10">Search</button>
+                    <button [disabled]="DisableInsuranceSearch" (click)="GetAllDetails(selectedelem.value)"
+                        class="btn blue square-btn blue-hover btn-txt ml-10">Search</button>
                 </div>
             </form>
             <!-- <span class="pull-left pl-7 col-md-12">
@@ -42,8 +44,12 @@
                 <div class="col-md-12 p-0">
                     <div class="table-responcive">
                         <div class="sticky-table sticky-ltr-cells border-0 table-hight sticky-table-h">
-                            <ag-grid-angular [rowSelection]="RowSelection" [enableFilter]="true" (gridReady)="OnClientGridReady($event)" (rowClicked)="OnClientRowClicked($event)" (firstDataRendered)="autoSizeCGrid($event)" [enableColResize]="true" class="ag-theme-balham grid-w"
-                                [enableSorting]="true" [rowData]="ClientRows" [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true" [pagination]="true" [paginationPageSize]="15" [columnDefs]="CommonHeaders">
+                            <ag-grid-angular [rowSelection]="RowSelection" [enableFilter]="true"
+                                (gridReady)="OnClientGridReady($event)" (rowClicked)="OnClientRowClicked($event)"
+                                (firstDataRendered)="autoSizeCGrid($event)" [enableColResize]="true"
+                                class="ag-theme-balham grid-w" [enableSorting]="true" [rowData]="ClientRows"
+                                [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true"
+                                [pagination]="true" [paginationPageSize]="15" [columnDefs]="CommonHeaders">
                             </ag-grid-angular>
                         </div>
                     </div>
@@ -63,8 +69,12 @@
                 <div class="col-md-12 p-0">
                     <div class="table-responcive">
                         <div class="sticky-table sticky-ltr-cells border-0 table-hight sticky-table-h">
-                            <ag-grid-angular (rowSelected)="onRowSelected($event)" [rowSelection]="RowSelection" [enableFilter]="true" [enableColResize]="true" (gridReady)="OnGlobalGridReady($event)" (firstDataRendered)="autoSizeGGrid($event)" class="ag-theme-balham grid-w" [enableSorting]="true"
-                                [rowData]="GLobalRows" [suppressColumnVirtualisation]="true" [suppressDragLeaveHidesColumns]="true" [pagination]="true" [paginationPageSize]="15" (rowClicked)="OnGlobalRowClicked($event)" [columnDefs]="GlobalHeaders">
+                            <ag-grid-angular (rowSelected)="onRowSelected($event)" [rowSelection]="RowSelection"
+                                [enableFilter]="true" [enableColResize]="true" (gridReady)="OnGlobalGridReady($event)"
+                                (firstDataRendered)="autoSizeGGrid($event)" class="ag-theme-balham grid-w"
+                                [enableSorting]="true" [rowData]="GLobalRows" [suppressColumnVirtualisation]="true"
+                                [suppressDragLeaveHidesColumns]="true" [pagination]="true" [paginationPageSize]="15"
+                                (rowClicked)="OnGlobalRowClicked($event)" [columnDefs]="GlobalHeaders">
                             </ag-grid-angular>
                         </div>
                     </div>
@@ -76,4 +86,5 @@
     </div>
 </div>
 
-<app-mapping-modal *ngIf="DisplayModal" (ApiCallback)="RefreshOnMap($event)" (Toggle)="ToggleModal($event)" [SelectedClient]="SelectedClientInsurance" [SelectedGlobal]="SelectedGlobalInsurance"></app-mapping-modal>
+<app-mapping-modal *ngIf="DisplayModal" (ApiCallback)="RefreshOnMap($event)" (Toggle)="ToggleModal($event)"
+    [SelectedClient]="SelectedClientInsurance" [SelectedGlobal]="SelectedGlobalInsurance"></app-mapping-modal>
