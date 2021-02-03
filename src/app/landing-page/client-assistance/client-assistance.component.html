@@ -91,7 +91,7 @@
         </div>
       </div>
 
-      <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-5 p-0">
+      <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-3 p-0">
         <button (click)="GetInventories(a)" *ngFor="let a of AgingData"
           [ngClass]="[SelectedAging == a ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
           {{a.Ageing_Bucket_Name}}

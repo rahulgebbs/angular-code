@@ -261,6 +261,7 @@ export class ApprovalModalComponent implements OnInit {
     this.Invalid = false;
     console.log('this.Inventories : ', this.Inventories)
     this.Inventories.forEach(e => {
+
       if (e.IsChecked) {
         if (e.Action == '' || e.Standard_Comments == '') {
           this.Invalid = true;
@@ -294,17 +295,18 @@ export class ApprovalModalComponent implements OnInit {
       var obj = new Object();
       obj['request_info'] = response;
       // this.DisableSubmit = true;
-      // this.service.SaveInventories(obj).pipe(finalize(() => {
-      //   this.DisableSubmit = false;
-      // })).subscribe(
-      //   res => {
-      //     this.ResponseHelper.GetSuccessResponse(res);
-      //     this.ClosePopup.emit(true);
-      //   },
-      //   err => {
-      //     this.ResponseHelper.GetFaliureResponse(err);
-      //   }
-      // );
+      console.log('Before submit : ', obj);
+      this.service.SaveInventories(obj).pipe(finalize(() => {
+        this.DisableSubmit = false;
+      })).subscribe(
+        res => {
+          this.ResponseHelper.GetSuccessResponse(res);
+          this.ClosePopup.emit(true);
+        },
+        err => {
+          this.ResponseHelper.GetFaliureResponse(err);
+        }
+      );
     }
   }
 

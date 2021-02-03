@@ -142,7 +142,7 @@ export class ProjectandpriorityService {
       Client_ID: clientId,
       Project_Name: projectName
     }
-    return this.http.get(environment.ApiUrl + `api/get-agents-for-client/${clientId}/${projectName}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    return this.http.post(environment.ApiUrl + `api/get-agents-for-client`, obj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
   addAgentToProject(body) {

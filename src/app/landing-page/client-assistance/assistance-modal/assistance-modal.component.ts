@@ -445,18 +445,18 @@ export class AssistanceModalComponent implements OnInit {
       var obj = new Object();
       obj['request_info'] = response;
       console.log(obj);
-      // this.DisableSubmit = true;
-      // this.service.SaveInventories(obj).pipe(finalize(() => {
-      //   this.DisableSubmit = false;
-      // })).subscribe(
-      //   res => {
-      //     this.ResponseHelper.GetSuccessResponse(res);
-      //     this.ClosePopup.emit(true);
-      //   },
-      //   err => {
-      //     this.ResponseHelper.GetFaliureResponse(err);
-      //   }
-      // );
+      this.DisableSubmit = true;
+      this.service.SaveInventories(obj).pipe(finalize(() => {
+        this.DisableSubmit = false;
+      })).subscribe(
+        res => {
+          this.ResponseHelper.GetSuccessResponse(res);
+          this.ClosePopup.emit(true);
+        },
+        err => {
+          this.ResponseHelper.GetFaliureResponse(err);
+        }
+      );
     }
   }
 

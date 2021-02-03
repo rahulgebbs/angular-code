@@ -15,7 +15,7 @@
   </div>
   <div class="col-md-12 p-0" id="bucketContainer">
     <!-- <h1>Concluder buckets</h1> -->
-    <div class="col-md-12 col-sm-12 mb-5 p-0">
+    <div class="col-md-12 col-sm-12 mb-3 p-0">
       <button [disabled]="AccountsList==null" (click)="getDataByBucketName(bucket.Bucket_Name)"
         *ngFor="let bucket of bucketList"
         [ngClass]="[activeBucket == bucket.Bucket_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']"
