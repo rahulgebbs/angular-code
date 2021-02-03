@@ -128,7 +128,7 @@ export class ProjectandpriorityService {
   }
 
   getEmployeesAllocatedToProject(clientId, projectName, employeeId) {
-    return this.http.post(environment.ApiUrl + `api/get-all-employee-by-project`, obj, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+    return this.http.get(environment.ApiUrl + `api/get-all-employee-by-project/client/${clientId}/${projectName}/${employeeId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
   // /api/reallocate-pnp-account
