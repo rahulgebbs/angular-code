@@ -1426,7 +1426,7 @@ input:-ms-input-placeholder {
 }
 .sticky-table {
   border-bottom: 1px solid #dddddd !important;
-  border: 1px solid #ddd;
+  border: 1px solid #ddd !important;
 }
 .sticky-table tbody > tr:hover td {
   background-color: #ebf0fd;
