@@ -586,41 +586,13 @@
                         [ngClass]="[MenuName == '/'+menu.Route ? 'menu-active1': '']">
                         {{menu.Menu_Name}}
                       </a>
-                      <!-- <a *ngIf="menu.subMenus!=null && menu.subMenus.length>0"
-                   [ngClass]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? '' : 'collapsed']"
-                   role="button" data-toggle="collapse" data-parent="#accordionMenu" href="'#collapseFile{{index}}"
-                   aria-controls="collapseThree"
-                   [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']">
-                   {{menu.Menu_Name}}
-                 </a> -->
                     </h4>
                   </div>
-                  <!-- <div *ngIf="menu.subMenus.length>0"
-               [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']"
-               id="collapseFile{{index}}"
-               [ngClass]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'in' : '']"
-               class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
-               <div class="accordianbody">
-                 <ul class="nav">
-                   <ng-container *ngFor="let subMenu of menu.subMenus">
-                     <li *ngIf="checkMenu(subMenu.Route)"><a (click)="OpenMenu(subMenu.Route)"
-                         [ngClass]="[MenuName == '/'+subMenu.Route ? 'menu-active1': '']">
-                         {{subMenu.Submenu_Name}}
-                       </a>
-                     </li>
-                   </ng-container>
-                 </ul>
-               </div>
-             </div> -->
                 </div>
                 <div id="accordionMenu" *ngIf="menu.subMenus.length>0 && checkMenu(menu.subMenus[0].Route)"
                   class="panel panel-default">
                   <div class="acc-heading" role="tab" id="menu{{index}}">
                     <h4 class="acc-title">
-                      <!-- <a *ngIf="menu.subMenus==null || menu.subMenus.length==0" role="button"
-                   (click)="OpenMenu(menu.Route)" [ngClass]="[MenuName == '/'+menu.Route ? 'menu-active1': '']">
-                   {{menu.Menu_Name}}
-                 </a> -->
                       <a style="text-transform: capitalize" *ngIf="menu.subMenus!=null && menu.subMenus.length>0"
                         [ngClass]="[matchedMenu(menu.subMenus) ? 'menu-active1': '']" role="button"
                         data-toggle="collapse" data-parent="#accordionMenu" href="'#collapseFile{{index}}"

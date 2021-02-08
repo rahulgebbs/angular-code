@@ -4,7 +4,7 @@
   <form [formGroup]="dashboard" (ngSubmit)="SubmitForm()" class="row form-inline">
     <!-- removed class 'pull-left' and 'mr-10'  -->
     <!-- <span class="pt-5 label-std control-label b-600 w-auto">Client List</span> -->
-    <div class="form-group col-md-4 p-0">
+    <div class="form-group col-md-12 mb-3 mt-3 p-0">
       <label for="" class="formLabel">Client List &nbsp; </label>
       <select class="form-control" (change)="onClientChange($event)" formControlName="ClientId" [(ngModel)]="ClientId"
         placeholder="d.ff">
@@ -16,37 +16,32 @@
     </div>
 
 
-    <div class="row col-md-8" *ngIf="show">
-      <div class="col-md-3">
-        <span class="col-md-12 col-sm-12 p-0">
-          <!-- <div class="heading-panel"> -->
+    <div class="supervisorList" *ngIf="show">
+      <div class="row">
+        <div class="col-md-12">
           <h3>Supervisor List</h3>
-          <!-- <span class="text-sm text-ellipsis heading-txt flex">Supervisor List</span> -->
-          <!-- </div> -->
-        </span>
+        </div>
+        <div class="col-md-12 row checkBoxList">
+          <div class="col-md-2 mb-1" *ngFor="let j of SupervisorList; let k = index;">
+            <label class="custom-control">
+              <input type="checkbox" id="{{k}}" [checked]=" ( j.old == true )" (click)="changeCheckbox(k,$event)"
+                formControlName="vals" />
+              <label for="{{k}}">{{j.Full_Name}}</label>
+            </label>
+          </div>
+          <div class="col-md-12" *ngIf="SupervisorList && SupervisorList.length==0">
+            <h4>No supervisor list found</h4>
+          </div>
+        </div>
+        <div class="col-md-12 mh-15" style="margin-top: 1rem;">
 
-      </div>
-      <div class="col-md-8 row">
-        <div class="col-md-6 mb-1" *ngFor="let j of SupervisorList; let k = index;">
-          <label class="custom-control">
-            <input type="checkbox" id="{{k}}" [checked]=" ( j.old == true )" (click)="changeCheckbox(k,$event)"
-              formControlName="vals" />
-            <label for="{{k}}">{{j.Full_Name}}</label>
-          </label>
-        </div>
-        <div class="col-md-12" *ngIf="SupervisorList && SupervisorList.length==0">
-          <h4>No supervisor list found</h4>
-        </div>
-        <!-- (click)="changeCheckbox(k,$event)" -->
-      </div>
-      <!-- <div></div> -->
-      <div class="form-group mh-15">
-        <div class="col-md-2 text-center p-0">
           <!-- data-toggle="modal" data-target=".skip-ac" -->
-          <button type="submit" [disabled]="DisableSubmit || SupervisorList.length==0"
+          <button style="float: center;" type="submit" [disabled]="DisableSubmit || SupervisorList.length==0"
             class="btn blue square-btn blue-hover btn-txt mr-10" (click)="getFinalSelectedClient()">Submit</button>
+
         </div>
       </div>
+
     </div>
     <div *ngIf="showfields" class="container">
       <div class="row">
@@ -89,8 +84,6 @@
         </form>
       </div>
     </div>
-
-
     <div class="col-md-12 col-xs-12 userlist-stickytable">
       <div class="col-md-12 col-sm-12 p-0">
         <div class="heading-panel sT-hight p-0">

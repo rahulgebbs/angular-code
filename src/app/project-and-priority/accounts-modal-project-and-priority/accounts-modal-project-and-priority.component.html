@@ -15,7 +15,7 @@
   </div>
   <div [ngClass]="[refreshProjectStatus==true ? 'disabled':'']" class="col-md-12 p-0" id="projectContainer">
     <div class="col-md-12 col-sm-12 p-0">
-      <button [disabled]="AccountsList==null" (click)="getDataByProjectName(project.Project_Name)"
+      <button [disabled]="AccountsList==null" (click)="getDataByProjectName(project.Encrypted_Project_Name)"
         *ngFor="let project of projectList"
         [ngClass]="[activeProject == project.Project_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']"
         class="btn square-btn blue-hover btn-txt mr-5 reasonProject">

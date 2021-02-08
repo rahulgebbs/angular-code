@@ -83,5 +83,17 @@
 .formLabel {
   font-weight: bold;
   padding-left: 1.3rem;
+  margin-top: -0.2rem !important;
   font-size: 1.3rem;
+}
+
+.supervisorList {
+  border: 1px solid #cfcfcf;
+  margin: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+.checkBoxList {
+  max-height: 100px;
+  overflow-y: auto;
 }
