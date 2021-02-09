@@ -18,22 +18,10 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-md-8">
-          <div class="middle-align1">
-            <div class="col-md-12 p-0">
-              <span class="u-name">{{UserData.Full_Name}}</span>
-            </div>
-            <div class="col-md-12 p-0">
-              <span class="u-type">{{UserData.Role}}</span>
-            </div>
-          </div>
-        </div> -->
       </div>
 
       <div class="col-md-12 p-0 mt-10">
         <div class="m-leftsidebar bdr-t pt-0" style="margin-top: 2%;">
-          <!-- <div class="m-leftsidebar bdr-t pt-0"> -->
-
           <div class="menu">
             <div *ngIf="UserData.Role!='Client User' && UserData.Role!='Client Supervisor'"
               class="panel-group menu-small" id="accordionMenu" role="tablist" aria-multiselectable="true">
@@ -89,7 +77,6 @@
                   </h4>
                 </div>
               </div>
-
               <div *ngIf="checkMenu('citra-employee-mapping')" class="panel panel-default">
                 <div class="acc-heading" role="tab" id="headingOne">
                   <h4 class="acc-title">
@@ -513,14 +500,12 @@
                     </a>
                   </h4>
                 </div>
-
                 <div id="collapseThree_1" class="panel-collapse collapse" role="tabpanel"
                   aria-labelledby="headingThree">
                   <div class="accordianbody">
                     <ul class="nav">
                       <li *ngFor="let menu of biReportMenu">
                         <a role="button" (click)="openBIReport(menu)">
-                          <!-- [ngClass]="[MenuName == '/kyi-report' ? 'menu-active1': '']" -->
                           {{menu.Menu_Name}}
                         </a>
                       </li>
@@ -583,43 +568,42 @@
                     <h4 class="acc-title">
                       <a style="text-transform: capitalize" *ngIf="menu.subMenus==null || menu.subMenus.length==0"
                         role="button" (click)="OpenMenu(menu.Route)"
-                        [ngClass]="[MenuName == '/'+menu.Route ? 'menu-active1': '']">
+                        [ngClass]="[matchedMenu(menu.subMenus) ? 'menu-active1': '']">
                         {{menu.Menu_Name}}
                       </a>
                     </h4>
                   </div>
                 </div>
-                <div id="accordionMenu" *ngIf="menu.subMenus.length>0 && checkMenu(menu.subMenus[0].Route)"
-                  class="panel panel-default">
-                  <div class="acc-heading" role="tab" id="menu{{index}}">
+                <div *ngIf="menu && menu.subMenus && menu.subMenus.length>0" class="panel panel-default">
+                  <div class="acc-heading" role="tab" id="headingTen">
                     <h4 class="acc-title">
-                      <a style="text-transform: capitalize" *ngIf="menu.subMenus!=null && menu.subMenus.length>0"
-                        [ngClass]="[matchedMenu(menu.subMenus) ? 'menu-active1': '']" role="button"
-                        data-toggle="collapse" data-parent="#accordionMenu" href="'#collapseFile{{index}}"
-                        aria-controls="collapseThree"
-                        [attr.aria-expanded]="[matchedMenu(menu.subMenus) ? 'true' : 'false']">
-                        {{menu.Menu_Name}}
+                      <a [ngClass]="[matchedMenu(menu.subMenus) ? '' : 'collapsed']" role="button"
+                        data-toggle="collapse" data-parent="#accordionMenu" aria-controls="collapseThree"
+                        href="#collapseReport" [attr.aria-expanded]="[false]">
+                        Reports
                       </a>
                     </h4>
                   </div>
-                  <div *ngIf="menu.subMenus.length>0"
-                    [attr.aria-expanded]="[MenuName == '/'+menu.Route || MenuName == '/'+menu.Route ? 'true' : 'false']"
-                    id="collapseFile{{index}}" [ngClass]="[matchedMenu(menu.subMenus)? 'in' : '']"
-                    class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFile">
+                  <div id="collapseReport" [attr.aria-expanded]="[matchedMenu(menu.subMenus) ? 'true' : 'false']"
+                    class="panel-collapse collapse"
+                    [attr.aria-expanded]="[matchedMenu(menu.subMenus) ? 'true' : 'false']" role="tabpanel"
+                    aria-labelledby="headingReport">
                     <div class="accordianbody">
                       <ul class="nav">
                         <ng-container *ngFor="let subMenu of menu.subMenus">
-                          <li style="text-transform: capitalize;" *ngIf="checkMenu(subMenu.Route)"><a
-                              (click)="openDynamicMenu(subMenu)"
+                          <li style="text-transform: capitalize;" *ngIf="checkMenu(subMenu.Route)">
+                            <a (click)="openDynamicMenu(subMenu)"
                               [ngClass]="[MenuName == '/'+subMenu.Route ? 'menu-active1': '']">
                               {{subMenu.Submenu_Name}}
                             </a>
                           </li>
                         </ng-container>
+
                       </ul>
                     </div>
                   </div>
                 </div>
+
               </ng-container>
 
 

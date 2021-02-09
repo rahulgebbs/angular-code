@@ -273,11 +273,11 @@ export class MenuComponent implements OnInit {
   }
 
   matchedMenu(subMenus) {
-    console.log('matchedMenu subMenus : ', this.RouteName, subMenus);
+    console.log('matchedMenu subMenus : ', this.MenuName, subMenus);
     const menu = subMenus.find((menuObj) => {
       return this.MenuName == '/' + menuObj.Route;
     })
-    console.log('menu : ', menu);
+    console.log('matchedMenu menu : ', menu);
     if (menu != undefined)
       return true;
     else
