@@ -54,16 +54,9 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'V/N', field: 'Voice_NonVoice' },
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
-<<<<<<< HEAD
-      { headerName: 'Account No', field: 'Account_Number' }
-    ];
-    this.setDynamicColumnList();
-    if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
-=======
       //{ headerName: 'Account No', field: 'Account_Number' }
     ]
     if (this.AccountsList && this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
->>>>>>> b2048e0adb091ec682c7c4b149e0f99d0ee352cc
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
@@ -77,13 +70,8 @@ export class AccountsModalComponent implements OnInit {
     this.CloseAccountModal.emit(false);
   }
 
-<<<<<<< HEAD
-  setDynamicColumnList() {
-    console.log('setDynamicColumnList() : ', this.AccountsList);
-=======
   setColumnList() {
     console.log('setColumnList() : ', this.AccountsList);
->>>>>>> b2048e0adb091ec682c7c4b149e0f99d0ee352cc
     if (this.AccountsList[0] && this.AccountsList[0].Standard_Fields) {
       const { Standard_Fields } = this.AccountsList[0];
       Standard_Fields.forEach((element) => {
