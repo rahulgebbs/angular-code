@@ -17,25 +17,18 @@ export class AccountsModalComponent implements OnInit {
   columnDefs = [];
   GridApi;
   defaultColDef;
-
   CreateTemplate = '<b>hhhh</b>'
-
   newColumnList = [];
   constructor() { }
 
   ngOnInit() {
-
     this.defaultColDef = {
       cellRenderer: showOrderCellRenderer
     };
     this.setColumnList();
     function showOrderCellRenderer(params) {
       var eGui: any = document.createElement("span");
-      // console.log('params : ', params)
-
       eGui.innerHTML = `<span title='${params.value}'>${params.value}</span>`;
-      // var start = new Date();
-      // while (new Date() - start < 15) { }
       return eGui;
     }
     this.PayerName = this.AccountsList[0].Group_By_Field_Header;
@@ -46,7 +39,6 @@ export class AccountsModalComponent implements OnInit {
       }
       else {
         var date: Date;
-
         date = new Date(e.Completion_Date);
         e.Completion_Date = + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       }
@@ -56,9 +48,7 @@ export class AccountsModalComponent implements OnInit {
     this.columnDefs = [
       { field: 'Inventory_Id', hide: true, rowGroupIndex: null },
       { headerName: this.PayerName, field: this.PayerName },
-      {
-        headerName: 'TFL Status', field: 'TFL_Status'
-      },
+      { headerName: 'TFL Status', field: 'TFL_Status' },
       { headerName: 'Days', field: 'Days' },
       { headerName: 'Amount ($)', field: 'Dollar_Value' },
       { headerName: 'V/N', field: 'Voice_NonVoice' },
