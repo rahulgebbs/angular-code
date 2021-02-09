@@ -62,7 +62,8 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       { headerName: 'Account No', field: 'Account_Number' }
-    ]
+    ];
+    this.setDynamicColumnList();
     if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
@@ -74,6 +75,24 @@ export class AccountsModalComponent implements OnInit {
   }
   Close() {
     this.CloseAccountModal.emit(false);
+  }
+
+  setDynamicColumnList() {
+    console.log('setDynamicColumnList() : ', this.AccountsList);
+    if (this.AccountsList[0] && this.AccountsList[0].Standard_Fields) {
+      const { Standard_Fields } = this.AccountsList[0];
+      Standard_Fields.forEach((element) => {
+        this.columnDefs.push({ headerName: element.Header_Name, field: element.Header_Name });
+      });
+      this.AccountsList.forEach((account) => {
+        account.Standard_Fields.forEach((field) => {
+          account[field.Header_Name] = field.Field_Value;
+        })
+      })
+    }
+    console.log('this.columnDefs : ', this.columnDefs);
+    this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
+    this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
 
   OnGridReady(event) {

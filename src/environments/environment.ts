@@ -28,7 +28,7 @@ export const environment = {
   // LOCAL
   // FileApiUrl: "http://localhost:63482:1007",
   // ApiUrl: "http://localhost:63482/",
-  // linkUsed:'localhost:63482/'
+  // linkUsed: 'localhost:63482/'
 };
 /*
  * In development mode, for easier debugging, you can ignore zone related error

@@ -201,8 +201,13 @@ export class AppealModalComponent implements OnInit {
   Generate() {
     //is appeal non appeal
     this.AllFields.find((element) => {
-      if (element && element.Display_Name == 'Date of Service') {
-        console.log('Before Date of Service : ', element.FieldValue);
+      // if (element && element.Display_Name == 'Date of Service') {
+      //   console.log('Before Date of Service : ', element.FieldValue);
+      //   element.FieldValue = moment(element.FieldValue).format('MM/DD/YYYY HH:mm:ss a');
+      //   console.log('After Date of Service : ', element.FieldValue);
+      // }
+      if (element && element.Column_Datatype == 'Date') {
+        console.log('Before Date of Service : ', element);
         element.FieldValue = moment(element.FieldValue).format('MM/DD/YYYY HH:mm:ss a');
         console.log('After Date of Service : ', element.FieldValue);
       }
