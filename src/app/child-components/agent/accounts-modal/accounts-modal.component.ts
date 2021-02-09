@@ -20,12 +20,15 @@ export class AccountsModalComponent implements OnInit {
 
   CreateTemplate = '<b>hhhh</b>'
 
+  newColumnList = [];
   constructor() { }
 
   ngOnInit() {
+
     this.defaultColDef = {
       cellRenderer: showOrderCellRenderer
     };
+    this.setColumnList();
     function showOrderCellRenderer(params) {
       var eGui: any = document.createElement("span");
       // console.log('params : ', params)
@@ -61,19 +64,38 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'V/N', field: 'Voice_NonVoice' },
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
-      { headerName: 'Account No', field: 'Account_Number' }
+      //{ headerName: 'Account No', field: 'Account_Number' }
     ]
-    if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
+    if (this.AccountsList && this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
     }
+
     console.log('this.columnDefs : ', this.columnDefs);
     // this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
     // this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
   Close() {
     this.CloseAccountModal.emit(false);
+  }
+
+  setColumnList() {
+    console.log('setColumnList() : ', this.AccountsList);
+    if (this.AccountsList[0] && this.AccountsList[0].Standard_Fields) {
+      const { Standard_Fields } = this.AccountsList[0];
+      Standard_Fields.forEach((element) => {
+        this.columnDefs.push({ headerName: element.Header_Name, field: element.Header_Name });
+      });
+      this.AccountsList.forEach((account) => {
+        account.Standard_Fields.forEach((field) => {
+          account[field.Header_Name] = field.Field_Value;
+        })
+      })
+    }
+    console.log('this.columnDefs : ', this.columnDefs);
+    this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
+    this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
 
   OnGridReady(event) {
