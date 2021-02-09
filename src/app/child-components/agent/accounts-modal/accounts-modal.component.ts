@@ -17,22 +17,18 @@ export class AccountsModalComponent implements OnInit {
   columnDefs = [];
   GridApi;
   defaultColDef;
-
   CreateTemplate = '<b>hhhh</b>'
-
+  newColumnList = [];
   constructor() { }
 
   ngOnInit() {
     this.defaultColDef = {
       cellRenderer: showOrderCellRenderer
     };
+    this.setColumnList();
     function showOrderCellRenderer(params) {
       var eGui: any = document.createElement("span");
-      // console.log('params : ', params)
-
       eGui.innerHTML = `<span title='${params.value}'>${params.value}</span>`;
-      // var start = new Date();
-      // while (new Date() - start < 15) { }
       return eGui;
     }
     this.PayerName = this.AccountsList[0].Group_By_Field_Header;
@@ -43,7 +39,6 @@ export class AccountsModalComponent implements OnInit {
       }
       else {
         var date: Date;
-
         date = new Date(e.Completion_Date);
         e.Completion_Date = + (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       }
@@ -53,22 +48,27 @@ export class AccountsModalComponent implements OnInit {
     this.columnDefs = [
       { field: 'Inventory_Id', hide: true, rowGroupIndex: null },
       { headerName: this.PayerName, field: this.PayerName },
-      {
-        headerName: 'TFL Status', field: 'TFL_Status'
-      },
+      { headerName: 'TFL Status', field: 'TFL_Status' },
       { headerName: 'Days', field: 'Days' },
       { headerName: 'Amount ($)', field: 'Dollar_Value' },
       { headerName: 'V/N', field: 'Voice_NonVoice' },
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
+<<<<<<< HEAD
       { headerName: 'Account No', field: 'Account_Number' }
     ];
     this.setDynamicColumnList();
     if (this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
+=======
+      //{ headerName: 'Account No', field: 'Account_Number' }
+    ]
+    if (this.AccountsList && this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
+>>>>>>> b2048e0adb091ec682c7c4b149e0f99d0ee352cc
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
     }
+
     console.log('this.columnDefs : ', this.columnDefs);
     // this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
     // this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
@@ -77,8 +77,13 @@ export class AccountsModalComponent implements OnInit {
     this.CloseAccountModal.emit(false);
   }
 
+<<<<<<< HEAD
   setDynamicColumnList() {
     console.log('setDynamicColumnList() : ', this.AccountsList);
+=======
+  setColumnList() {
+    console.log('setColumnList() : ', this.AccountsList);
+>>>>>>> b2048e0adb091ec682c7c4b149e0f99d0ee352cc
     if (this.AccountsList[0] && this.AccountsList[0].Standard_Fields) {
       const { Standard_Fields } = this.AccountsList[0];
       Standard_Fields.forEach((element) => {

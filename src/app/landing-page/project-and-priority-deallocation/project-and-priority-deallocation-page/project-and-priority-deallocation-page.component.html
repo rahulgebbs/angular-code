@@ -25,7 +25,7 @@
         </label>
       </div>
     </div>
-    <div *ngIf="viewBy=='byModule'" class="col-md-12 p-0 code-auto-scroll p-0">
+    <div *ngIf="viewBy=='byModule'" class="row p-0 code-auto-scroll p-0">
       <div class="col-md-3 mt-10 border-b deAllocate" *ngFor="let module of moduleList;let k = index;">
         <label class="custom-control">
           <label>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="viewBy=='byAgent'" class="col-md-12 p-0 code-auto-scroll p-0">
+    <div *ngIf="viewBy=='byAgent'" class="row p-0 code-auto-scroll p-0">
       <ng-container *ngFor="let employee of employeeList;let k = index;">
         <div class="col-md-3 mt-10 border-b deAllocate"
           *ngIf="employee && employee.modules && employee.modules.length>0">
