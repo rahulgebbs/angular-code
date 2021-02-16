@@ -78,7 +78,7 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
     });
   }
 
-  getDataByProjectName(projectName) {
+  getDataByProjectName(project) {
     // if (this.AccountsList == null) {
     //   return false;
     // }
@@ -86,9 +86,9 @@ export class AccountsModalProjectAndPriorityComponent implements OnInit {
 
     this.accountListStatus = true;
     // this.gridOptions.api.showLoadingOverlay();
-    this.activeProject = projectName;
+    this.activeProject = project.Project_Name;
     const { Clients, Employee_Code } = this.userdata;
-    this.projectandpriorityService.getAccountsByProject(Clients[0].Client_Id, projectName).subscribe((response) => {
+    this.projectandpriorityService.getAccountsByProject(Clients[0].Client_Id, project.Encrypted_Project_Name).subscribe((response) => {
       console.log('getProjectList response : ', response.Data.PNP_Inventory_Info);
       this.accountListStatus = false;
       this.allData = response.Data.PNP_Inventory_Info;

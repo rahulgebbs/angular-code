@@ -1,50 +1,42 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="row col-md-12 p-0 grey" style="margin: 0">
-    <span class="col-md-10 col-sm-10 p-0">
+    <div class="row col-md-12 p-0 grey" style="margin: 0">
+        <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span class="text-sm text-ellipsis heading-txt flex">
           Assigned Projects
         </span>
-      </div>
+    </div>
     </span>
     <span title="close" class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="closeModal()">
       <i class="fa fa-times" aria-hidden="true"></i>
     </span>
-  </div>
-  <div [ngClass]="[refreshProjectStatus==true ? 'disabled':'']" class="col-md-12 p-0" id="projectContainer">
+</div>
+<div [ngClass]="[refreshProjectStatus==true ? 'disabled':'']" class="col-md-12 p-0" id="projectContainer">
     <div class="col-md-12 col-sm-12 p-0">
-      <button [disabled]="AccountsList==null" (click)="getDataByProjectName(project.Encrypted_Project_Name)"
-        *ngFor="let project of projectList"
-        [ngClass]="[activeProject == project.Project_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']"
-        class="btn square-btn blue-hover btn-txt mr-5 reasonProject">
+        <button [disabled]="AccountsList==null" (click)="getDataByProjectName(project)" *ngFor="let project of projectList" [ngClass]="[activeProject == project.Project_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']" class="btn square-btn blue-hover btn-txt mr-5 reasonProject">
         {{project.Project_Name || "N/A"}}
         <span class="buckets-list-cl d-unset">
           <b class="badge circle-buget  badge-sm badge-pill">{{project.Project_Count || 0}}</b>
         </span>
       </button>
-      <div style="text-align: center;" *ngIf="refreshProjectStatus==false && projectListStatus==true">
-        <i class="fa fa-refresh fa-spin fa-5x"></i>
-        <p>Getting Project List</p>
-      </div>
-      <h1 *ngIf="projectList!=null && projectList.length==0 && projectListStatus==false" style="text-align: center;">No
-        Records to show</h1>
+        <div style="text-align: center;" *ngIf="refreshProjectStatus==false && projectListStatus==true">
+            <i class="fa fa-refresh fa-spin fa-5x"></i>
+            <p>Getting Project List</p>
+        </div>
+        <h1 *ngIf="projectList!=null && projectList.length==0 && projectListStatus==false" style="text-align: center;">No Records to show</h1>
     </div>
-  </div>
-  <div class="col-md-12 p-0" style="min-height: 300px;">
+</div>
+<div class="col-md-12 p-0" style="min-height: 300px;">
     <div style="text-align: center;" *ngIf="accountListStatus==true">
-      <i class="fa fa-refresh fa-spin fa-5x"></i>
-      <p>Getting Information</p>
+        <i class="fa fa-refresh fa-spin fa-5x"></i>
+        <p>Getting Information</p>
     </div>
-    <div *ngIf="AccountsList!=null && activeProject!=null && accountListStatus==false"
-      class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef"
-        [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
-        [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
-        [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true"
-        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" (rowClicked)="rowClick($event.data)">
-      </ag-grid-angular>
+    <div *ngIf="AccountsList!=null && activeProject!=null && accountListStatus==false" class="acc-popup-table sticky-table sticky-ltr-cells border-0">
+        <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
+            [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true" [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" (rowClicked)="rowClick($event.data)">
+        </ag-grid-angular>
     </div>
-  </div>
+</div>
 </div>
