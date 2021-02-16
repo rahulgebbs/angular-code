@@ -561,7 +561,7 @@
             <div *ngIf="UserData.Role=='Client User' || UserData.Role=='Client Supervisor'"
               class="panel-group menu-small" role="tablist" aria-multiselectable="true">
               <ng-container *ngFor="let menu of clientUserMenuList;let index=index">
-                <div id="accordionMenu"
+                <div id="accordionMenuNormal"
                   *ngIf="menu.subMenus.length==0 &&  checkMenu(menu.Route) || checkMenu(menu.Route)"
                   class="panel panel-default">
                   <div class="acc-heading" role="tab" id="menu{{index}}">
@@ -574,13 +574,14 @@
                     </h4>
                   </div>
                 </div>
-                <div *ngIf="menu && menu.subMenus && menu.subMenus.length>0" class="panel panel-default">
-                  <div class="acc-heading" role="tab" id="headingTen">
+                <div id="accordionMenu" *ngIf="menu && menu.subMenus && menu.subMenus.length>0;let menuIndex=index"
+                  class="panel panel-default">
+                  <div class="acc-heading" role="tab" id="heading{{menuIndex}}">
                     <h4 class="acc-title">
-                      <a [ngClass]="[matchedMenu(menu.subMenus) ? '' : 'collapsed']" role="button"
+                      <a [ngClass]="[matchedMenu(menu.subMenus) ? 'open' : 'collapsed']" role="button"
                         data-toggle="collapse" data-parent="#accordionMenu" aria-controls="collapseThree"
-                        href="#collapseReport" [attr.aria-expanded]="[false]">
-                        Reports
+                        href="#collapseReport" [attr.aria-expanded]="[matchedMenu(menu.subMenus) ? 'true' : 'false']">
+                        {{menu.Menu_Name}}
                       </a>
                     </h4>
                   </div>

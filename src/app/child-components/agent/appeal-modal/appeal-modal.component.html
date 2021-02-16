@@ -5,7 +5,10 @@
   <div class="row col-md-12 p-0 grey">
     <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel">
-        <span class="text-sm text-ellipsis heading-txt flex">Appeal</span>
+        <!-- <span class="text-sm text-ellipsis heading-txt flex">Appeal</span> -->
+        <span class="text-sm text-ellipsis heading-txt flex"
+          style="text-transform: capitalize;">{{setTitle() || "N/A"}}</span>
+        <!-- AppealType -->
       </div>
     </span>
     <span *ngIf="!DisableAll" class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
@@ -49,7 +52,7 @@
             <form class="form">
               <div class="file-upload-wrapper letter-upload-file" [attr.data-text]="item.Filename">
                 <input [disabled]="DisableAll" #file onclick="file.value = null" name="file-upload-field" type="file"
-                (change)="OnInputFileChanged($event,i,item.Template_Name)" accept="application/pdf"
+                  (change)="OnInputFileChanged($event,i,item.Template_Name)" accept="application/pdf"
                   class="file-upload-field">
               </div>
             </form>

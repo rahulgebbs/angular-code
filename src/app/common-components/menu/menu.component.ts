@@ -67,6 +67,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.MenuList = [];
+    console.log('App Menu : ', this.MenuName);
     this.CheckRole();
     this.initClient();
     // this.getBIReportMenu();

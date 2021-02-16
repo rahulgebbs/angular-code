@@ -8,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./accounts-modal.component.css']
 })
 export class AccountsModalComponent implements OnInit {
+
   @Output() CloseAccountModal = new EventEmitter<any>();
   @Output() GetAllFields = new EventEmitter<any>();
   @Input() AccountsList;
@@ -16,16 +17,28 @@ export class AccountsModalComponent implements OnInit {
   PayerName = '';
   columnDefs = [];
   GridApi;
+  gridApi;
+  gridColumnApi;
   defaultColDef;
   CreateTemplate = '<b>hhhh</b>'
   newColumnList = [];
+  savedFilterList = null;
+  filterIsActive = null;
+  activeFilters = 0;
   constructor() { }
+
+  // onGridReady(params) {
+  //   params.api.sizeColumnsToFit();
+  //   this.gridApi = params.api;
+  //   this.gridColumnApi = params.columnApi;
+  //   console.log('this.gridApi,this.gridColumnApi: ', this.gridApi, this.gridColumnApi);
+  // }
 
   ngOnInit() {
     this.defaultColDef = {
       cellRenderer: showOrderCellRenderer
     };
-    this.setColumnList();
+
     function showOrderCellRenderer(params) {
       var eGui: any = document.createElement("span");
       eGui.innerHTML = `<span title='${params.value}'>${params.value}</span>`;
@@ -44,7 +57,6 @@ export class AccountsModalComponent implements OnInit {
       }
       e[this.PayerName] = e.Group_By_Field_Value;
     });
-
     this.columnDefs = [
       { field: 'Inventory_Id', hide: true, rowGroupIndex: null },
       { headerName: this.PayerName, field: this.PayerName },
@@ -56,17 +68,17 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'Encounter No', field: 'Encounter_Number' },
       //{ headerName: 'Account No', field: 'Account_Number' }
     ]
+    this.setColumnList();
     if (this.AccountsList && this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {
       this.columnDefs.push({
         headerName: 'Action', field: 'Inventory_Id', field2: this.WorkingAccountId, cellRenderer: this.ActionDisable
       })
     }
-
     console.log('this.columnDefs : ', this.columnDefs);
-    // this.AccountsList = JSON.parse(JSON.stringify(this.AccountsList));
-    // this.columnDefs = JSON.parse(JSON.stringify(this.columnDefs));
   }
   Close() {
+    this.checkFilter();
+    console.log('Close() : ')
     this.CloseAccountModal.emit(false);
   }
 
@@ -89,13 +101,13 @@ export class AccountsModalComponent implements OnInit {
   }
 
   OnGridReady(event) {
+    console.log('OnGridReady : ', event)
     if (this.AccountsList != null) {
       var allColumnIds = [];
       event.columnApi.getAllColumns().forEach(function (column) {
         allColumnIds.push(column.colId);
       });
       event.columnApi.autoSizeColumns(allColumnIds);
-
       var thisref = this;
       event.api.forEachNode(function (node) {
         if (node.data.Inventory_Id == thisref.WorkingAccountId) {
@@ -103,10 +115,58 @@ export class AccountsModalComponent implements OnInit {
         }
       });
     }
+    this.gridApi = event.api;
+    this.gridColumnApi = event.columnApi;
+    this.restoreFilterModel();
+    console.log('this.gridApi,this.gridColumnApi: ', this.gridApi, this.gridColumnApi);
   }
 
+  checkFilter() {
+    // this.savedFilterList = this.gridApi.getFilterModel();
 
+    // if (this.savedFilterList == null || Object.keys(this.savedFilterList).length === 0) {
+    //   sessionStorage.removeItem('agent-account-filter-list');
+    // }
+    // else {
+    //   sessionStorage.setItem('agent-account-filter-list', JSON.stringify(this.savedFilterList));
+    // }
+  }
 
+  restoreFilterModel() {
+    const filterListFromLocal = sessionStorage.getItem('agent-account-filter-list');
+    if (filterListFromLocal && filterListFromLocal.length > 0) {
+      this.gridApi.setFilterModel(JSON.parse(filterListFromLocal));
+      this.gridApi.onFilterChanged();
+    }
+  }
+
+  checkIfFilterExists() {
+    // console.log('checkIfFilterExists() : ', this.gridApi.getFilterModel());
+    // return true;
+  }
+
+  resetFilter() {
+    // this.gridApi.setFilterModel([]);
+    // this.gridApi.onFilterChanged();
+    // this.checkFilter();
+
+  }
+
+  FilterChanged(event) {
+    // if (this.gridApi) {
+    //   const modelList = this.gridApi.getFilterModel();
+    //   if (modelList && Object.keys(modelList).length > 0) {
+    //     this.filterIsActive = true;
+    //     this.activeFilters = Object.keys(modelList).length;
+    //   }
+    //   else {
+    //     this.filterIsActive = false;
+    //     this.activeFilters = 0;
+    //   }
+    //   this.checkFilter();
+    //   console.log('FilterChanged event : ', this.gridApi.getFilterModel(), event);
+    // }
+  }
   ActionDisable(params) {
     if (params.value == params.colDef.field2) {
 
@@ -149,5 +209,6 @@ export class AccountsModalComponent implements OnInit {
     else {
       this.CloseAccountModal.emit(false);
     }
+    // this.checkFilter();
   }
 }

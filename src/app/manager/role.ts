@@ -5,6 +5,7 @@ export const Access = {
   "global-insurance": ["Administrator", "Admin"],
   "global-mapping": ["Administrator", "Admin"],
   "dashboard": ["All"],
+  "welcome-page": ["Client Supervisor"],
   "change-password": ["All"],
   "auto-allocation": ["Administrator", "Admin"],
   "client-instruction": ["Supervisor", "QC", "Client Supervisor"],

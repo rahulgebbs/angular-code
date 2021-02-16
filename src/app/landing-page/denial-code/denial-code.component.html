@@ -7,7 +7,8 @@
       <div class="search-grid">
         <span class="pull-left mr-10 pt-3 label-std control-label b-600 w-auto">Client List</span>
         <span class="pull-left mr-10 pt-3">
-          <select (change)="ClientOnChange($event)" [(ngModel)]="ClientId" #selectedelem class="form-control">
+          <select (change)="ClientOnChange($event)" [(ngModel)]="ClientId" #selectedelem class="form-control"
+            style="min-width:200px;">
             <option value="0" disabled>Select</option>
             <option *ngFor="let c of ClientList" [value]="c.Client_Id" [selected]="c.selected">{{c.Client_Name}}
             </option>
@@ -26,7 +27,7 @@
       </div>
       <!-- data-toggle="modal" data-target=".add-denial-code" -->
 
-      <div class="offset-md-3 col-md-8 p-0">
+      <div class="offset-md-2 col-md-10 p-0">
         <span class="form-group file-provider mt-10">
           <!-- <form class="form"> -->
           <div class="file-upload-wrapper" [attr.data-text]="Filename">

@@ -280,5 +280,7 @@ export class AppealModalComponent implements OnInit {
   Close() {
     this.CloseModal.emit();
   }
-
+  setTitle() {
+    return this.AppealType.replace(/_/g, "-")
+  }
 }

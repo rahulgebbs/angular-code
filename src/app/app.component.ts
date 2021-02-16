@@ -211,6 +211,7 @@ export class AppComponent implements OnInit {
     else {
       this.ShowElement = false;
     }
+    console.log('App Menu MenuName : ', this.MenuName);
   }
 
   ToggleMenu(event) {
