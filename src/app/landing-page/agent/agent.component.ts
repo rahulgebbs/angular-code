@@ -633,7 +633,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       console.log('submitPNPForm response : ', response);
       this.GetBucketsWithCount();
       this.assignNextInventory();
-      
+
       this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       console.log('submitPNPForm error : ', error);
@@ -913,6 +913,8 @@ export class AgentComponent implements OnInit, OnDestroy {
               this.AccountsList.push(e);
           });
           if (this.AccountsList && this.AccountsList.length == 0) {
+            /* reset grid*/
+            sessionStorage.removeItem('agent-account-filter-list');
             this.GetAccountList(bucket, false);
             return false;
           }

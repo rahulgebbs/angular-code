@@ -45,7 +45,7 @@
       </span>
     </div>
   </div>
-  <div *ngIf="DisplayFields" class="col-md-12 p-0">
+  <div *ngIf="DisplayFields" class="col-md-12 row p-0">
     <div class="col-md-3 p-0 blue-seprator serpartion-h">
       <div class="col-md-12 col-sm-12 p-0">
         <div class="heading-panel sT-hight">
@@ -77,11 +77,11 @@
           <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Input Fields</span>
         </div>
       </div>
-      <div class="col-md-12 p-0  auto-scroll-section">
-        <div class="col-md-12 p-0">
+      <div class="col-md-12 p-0 auto-scroll-section">
+        <div class="row">
           <ng-container *ngFor="let f of AllFields">
-            <div class="col-md-6" *ngIf="!f.Is_Standard_Field  && !f.Is_Correspondence && f.Is_View_Allowed_Agent">
-              <div class="form-group" [ngClass]="[!f.Is_Edit_Allowed_Agent ? 'border-b' : '']">
+            <div *ngIf="!f.Is_Standard_Field  && !f.Is_Correspondence && f.Is_View_Allowed_Agent" class="col-md-6">
+              <div class="form-group " [ngClass]="[!f.Is_Edit_Allowed_Agent ? 'border-b' : '']">
                 <label for="f.Id" class="label-std  control-label p-0 b-600">{{f.Display_Name}}</label>
                 <ng-container *ngIf="f.Is_Edit_Allowed_Agent; else readonly">
                   <ng-container [ngSwitch]="f.Column_Datatype">
@@ -100,8 +100,6 @@
                           <input type="text" class="form-control" [maxlength]="f.Field_Limit" id="f.Id" placeholder=""
                             [(ngModel)]="f.FieldValue">
                         </ng-template>
-
-
                       </ng-template>
                     </ng-container>
                     <ng-container *ngSwitchCase="'Date'">
@@ -123,12 +121,12 @@
                 <ng-template #readonly>
                   <label for="f.Id" class="control-label label-s text-color p-0">{{f.FieldValue}}</label>
                 </ng-template>
-
-
               </div>
             </div>
+
           </ng-container>
         </div>
+
       </div>
     </div>
     <div class="col-md-3 p-0">
