@@ -15,8 +15,8 @@
     </div>
     <div class="col-md-12 p-0">
       <div class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-        <!-- <button *ngIf="gridApi && filterIsActive==true" class="btn btn-primary" (click)="resetFilter()">Reset Filter
-          {{activeFilters}}</button> -->
+        <button *ngIf="gridApi && filterIsActive==true" class="btn btn-primary" (click)="resetFilter()">Reset Filter
+          {{activeFilters}}</button>
         <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true"
           [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
           class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"

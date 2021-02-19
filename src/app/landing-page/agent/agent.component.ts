@@ -914,7 +914,7 @@ export class AgentComponent implements OnInit, OnDestroy {
           });
           if (this.AccountsList && this.AccountsList.length == 0) {
             /* reset grid*/
-            sessionStorage.removeItem('agent-account-filter-list');
+            // sessionStorage.removeItem('agent-account-filter-list');
             this.GetAccountList(bucket, false);
             return false;
           }
