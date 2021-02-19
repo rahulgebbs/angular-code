@@ -1,46 +1,39 @@
 <div class="pop-bg">
 </div>
 <div class="pop-position">
-  <div class="row col-md-12 p-0 grey" style="margin: 0">
-    <span class="col-md-10 col-sm-10 p-0">
+    <div class="row col-md-12 p-0 grey" style="margin: 0">
+        <span class="col-md-10 col-sm-10 p-0">
       <div class="heading-panel pl-10">
         <span class="text-sm text-ellipsis heading-txt flex">
           Concluded
         </span>
-      </div>
+    </div>
     </span>
     <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
       <i class="fa fa-times" aria-hidden="true"></i>
     </span>
-  </div>
-  <div class="col-md-12 p-0" id="bucketContainer">
+</div>
+<div class="col-md-12 p-0" id="bucketContainer">
     <!-- <h1>Concluder buckets</h1> -->
     <div class="col-md-12 col-sm-12 mb-3 p-0">
-      <button [disabled]="AccountsList==null" (click)="getDataByBucketName(bucket.Bucket_Name)"
-        *ngFor="let bucket of bucketList"
-        [ngClass]="[activeBucket == bucket.Bucket_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']"
-        class="btn square-btn blue-hover btn-txt mr-5 reasonBucket">
+        <button [disabled]="AccountsList==null" (click)="getDataByBucketName(bucket.Bucket_Name)" *ngFor="let bucket of bucketList" [ngClass]="[activeBucket == bucket.Bucket_Name ? 'blue' : 'grey',AccountsList==null ? 'disableBtn':'']" class="btn square-btn blue-hover btn-txt mr-5 reasonBucket">
         {{bucket.Bucket_Name || "N/A"}}
         <span class="buckets-list-cl d-unset">
           <b class="badge circle-buget  badge-sm badge-pill">{{bucket.Bucket_Count || 0}}</b>
         </span>
       </button>
-      <h1 *ngIf="bucketList!=null && bucketList.length==0" style="text-align: center;">No Records to show</h1>
+        <h1 *ngIf="bucketList!=null && bucketList.length==0" style="text-align: center;">No Records to show</h1>
     </div>
-  </div>
-  <div class="col-md-12 p-0" style="min-height: 350px;">
+</div>
+<div class="col-md-12 p-0" style="min-height: 350px;">
     <div style="text-align: center;" *ngIf="AccountsList==null">
-      <i class="fa fa-refresh fa-spin fa-5x"></i>
-      <p>Getting Information</p>
+        <i class="fa fa-refresh fa-spin fa-5x"></i>
+        <p>Getting Information</p>
     </div>
-    <div *ngIf="AccountsList!=null && columnDefs.length>0"
-      class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-      <!-- <div *ngIf="AccountsList==null"> -->
-      <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef"
-        [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w"
-        [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
-        [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true"
-        [gridOptions]="gridOptions" (rowClicked)="getAllFields($event.data,true)"></ag-grid-angular>
+    <div *ngIf="AccountsList!=null && columnDefs.length>0" class="acc-popup-table sticky-table sticky-ltr-cells border-0">
+        <!-- <div *ngIf="AccountsList==null"> -->
+        <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
+            [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true" [gridOptions]="gridOptions" (rowClicked)="getAllFields($event.data,true)"></ag-grid-angular>
     </div>
-  </div>
+</div>
 </div>

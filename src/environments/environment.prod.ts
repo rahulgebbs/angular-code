@@ -3,6 +3,7 @@
 export const environment = {
   production: true,
   Agent_Appeal_Url: '/Content/Appeal_Files/',
+
   // OLD UAT
   // FileApiUrl: "http://172.19.9.101:1007",
   // ApiUrl: "http://172.19.9.101:1001",
@@ -17,10 +18,16 @@ export const environment = {
   // ApiUrl: "http://172.18.7.2:1001/", // LIVE Server,
   // FileApiUrl: "http://172.18.7.2:1007/",// LIVE Server,
   // linkUsed: '172.18.7.2:1002' 
+
   // NEW UAT
   FileApiUrl: "http://172.30.52.25:1007",
   ApiUrl: "http://172.30.52.25:1001/",
   linkUsed: '172.30.52.25:1001'
+
+  // NEW Bootstrap UAT Link
+  // FileApiUrl: "http://172.30.52.25:1114",
+  // ApiUrl: "http://172.30.52.25:1112/",
+  // linkUsed: '172.30.52.25:1113'
   // Local
 
   // FileApiUrl: "http://localhost:63482:1007",
