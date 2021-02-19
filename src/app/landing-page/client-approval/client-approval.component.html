@@ -55,7 +55,7 @@
     </span>
   </form>
 </div>
-<div class="container-fluid">
+<div class="container-fluid p-0 border">
   <div class="row">
     <div *ngIf="ShowMain" class="col-md-3 p-0 client-app blue-seprator serpartion-ht">
       <div class="col-md-12 col-sm-12 p-0">
@@ -84,7 +84,7 @@
         </div>
       </div>
 
-      <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-3 p-0">
+      <div *ngIf="ShowAging" class="col-md-12 col-sm-12 p-0">
         <button (click)="GetInventories(a)" *ngFor="let a of AgingData"
           [ngClass]="[SelectedAging == a ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
           {{a.AgeingName}}
