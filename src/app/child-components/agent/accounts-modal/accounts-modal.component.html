@@ -3,20 +3,33 @@
 <div class="pop-position">
   <div class="row">
     <div class="col-md-12 row p-0 grey">
-      <span class="col-md-10 col-sm-10 p-0">
-        <div class="heading-panel pl-10">
+      <div class="col-md-10 row col-sm-10 p-0">
+        <div class="col-md-4 heading-panel pl-10">
           <span class="text-sm text-ellipsis heading-txt flex">Account List
           </span>
         </div>
-      </span>
+        <div *ngIf="gridApi && filterIsActive==true" class="priorityBtn col-md-8" title="Project & Priority"
+          (click)="resetFilter()">
+          <div class="text">
+            Reset Filter
+            <div class="count">
+              <!-- <i style="background: transparent;color:#fff" *ngIf="projectListStatus==true"
+                  class="fa fa-refresh fa-spin"></i> -->
+              <span>
+                {{activeFilters}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
         <i class="fa fa-times" aria-hidden="true"></i>
       </span>
     </div>
     <div class="col-md-12 p-0">
       <div class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-        <button *ngIf="gridApi && filterIsActive==true" class="btn btn-primary" (click)="resetFilter()">Reset Filter
-          {{activeFilters}}</button>
+        <!-- <button *ngIf="gridApi && filterIsActive==true" class="btn btn-primary" (click)="resetFilter()">Reset Filter
+          {{activeFilters}}</button> -->
         <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true"
           [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15"
           class="ag-theme-balham grid-w" [rowData]="AccountsList" [columnDefs]="columnDefs"
