@@ -8,7 +8,7 @@
           Projects By EmployeeCode
         </span>
         <span *ngIf="viewBy=='byAgent'" class="text-sm text-ellipsis heading-txt flex">
-          Select Employees From Project
+          Employees Codes By Project
         </span>
       </div>
     </span>
@@ -20,8 +20,8 @@
     <div class="col-md-12 p-0 mt-10 border-b">
       <div class="col-md-6">
         <label class="custom-control">
+          <label *ngIf="viewBy=='byModule'" for="selectall">Select Employees From Project</label>
           <label *ngIf="viewBy=='byAgent'" for="selectall">Select Projects Mapped To Employee</label>
-          <label *ngIf="viewBy=='byModule'" for="selectall">Select Employees From Module</label>
         </label>
       </div>
     </div>
