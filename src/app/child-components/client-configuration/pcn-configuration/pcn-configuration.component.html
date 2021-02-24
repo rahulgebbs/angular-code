@@ -4,29 +4,30 @@
 
 
 
-      <div style="max-height: 55vh;" class="col-md-12 p-0">
-        <div class="col-md-12">
-        </div>
-        <div class="col-md-offset-2 col-md-8 p-0">
-          <div class="headerInfo">
-            <div *ngIf="(rowData==null || rowData.length==0)" class="addBtn">
-              <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
-                data-target=".add-saag-master">
-                <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+      <div style="max-height: 55vh;" class="container-fluid p-0">
+        <div class="row p-0">
+          <div class="offset-md-2 col-md-8">
+            <div class="headerInfo">
+              <div *ngIf="(rowData==null || rowData.length==0)" class="addBtn">
+                <label class="export-btn label grey lg-text label-info square-btn cursor" (click)="openPopup()"
+                  data-target=".add-saag-master">
+                  <i class="fa fa-plus mr-5 lg-text" aria-hidden="true"></i>Add</label>
+              </div>
+
+              <div class="clientInfo">
+                <p class="w-auto" *ngIf="ClientData">
+                  Client Name :-<b>{{ClientData.Client_Name}}</b>
+                </p>
+
+                <p class="w-auto" *ngIf="ClientData">
+                  Total Rows:-<b>{{rowData == null ? '0' : rowData.length}}</b>
+                </p>
+              </div>
             </div>
 
-            <div class="clientInfo">
-              <p class="w-auto" *ngIf="ClientData">
-                Client Name :-<b>{{ClientData.Client_Name}}</b>
-              </p>
-
-              <p class="w-auto" *ngIf="ClientData">
-                Total Rows:-<b>{{rowData == null ? '0' : rowData.length}}</b>
-              </p>
-            </div>
 
           </div>
-          <div class="border-0">
+          <div class="offset-md-2 col-md-8 border-0">
             <div class="col-md-12 p-0 client-inv-sticky">
 
               <div class="sticky-table sticky-ltr-cells border-0" style="padding-bottom:0px !important">
