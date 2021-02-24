@@ -65,7 +65,6 @@
             </div>
             <div class="col-md-12 col-sm-12 p-0">
                 <div class="table-responcive">
-
                     <div class="sticky-table sticky-ltr-cells border-0 table-hight">
                         <ag-grid-angular [enableSorting]="true" [enableColResize]="true" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="rowData" [columnDefs]="columnDefs" [rowSelection]="RowSelection" [suppressColumnVirtualisation]="true"
                             [suppressDragLeaveHidesColumns]="true" (firstDataRendered)="autoSizeAll()" [suppressDragLeaveHidesColumns]="true" (gridReady)="onGridReady($event)" (rowClicked)="OnRowClicked($event)">
