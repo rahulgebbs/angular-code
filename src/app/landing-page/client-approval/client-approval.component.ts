@@ -84,27 +84,6 @@ export class ClientApprovalComponent implements OnInit {
     }, (error) => {
       console.log('error : ', error);
       this.practiceList = [];
-      const response = {
-        "Message": [
-          {
-            "Message": "Practice List.",
-            "Type": "SUCCESS"
-          }
-        ],
-        "Data": {
-          "Practice": [
-            "IG Din Bylor, MD",
-            "IMmen's Health Moore",
-            "mark's",
-            "test"
-          ]
-        }
-      }
-      console.log('response : ', response);
-      // this.practiceList = response.Data.Practice;
-      this.practiceList = response.Data.Practice.map((practice, index) => ({ Field_Name: practice, Id: index + 1 }));
-
-
     });
   }
 
@@ -140,11 +119,23 @@ export class ClientApprovalComponent implements OnInit {
   }
 
   Search() {
+    console.log('Search() : ', this.activePracticeList);
+    // Field_Name
+    let practiceString = '';
+    this.activePracticeList.forEach((element, index) => {
+      if ((index + 1) < this.activePracticeList.length) {
+        practiceString = practiceString + element.Field_Name + '|'
+      }
+      else {
+        practiceString = practiceString + element.Field_Name;
+      }
+    });
+    console.log('practiceString : ', practiceString);
     this.ShowAging = false;
     this.SelectedAging = null;
     this.DisableSearch = true;
     this.SelectedComment = '';
-    this.service.GetSummaryAndComments(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action)
+    this.service.GetSummaryAndComments(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action, practiceString)
       .pipe(finalize(() => {
         this.DisableSearch = false;
       })).subscribe(

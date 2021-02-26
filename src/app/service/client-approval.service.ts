@@ -18,11 +18,15 @@ export class ClientApprovalService {
 
   getPracticeNameList(ClientId) {
     // get-practice
+
     return this.http.get(environment.ApiUrl + `api/get-practice/${ClientId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
   }
 
-  GetSummaryAndComments(ClientId: number, fromdate, todate, status) {
-    return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  GetSummaryAndComments(ClientId: number, fromdate, todate, status, practice) {
+    if (practice == null || practice.length == 0) {
+      practice = ''
+    }
+    return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status + '&practice=' + practice, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
   GetAging(clientId, action, FromDate, ToDate, SelectedComment: string) {

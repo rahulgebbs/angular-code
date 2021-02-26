@@ -20,14 +20,15 @@ export const environment = {
   // linkUsed: '172.18.7.2:1002' 
 
   // NEW UAT
-  FileApiUrl: "http://172.30.52.25:1007",
-  ApiUrl: "http://172.30.52.25:1001/",
-  linkUsed: '172.30.52.25:1001'
+  // FileApiUrl: "http://172.30.52.25:1007",
+  // ApiUrl: "http://172.30.52.25:1001/",
+  // linkUsed: '172.30.52.25:1001'
 
   // NEW Bootstrap UAT Link
-  // FileApiUrl: "http://172.30.52.25:1114",
-  // ApiUrl: "http://172.30.52.25:1112/",
-  // linkUsed: '172.30.52.25:1113'
+  FileApiUrl: "http://172.30.52.25:1114",
+  ApiUrl: "http://172.30.52.25:1112/",
+  linkUsed: '172.30.52.25:1113'
+
   // Local
 
   // FileApiUrl: "http://localhost:63482:1007",
