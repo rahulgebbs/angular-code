@@ -16,6 +16,11 @@ export class ClientApprovalService {
     this.TokenCls = new Token(this.router);
   }
 
+  getPracticeNameList(ClientId) {
+    // get-practice
+    return this.http.get(environment.ApiUrl + `api/get-practice/${ClientId}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());
+  }
+
   GetSummaryAndComments(ClientId: number, fromdate, todate, status) {
     return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
@@ -47,8 +52,7 @@ export class ClientApprovalService {
     return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + Client_Id + '/' + Inventory_Id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  excelData(ClientId: number, fromdate, todate, status)
-  {
+  excelData(ClientId: number, fromdate, todate, status) {
     return this.http.get(environment.ApiUrl + `/api/Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
   }
 

@@ -20,7 +20,7 @@ export class InventoryHighPriorityComponent implements OnInit {
     textField: 'Field_Name',
     closeDropDownOnSelection: true,
     allowSearchFilter: true
-  }
+  };
   fieldList = [];
   reference = null;
   activeField = null;

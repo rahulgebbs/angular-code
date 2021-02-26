@@ -31,7 +31,7 @@ export class ClientApprovalComponent implements OnInit {
   FromDate: Date;
   ToDate: Date;
   Action = "Approve";
-  
+
   ActionList = [
     { Key: "Pending", Value: "Approve" },
     { Key: "To Gebbs", Value: "To Gebbs" },
@@ -49,8 +49,20 @@ export class ClientApprovalComponent implements OnInit {
   SelectedAging;
   Summary;
   Comments = [];
+  practiceList: any = [];
+  activePracticeList = [];
+  fieldSetting = {
+    singleSelection: false,
+    idField: 'Id',
+    textField: 'Field_Name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 1,
+    allowSearchFilter: true,
+    noDataAvailablePlaceholderText: 'No Practice Name Found'
 
-  constructor(private router: Router, private notification: NotificationService, private commonservice: CommonService, private service: ClientApprovalService,private excelService:ExcelService) { }
+  };
+  constructor(private router: Router, private notification: NotificationService, private commonservice: CommonService, private service: ClientApprovalService, private excelService: ExcelService) { }
 
   ngOnInit() {
     var tk = new Token(this.router);
@@ -61,9 +73,40 @@ export class ClientApprovalComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notification);
     this.MinDate = new Date('01/01/2000');
     //  this.GetClientList();
+    this.getPracticeNameList();
   }
+  // api/get-practice/9132
+
+  getPracticeNameList() {
+    this.service.getPracticeNameList(this.ClientId).subscribe((response) => {
+      console.log('response : ', response);
+      this.practiceList = response.Data.Practice.map((practice, index) => ({ Field_Name: practice, Id: index + 1 }));
+    }, (error) => {
+      console.log('error : ', error);
+      this.practiceList = [];
+      const response = {
+        "Message": [
+          {
+            "Message": "Practice List.",
+            "Type": "SUCCESS"
+          }
+        ],
+        "Data": {
+          "Practice": [
+            "IG Din Bylor, MD",
+            "IMmen's Health Moore",
+            "mark's",
+            "test"
+          ]
+        }
+      }
+      console.log('response : ', response);
+      // this.practiceList = response.Data.Practice;
+      this.practiceList = response.Data.Practice.map((practice, index) => ({ Field_Name: practice, Id: index + 1 }));
 
 
+    });
+  }
 
   BlockInput(event) {
     if (event.key == 'Backspace' || event.key == 'Tab') {
@@ -168,9 +211,9 @@ export class ClientApprovalComponent implements OnInit {
   }
 
   getDataForExcel() {
-    
+
     this.DisableSearch = true;
-    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action).subscribe((response:any) => {
+    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action).subscribe((response: any) => {
       console.log('getDataForExcel() response : ', response);
       this.handleData(response.Data)
     }, (error) => {
@@ -180,20 +223,19 @@ export class ClientApprovalComponent implements OnInit {
     })
   }
 
-  handleData(Data)
-  {
+  handleData(Data) {
     // this.DisableSearch = true;
     console.log('clientApproval : ', Data);
-    const finalArray=[];
-    Data.forEach((client)=>{
+    const finalArray = [];
+    Data.forEach((client) => {
       const finalObj = {};
-      client.forEach((element)=>{
-        finalObj[element.Header_Name]=element.Field_Value
+      client.forEach((element) => {
+        finalObj[element.Header_Name] = element.Field_Value
       });
       finalArray.push(finalObj);
     });
     this.DisableSearch = false;
     this.excelService.exportAsExcelFile(finalArray, 'Client-Assurance-Reoprt');
-    console.log('finalArray : ',finalArray);
+    console.log('finalArray : ', finalArray);
   }
 }
