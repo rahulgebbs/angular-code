@@ -56,8 +56,11 @@ export class ClientApprovalService {
     return this.http.get(environment.ApiUrl + '/api/client-approval/client/' + Client_Id + '/' + Inventory_Id, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  excelData(ClientId: number, fromdate, todate, status) {
-    return this.http.get(environment.ApiUrl + `/api/Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
+  excelData(ClientId: number, fromdate, todate, status, practice) {
+    if (practice == null || practice.length == 0) {
+      practice = ''
+    }
+    return this.http.get(environment.ApiUrl + `/api/Get_Client_Assistance_Summary_Report?Id=${ClientId}&status=${status}&FromDate=${fromdate}&ToDate=${todate}&practice=${practice}`, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) }).map(res => res.json());;
   }
 
 }

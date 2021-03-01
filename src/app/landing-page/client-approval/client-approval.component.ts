@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Router } from '@angular/router';
 import { Token } from 'src/app/manager/token';
@@ -14,7 +14,8 @@ import { ExcelService } from 'src/app/service/client-configuration/excel.service
 @Component({
   selector: 'app-client-approval',
   templateUrl: './client-approval.component.html',
-  styleUrls: ['./client-approval.component.css']
+  styleUrls: ['./client-approval.component.css'],
+  encapsulation: ViewEncapsulation.None // Add this line
 })
 export class ClientApprovalComponent implements OnInit {
 
@@ -204,14 +205,24 @@ export class ClientApprovalComponent implements OnInit {
   getDataForExcel() {
 
     this.DisableSearch = true;
-    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action).subscribe((response: any) => {
-      console.log('getDataForExcel() response : ', response);
-      this.handleData(response.Data)
-    }, (error) => {
-      this.DisableSearch = false;
-      console.log('getDataForExcel() error : ', error);
-      this.ResponseHelper.GetFaliureResponse(error);
-    })
+    let practiceString = '';
+    this.activePracticeList.forEach((element, index) => {
+      if ((index + 1) < this.activePracticeList.length) {
+        practiceString = practiceString + element.Field_Name + '|'
+      }
+      else {
+        practiceString = practiceString + element.Field_Name;
+      }
+    });
+    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action,practiceString)
+      .subscribe((response: any) => {
+        console.log('getDataForExcel() response : ', response);
+        this.handleData(response.Data);
+      }, (error) => {
+        this.DisableSearch = false;
+        console.log('getDataForExcel() error : ', error);
+        this.ResponseHelper.GetFaliureResponse(error);
+      })
   }
 
   handleData(Data) {

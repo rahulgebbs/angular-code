@@ -31,5 +31,7 @@
 ng-multiselect-dropdown {
   min-width: 200px !important;
 }
-/* .dropdown-btn {
-} */
+.dropdown-btn {
+  padding: 0.3rem !important;
+  min-width: 200px !important;
+}
