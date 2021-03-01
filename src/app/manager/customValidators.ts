@@ -133,14 +133,12 @@ export class customValidation {
                 control.get('Email_Id').setErrors({ required: true });
 
             }
-            else if (myVal.indexOf('@gebbs.com') > -1) {
-                //    
-                control.get('Email_Id').setErrors({ invalidDomain: true })
-            } else {
-                // 
+            // else if (myVal.indexOf('@gebbs.com') > -1) {
+            //     control.get('Email_Id').setErrors({ invalidDomain: true })
+            // } 
+            else {
                 control.get('Email_Id').clearValidators()
             }
-        } else {
         }
 
         if (control.get('User_Type').value == 'GeBBS') {

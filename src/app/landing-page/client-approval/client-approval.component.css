@@ -27,3 +27,11 @@
   margin-top: 0 !important;
   margin-bottom: 0.1rem !important;
 }
+
+ng-multiselect-dropdown {
+  min-width: 200px !important;
+}
+.dropdown-btn {
+  padding: 0.3rem !important;
+  min-width: 200px !important;
+}

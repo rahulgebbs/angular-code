@@ -25,11 +25,9 @@ export class ClientConfigurationComponent implements OnInit {
     this.clientData.Is_Formula_Required = false;
     this.clientData.Is_Dropdown_Required = false;
 
-    /* Added/Commented for PCN testing*/
-
+    /* Added - Commented for PCN testing*/
     // this.clientData.Is_PCN = true;
     // this.ShowTabName = 'pcn';
-
   }
 
   next_page(e) {

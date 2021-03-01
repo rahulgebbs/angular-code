@@ -13,3 +13,12 @@
 .alignFromTop {
   margin-top: 1rem;
 }
+ng-multiselect-dropdown {
+  min-width: 200px !important;
+  /* padding: 0.4rem; */
+}
+
+.dropdown-btn {
+  padding: 0.3rem !important;
+  min-width: 200px !important;
+}

@@ -45,6 +45,23 @@
         </div>
 
       </span>
+      <span style="margin-top: 1.4rem" class="pull-left mr-10 label-std control-label b-600 w-auto">Practice
+        &nbsp;</span>
+      <span class="pull-left mr-10 alignFromTop">
+        <ng-multiselect-dropdown name="practiceName" [placeholder]="'Select Practice Name'" [data]="practiceList"
+          [(ngModel)]="activePracticeList" [settings]="fieldSetting" (onSelect)="enableSearch()"
+          (onDeSelect)="enableSearch()">
+        </ng-multiselect-dropdown>
+      </span>
+      <!-- <div class="form-group">
+        <label for="toDate" class="formLabel" style="font-weight: bold">
+          Practice Name &nbsp;
+        </label>
+        <ng-multiselect-dropdown name="practiceName" [placeholder]="'Select Practice Name'" [data]="practiceList"
+          [(ngModel)]="activePracticeList" [settings]="fieldSetting" (onSelect)="enableSearch()"
+          (onDeSelect)="enableSearch()">
+        </ng-multiselect-dropdown>
+      </div> -->
       <span>
         <button class="btn blue square-btn blue-hover btn-txt mr-10 alignFromTop"
           [disabled]="DisableSearch || ClientId == 0" (click)="Search()">Search</button>
