@@ -65,10 +65,7 @@ export class ClientApprovalComponent implements OnInit {
   };
   constructor(private router: Router, private notification: NotificationService, private commonservice: CommonService, private service: ClientApprovalService, private excelService: ExcelService) { }
 
-  enableSearch()
-  {
-    
-  }
+
   ngOnInit() {
     var tk = new Token(this.router);
     var userdata = tk.GetUserData();
