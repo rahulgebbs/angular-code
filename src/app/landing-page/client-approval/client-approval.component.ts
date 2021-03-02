@@ -144,6 +144,7 @@ export class ClientApprovalComponent implements OnInit {
           this.Summary = res.json().Data.Client_Summary;
           this.Comments = res.json().Data.Dispostion_Details;
           this.ShowMain = true;
+          this.ResponseHelper.GetSuccessResponse(res);
         },
         err => {
           this.ShowMain = false;
@@ -154,8 +155,16 @@ export class ClientApprovalComponent implements OnInit {
 
   GetAging(s) {
     if (s.StandardComment != this.SelectedComment) {
-
-      this.service.GetAging(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), s.StandardComment).subscribe(
+      let practiceString = '';
+      this.activePracticeList.forEach((element, index) => {
+        if ((index + 1) < this.activePracticeList.length) {
+          practiceString = practiceString + element.Field_Name + '|'
+        }
+        else {
+          practiceString = practiceString + element.Field_Name;
+        }
+      });
+      this.service.GetAging(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), s.StandardComment, practiceString).subscribe(
         res => {
           this.SelectedComment = s.StandardComment;
           this.CommentCount = s.Count;
@@ -169,9 +178,22 @@ export class ClientApprovalComponent implements OnInit {
     }
   }
 
+  enableSearch()
+  {
+    
+  }
   GetInventories(a) {
     if (a.Count != "0") {
-      this.service.GetInventories(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.SelectedComment, a.AgeingName).subscribe(
+      let practiceString = '';
+      this.activePracticeList.forEach((element, index) => {
+        if ((index + 1) < this.activePracticeList.length) {
+          practiceString = practiceString + element.Field_Name + '|'
+        }
+        else {
+          practiceString = practiceString + element.Field_Name;
+        }
+      });
+      this.service.GetInventories(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.SelectedComment, a.AgeingName, practiceString).subscribe(
         res => {
           this.SelectedAging = a;
           this.SelectedHeader = this.SelectedComment + ' (' + this.SelectedAging.AgeingName + ')'
@@ -214,7 +236,7 @@ export class ClientApprovalComponent implements OnInit {
         practiceString = practiceString + element.Field_Name;
       }
     });
-    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action,practiceString)
+    this.service.excelData(this.ClientId, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.Action, practiceString)
       .subscribe((response: any) => {
         console.log('getDataForExcel() response : ', response);
         this.handleData(response.Data);

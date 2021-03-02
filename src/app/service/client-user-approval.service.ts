@@ -22,17 +22,23 @@ export class ClientUserApprovalService {
 
   GetSummaryAndComments(ClientId: number, fromdate, todate, status, practice) {
     if (practice == null || practice.length == 0) {
-      practice = ''
+      practice = 'All';
     }
-    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status + '&practice=' + practice, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  GetAging(clientId, action, FromDate, ToDate, SelectedComment: string) {
-    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + clientId + '?status=' + action + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&comment=' + SelectedComment, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  GetAging(clientId, action, FromDate, ToDate, SelectedComment: string, practice) {
+    if (practice == null || practice.length == 0) {
+      practice = 'All';
+    }
+    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + clientId + '?status=' + action + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&comment=' + SelectedComment + '&practice=' + practice, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
-  GetInventories(ClientId: number, Action: string, FromDate: string, ToDate: string, SelectedComment: string, Ageing_Bucket_Name: any) {
-    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?status=' + Action + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&comment=' + SelectedComment + '&filter=' + Ageing_Bucket_Name, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+  GetInventories(ClientId: number, Action: string, FromDate: string, ToDate: string, SelectedComment: string, Ageing_Bucket_Name: any, practice) {
+    if (practice == null || practice.length == 0) {
+      practice = 'All';
+    }
+    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?status=' + Action + '&FromDate=' + FromDate + '&ToDate=' + ToDate + '&comment=' + SelectedComment + '&filter=' + Ageing_Bucket_Name + '&practice=' + practice, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
   SaveInventories(response) {
