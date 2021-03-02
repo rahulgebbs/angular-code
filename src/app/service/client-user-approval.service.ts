@@ -24,7 +24,7 @@ export class ClientUserApprovalService {
     if (practice == null || practice.length == 0) {
       practice = ''
     }
-    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
+    return this.http.get(environment.ApiUrl + '/api/client-user-approval/client/' + ClientId + '?FromDate=' + fromdate + '&ToDate=' + todate + '&Status=' + status + '&practice=' + practice, { headers: new Headers({ 'Access_Token': this.TokenCls.GetToken() }) });
   }
 
   GetAging(clientId, action, FromDate, ToDate, SelectedComment: string) {

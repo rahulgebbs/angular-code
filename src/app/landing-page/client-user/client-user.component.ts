@@ -72,6 +72,10 @@ export class ClientUserComponent implements OnInit {
       this.practiceList = [];
     });
   }
+  enableSearch()
+  {
+    
+  }
 
   ngOnInit() {
     var tk = new Token(this.router);
