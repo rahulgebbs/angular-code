@@ -188,9 +188,8 @@ export class ClientUserComponent implements OnInit {
       )
     }
   }
-  enableSearch()
-  {
-    
+  enableSearch() {
+
   }
 
   GetInventories(a) {
@@ -204,6 +203,7 @@ export class ClientUserComponent implements OnInit {
           practiceString = practiceString + element.Field_Name;
         }
       });
+      
       this.service.GetInventories(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.SelectedComment, a.AgeingName, practiceString).subscribe(
         res => {
           this.SelectedAging = a;
