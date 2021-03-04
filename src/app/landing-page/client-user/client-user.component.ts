@@ -72,7 +72,7 @@ export class ClientUserComponent implements OnInit {
       this.practiceList = [];
     });
   }
-  
+
 
   ngOnInit() {
     var tk = new Token(this.router);
@@ -123,7 +123,6 @@ export class ClientUserComponent implements OnInit {
   ToDateOnChange() {
     this.ResetPage();
   }
-
 
   ResetPage() {
     this.ShowAging = false;
@@ -189,6 +188,7 @@ export class ClientUserComponent implements OnInit {
       )
     }
   }
+
   enableSearch() {
 
   }
@@ -204,7 +204,7 @@ export class ClientUserComponent implements OnInit {
           practiceString = practiceString + element.Field_Name;
         }
       });
-      
+
       this.service.GetInventories(this.ClientId, this.Action, this.ConvertDateFormat(this.FromDate), this.ConvertDateFormat(this.ToDate), this.SelectedComment, a.AgeingName, practiceString).subscribe(
         res => {
           this.SelectedAging = a;

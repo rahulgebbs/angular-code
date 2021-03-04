@@ -4,56 +4,57 @@
         <div class="col-md-12 pull-left border-b pb-10">
             <span class="pull-left mr-10 label-std control-label b-600 w-auto">Client</span>
             <span class="mr-10 pull-left" style="margin-top: 1.25rem;">
-        {{Client_Name}}
-        <!-- <select class="form-control" (change)="ClientListOnChange()" [(ngModel)]="ClientId">
+                {{Client_Name}}
+                <!-- <select class="form-control" (change)="ClientListOnChange()" [(ngModel)]="ClientId">
                   <option value="0">Select</option>
                   <option *ngFor="let c of ClientList" [value]="c.Id" [selected]="c.selected">{{c.Client_Name}}
                   </option>
                 </select> -->
-      </span>
+            </span>
             <span class="pull-left mr-10 label-std control-label b-600 w-auto">Status</span>
             <span class="pull-left mr-10 alignFromTop">
-        <select class="form-control" (change)="OnActionChange()" [(ngModel)]="Action">
-          <option *ngFor="let a of ActionList" [value]="a.Value">{{a.Key}}
-          </option>
-        </select>
-      </span>
+                <select class="form-control" (change)="OnActionChange()" [(ngModel)]="Action">
+                    <option *ngFor="let a of ActionList" [value]="a.Value">{{a.Key}}
+                    </option>
+                </select>
+            </span>
             <span class="pull-left mr-10 label-std control-label b-600 w-auto">From Date</span>
             <span class="pull-left mr-10 alignFromTop">
 
-        <div class="input-group date row" id="datetimepicker1">
-          <input autocomplete="off" [min]="MinDate" [(ngModel)]="FromDate" (dateTimeInput)="FromDateOnChange()"
-            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1"
-            class="owl-dp col-md-10" name="date" [owlDateTime]="dt1">
-          <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
-            <span class="fa fa-calendar"></span>
+                <div class="input-group date row" id="datetimepicker1">
+                    <input autocomplete="off" [min]="MinDate" [(ngModel)]="FromDate"
+                        (dateTimeInput)="FromDateOnChange()" (keydown)="BlockInput($event)"
+                        (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp col-md-10" name="date"
+                        [owlDateTime]="dt1">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+
             </span>
-            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
-        </div>
+            <span class="pull-left mr-10  label-std control-label b-600 w-auto">To Date</span>
+            <span class="pull-left mr-10 alignFromTop">
+                <div class="input-group date" id="datetimepicker2">
+                    <input autocomplete="off" [min]="MinDate" [(ngModel)]="ToDate" (dateTimeInput)="ToDateOnChange()"
+                        (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2"
+                        class="owl-dp col-md-10" name="date" [owlDateTime]="dt2">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt2">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                </div>
 
-        </span>
-        <span class="pull-left mr-10  label-std control-label b-600 w-auto">To Date</span>
-        <span class="pull-left mr-10 alignFromTop">
-        <div class="input-group date" id="datetimepicker2">
-          <input autocomplete="off" [min]="MinDate" [(ngModel)]="ToDate" (dateTimeInput)="ToDateOnChange()"
-            (keydown)="BlockInput($event)" (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2"
-            class="owl-dp col-md-10" name="date" [owlDateTime]="dt2">
-          <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt2">
-            <span class="fa fa-calendar"></span>
-        </span>
-        <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
-    </div>
-
-    </span>
-    <span style="margin-top: 1.4rem" class="pull-left mr-10 label-std control-label b-600 w-auto">Practice
-        &nbsp;</span>
-    <span class="pull-left mr-10 alignFromTop">
-        <ng-multiselect-dropdown name="practiceName" [placeholder]="'Select Practice Name'" [data]="practiceList"
-          [(ngModel)]="activePracticeList" [settings]="fieldSetting" (onSelect)="enableSearch()"
-          (onDeSelect)="enableSearch()">
-        </ng-multiselect-dropdown>
-      </span>
-    <!-- <div class="form-group">
+            </span>
+            <span style="margin-top: 1.4rem" class="pull-left mr-10 label-std control-label b-600 w-auto">Practice
+                &nbsp;</span>
+            <span class="pull-left mr-10 alignFromTop">
+                <ng-multiselect-dropdown name="practiceName" [placeholder]="'Select Practice Name'"
+                    [data]="practiceList" [(ngModel)]="activePracticeList" [settings]="fieldSetting"
+                    (onSelect)="enableSearch()" (onDeSelect)="enableSearch()">
+                </ng-multiselect-dropdown>
+            </span>
+            <!-- <div class="form-group">
         <label for="toDate" class="formLabel" style="font-weight: bold">
           Practice Name &nbsp;
         </label>
@@ -62,79 +63,84 @@
           (onDeSelect)="enableSearch()">
         </ng-multiselect-dropdown>
       </div> -->
-    <span>
-        <button class="btn blue square-btn blue-hover btn-txt mr-10 alignFromTop"
-          [disabled]="DisableSearch || ClientId == 0" (click)="Search()">Search</button>
-      </span>
-</div>
-<div *ngIf="ShowMain" class="col-md-3 p-0 blue-seprator">
-    <div class="col-md-12 col-sm-12 p-0">
-        <div class="heading-panel ptb-0">
-            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Summary</span>
+            <span>
+                <button class="btn blue square-btn blue-hover btn-txt mr-10 alignFromTop"
+                    [disabled]="DisableSearch || ClientId == 0" (click)="Search()">Search</button>
+            </span>
         </div>
-        <div class="d-block summary-text-subt mt-10 col-md-12 col-sm-12 col-xs-12 ">Client summary view
-            <div class="col-md-12 p-0 summary-text">
-                <table class="" width="100%">
-                    <tbody>
-                        <tr *ngFor="let s of Summary">
-                            <td>{{s.Status_Name}}</td>
-                            <td class="text-right">{{s.Count}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div *ngIf="ShowMain" class="col-md-3 p-0 blue-seprator">
+            <div class="col-md-12 col-sm-12 p-0">
+                <div class="heading-panel ptb-0">
+                    <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Summary</span>
+                </div>
+                <div class="d-block summary-text-subt mt-10 col-md-12 col-sm-12 col-xs-12 ">Client summary view
+                    <div class="col-md-12 p-0 summary-text">
+                        <table class="" width="100%">
+                            <tbody>
+                                <tr *ngFor="let s of Summary">
+                                    <td>{{s.Status_Name}}</td>
+                                    <td class="text-right">{{s.Count}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
+        <div *ngIf="ShowMain" class="col-md-9">
+            <div class="col-md-12 col-sm-12 p-0">
+                <div class="heading-panel sT-hight p-0">
+                    <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Client Approval</span>
+                </div>
+            </div>
 
-    </div>
-</div>
-<div *ngIf="ShowMain" class="col-md-9">
-    <div class="col-md-12 col-sm-12 p-0">
-        <div class="heading-panel sT-hight p-0">
-            <span class="text-sm text-ellipsis heading-txt t-uppercase blue-text">Client Approval</span>
-        </div>
-    </div>
-
-    <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-3 p-0">
-        <button (click)="GetInventories(a)" *ngFor="let a of AgingData" [ngClass]="[SelectedAging == a ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
-          {{a.AgeingName}}
-          <span class="buckets-list-cl d-unset">
-            <b class="badge circle-buget  badge-sm badge-pill">{{a.Count}}</b>
-          </span>
-        </button>
-    </div>
-    <div class="col-md-12 col-sm-12 p-0">
-        <div class="table-responcive">
-            <div class="sticky-table sticky-ltr-cells border-0 table-hight">
-                <table class="table">
-                    <thead>
-                        <tr class="sticky-header">
-                            <th class="dark">Standard Comments</th>
-                            <th class="dark">Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngIf="Comments.length == 0; else showRows">
-                            <tr>
-                                <td style="text-align: center" colspan="2">
-                                    No Comments For available for Selected Action
-                                </td>
-                            </tr>
-                        </ng-container>
-                        <ng-template #showRows>
-                            <tr *ngFor="let s of Comments" (click)="GetAging(s)">
-                                <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">{{s.StandardComment}}</td>
-                                <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">{{s.Count}}</td>
-                            </tr>
-                        </ng-template>
-                    </tbody>
-                </table>
+            <div *ngIf="ShowAging" class="col-md-12 col-sm-12 mb-3 p-0">
+                <button (click)="GetInventories(a)" *ngFor="let a of AgingData"
+                    [ngClass]="[SelectedAging == a ? 'blue' : 'grey']" class="btn square-btn blue-hover btn-txt mr-5">
+                    {{a.AgeingName}}
+                    <span class="buckets-list-cl d-unset">
+                        <b class="badge circle-buget  badge-sm badge-pill">{{a.Count}}</b>
+                    </span>
+                </button>
+            </div>
+            <div class="col-md-12 col-sm-12 p-0">
+                <div class="table-responcive">
+                    <div class="sticky-table sticky-ltr-cells border-0 table-hight">
+                        <table class="table">
+                            <thead>
+                                <tr class="sticky-header">
+                                    <th class="dark">Standard Comments</th>
+                                    <th class="dark">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="Comments.length == 0; else showRows">
+                                    <tr>
+                                        <td style="text-align: center" colspan="2">
+                                            No Comments For available for Selected Action
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-template #showRows>
+                                    <tr *ngFor="let s of Comments" (click)="GetAging(s)">
+                                        <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">
+                                            {{s.StandardComment}}</td>
+                                        <td [ngClass]="[SelectedComment == s.StandardComment ? 'tr-active' : '']">
+                                            {{s.Count}}</td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 
 <!-- end midd content -->
-<app-client-user-approval-modal [TLAction]="Action" [Inventories]="Inventories" [Client_Id]="ClientId" [HeaderStatus]="SelectedHeader" [InventoryCount]="CommentCount" [Standard_Comment]="SelectedComment" (ClosePopup)="ToggleApprovalModal($event)" *ngIf="ShowInventories"></app-client-user-approval-modal>
+<app-client-user-approval-modal [TLAction]="Action" [Inventories]="Inventories" [Client_Id]="ClientId"
+    [HeaderStatus]="SelectedHeader" [InventoryCount]="CommentCount" [Standard_Comment]="SelectedComment"
+    (ClosePopup)="ToggleApprovalModal($event)" *ngIf="ShowInventories"></app-client-user-approval-modal>
