@@ -45,10 +45,10 @@
       <ng-container *ngFor="let employee of employeeList;let k = index;">
         <div class="col-md-3 mt-10 border-b deAllocate"
           *ngIf="employee && employee.modules && employee.modules.length>0">
-          <label>
+          <label class="custom-control">
             <input type="radio" name="{{employee.Employee_Code}}" [id]="employee.Employee_Code"
               value="{{employee.Employee_Code}}" [(ngModel)]="checklist" (change)="manageEmployeeRadiobutton()">
-            {{employee.Employee_Code}}
+            {{employee.Employee_Code}} - {{employee.Full_Name}}
           </label>
           <!-- <label class="custom-control">
             <label for="{{employee.Employee_Code}}">{{employee.Full_Name}} </label>

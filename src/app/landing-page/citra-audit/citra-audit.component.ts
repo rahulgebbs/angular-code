@@ -109,8 +109,8 @@ export class CitraAuditComponent implements OnInit {
         'txtRca': [""],
         'Call': [""],
         'AccountResolved': [""],
-        'txtProcessTrendsIdentified':['', Validators.required],
-        'txtGlobalTrendsIdentified' : ['', Validators.required]
+        'txtProcessTrendsIdentified': ['', Validators.required],
+        'txtGlobalTrendsIdentified': ['', Validators.required]
       })
   }
 
@@ -163,8 +163,8 @@ export class CitraAuditComponent implements OnInit {
     // this.DisplayMain = false;
 
 
-    this.ActionForm1.patchValue({'AccountResolved':'Yes'});
-    this.ActionForm1.patchValue({'Call':'Y'});
+    this.ActionForm1.patchValue({ 'AccountResolved': 'Yes' });
+    this.ActionForm1.patchValue({ 'Call': 'Y' });
     this.ActionForm1.controls["txtRca"].clearValidators();
     this.ActionForm1.controls['drpReRes'].setValidators([Validators.required])
     this.ActionForm1.controls['drpReRes'].updateValueAndValidity()
@@ -304,6 +304,7 @@ export class CitraAuditComponent implements OnInit {
       // this.Validated = false;
     })).subscribe(
       res => {
+        console.log('GetAllFieldsApiCall : ', res);
         this.AllFields = res.json().Data;
         console.log(this.AllFields);
 
@@ -316,7 +317,7 @@ export class CitraAuditComponent implements OnInit {
         }
       },
       err => {
-
+        console.log('GetAllFieldsApiCall : ', err)
         this.ResponseHelper.GetFaliureResponse(err);
       }
     );
@@ -492,7 +493,7 @@ export class CitraAuditComponent implements OnInit {
     this.ActionForm1.controls['txtRca'].updateValueAndValidity();
   }
 
-  
+
 
   EnableDisableFields(val) {
     if (val == "Yes") {
@@ -515,7 +516,7 @@ export class CitraAuditComponent implements OnInit {
 
   SubmitForm() {
     this.formsubmitted = true;
-    console.log('submitform: ',this.ActionForm1)
+    console.log('submitform: ', this.ActionForm1)
     if (!this.ActionForm1.valid) {
       return;
     }

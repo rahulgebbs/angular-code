@@ -70,7 +70,7 @@ export class AllocatedCountModalComponent implements OnInit {
   }
   showCellRenderer(params) {
     var eGui: any = document.createElement("div");
-    eGui.innerHTML = `<button  class="btn label grey label-info square-btn cursor" data-action-type="update" title="Re-Allocate">Re-Allocate</button>`;
+    eGui.innerHTML = `<button style="color: #fff;background-color: #5bc0de;" class="btn label grey label-info square-btn cursor" data-action-type="update" title="Re-Allocate">Re-Allocate</button>`;
     return eGui;
   }
   getData(params) {

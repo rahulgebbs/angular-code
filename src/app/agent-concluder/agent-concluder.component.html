@@ -1,5 +1,5 @@
 <!-- <app-header [title]="Title"></app-header> -->
-<div class="container-fluid">
+<div class="container-fluid p-0">
     <form *ngIf="concludedForm" [formGroup]="concludedForm" class="row" (ngSubmit)="submitForm()">
 
         <div *ngIf="concludedForm && concludedForm.value as formValue" class="container-fluid">
