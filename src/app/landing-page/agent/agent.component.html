@@ -436,13 +436,13 @@
                     <p class="callText">Web Calling</p>
                   </div>
                   <button title="Submit" style="margin-top: 1rem;" type="submit" [disabled]="DisableSubmit"
-                    class="btn blue square-btn blue-hover btn-txt mr-10">Submit</button>
+                    class="btn blue square-btn blue-hover btn-txt mr-5">Submit</button>
                   <button title="Cancel" style="margin-top: 1rem;" type="button" (click)="ClearForm()"
-                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-10">Clear</button>
+                    [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt mr-5">Clear</button>
                   <button title="Add New Line" style="margin-top: 1rem;"
                     *ngIf="Is_New_Line==false && ActiveBucket !='To_be_Concluded' && ActiveBucket !='Concluded' && ActiveBucket !='PNP'"
                     type="button" (click)="addNewLine()" [disabled]="DisableSubmit"
-                    class="btn blue square-btn blue-hover btn-txt mr-10"><i class="fa fa-plus"></i>
+                    class="btn blue square-btn blue-hover btn-txt mr-5"><i class="fa fa-plus"></i>
                     New Line </button>
                   <button title="Add PCN" style="margin-top: 1rem;"
                     *ngIf="clientObj.Is_PCN==true && ActiveBucket !='To_be_Concluded' && ActiveBucket !='Concluded' && ActiveBucket !='PNP'"

@@ -104,7 +104,8 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
 
   addNewPCN() {
-    this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
+
+    this.fixedPCNFields = this.pcnInfo && this.pcnInfo.length > 0 ? JSON.parse(JSON.stringify(this.pcnInfo[0])) : [];
 
     this.fixedPCNFields.forEach((pcn: any) => {
       switch (pcn.Column_Data_Type) {
@@ -469,7 +470,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   setSubStatus(pcnItemList, subStatusList) {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Sub_Status') {
-        console.log('setSubStatus obj : ',subStatusList);
+        console.log('setSubStatus obj : ', subStatusList);
         pcnItem.patchValue({ list: _.map(subStatusList, 'Sub_Status') });
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
@@ -499,7 +500,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {
         const obj = pcnItem.value;
-        console.log('setActionCode obj : ', obj,actionCodeList);
+        console.log('setActionCode obj : ', obj, actionCodeList);
         pcnItem.patchValue({ list: _.map(actionCodeList, 'Action_Code') });
         if (actionCodeList && actionCodeList.length == 1) {
           pcnItem.patchValue({ FieldValue: actionCodeList[0].Action_Code });

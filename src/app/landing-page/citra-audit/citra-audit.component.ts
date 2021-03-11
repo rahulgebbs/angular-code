@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { CitraserviceService } from 'src/app/service/citraservice.service';
 import { finalize } from 'rxjs/operators';
 import { ResponseHelper } from 'src/app/manager/response.helper';
@@ -9,6 +9,7 @@ import { DropdownService } from 'src/app/service/client-configuration/dropdown.s
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SaagService } from 'src/app/service/client-configuration/saag.service';
 import { SupervisorDashboardService } from 'src/app/service/supervisor-dashboard.service';
+// ChangeDetectorRef
 
 @Component({
   selector: 'app-citra-audit',
@@ -61,7 +62,7 @@ export class CitraAuditComponent implements OnInit {
   dashboard: FormGroup;
   ResponseHelper: ResponseHelper;
 
-  constructor(private dash: SupervisorDashboardService, private citraservice: CitraserviceService, private notificationservice: NotificationService, private router: Router, private dropdownservice: DropdownService, private fb: FormBuilder, private saagservice: SaagService) {
+  constructor(private dash: SupervisorDashboardService, private citraservice: CitraserviceService, private notificationservice: NotificationService, private router: Router, private dropdownservice: DropdownService, private fb: FormBuilder, private saagservice: SaagService, private cdr: ChangeDetectorRef) {
     this.CreateActionForm();
     this.CreateActionForm1();
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
@@ -315,6 +316,7 @@ export class CitraAuditComponent implements OnInit {
         if (fromPopup == true) {
           this.OpenAccountsModal = false;
         }
+        this.cdr.detectChanges();
       },
       err => {
         console.log('GetAllFieldsApiCall : ', err)
