@@ -167,6 +167,12 @@ form {
   label {
     cursor: pointer;
   }
+  label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
   h6 {
     margin: 0;
   }
@@ -176,4 +182,13 @@ input::-webkit-input-placeholder {
   color: #6c75a7 !important;
 }
 
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
 
+h5 {
+  padding: 1rem 0 0 1.2rem;
+}

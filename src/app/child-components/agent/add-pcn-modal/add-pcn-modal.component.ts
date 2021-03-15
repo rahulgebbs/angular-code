@@ -43,6 +43,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+
   }
 
   copyText(text) {
@@ -104,8 +105,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
 
   addNewPCN() {
-
-    this.fixedPCNFields = this.pcnInfo && this.pcnInfo.length > 0 ? JSON.parse(JSON.stringify(this.pcnInfo[0])) : [];
+    this.fixedPCNFields = JSON.parse(JSON.stringify(this.pcnInfo[0]));
 
     this.fixedPCNFields.forEach((pcn: any) => {
       switch (pcn.Column_Data_Type) {
@@ -169,9 +169,11 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     console.log('AllFields : ', this.AllFields);
     this.AllFields.forEach((field) => {
       if (field.Is_Standard_Field == true) {
-        this.keyList.push({ key: field.Header_Name, name: field.Display_Header });;
+        this.keyList.push({ key: field.Header_Name, name: field.Display_Name,dataType:field.Column_Datatype });;
       }
     });
+
+    console.log('AllFields : ', this.keyList);
   }
 
   setFieldType() {
@@ -196,13 +198,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
         pcn.FieldType = 'Date';
       }
       else {
-        if (pcn.Column_Data_Type == 'Text') {
-          pcn.FieldType = 'Textbox'
-        }
-        else {
-          pcn.FieldType = pcn.Column_Data_Type
-        }
-        // pcn.FieldType = 'Textbox';
+        pcn.FieldType = 'Textbox';
       }
     });
     this.addPCN();
@@ -304,7 +300,11 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
       return false;
     }
     this.disableBtn = true;
-    this.saveFieldsIntoLocal()
+    const localPCNArray = []
+    value.pcnList.forEach((ele) => {
+      localPCNArray.push(ele.pcn)
+    })
+    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
     value.pcnList.forEach((ele) => {
       const obj = {}
       ele.pcn.forEach(element => {
@@ -333,15 +333,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
 
     })
     console.log('finalArray : ', finalArray)
-  }
-
-  saveFieldsIntoLocal() {
-    const value = this.addPCNForm.getRawValue();
-    const localPCNArray = []
-    value.pcnList.forEach((ele) => {
-      localPCNArray.push(ele.pcn)
-    })
-    sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
   }
 
   setResponseIntoLocal(response) {
@@ -398,8 +389,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     })
     sessionStorage.setItem('localPCN', JSON.stringify(localPCNArray));
     this.close.emit();
-    this.saveFieldsIntoLocal();
-    sessionStorage.removeItem('lastPCN');
   }
 
   onStatusChange() {
@@ -470,7 +459,6 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
   setSubStatus(pcnItemList, subStatusList) {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Sub_Status') {
-        console.log('setSubStatus obj : ', subStatusList);
         pcnItem.patchValue({ list: _.map(subStatusList, 'Sub_Status') });
         if (subStatusList && subStatusList.length == 1) {
           pcnItem.patchValue({ FieldValue: subStatusList[0].Sub_Status });
@@ -500,7 +488,7 @@ export class AddPcnModalComponent implements OnInit, OnChanges {
     pcnItemList.controls.forEach((pcnItem, index) => {
       if (pcnItem.controls.Display_Header.value == 'Action_Code') {
         const obj = pcnItem.value;
-        console.log('setActionCode obj : ', obj, actionCodeList);
+        console.log('obj : ', obj);
         pcnItem.patchValue({ list: _.map(actionCodeList, 'Action_Code') });
         if (actionCodeList && actionCodeList.length == 1) {
           pcnItem.patchValue({ FieldValue: actionCodeList[0].Action_Code });
