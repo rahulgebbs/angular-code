@@ -85,7 +85,10 @@ export class DataUploadComponent implements OnInit {
     const { value } = this.dataUpload;
     if (value && value.Client_Id) {
       this.service.getModuleList(value.Client_Id).subscribe((response) => {
-        this.projectList = (response && response.Data) ? response.Data : [];
+        // this.projectList = (response && response.Data) ? response.Data : [];
+        this.projectList = response && response.Data ? response.Data.filter((element) => {
+          return element.Status == true;
+        }) : [];
         console.log('getModuleList response : ', response);
         // this.ResponseHelper.GetSuccessResponse(response);
       }, (error) => {

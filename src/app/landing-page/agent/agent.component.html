@@ -12,7 +12,11 @@
         <div>
           <span>{{b.Display_Name}}</span>
           <span class="buckets-list-cl">
-            <b class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
+            <b class="badge circle-buget">
+              <i *ngIf="b.disableBtn==true" class="fa fa-refresh fa-spin"></i>
+            </b>
+            <b *ngIf="b.disableBtn==false || b.disableBtn==null"
+              class="badge circle-buget  badge-sm badge-pill">{{b.Count}}</b>
           </span>
         </div>
       </li>
@@ -567,7 +571,7 @@
   (concluderRowClick)="concluderRowClick($event)" [ClientId]="ClientId" [UserId]="UserId"
   (CloseConcluderModal)="CloseConcluderModal($event)"></app-to-be-concluder-accounts>
 
-  <!-- comment for now -->
+<!-- comment for now -->
 <!-- <app-client-instruction-info *ngIf="clientInstructionInfoModal==true" (close)="closeInstructionModal($event)">
 </app-client-instruction-info> -->
 

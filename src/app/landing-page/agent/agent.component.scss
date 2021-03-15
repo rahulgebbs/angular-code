@@ -185,3 +185,9 @@ a.dropdown-toggle:active + .dropdown-menu {
   font-style: normal;
   z-index: 1;
 }
+
+.disableBtn {
+  /* user-select: none; */
+  pointer-events: none;
+  /* cursor: not-allowed; */
+}
