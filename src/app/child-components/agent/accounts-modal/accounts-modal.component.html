@@ -6,27 +6,33 @@
             <div class="col-md-10 row col-sm-10 p-0">
                 <div class="col-md-4 heading-panel pl-10">
                     <span class="text-sm text-ellipsis heading-txt flex">Account List
-          </span>
+                    </span>
                 </div>
-                <div *ngIf="gridApi && filterIsActive==true" class="priorityBtn col-md-8" title="Project & Priority" (click)="resetFilter()">
+                <div *ngIf="gridApi && filterIsActive==true" class="priorityBtn col-md-8" title="Project & Priority"
+                    (click)="resetFilter()">
                     <div class="text">
                         Reset Filter
                         <div class="count">
                             <span>
-                {{activeFilters}}
-              </span>
+                                {{activeFilters}}
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </span>
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </span>
         </div>
         <div class="col-md-12 p-0">
             <div class="acc-popup-table sticky-table sticky-ltr-cells border-0">
-                <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true" [enableColResize]="true" [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true" [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList"
-                    [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true" [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection" (gridReady)="OnGridReady($event)" (modelUpdated)="FilterChanged($event)" (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"
+                <ag-grid-angular *ngIf="AccountsList && AccountsList.length>0" [enableSorting]="true"
+                    [enableColResize]="true" [defaultColDef]="defaultColDef" [enableFilter]="true" [pagination]="true"
+                    [paginationPageSize]="15" class="ag-theme-balham grid-w" [rowData]="AccountsList"
+                    [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
+                    [suppressDragLeaveHidesColumns]="true" [rowSelection]="RowSelection"
+                    (gridReady)="OnGridReady($event)" (modelUpdated)="FilterChanged($event)"
+                    (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"
                     (cellClicked)="OnCellClicked($event)" [suppressColumnVirtualisation]="true"></ag-grid-angular>
             </div>
         </div>

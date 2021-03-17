@@ -24,6 +24,7 @@ export class ForgotPasswordComponent implements OnInit {
   captchaArray = [];
   gradientColor = null;
   captchaModel = '';
+  CurrentYear;
   constructor(private forgotpasswordservice: ForgotPaswordService, private notificationservice: NotificationService, private router: Router) { }
 
 
@@ -31,6 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.CreateForm();
     this.makeid();
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
+    this.CurrentYear = (new Date()).getFullYear();
   }
 
 

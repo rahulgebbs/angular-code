@@ -169,9 +169,14 @@ export class AppComponent implements OnInit {
 
   ChangeRouteName(event) {
     this.ShowElement = true;
+    this.MenuName = event.router.url;
     if (event.router != undefined) {
-
-      this.MenuName = event.router.url;
+      const matchedMenu = this.MenuName.match('forgot-password-new');
+      console.log('matchedMenu : ', matchedMenu);
+      if (matchedMenu != null) {
+        this.ShowElement = false;
+      }
+      // console.log('route name : ', event.router);
 
       switch (event.router.url) {
         case '/login':
@@ -186,6 +191,7 @@ export class AppComponent implements OnInit {
         case '/forgot-password':
           this.ShowElement = false;
           break;
+
         case '/change-password':
           try {
             this.Token = new Token(this.router);
@@ -201,6 +207,7 @@ export class AppComponent implements OnInit {
             this.notificationservice.ChangeNotification(data)
             this.router.navigateByUrl[('/login')]
           }
+
       }
       let menuname: string = event.router.url;
       menuname = menuname.split("-").join(" ").substring(1);

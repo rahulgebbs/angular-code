@@ -19,7 +19,7 @@
   <div class="col-md-12 p-0 mt-10">
     <form [formGroup]="addInsurance" (ngSubmit)="submitForm() && updateClientRow()">
       <div class="client-insurance-field col-md-12 p-0">
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
           <div class="form-group col-md-3">
             <label for="Practice_Name" class="label-std  control-label p-0 b-600">Practice Name</label>
             <input class="form-control" type="text" formControlName="Practice_Name"
@@ -59,7 +59,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3">
             <label for="Website" class="label-std  control-label p-0 b-600">Website</label>
@@ -88,7 +88,7 @@
               [(ngModel)]="selectedClientRow.Appeal_Mailing_Address" placeholder="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3">
             <label for="End_Time" class="label-std  control-label p-0 b-600">End Time</label>
@@ -126,7 +126,7 @@
               [(ngModel)]="selectedClientRow.Appeal_Mailing_Address1" placeholder="" value="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3 ">
             <label for="Appeal_Mailing_Address2" class="label-std  control-label p-0 b-600">Appeal Mailing
@@ -151,7 +151,7 @@
               [(ngModel)]="selectedClientRow.Appeal_Mailing_Zipcode" placeholder="" value="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3 ">
             <label for="Claim_Mailing_Address1" class="label-std  control-label p-0 b-600">Claim Mailing
@@ -176,7 +176,7 @@
               [(ngModel)]="selectedClientRow.Claim_Mailing_State" placeholder="" value="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3">
             <label for="Claim_Mailing_Zipcode" class="label-std  control-label p-0 b-600">Claim Mailing Zipcode</label>
@@ -199,7 +199,7 @@
               [(ngModel)]="selectedClientRow.Appeal_Mailing_FaxNo" placeholder="" value="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3 ">
             <label for="Claim_Mailing_FaxNo" class="label-std  control-label p-0 b-600">Claim Mailing FaxNo</label>
@@ -225,7 +225,7 @@
               [(ngModel)]="selectedClientRow.Insurance_Name_for_Appeal" placeholder="" value="">
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3 ">
             <label for="Insurance_Name_for_Mail" class="label-std  control-label p-0 b-600">Insurance Name for
@@ -251,7 +251,7 @@
             </select>
           </div>
         </div>
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 row p-0">
 
           <div class="form-group col-md-3">
             <label for="Is_Voice" class="label-std  control-label p-0 b-600">Is Voice</label>

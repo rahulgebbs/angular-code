@@ -27,10 +27,12 @@ export class ForgotPasswordNewComponent implements OnInit {
   captchaModel = '';
   timeInterval;
   securityCodeTime;
+  CurrentYear;
   constructor(private forgotpasswordservice: ForgotPaswordService, private notificationservice: NotificationService, private router: Router, private route: ActivatedRoute, private notification: NotificationService) { }
 
 
   ngOnInit() {
+    this.CurrentYear = (new Date()).getFullYear();
     // this.CreateForm();
     this.CreateResetForm();
     this.route.params.subscribe((params) => {
