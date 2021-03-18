@@ -428,7 +428,7 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'client-simple-report', component: ClientSupervisorSimpleReportComponent, canActivate: [AuthGuard], data: { route: ['client-simple-report'] } },
       { path: '**', component: NotFoundComponent }
 
-    ], { useHash: true }),
+    ]),
     NgMultiSelectDropDownModule.forRoot(),
     HttpClientModule
   ],
