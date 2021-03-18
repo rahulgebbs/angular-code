@@ -38,6 +38,7 @@ export class ForgotPasswordNewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       console.log('params : ', params);
       if (params && params.securityCode) {
+        this.ResetForm.patchValue({ 'Temporary_Password': params.securityCode })
         this.valdateCode(params.securityCode);
       }
     })
@@ -48,12 +49,35 @@ export class ForgotPasswordNewComponent implements OnInit {
   valdateCode(code) {
     this.forgotpasswordservice.validateCode(code).subscribe((response: any) => {
       console.log('response: ', response);
-      this.ResetForm.patchValue({ Username: response.Data.User_Id })
-      this.securityCodeTime = moment(response.Data.Mail_Sent_Time).format();
+      if (response != null) {
+        this.ResetForm.patchValue({ Username: response.Data.Username })
+        this.securityCodeTime = moment(response.Data.Mail_Sent_Time).format();
+        this.validteTime();
+      }
+      else {
+        this.redirectToLogin();
+      }
+
     }, (error) => {
+      console.log('error: ', error);
+      this.ResponseHelper.GetFaliureResponse(error);
+      this.redirectToLogin();
+      // const response = {
+      //   "Message": [
+      //     {
+      //       "Message": "Employee list.",
+      //       "Type": "SUCCESS"
+      //     }
+      //   ],
+      //   "Data": {
+      //     "User_Id": 11622,
+      //     "Mail_Sent_Time": "2020-09-15T13:04:55.703Z"
+
+      //   }
+      // }
 
     });
-    this.validteTime();
+
   }
   validteTime() {
     if (this.timeInterval) {
@@ -63,12 +87,15 @@ export class ForgotPasswordNewComponent implements OnInit {
       var ogDate = moment(this.securityCodeTime);
       const diff = moment().diff(ogDate, 'seconds');
       console.log('diff, this.securityCodeTime, moment().format() : ', diff, this.securityCodeTime, moment().format());
-      if (diff && diff >= diff) {
-        clearInterval(this.timeInterval);
-        this.notification.ChangeNotification([{ Message: "Link Expired", Type: "ERROR" }])
-        this.router.navigate(['/login'])
+      if (diff && diff >= 600) {
+        this.redirectToLogin();
       }
     }, 1000);
+  }
+  redirectToLogin() {
+    clearInterval(this.timeInterval);
+    this.notification.ChangeNotification([{ Message: "Link Expired", Type: "ERROR" }])
+    this.router.navigate(['/login'])
   }
   // CreateForm() {
   //   // const self = this;
@@ -167,7 +194,7 @@ export class ForgotPasswordNewComponent implements OnInit {
           }, 2000);
 
         }, err => {
-          this.ResponseHelper.GetFaliureResponse(err)
+          this.ResponseHelper.GetFaliureResponse(err);
           this.DisableSubmit = false;
 
         })

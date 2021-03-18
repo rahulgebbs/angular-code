@@ -1,7 +1,6 @@
 <!-- <h1>timeout : {{timedOut}}</h1> -->
 <router-outlet (activate)="ChangeRouteName($event)"></router-outlet>
-<app-menu (Toggle)="ToggleMenu($event)" [MenuName]="MenuName" [DisplayMenu]="DisplayMenu"
-    *ngIf="ShowElement && DisplayMenu"></app-menu>
+<app-menu (Toggle)="ToggleMenu($event)" [MenuName]="MenuName" [DisplayMenu]="DisplayMenu" *ngIf="ShowElement && DisplayMenu"></app-menu>
 <app-footer [DisplayMenu]="DisplayMenu" (Toggle)="ToggleMenuFromFooter($event)" *ngIf="ShowElement"></app-footer>
 
 <app-notification></app-notification>
@@ -11,7 +10,7 @@
     <div class="popup-bg">
     </div>
 
-    <div class="popup-position container">
+    <div class="popup-position container-fluid p-0">
         <div class="white mystats in">
             <div class="row">
                 <div class="col-md-11 popup-header">
