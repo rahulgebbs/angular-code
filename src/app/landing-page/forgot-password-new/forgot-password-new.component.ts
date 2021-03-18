@@ -38,7 +38,7 @@ export class ForgotPasswordNewComponent implements OnInit {
     this.route.params.subscribe((params) => {
       console.log('params : ', params);
       if (params && params.securityCode) {
-        // this.valdateCode(params.securityCode);
+        this.valdateCode(params.securityCode);
       }
     })
     // this.makeid();
