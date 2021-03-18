@@ -66,7 +66,7 @@ export class AccountsModalComponent implements OnInit {
       { headerName: 'V/N', field: 'Voice_NonVoice' },
       { headerName: 'Completion Date', field: 'Completion_Date' },
       { headerName: 'Encounter No', field: 'Encounter_Number' },
-      //{ headerName: 'Account No', field: 'Account_Number' }
+      { headerName: 'Account No', field: 'Account_Number' }
     ]
     this.setColumnList();
     if (this.AccountsList && this.AccountsList.length > 0 && this.AccountsList[0].Bucket_Name.indexOf('Appeal') != -1) {

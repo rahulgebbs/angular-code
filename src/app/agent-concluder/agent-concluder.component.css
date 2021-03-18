@@ -26,6 +26,7 @@
 }
 input[type="radio"] {
   vertical-align: middle;
+  margin-right: 4px !important;
 }
 
 .field {
@@ -40,7 +41,7 @@ input[type="radio"] {
   margin: 0 2rem 2rem 0;
 }
 
-.col-md-4{
+.col-md-4 {
   margin: 0 0rem 2rem 0;
 }
 
