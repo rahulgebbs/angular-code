@@ -1,4 +1,4 @@
-import { Component, OnInit ,Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonService } from 'src/app/service/common-service';
 import { Token } from 'src/app/manager/token';
 import { Router } from '@angular/router';
@@ -55,7 +55,7 @@ export class DenialCodeComponent implements OnInit {
 
 
 
-  constructor(private selectedFields: dropDownFields, private denialcodeservice: DenialCodeService, private commonservice: CommonService, private router: Router, private notificationservice: NotificationService,private excelService: ExcelService) {
+  constructor(private selectedFields: dropDownFields, private denialcodeservice: DenialCodeService, private commonservice: CommonService, private router: Router, private notificationservice: NotificationService, private excelService: ExcelService) {
 
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
@@ -168,7 +168,7 @@ export class DenialCodeComponent implements OnInit {
       this.ConvertToBase64()
     }
     else {
-      this.Filename='No File Chosen'
+      this.Filename = 'No File Chosen'
       this.File = null;
       this.validated = true
       this.FileBase64 = null;
@@ -192,8 +192,8 @@ export class DenialCodeComponent implements OnInit {
       this.fileSelected = false
     }
     this.uploadBtnDisable = true
-    let dataobj = { File: this.FileBase64, File_Name: this.Filename ,Client_Id: this.ClientId };
-    
+    let dataobj = { File: this.FileBase64, File_Name: this.Filename, Client_Id: this.ClientId };
+
     if (this.fileSelected) {
       this.denialcodeservice.uploadDenialCode(dataobj).subscribe(res => {
         this.validated = false
@@ -206,7 +206,7 @@ export class DenialCodeComponent implements OnInit {
 
           this.ResponseHelper.GetFaliureResponse(err)
         }
-        
+
       );
       this.GetDenialCodeList('')
     }
@@ -218,13 +218,14 @@ export class DenialCodeComponent implements OnInit {
     this.downloadTemplateDisable = true
     this.denialcodeservice.downloadTemplate().subscribe(res => {
       this.downloadTemplateDisable = false
-      this.excelService.downloadExcel(res)
+      this.excelService.downloadExcel(res);
     }, err => {
-      this.downloadTemplateDisable = false
-      this.ResponseHelper.GetFaliureResponse(err)
+      this.downloadTemplateDisable = false;
+      console.log('err : ', err);
+      this.ResponseHelper.GetFaliureResponse(err);
     })
   }
- 
+
 
   exportToExcel() {
     this.exportBtnDisable = true

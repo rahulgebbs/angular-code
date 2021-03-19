@@ -44,7 +44,8 @@ export class ProjectSelectorModalComponent implements OnInit {
   }
 
   CheckSelectAll() {
-    if (this.AllProjects.every(v => v.Is_Selected == true)) {
+    if (this.AllProjects && this.AllProjects.length > 0) {
+      this.AllProjects.every(v => v.Is_Selected == true)
       this.SelectAll = true;
     }
     else {

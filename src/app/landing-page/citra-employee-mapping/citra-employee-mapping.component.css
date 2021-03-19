@@ -98,7 +98,15 @@
   overflow-y: auto;
 }
 
-
-.sticky-table-new{
+.sticky-table-new {
   height: 55vh !important;
+}
+
+.form-group {
+  margin-right: 1rem;
+}
+
+.form-group .formLabel {
+  /* padding-left: 0 !important; */
+  /* border: 1px solid; */
 }

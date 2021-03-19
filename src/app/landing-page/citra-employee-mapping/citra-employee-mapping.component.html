@@ -4,7 +4,7 @@
   <form [formGroup]="dashboard" (ngSubmit)="SubmitForm()" class="row form-inline">
     <!-- removed class 'pull-left' and 'mr-10'  -->
     <!-- <span class="pt-5 label-std control-label b-600 w-auto">Client List</span> -->
-    <div class="form-group col-md-12 mb-3 mt-3 p-0">
+    <div class="form-group col-md-3 mb-3 mt-3 mr-0 p-0">
       <label for="" class="formLabel">Client List &nbsp; </label>
       <select class="form-control" (change)="onClientChange($event)" formControlName="ClientId" [(ngModel)]="ClientId"
         placeholder="d.ff">
@@ -14,7 +14,33 @@
         </option>
       </select>
     </div>
+    <!--  configdetail FORM-->
+    <form *ngIf="showfields" [formGroup]="configdetail" (ngSubmit)="SubmitForm1()" class="form-inline">
+      <div class="form-group">
+        <label for="" class="formLabel p-0">Client Name &nbsp; </label>
+        <input type="text" class="form-control" id="Client_Name" disabled placeholder="" [(ngModel)]="Client_Name"
+          formControlName="Client_Name">
+      </div>
+      <div class="form-group">
+        <label for="" class="formLabel p-0">Supervisor Name &nbsp; </label>
+        <input type="text" class="form-control" id="Supervisor_Name" disabled placeholder=""
+          [(ngModel)]="Supervisor_Name" formControlName="Supervisor_Name">
+      </div>
+      <div class="form-group">
+        <label class="custom-control client-conf pt-2">
+          <input type="checkbox" formControlName="isChecked" id="ac-active" (change)="function($event)"
+            [(ngModel)]="isChecked">
+          <label for="ac-active" class="">Is Active</label>
+        </label>
+      </div>
 
+      <div class="col-md-1 text-center p-0">
+        <!-- data-toggle="modal" data-target=".skip-ac" -->
+        <button type="submit" [disabled]="DisableSubmit"
+          class="btn blue square-btn blue-hover btn-txt mr-10">Update</button>
+      </div>
+
+    </form>
 
     <div class="supervisorList" *ngIf="show">
       <div class="row">
@@ -43,47 +69,36 @@
       </div>
 
     </div>
-    <div *ngIf="showfields" class="container">
+    <!-- <div *ngIf="showfields" class="container-fluid p-0">
       <div class="row">
-        <form [formGroup]="configdetail" (ngSubmit)="SubmitForm1()">
-          <div class="col-sm-3">
-            <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto"><label for="inputEmail3"
-                class="label-std  control-label p-0 b-600">Client Name</label>
-            </span>
-            <span class="pull-left mr-10 pt-3">
-              <input type="text" class="form-control" id="Client_Name" disabled placeholder="" [(ngModel)]="Client_Name"
-                formControlName="Client_Name">
-            </span>
+        <form [formGroup]="configdetail" (ngSubmit)="SubmitForm1()" class="form-inline">
+          <div class="form-group">
+            <label for="" class="formLabel">Client Name &nbsp; </label>
+            <input type="text" class="form-control" id="Client_Name" disabled placeholder="" [(ngModel)]="Client_Name"
+              formControlName="Client_Name">
           </div>
-          <div class="col-sm-3">
-            <span class="pull-left mr-10 pt-5 label-std control-label b-600 w-auto">
-              <label for="inputEmail3" class="label-std  control-label p-0 b-600">Supervisor Name</label>
-            </span>
-            <span class="pull-left mr-10 pt-3" style="width:46%">
-              <input type="text" class="form-control" id="Supervisor_Name" disabled placeholder=""
-                [(ngModel)]="Supervisor_Name" formControlName="Supervisor_Name">
-            </span>
+          <div class="form-group">
+            <label for="" class="formLabel p-0">Client List &nbsp; </label>
+            <input type="text" class="form-control" id="Supervisor_Name" disabled placeholder=""
+              [(ngModel)]="Supervisor_Name" formControlName="Supervisor_Name">
           </div>
-          <div class="col-sm-2">
-            <form [formGroup]="citramappingForm" (ngSubmit)="submitFrom()">
-              <span class="col-md-12 p-0 text-left">
-                <label class="custom-control client-conf pt-4">
-                  <input type="checkbox" formControlName="isChecked" id="ac-active" (change)="function($event)"
-                    [(ngModel)]="isChecked">
-                  <label for="ac-active" class="pt-4">Is Active</label>
-                </label>
-              </span>
-            </form>
+          <div class="form-group">
+            <label class="custom-control client-conf pt-2">
+              <input type="checkbox" formControlName="isChecked" id="ac-active" (change)="function($event)"
+                [(ngModel)]="isChecked">
+              <label for="ac-active" class="">Is Active</label>
+            </label>
           </div>
+
           <div class="col-md-1 text-center p-0">
-            <!-- data-toggle="modal" data-target=".skip-ac" -->
             <button type="submit" [disabled]="DisableSubmit"
               class="btn blue square-btn blue-hover btn-txt mr-10">Update</button>
           </div>
 
         </form>
       </div>
-    </div>
+    </div> -->
+
     <div class="col-md-12 col-xs-12 userlist-stickytable">
       <div class="col-md-12 col-sm-12 p-0">
         <div class="heading-panel sT-hight p-0">

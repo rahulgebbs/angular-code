@@ -23,6 +23,7 @@ export class ResponseHelper {
     }
 
     GetFaliureResponse(httpres) {
+        console.log('GetFailure Response : ', httpres);
         let notifydata = [];
         if (httpres.status == 500) {
             notifydata = null;
@@ -30,9 +31,11 @@ export class ResponseHelper {
         else {
             notifydata = httpres.Message ? httpres.Message : httpres.json().Message;
         }
-        if (notifydata && notifydata.length == 0) {
-            return 0;
+        if (notifydata == null || notifydata.length == 0) {
+            this.notification.ChangeNotification([{ Message: "No Data found", Type: "ERROR" }]);
+            return null;
         }
+        console.log('GetFailure : ', notifydata)
         switch (httpres.status) {
             case 400:
                 notifydata[0].Type != null ? this.notification.ChangeNotification(notifydata) : this.notification.ChangeNotification([{ Message: "Bad Request", Type: "ERROR" }])

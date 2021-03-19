@@ -154,14 +154,16 @@ export class ProjectAndPriorityReportComponent implements OnInit {
 
   CloseModal() {
     this.ShowModal = false;
-    this.Projects.forEach(e => {
-      if (e.Is_Selected && !e.Is_Old) {
-        e.Is_Selected = false;
-      }
-      if (!e.Is_Selected && e.Is_Old) {
-        e.Is_Selected = true;
-      }
-    })
+    if (this.Projects && this.Projects.length > 0) {
+      this.Projects.forEach(e => {
+        if (e.Is_Selected && !e.Is_Old) {
+          e.Is_Selected = false;
+        }
+        if (!e.Is_Selected && e.Is_Old) {
+          e.Is_Selected = true;
+        }
+      })
+    }
   }
 
 
@@ -169,11 +171,17 @@ export class ProjectAndPriorityReportComponent implements OnInit {
     this.projectandpriorityService.getProjectListByClientID(this.ClientId).subscribe((response) => {
       console.log('getProjectListByClientID response : ', response);
       this.Projects = response.Data;
-      this.Projects.forEach(e => {
-        e.Is_Selected = false;
-      });
+      if (this.Projects && this.Projects.length > 0) {
+
+        this.Projects.forEach(e => {
+          e.Is_Selected = false;
+        });
+      }
+
+      this.ResponseHelper.GetSuccessResponse(response);
     }, (error) => {
       this.Projects = [];
+      this.ResponseHelper.GetFaliureResponse(error);
       console.log('getProjectListByClientID response : ', error);
     });
   }
@@ -232,10 +240,13 @@ export class ProjectAndPriorityReportComponent implements OnInit {
     }
     this.ProjectString = "";
     this.SelectedProjects = [];
-    this.Projects.forEach(e => {
-      e.Is_Selected = false;
-      e.Is_Old = false;
-    })
+    if (this.Projects && this.Projects.length > 0) {
+
+      this.Projects.forEach(e => {
+        e.Is_Selected = false;
+        e.Is_Old = false;
+      })
+    }
   }
 
   ShowDownloadButton(ClientId) {
@@ -303,9 +314,11 @@ export class ProjectAndPriorityReportComponent implements OnInit {
       this.ConcluderForm.patchValue({ 'From_Time': "0:00" })
       this.ConcluderForm.patchValue({ 'To_Time': "0:00" })
       this.exportFunction()
-      this.Projects.forEach(e => {
-        e.Is_Selected = false;
-      })
+      if (this.Projects && this.Projects.length > 0) {
+        this.Projects.forEach(e => {
+          e.Is_Selected = false;
+        })
+      }
     }
     else {
       this.exportFunction();

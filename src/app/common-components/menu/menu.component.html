@@ -236,7 +236,7 @@
                     <ul class="nav">
                       <li><a (click)="OpenMenu('simple-report')"
                           [ngClass]="[MenuName == '/simple-report' ? 'menu-active1': '']">Simple Report</a></li>
-                      <li><a (click)="OpenMenu('client-simple-report')"
+                      <li *ngIf="checkMenu('client-simple-report')"><a (click)="OpenMenu('client-simple-report')"
                           [ngClass]="[MenuName == '/client-simple-report' ? 'menu-active1': '']">Client Simple
                           Report</a></li>
                       <li><a (click)="OpenMenu('mis-report')"

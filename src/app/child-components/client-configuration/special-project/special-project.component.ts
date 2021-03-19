@@ -110,7 +110,7 @@ export class SpecialProjectComponent implements OnInit {
     // params.value = false;
     if (params && params.value == true) {
       val = "De-Activate";
-      eDiv.innerHTML = '<button  class="btn label grey label-info square-btn cursor " data-action-type="update">' + val + '</button>';
+      eDiv.innerHTML = '<button style="color:#fff;background-color:#5bc0de" class="btn label grey label-info square-btn cursor " data-action-type="update">' + val + '</button>';
     } else {
       val = 'De-Active';
       eDiv.innerHTML = '<button disabled class="btn label square-btn cursor" style="color:#000;font-size: 13px;font-weight: normal;padding: 3px 5px;width: 80px;float: left;border: 1px solid gray;">' + val + '</button>';

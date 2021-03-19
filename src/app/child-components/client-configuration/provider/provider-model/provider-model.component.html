@@ -2,10 +2,21 @@
 </div>
 <div class="pop-position edit-provider-pop">
 
+  <div class="row p-0 grey">
+    <span class="col-md-10 col-sm-2 p-0">
+      <div class="heading-panel">
+        <span class="text-sm text-ellipsis heading-txt flex"> Edit Provider Master</span>
+      </div>
+    </span>
+    <span class="pull-right text-right col-md-2 cursor mt-2">
+      <div class="pull-right padding-cross">
+        <i class="fa fa-times" aria-hidden="true" (click)="ToggleModal()"></i>
+      </div>
+    </span>
+  </div>
 
-  <div class="col-md-12 grey p-0">
+  <!-- <div class="col-md-12 grey p-0">
     <span class="col-md-4 col-sm-2 p-0">
-
       <div class="heading-panel">
         <span class="text-sm text-ellipsis heading-txt flex mt-5"> Edit Provider Master</span>
       </div>
@@ -15,11 +26,13 @@
         <i class="fa fa-times" aria-hidden="true" (click)="ToggleModal()"></i>
       </div>
     </span>
-  </div>
+  </div> -->
+
   <div class="col-md-12 p-0 mt-10">
     <form [formGroup]="editProvider" (ngSubmit)="submitForm()">
       <div class="edit-provider-field col-md-12 p-0">
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
           <div class="form-group col-md-3">
             <label for="Practice_Code" class="label-std  control-label p-0 b-600">Practice Code</label>
             <input class="form-control" type="text" formControlName="Practice_Code"
@@ -61,7 +74,8 @@
           </div>
 
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3">
             <label for="Provider_Legal_FirstName" class="label-std  control-label p-0 b-600">Provider Legal
@@ -97,7 +111,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3">
             <label for="Individual_NPI" class="label-std  control-label p-0 b-600">Individual NPI</label>
@@ -131,7 +146,8 @@
             </label>
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3 ">
             <label for="Physical_AddressLine1" class="label-std  control-label p-0 b-600">Physical AddressLine1</label>
@@ -165,7 +181,8 @@
 
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3 ">
             <label for="Physical_Zip" class="label-std  control-label p-0 b-600">Physical Zip</label>
@@ -200,7 +217,8 @@
 
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3">
             <label for="PayToAdd_AddressLine2" class="label-std  control-label p-0 b-600">PayToAdd AddressLine2</label>
@@ -235,7 +253,8 @@
 
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3 ">
             <label for="PayToAdd_Phone" class="label-std  control-label p-0 b-600">PayToAdd Phone</label>
@@ -275,7 +294,8 @@
               required</label>
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3 ">
             <label for="Line_of_Business" class="label-std  control-label p-0 b-600">Line of Business</label>
@@ -314,7 +334,8 @@
 
           </div>
         </div>
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-12 p-0 row">
 
           <div class="form-group col-md-3">
             <label for="Contact_Person_Name" class="label-std  control-label p-0 b-600">Contact Person Name</label>
