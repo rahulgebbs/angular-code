@@ -21,7 +21,7 @@ export class ExceptionEntryComponent implements OnInit {
   ClientId: number;
   addException: FormGroup;
   disableUpload: boolean = true;
-  exceptioData;
+  exceptioData = [];
   DisplayMain: boolean = false;
   validated: boolean = false;
   File;
@@ -116,18 +116,20 @@ export class ExceptionEntryComponent implements OnInit {
   }
 
   Getexception() {
+    this.exceptioData = [];
     this.addException = this.fb.group({
       "Client_Id": [this.ClientId],
     })
     this.service.getException(this.ClientId).subscribe(res => {
       let data = res.json().Data;
       let data1 = data.sort((a, b) => Number(a.Column_Display_Order) - Number(b.Column_Display_Order));
-      this.exceptioData = data1
+      this.exceptioData = data1;
       this.createFrom(this.exceptioData)
       this.DisplayMain = true;
       this.showLoading = false
     }, err => {
-      this.showLoading = false
+      this.showLoading = false;
+      this.exceptioData = [];
       this.ResponseHelper.GetFaliureResponse(err);
     })
   }
