@@ -24,47 +24,53 @@
           </div>
           <div class="form-group">
             <label for="inputEmail3" class="label-std  control-label p-0 b-600">Add Dropdown Values</label>
-            <div class="controls">
+            <!-- <div class="controls">
+            </div> -->
 
-              <form [formGroup]="addDropdown" (ngSubmit)="submitFrom()" autocomplete="off">
-                <div class="entry col-md-12 p-0">
-                  <input class="form-control" type="hidden" formControlName="Client_Id" placeholder="Add Dropdown Values"
-                    [(ngModel)]="Client_Id" />
-                  <input class="form-control" type="hidden" formControlName="Client_Inventory_Id" placeholder="Add Dropdown Values"
-                    [(ngModel)]="Client_Inventory_Id" />
-                  <input class="form-control" type="hidden" formControlName="Is_Active" placeholder="Add Dropdown Values"
-                    [(ngModel)]="Is_Active" />
-                  <input class="form-control" type="hidden" formControlName="Updated_Date" placeholder="Add Dropdown Values"
-                    [(ngModel)]="Updated_Date" />
-                  <input class="form-control" type="hidden" formControlName="Id" placeholder="Add Dropdown Values"
-                    [(ngModel)]="Id" />
+            <form [formGroup]="addDropdown" (ngSubmit)="submitFrom()" autocomplete="off">
+              <div class="entry col-md-12 p-0">
+                <input class="form-control" type="hidden" formControlName="Client_Id" placeholder="Add Dropdown Values"
+                  [(ngModel)]="Client_Id" />
+                <input class="form-control" type="hidden" formControlName="Client_Inventory_Id"
+                  placeholder="Add Dropdown Values" [(ngModel)]="Client_Inventory_Id" />
+                <input class="form-control" type="hidden" formControlName="Is_Active" placeholder="Add Dropdown Values"
+                  [(ngModel)]="Is_Active" />
+                <input class="form-control" type="hidden" formControlName="Updated_Date"
+                  placeholder="Add Dropdown Values" [(ngModel)]="Updated_Date" />
+                <input class="form-control" type="hidden" formControlName="Id" placeholder="Add Dropdown Values"
+                  [(ngModel)]="Id" />
 
 
-                  <input class="form-control" type="text" formControlName="Dropdown_Value" placeholder="Add Dropdown Values"
-                    [(ngModel)]="valueDropdown" class="add-drop-input" (focusin)="enableBtn()"/>
-                  <label class="error" *ngIf="checkvalidation && addDropdown.get('Dropdown_Value').hasError('required') && validated">Dropdown
-                    value is require</label>
-                  <label class="error" *ngIf=" addDropdown.get('Dropdown_Value').hasError('maxlength') && validated">maximum
-                    50 charcter allowed</label>
-                  <span class="ml-10">
-                    <button class="btn blue btn-add square-btn save-txt-btn mr-5" type="submit"  [disabled]="saveBtnDisable">
-                      <!-- <span class="fa fa-plus"></span> -->Save
+                <input class="form-control" type="text" formControlName="Dropdown_Value"
+                  placeholder="Add Dropdown Values" [(ngModel)]="valueDropdown" class="add-drop-input"
+                  (focusin)="enableBtn()" />
+                <label class="error"
+                  *ngIf="checkvalidation && addDropdown.get('Dropdown_Value').hasError('required') && validated">Dropdown
+                  value is require</label>
+                <label class="error"
+                  *ngIf=" addDropdown.get('Dropdown_Value').hasError('maxlength') && validated">maximum
+                  50 charcter allowed</label>
+                <span class="ml-10">
+                  <button class="btn blue btn-add square-btn save-txt-btn mr-5" type="submit"
+                    [disabled]="saveBtnDisable">
+                    <!-- <span class="fa fa-plus"></span> -->Save
+                  </button>
+                  <span class="">
+                    <button class="btn blue btn-add square-btn save-txt-btn" type="button" [disabled]="resetBtnDisable"
+                      (click)="updateCancel()">
+                      <!-- <span class="fa fa-plus"></span> -->Reset
                     </button>
-                    <span class="">
-                      <button class="btn blue btn-add square-btn save-txt-btn" type="button"  [disabled]="resetBtnDisable" (click)="updateCancel()">
-                        <!-- <span class="fa fa-plus"></span> -->Reset
-                      </button>
-                    </span>
                   </span>
+                </span>
 
-                </div>
+              </div>
 
-              </form>
-            </div>
+            </form>
           </div>
         </div>
         <div class="col-md-12 p-0 mb-15">
-          <div class="sticky-table sticky-ltr-cells border-0 table-hight" style="padding-bottom:0px !important;height: 260px;">
+          <div class="sticky-table sticky-ltr-cells border-0 table-hight"
+            style="padding-bottom:0px !important;height: 260px;">
             <table class="table">
               <thead>
                 <tr class="sticky-header">

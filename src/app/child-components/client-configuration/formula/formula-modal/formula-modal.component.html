@@ -5,7 +5,7 @@
   <div class="pop-position formula-pop">
     <form [formGroup]="addFormula" (ngSubmit)="submitFrom()" autocomplete="off">
       <div class="modal-content  white">
-        <div class="col-md-12 grey p-0">
+        <div class="col-md-12 grey p-0 row">
           <span class="col-md-10 col-sm-10 p-0">
             <div class="heading-panel">
               <span class="text-sm text-ellipsis heading-txt flex">Generate Formula </span>
@@ -36,6 +36,7 @@
               <label class="error" *ngIf="addFormula.get('Expression').hasError('maxlength')">Maximum 200 charcter
                 allowed</label>
               <div class="num-pad mt-10">
+                <p>{{disableSymbol || "N/A"}}</p>
                 <div class="row col-md-12 p-0 grey">
                   <div class="col-md-2 p-0 operator-seprator">
                     <div class="num">

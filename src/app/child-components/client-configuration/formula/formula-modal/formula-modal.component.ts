@@ -46,7 +46,8 @@ export class FormulaModalComponent implements OnInit {
       "Updated_Date": []
     });
     this.token = new Token(this.router);
-    this.userData = this.token.GetUserData()
+    this.userData = this.token.GetUserData();
+    console.log('this.data : ', this.data);
   }
 
   ngOnInit() {
@@ -115,7 +116,7 @@ export class FormulaModalComponent implements OnInit {
     this.Expression = "";
     this.update = true;
     this.disableValue = false;
-    this.disableSymbol = true
+    this.disableSymbol = true;
   }
 
   creatFormula(id) {
@@ -149,14 +150,14 @@ export class FormulaModalComponent implements OnInit {
       }
 
       this.disableSymbol = true;
-      this.disableValue = false
+      this.disableValue = false;
     } else {
       if (this.disableValue) {
         return false
       }
       val = '[' + val + ']'
       this.disableValue = true;
-      this.disableSymbol = false
+      this.disableSymbol = false;
     }
     this.Expression = this.Expression.concat(val);
   }

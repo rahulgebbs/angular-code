@@ -110,7 +110,7 @@ input {
 }
 @media only screen and (min-device-height: 800px){
     .pop-position{
-        height: 350px;
+        /* height: 350px; */
     }
     .generate-blue-sep .blue-seprator {
         height: 277px;

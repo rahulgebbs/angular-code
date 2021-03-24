@@ -35,7 +35,7 @@ export class FormulaComponent implements OnInit {
   }
 
   ngOnInit() {
-      
+
     if (this.ClientData.Is_Formula_Required) {
       this.getFormulaLookup();
     }
@@ -47,7 +47,7 @@ export class FormulaComponent implements OnInit {
 
   getFormulaLookup() {
 
-    this.service.getFormulaLookup(this.ClientData.Id).subscribe(res => {        
+    this.service.getFormulaLookup(this.ClientData.Id).subscribe(res => {
 
       let data = res.json();
       this.formula = data.Data;
@@ -61,25 +61,26 @@ export class FormulaComponent implements OnInit {
 
   getFormulaValue() {
 
-    this.service.getFormulaValues(this.ClientData.Id,this.Client_Inventory_Id).subscribe(res => {
+    this.service.getFormulaValues(this.ClientData.Id, this.Client_Inventory_Id).subscribe(res => {
 
       let data = res.json()
       this.FormulaValues = []
       this.FormulaValues = data.Data
 
     }, err => {
-        
+
       this.ResponseHelper.GetFaliureResponse(err)
     })
   }
   creatFormula(id) {
-    this.getFormulaValue()
+    console.log('creatFormula : ', id);
     this.Client_Id = this.ClientData.Id;
     this.Client_Inventory_Id = id.Client_Inventory_Id;
     this.Id = id.Formula_Id;
     this.Expression = id.Expression;
-    this.Is_Active=id.Is_Active;
-    this.Updated_Date=id.Updated_Date
+    this.Is_Active = id.Is_Active;
+    this.Updated_Date = id.Updated_Date
+    this.getFormulaValue();
     this.service.getSingelFormula(this.ClientData.Id, id.Formula_Id).pipe(finalize(() => {
       this.data = [{
         "Id": this.Id, "Expression": this.Expression, "Client_Id": this.Client_Id,
@@ -87,7 +88,7 @@ export class FormulaComponent implements OnInit {
       }]
       this.showPopup = true;
     })).subscribe(res => {
-          
+
       let data = res.json();
 
       this.Expression = data.Data.Expression;
@@ -97,7 +98,7 @@ export class FormulaComponent implements OnInit {
 
 
     }, err => {
-        
+
       this.ResponseHelper.GetFaliureResponse(err)
     })
 

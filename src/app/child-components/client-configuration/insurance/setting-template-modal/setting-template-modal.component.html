@@ -14,31 +14,31 @@
         </span>
     </div>
     <div class="col-md-12 p-0 mt-10">
-        <div class="col-md-12 col-sm-12 col-xs-12 mb-10">
-            <div *ngFor="let a of templatelist; let i = index" class="col-md-12 col-sm-12 col-xs-12 p-0">
-                <label class="w-100">{{a.type.split("_").join(" ") + ':*'}}</label>
-                <span class="form-group  mt-10">
-                    <form class="form">
-                        <div class="file-upload-wrapper inventory-provider" [attr.data-text]="a.uploadname">
-                            <input name="file-upload-field" (change)="OnChange($event,a.type,i);"
-                                onclick="this.value = null" type="file" accept=".pdf">
-                        </div>
-                    </form>
-                </span>
-                <span>
-                    <button [disabled]="a.uploadname == 'No File Chosen' || disableUpload" (click)="uploadAppealTemplate(a.type);"
+        <div class="col-md-12 col-sm-12 col-xs-12 mb-10 p-0">
+            <div *ngFor="let a of templatelist; let i = index" class="col-md-12 col-sm-12 col-xs-12 p-0 row"
+                style="margin-bottom:0.5rem !important">
+                <div class="col-md-6">
+                    <label class="w-100">{{a.type.split("_").join(" ") + ':*'}}</label>
+                    <div class="file-upload-wrapper inventory-provider" [attr.data-text]="a.uploadname">
+                        <input name="file-upload-field" (change)="OnChange($event,a.type,i);"
+                            onclick="this.value = null" type="file" accept=".pdf">
+                    </div>
+                </div>
+                <div class="col-md-6 btnSection">
+                    <button [disabled]="a.uploadname == 'No File Chosen' || disableUpload"
+                        (click)="uploadAppealTemplate(a.type);"
                         class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
                         Upload</button>
                     <button [disabled]="a.uploadedurl == ''" (click)="viewUploadedFile(a.type)"
                         class="btn pr-upl label grey lg-text label-info square-btn cursor mr-10 mt-0">
                         Download </button>
-
-                    <!-- data-toggle="modal"  data-target=".file-view"  -->
                     <button [disabled]="a.delete == ''" (click)="deleteUploadedFile(a.type)"
                         class=" btn pr-upl label grey lg-text label-info square-btn cursor mr-0 mt-0"> Delete</button>
+                </div>
+                <span>
+
                 </span>
             </div>
         </div>
     </div>
 </div>
-
