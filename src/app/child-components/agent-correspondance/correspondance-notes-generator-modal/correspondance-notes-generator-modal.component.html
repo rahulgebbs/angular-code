@@ -15,7 +15,7 @@
     <div class=" generate-blue-sep">
       <form>
         <div class="col-md-12 p-0 row mt-10">
-          <div class="col-md-9 blue-seprator serpartion-h p-0 mt-10">
+          <div class="col-md-9 blue-seprator p-0 mt-10">
             <div class="col-md-12 p-0 row">
               <!-- <div class="col-md-4 p-0 pt-10"> -->
               <div class="col-md-4 mb-10 p-0">
@@ -82,12 +82,12 @@
               <div *ngIf="NotesModel.ClaimProcessDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="ClaimProcessDate" class="label-std  control-label p-0">Claim Process Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker1'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker1'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.ClaimProcessDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp" name="ClaimProcessDate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt1" class="owl-dp col-md-10" name="ClaimProcessDate"
                       [owlDateTime]="dt1">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt1">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt1">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -97,12 +97,12 @@
               <div *ngIf="NotesModel.ClaimReceiveDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="claimreceivedate" class="label-std  control-label p-0">Claim Received Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker2'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker2'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.ClaimReceiveDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp" name="claimreceivedate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt2" class="owl-dp col-md-10" name="claimreceivedate"
                       [owlDateTime]="dt2">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt2">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt2">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
@@ -112,12 +112,12 @@
               <div *ngIf="NotesModel.ClaimDeniedDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="claimdenieddate" class="label-std  control-label p-0">Claim Denied Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker3'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker3'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.ClaimDeniedDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt3" class="owl-dp" name="claimdenieddate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt3" class="owl-dp col-md-10" name="claimdenieddate"
                       [owlDateTime]="dt3">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt3">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt3">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
@@ -127,12 +127,12 @@
               <div *ngIf="NotesModel.EffectiveDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="effectivedate" class="label-std  control-label p-0">Effective Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker5'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker5'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.EffectiveDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt5" class="owl-dp" name="effectivedate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt5" class="owl-dp col-md-10" name="effectivedate"
                       [owlDateTime]="dt5">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt5">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt5">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
@@ -144,12 +144,12 @@
               <div *ngIf="NotesModel.TerminationDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="terminationdate" class="label-std  control-label p-0">Termination Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker6'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker6'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.TerminationDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt6" class="owl-dp" name="terminationdate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt6" class="owl-dp col-md-10" name="terminationdate"
                       [owlDateTime]="dt6">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt6">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt6">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
@@ -159,12 +159,12 @@
               <div *ngIf="NotesModel.ClaimRejectedDate.IsActive" class="col-md-4 mb-10 p-0">
                 <div class="form-group mh-15">
                   <label for="claimrejecteddate" class="label-std  control-label p-0">Claim Rejected Date</label>
-                  <div class="input-group date col-md-12" id='datetimepicker3'>
+                  <div class="input-group date col-md-12 row p-0" id='datetimepicker3'>
                     <input (dateTimeInput)="CreatePreview()" autocomplete="off"
                       [(ngModel)]="NotesModel.ClaimRejectedDate.Value" (keydown)="BlockInput($event)"
-                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt4" class="owl-dp" name="claimrejecteddate"
+                      (keypress)="BlockInput($event)" [owlDateTimeTrigger]="dt4" class="owl-dp col-md-10" name="claimrejecteddate"
                       [owlDateTime]="dt4">
-                    <span class="input-group-addon" [owlDateTimeTrigger]="dt4">
+                    <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="dt4">
                       <span class="fa fa-calendar"></span>
                     </span>
                     <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>

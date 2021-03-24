@@ -134,3 +134,11 @@ input {
     height: 24px;
     overflow-y: -webkit-paged-x;
 }
+
+.pop-position{
+    height: auto !important;
+}
+.blue-seprator {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
