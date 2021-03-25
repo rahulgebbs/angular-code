@@ -3,7 +3,9 @@ import { Http, Headers } from '@angular/http';
 import * as jwt_decode from "jwt-decode";
 
 import 'rxjs/Rx';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment.prod';
+
 
 @Injectable({
   providedIn: 'root'

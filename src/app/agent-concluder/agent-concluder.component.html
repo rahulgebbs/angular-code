@@ -252,12 +252,12 @@
                     <div class="form-group">
                         <label class="label-std  control-label p-0 b-600">Denial Date <span
                                 class="asteric">*</span></label>
-                        <div class='input-group date' id='denialDateCalendar'>
-                            <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp form-control"
+                        <div class='input-group date row' id='denialDateCalendar'>
+                            <input placeholder="mm/dd/yyyy" autocomplete="off" class="owl-dp col-md-10 form-control"
                                 name="denialDateCalendar" [owlDateTime]="denialDateCalendar" [max]="maxDate"
                                 formControlName="Denial_Date" (keyup)="BlockInput('Denial_Date',$event)"
                                 (dateTimeChange)="BlockInput('Denial_Date',$event)">
-                            <span class="input-group-addon" [owlDateTimeTrigger]="denialDateCalendar">
+                            <span class="input-group-addon col-md-2" [owlDateTimeTrigger]="denialDateCalendar">
                                 <span class="fa fa-calendar"></span>
                             </span>
                             <owl-date-time [pickerType]="'calendar'" #denialDateCalendar></owl-date-time>

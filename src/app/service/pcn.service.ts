@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 import 'rxjs/Rx';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment.prod';
+// environment
 @Injectable({
   providedIn: 'root'
 })

@@ -4,10 +4,15 @@
 }
 
 .denialInput {
-  width: 30% !important;
+  /* width: 30% !important;
   margin-bottom: 1rem;
   float: left;
   min-height: 50px;
+  margin-right: 1rem; */
+  width: auto !important;
+  margin-bottom: 1rem;
+  float: left;
+  /* min-height: 50px; */
   margin-right: 1rem;
 }
 
