@@ -123,22 +123,22 @@ export class AccountsModalComponent implements OnInit {
   }
 
   checkFilter() {
-    this.savedFilterList = this.gridApi.getFilterModel();
+    // this.savedFilterList = this.gridApi.getFilterModel();
 
-    if (this.savedFilterList == null || Object.keys(this.savedFilterList).length === 0) {
-      sessionStorage.removeItem('agent-account-filter-list');
-    }
-    else {
-      sessionStorage.setItem('agent-account-filter-list', JSON.stringify(this.savedFilterList));
-    }
+    // if (this.savedFilterList == null || Object.keys(this.savedFilterList).length === 0) {
+    //   sessionStorage.removeItem('agent-account-filter-list');
+    // }
+    // else {
+    //   sessionStorage.setItem('agent-account-filter-list', JSON.stringify(this.savedFilterList));
+    // }
   }
   restoreFilterModel() {
-    const filterListFromLocal = sessionStorage.getItem('agent-account-filter-list');
-    if (filterListFromLocal && filterListFromLocal.length > 0) {
-      this.gridApi.setFilterModel(JSON.parse(filterListFromLocal));
-      this.gridApi.onFilterChanged();
-    }
-    this.FilterChanged(event)
+    // const filterListFromLocal = sessionStorage.getItem('agent-account-filter-list');
+    // if (filterListFromLocal && filterListFromLocal.length > 0) {
+    //   this.gridApi.setFilterModel(JSON.parse(filterListFromLocal));
+    //   this.gridApi.onFilterChanged();
+    // }
+    // this.FilterChanged(event)
   }
 
   checkIfFilterExists() {
@@ -147,25 +147,25 @@ export class AccountsModalComponent implements OnInit {
   }
 
   resetFilter() {
-    this.gridApi.setFilterModel([]);
-    this.gridApi.onFilterChanged();
-    this.checkFilter();
+    // this.gridApi.setFilterModel([]);
+    // this.gridApi.onFilterChanged();
+    // this.checkFilter();
 
   }
 
   FilterChanged(event) {
-    if (this.gridApi) {
-      const modelList = this.gridApi.getFilterModel();
-      if (modelList && Object.keys(modelList).length > 0) {
-        this.filterIsActive = true;
-        this.activeFilters = Object.keys(modelList).length;
-      }
-      else {
-        this.filterIsActive = false;
-        this.activeFilters = 0;
-      }
-      console.log('FilterChanged event : ', this.gridApi.getFilterModel(), event);
-    }
+    // if (this.gridApi) {
+    //   const modelList = this.gridApi.getFilterModel();
+    //   if (modelList && Object.keys(modelList).length > 0) {
+    //     this.filterIsActive = true;
+    //     this.activeFilters = Object.keys(modelList).length;
+    //   }
+    //   else {
+    //     this.filterIsActive = false;
+    //     this.activeFilters = 0;
+    //   }
+    //   console.log('FilterChanged event : ', this.gridApi.getFilterModel(), event);
+    // }
 
   }
   ActionDisable(params) {

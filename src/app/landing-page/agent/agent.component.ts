@@ -896,9 +896,11 @@ export class AgentComponent implements OnInit, OnDestroy {
       }
       else if (bucket.Name == 'To_be_Concluded') {
         // call concluder to be done service
+        bucket.disableBtn = false;
         this.toBeConcluded();
       }
       else if (bucket.Name == "Concluded") {
+        bucket.disableBtn = false;
         this.conclusionBucket();
       }
       else {
