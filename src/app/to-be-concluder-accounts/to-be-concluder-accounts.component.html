@@ -20,7 +20,8 @@
         [rowData]="AccountsList" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
         [rowSelection]="RowSelection" (firstDataRendered)="OnGridReady($event)"
         (rowClicked)="this.AccountsList[0].Bucket_Name.indexOf('Appeal') == -1 && OnRowClicked($event)"
-        [suppressColumnVirtualisation]="true"></ag-grid-angular>
+        [suppressColumnVirtualisation]="true" [frameworkComponents]="frameworkComponents"
+        (cellValueChanged)="onCellClicked($event)"></ag-grid-angular>
     </div>
     <!-- <div *ngIf="AccountsList==null">
         <h1>Fetching records</h1>

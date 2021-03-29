@@ -17,6 +17,7 @@ import { NotificationService } from './service/notification.service';
 import { NotFoundComponent } from './landing-page/not-found/not-found.component';
 import { BucketMappingComponent } from './landing-page/bucket-mapping/bucket-mapping.component';
 import { AgGridModule } from 'ag-grid-angular';
+
 import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './landing-page/dashboard/dashboard.component';
 
@@ -171,6 +172,7 @@ import { ProjectAndPriorityDashboardComponent } from './project-and-priority/pro
 import { ProjectDeactivateConfirmationComponent } from './project-and-priority/project-deactivate-confirmation/project-deactivate-confirmation.component';
 import { ProjectReallocationComponent } from './project-and-priority/project-reallocation/project-reallocation.component';
 import { ClientSupervisorSimpleReportComponent } from './landing-page/client-supervisor-simple-report/client-supervisor-simple-report.component';
+import { SelectBoxComponent } from './ag-grid/select-box/select-box.component';
 
 
 
@@ -334,7 +336,8 @@ export const MY_CUSTOM_FORMATS = {
     ProjectAndPriorityDashboardComponent,
     ProjectDeactivateConfirmationComponent,
     ProjectReallocationComponent,
-    ClientSupervisorSimpleReportComponent
+    ClientSupervisorSimpleReportComponent,
+    SelectBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -435,6 +438,6 @@ export const MY_CUSTOM_FORMATS = {
   providers: [NotificationService, CommonService, ClientUserMappingService, { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
   ],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [SelectBoxComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { filter } from 'minimatch';
 // import { ColumnGroup } from 'ag-grid-community';
 // import { parseIntAutoRadix } from '@angular/common/src/i18n/format_number';
 
@@ -25,6 +26,18 @@ export class AccountsModalComponent implements OnInit {
   savedFilterList = null;
   filterIsActive = null;
   activeFilters = 0;
+  activeFilterList = [];
+  filterSetting = {
+    singleSelection: false,
+    // idField: 'Id',
+    // textField: 'Field_Name',
+    text: "See Applied Filters",
+
+    closeDropDownOnSelection: true,
+    itemsShowLimit: 3,
+    allowSearchFilter: true
+  }
+  activeFilterObj = null;
   constructor() { }
 
   // onGridReady(params) {
@@ -123,22 +136,21 @@ export class AccountsModalComponent implements OnInit {
   }
 
   checkFilter() {
-    // this.savedFilterList = this.gridApi.getFilterModel();
-
-    // if (this.savedFilterList == null || Object.keys(this.savedFilterList).length === 0) {
-    //   sessionStorage.removeItem('agent-account-filter-list');
-    // }
-    // else {
-    //   sessionStorage.setItem('agent-account-filter-list', JSON.stringify(this.savedFilterList));
-    // }
+    this.savedFilterList = this.gridApi.getFilterModel();
+    if (this.savedFilterList == null || Object.keys(this.savedFilterList).length === 0) {
+      sessionStorage.removeItem('agent-account-filter-list');
+    }
+    else {
+      sessionStorage.setItem('agent-account-filter-list', JSON.stringify(this.savedFilterList));
+    }
   }
   restoreFilterModel() {
-    // const filterListFromLocal = sessionStorage.getItem('agent-account-filter-list');
-    // if (filterListFromLocal && filterListFromLocal.length > 0) {
-    //   this.gridApi.setFilterModel(JSON.parse(filterListFromLocal));
-    //   this.gridApi.onFilterChanged();
-    // }
-    // this.FilterChanged(event)
+    const filterListFromLocal = sessionStorage.getItem('agent-account-filter-list');
+    if (filterListFromLocal && filterListFromLocal.length > 0) {
+      this.gridApi.setFilterModel(JSON.parse(filterListFromLocal));
+      this.gridApi.onFilterChanged();
+    }
+    this.FilterChanged(event)
   }
 
   checkIfFilterExists() {
@@ -147,26 +159,46 @@ export class AccountsModalComponent implements OnInit {
   }
 
   resetFilter() {
-    // this.gridApi.setFilterModel([]);
-    // this.gridApi.onFilterChanged();
-    // this.checkFilter();
+    this.gridApi.setFilterModel([]);
+    this.gridApi.onFilterChanged();
+    this.checkFilter();
 
   }
 
   FilterChanged(event) {
-    // if (this.gridApi) {
-    //   const modelList = this.gridApi.getFilterModel();
-    //   if (modelList && Object.keys(modelList).length > 0) {
-    //     this.filterIsActive = true;
-    //     this.activeFilters = Object.keys(modelList).length;
-    //   }
-    //   else {
-    //     this.filterIsActive = false;
-    //     this.activeFilters = 0;
-    //   }
-    //   console.log('FilterChanged event : ', this.gridApi.getFilterModel(), event);
-    // }
+    if (this.gridApi) {
+      const modelList = this.gridApi.getFilterModel();
+      if (modelList && Object.keys(modelList).length > 0) {
+        this.filterIsActive = true;
+        // commented for now
+        // this.activeFilters = Object.keys(modelList).length;
+        this.activeFilterList = Object.keys(modelList);
+        this.setFilterFields(Object.keys(modelList))
+      }
+      else {
+        this.filterIsActive = false;
+        // commented for now
+        // this.activeFilters = 0;
+        // this.activeFilterList = []
+        this.setFilterFields([]);
+      }
+      console.log('FilterChanged event : ', this.gridApi.getFilterModel(), event);
+    }
+  }
 
+  setFilterFields(filterList) {
+    this.activeFilterList = filterList;
+    this.activeFilterObj = filterList;
+
+  }
+  removeFilter(filterName) {
+    console.log('filterName : ', filterName)
+    const modelList = this.gridApi.getFilterModel();
+    console.log('Before : ', modelList);
+    delete modelList[filterName];
+    console.log('After : ', modelList);
+    sessionStorage.setItem('agent-account-filter-list', JSON.stringify(modelList));
+    this.restoreFilterModel();
   }
   ActionDisable(params) {
     if (params.value == params.colDef.field2) {
@@ -212,4 +244,21 @@ export class AccountsModalComponent implements OnInit {
     }
     this.checkFilter();
   }
+
+  selectFilter() {
+    console.log('selectFilter : ', this.activeFilterList);
+    if (this.activeFilterList && this.activeFilterList.length > 0) {
+      let obj = {};
+
+    }
+    else {
+      this.resetFilter();
+    }
+
+    // this.activeFilterList= []
+  }
+  clearFilter() {
+
+  }
+
 }

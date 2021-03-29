@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { ConcluderService } from '../service/concluder.service';
 import { NotificationService } from '../service/notification.service';
+import { SelectBoxComponent } from '../ag-grid/select-box/select-box.component';
 
 @Component({
   selector: 'app-to-be-concluder-accounts',
@@ -28,14 +29,18 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   allData = [];
   activeConcluderId = null;
   oldConcluderId = null;
+  frameworkComponents
   constructor(private concluderService: ConcluderService, private notificationservice: NotificationService) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
 
   ngOnInit() {
     console.log('toBeConcluded : ', this.UserId, this.WorkingAccountId)
-    this.toBeConcluded();
     this.oldConcluderId = this.WorkingAccountId;
+    this.frameworkComponents = {
+      selectCellRenderer: SelectBoxComponent,
+    };
+    this.toBeConcluded();
   }
 
   toBeConcluded() {
@@ -78,18 +83,26 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   formatInventory() {
 
     const list = [];
-    this.allData.forEach((data) => {
+    this.allData.forEach((data, rowIndex) => {
       const obj = {};
       data.forEach((field) => {
         this.columnDefs.push({ headerName: field.Header_Name, field: field.Header_Name });
         obj[field.Header_Name] = field.Field_Value;
       });
       obj["Bucket_Name"] = "To_be_Concluded";
+      obj['testAction'] = rowIndex;
+      this.columnDefs.push(
+        {
+          headerName: "Select Status",
+          field: 'testAction',
+          cellRenderer: 'selectCellRenderer',
+        })
       list.push(obj)
     });
     this.columnDefs = _.uniqBy(this.columnDefs, (column) => {
       return column.headerName;
     });
+
     this.AccountsList = list;
     this.setFirstAccount(this.AccountsList[0], "To_be_Concluded");
   }
@@ -155,26 +168,34 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     })
   }
 
-  OnRowClicked(e) {
-    // console.log('OnRowClicked : ', e);
-    let standardFields = [];
-    const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
-    fieldList.forEach((field) => {
-      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
-        field.Is_Standard_Field = false;
-      }
-      else {
-        field.Is_Standard_Field = true;
-      }
-      // field['Column_DataType'] = fieldColumn_DataType
-      field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
-      field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
-      field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
-    });
-
-    this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Concluder_Id, fieldList, true);
+  cellClicked(params) {
+    console.log('cellClicked : ', params)
   }
 
+  OnRowClicked(e) {
+    // console.log('OnRowClicked : ', e);
+    // commented for now
+    // let standardFields = [];
+    // const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
+    // fieldList.forEach((field) => {
+    //   if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+    //     field.Is_Standard_Field = false;
+    //   }
+    //   else {
+    //     field.Is_Standard_Field = true;
+    //   }
+    //   // field['Column_DataType'] = fieldColumn_DataType
+    //   field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
+    //   field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
+    //   field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
+    // });
+
+    // this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Concluder_Id, fieldList, true);
+  }
+
+  onCellClicked(params) {
+    console.log('onCellClicked : ', params);
+  }
   GetFieldsFromAccount(bucketname, concluderId, fieldList, closePopup) {
     // this.oldConcluderId = concluderId;
     sessionStorage.removeItem('localPCN');

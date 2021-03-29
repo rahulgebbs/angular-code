@@ -4,22 +4,35 @@
     <div class="row">
         <div class="col-md-12 row p-0 grey">
             <div class="col-md-10 row col-sm-10 p-0">
-                <div class="col-md-4 heading-panel pl-10">
+                <div class="col-md-2 heading-panel pl-10">
                     <span class="text-sm text-ellipsis heading-txt flex">Account List
                     </span>
                 </div>
                 <!-- commented for future use -->
-                <!-- <div *ngIf="gridApi && filterIsActive==true" class="priorityBtn col-md-8" title="Project & Priority"
-                    (click)="resetFilter()">
-                    <div class="text">
-                        Reset Filter
-                        <div class="count">
-                            <span>
-                                {{activeFilters}}
-                            </span>
-                        </div>
+                <!-- *ngIf="gridApi && filterIsActive==true" -->
+                <!-- {{activeFilterList.length}} -->
+                <div id="filterSection" class="col-md-8 row" *ngIf="gridApi && filterIsActive==true">
+                    <div class="col-md-10" style="margin-top: 0.2rem;">
+                        <!-- <label class=" label-std control-label p-0 b-600 pl-0" for="">Filter List</label> -->
+                        <ng-multiselect-dropdown [placeholder]="'Applied Filter'" [data]="activeFilterList"
+                            [(ngModel)]="activeFilterList" [settings]="filterSetting" (onSelect)="selectFilter()"
+                            (onDeSelect)="removeFilter($event)">
+                            <!-- (onSelect)="enableSearch()"
+                            (onDeSelect)="enableSearch()" -->
+                        </ng-multiselect-dropdown>
                     </div>
-                </div> -->
+                    <button [disabled]="activeFilterObj==null || activeFilterObj.length==0"
+                        class="btn blue square-btn blue-hover btn-txt" (click)="resetFilter()">
+                        Clear Filter
+                    </button>
+                    <!-- <div [attr.disabled]="activeFilterObj==null || activeFilterObj.length==0" class="priorityBtn p-0"
+                        title="Clear Filter" (click)="resetFilter()">
+                        <div class="text">
+                            Clear Filter
+                        </div>
+                    </div> -->
+                </div>
+
             </div>
             <span class="pull-right text-right col-md-2 col-sm-2 pv-10 cursor" (click)="Close()">
                 <i class="fa fa-times" aria-hidden="true"></i>

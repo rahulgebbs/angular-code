@@ -131,6 +131,7 @@ input {
   color: #fff;
   padding: 0.5rem;
   border-right: none;
+  width: auto;
 }
 .priorityBtn .count {
   float: right;
@@ -146,4 +147,20 @@ input {
   font-size: 1.1rem;
   margin-left: 0.5rem;
   margin-right: 0.1rem;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-btn {
+  background: #fff !important;
+  border: 1px solid #fff !important;
+  padding: 2px !important;
+}
+
+:host ::ng-deep .selected-item {
+  font-size: 1rem !important;
+}
+
+#filterSection {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
