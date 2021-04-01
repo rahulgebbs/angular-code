@@ -9,17 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select-box.component.css']
 })
 export class SelectBoxComponent implements OnInit {
-  private cellValue: string;
+  cellValue = null;
   activeParams;
   optionList = [{
-    name: 'Yes',
-    value: 'yes'
-  }, {
-    name: 'No',
-    value: 'no'
-  }, {
+    name: 'Accepted',
+    value: true
+  },
+  //  {
+  //   name: 'No',
+  //   value: 'no'
+  // }, 
+  {
     name: 'Need Clarification',
-    value: 'need clarification'
+    value: false
   }]
   constructor() { }
 
@@ -28,8 +30,9 @@ export class SelectBoxComponent implements OnInit {
   // gets called once before the renderer is used
   agInit(params): void {
     // this.cellValue = this.getValueToDisplay(params);
-    console.log('agInit : ', params.value, params);
+    console.log('agInit : ', params, params.data);
     this.activeParams = params;
+    // this.cellValue = params && params.data ? params.data.Is_Read_By_Agent : null;
   }
 
   // gets called whenever the user gets the cell to refresh
@@ -47,8 +50,24 @@ export class SelectBoxComponent implements OnInit {
   //   return params.valueFormatted ? params.valueFormatted : params.value;
   // }
   changeValue() {
-    console.log('changeValue : ', this.cellValue);
-    this.activeParams.setValue(this.cellValue)
+    // if (this.cellValue != null && this.cellValue=="true") {
+    //   this.activeParams.setValue(JSON.parse(this.cellValue));
+    // }
+    // else{
+    //   this.activeParams.setValue(JSON.parse(this.cellValue));
+    // }
+    switch (this.cellValue) {
+      case true:
+        this.activeParams.setValue(true);
+        break;
+      case false:
+        this.activeParams.setValue(false);
+        break;
+
+      default:
+        break;
+    }
+    console.log('changeValue : ', this.cellValue, this.activeParams.data);
   }
 
 }

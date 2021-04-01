@@ -173,6 +173,7 @@ import { ProjectDeactivateConfirmationComponent } from './project-and-priority/p
 import { ProjectReallocationComponent } from './project-and-priority/project-reallocation/project-reallocation.component';
 import { ClientSupervisorSimpleReportComponent } from './landing-page/client-supervisor-simple-report/client-supervisor-simple-report.component';
 import { SelectBoxComponent } from './ag-grid/select-box/select-box.component';
+import { CommentConfirmationComponent } from './child-components/agent/client-update/comment-confirmation/comment-confirmation.component';
 
 
 
@@ -337,7 +338,8 @@ export const MY_CUSTOM_FORMATS = {
     ProjectDeactivateConfirmationComponent,
     ProjectReallocationComponent,
     ClientSupervisorSimpleReportComponent,
-    SelectBoxComponent
+    SelectBoxComponent,
+    CommentConfirmationComponent
   ],
   imports: [
     BrowserModule,

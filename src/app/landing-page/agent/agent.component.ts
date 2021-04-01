@@ -132,6 +132,7 @@ export class AgentComponent implements OnInit, OnDestroy {
   openPAndPModal = false;
   PNP_Inventory_Id = null;
   PNP_Inventory_Log_Id = null;
+  // showClientInstructionCommentModal = false;
   constructor(
     private router: Router,
     private notificationservice: NotificationService,
@@ -1846,4 +1847,7 @@ export class AgentComponent implements OnInit, OnDestroy {
       this.activeReasonBucket = '';
     }
   }
+  // closeCommentModal() {
+  //   this.showClientInstructionCommentModal = false;
+  // }
 }

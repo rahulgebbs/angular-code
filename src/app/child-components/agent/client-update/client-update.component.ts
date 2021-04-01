@@ -3,6 +3,7 @@ import { AgentService } from 'src/app/service/agent.service';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
 import * as moment from 'moment';
+import { SelectBoxComponent } from 'src/app/ag-grid/select-box/select-box.component';
 
 @Component({
   selector: 'app-client-update',
@@ -27,13 +28,23 @@ export class ClientUpdateComponent implements OnInit {
     { headerName: 'Instructions', field: 'Instructions' },
     { headerName: 'Active/De-Active', field: 'Is_Active', cellRenderer: this.MyCustomCellRendererClass },
     { headerName: 'Status', field: 'Type' },
-    { headerName: 'Action', field: 'Is_Read_By_Agent', cellRenderer: this.ActionCellRendererClass }
-  ]
+    // { headerName: 'Action', field: 'Is_Read_By_Agent', cellRenderer: this.ActionCellRendererClass },
+    {
+      headerName: "Action",
+      field: 'Is_Read_By_Agent',
+      cellRenderer: 'selectCellRenderer',
+    }
+  ];
+  frameworkComponents;
+  showClientInstructionCommentModal
   constructor(private service: AgentService, private notificationservice: NotificationService) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
-
+  activeRow = null;
   ngOnInit() {
+    this.frameworkComponents = {
+      selectCellRenderer: SelectBoxComponent,
+    };
     this.defaultColDef = {
       cellRenderer: showOrderCellRenderer,
       resizable: false
@@ -56,24 +67,41 @@ export class ClientUpdateComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-  onCellClicked(data) {
+  onCellClicked(statusObj) {
     let updateVlue = {
-      "Client_Id": data.data.Client_Id,
-      "Client_Instruction_Id": data.data.Id,
+      "Client_Id": statusObj.data.Client_Id,
+      "Client_Instruction_Id": statusObj.data.Id,
       "Agent_Id": this.UserId
     }
-    let actionType = data.event.target.getAttribute("data-action-type")
-    if (data.colDef.headerName == "Action" && actionType == "update") {
-      this.service.updateClientInstruction(updateVlue).subscribe(res => {
-        this.ResponseHelper.GetSuccessResponse(res);
-        data = res.json();
-        this.ClientUpdateData = data.Data;
-        this.getCount.emit('')
-      }, err => {
-        this.ResponseHelper.GetFaliureResponse(err);
+    const { data } = statusObj;
+    this.showClientInstructionCommentModal = true;
+    // let actionType = data.event.target.getAttribute("data-action-type");
+    console.log('cellValueChanged data : ', data);
+    this.activeRow = data;
+    // switch (data.Read_By) {
+    //   case true:
+    //     {
+    //       this.activeRow = 
+    //       break;
+    //     }
+    //   case false:
+    //     {
+    //       break;
+    //     }
+    //   default:
+    //     break;
+    // }
+    // if (data.colDef.headerName == "Action" && actionType == "update") {
+    //   this.service.updateClientInstruction(updateVlue).subscribe(res => {
+    //     this.ResponseHelper.GetSuccessResponse(res);
+    //     data = res.json();
+    //     this.ClientUpdateData = data.Data;
+    //     this.getCount.emit('')
+    //   }, err => {
+    //     this.ResponseHelper.GetFaliureResponse(err);
 
-      })
-    }
+    //   })
+    // }
   }
   DateFormat(params) {
     return moment(params.value).format('MM/DD/YYYY')
@@ -100,5 +128,8 @@ export class ClientUpdateComponent implements OnInit {
     }
     return eDiv;
   }
-
+  closeCommentModal() {
+    console.log('client update : closeCommentModal');
+    this.showClientInstructionCommentModal = false;
+  }
 }

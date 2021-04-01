@@ -1,5 +1,5 @@
 <select name="" id="" [(ngModel)]="cellValue" (change)="changeValue()">
-  <option value="">Select</option>
-  <option *ngFor="let option of optionList" [value]="option.value">{{option.name}}</option>
+  <option [ngValue]="null" disabled>Select</option>
+  <option *ngFor="let option of optionList" [ngValue]="option.value">{{option.name}}</option>
 
 </select>

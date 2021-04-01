@@ -29,7 +29,8 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   allData = [];
   activeConcluderId = null;
   oldConcluderId = null;
-  frameworkComponents
+  frameworkComponents;
+
   constructor(private concluderService: ConcluderService, private notificationservice: NotificationService) {
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
   }
@@ -63,6 +64,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
       this.AccountsList = [];
     });
   }
+
   Close() {
     this.CloseConcluderModal.emit(false);
   }
@@ -81,7 +83,6 @@ export class ToBeConcluderAccountsComponent implements OnInit {
   }
 
   formatInventory() {
-
     const list = [];
     this.allData.forEach((data, rowIndex) => {
       const obj = {};
@@ -90,13 +91,13 @@ export class ToBeConcluderAccountsComponent implements OnInit {
         obj[field.Header_Name] = field.Field_Value;
       });
       obj["Bucket_Name"] = "To_be_Concluded";
-      obj['testAction'] = rowIndex;
-      this.columnDefs.push(
-        {
-          headerName: "Select Status",
-          field: 'testAction',
-          cellRenderer: 'selectCellRenderer',
-        })
+      // obj['testAction'] = rowIndex;
+      // this.columnDefs.push(
+      //   {
+      //     headerName: "Select Status",
+      //     field: 'testAction',
+      //     cellRenderer: 'selectCellRenderer',
+      //   })
       list.push(obj)
     });
     this.columnDefs = _.uniqBy(this.columnDefs, (column) => {
@@ -168,34 +169,32 @@ export class ToBeConcluderAccountsComponent implements OnInit {
     })
   }
 
-  cellClicked(params) {
-    console.log('cellClicked : ', params)
-  }
 
   OnRowClicked(e) {
-    // console.log('OnRowClicked : ', e);
-    // commented for now
-    // let standardFields = [];
-    // const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
-    // fieldList.forEach((field) => {
-    //   if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
-    //     field.Is_Standard_Field = false;
-    //   }
-    //   else {
-    //     field.Is_Standard_Field = true;
-    //   }
-    //   // field['Column_DataType'] = fieldColumn_DataType
-    //   field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
-    //   field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
-    //   field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
-    // });
+    console.log('OnRowClicked : ', e);
+    // will be commented for testing
+    let standardFields = [];
+    const fieldList = this.allData && this.allData.length > 0 ? this.allData[e.rowIndex] : [];
+    fieldList.forEach((field) => {
+      if (field.Header_Name == 'Concluder_Id' || field.Header_Name == 'Bucket_Id' || field.Header_Name == 'Allocated_To' || field.Header_Name == 'Allocated_On') {
+        field.Is_Standard_Field = false;
+      }
+      else {
+        field.Is_Standard_Field = true;
+      }
+      // field['Column_DataType'] = fieldColumn_DataType
+      field['Display_Name'] = field.Display_Name == null || field.Display_Name.length == 0 ? field.Header_Name : '';
+      field['Is_View_Allowed_Agent'] = field.Is_View_Allowed_Agent == null ? true : false;
+      field['FieldValue'] = field.FieldValue == null ? field.Field_Value : null;
+    });
 
-    // this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Concluder_Id, fieldList, true);
+    this.GetFieldsFromAccount(e.data.Bucket_Name, e.data.Concluder_Id, fieldList, true);
   }
 
   onCellClicked(params) {
     console.log('onCellClicked : ', params);
   }
+
   GetFieldsFromAccount(bucketname, concluderId, fieldList, closePopup) {
     // this.oldConcluderId = concluderId;
     sessionStorage.removeItem('localPCN');
@@ -220,6 +219,7 @@ export class ToBeConcluderAccountsComponent implements OnInit {
         this.CloseConcluderModal.emit(closePopup);
     }
   }
+
   saveIntoLocal() {
     sessionStorage.setItem('concluderAccounts', JSON.stringify(this.allData));
   }
