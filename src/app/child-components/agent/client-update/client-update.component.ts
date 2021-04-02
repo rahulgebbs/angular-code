@@ -28,12 +28,15 @@ export class ClientUpdateComponent implements OnInit {
     { headerName: 'Instructions', field: 'Instructions' },
     { headerName: 'Active/De-Active', field: 'Is_Active', cellRenderer: this.MyCustomCellRendererClass },
     { headerName: 'Status', field: 'Type' },
-    // { headerName: 'Action', field: 'Is_Read_By_Agent', cellRenderer: this.ActionCellRendererClass },
-    {
-      headerName: "Action",
-      field: 'Is_Read_By_Agent',
-      cellRenderer: 'selectCellRenderer',
-    }
+    { headerName: 'Action', field: 'Is_Read_By_Agent', cellRenderer: this.ActionCellRendererClass },
+    /*
+    commented for release
+    */
+    // {
+    //   headerName: "Action",
+    //   field: 'Is_Read_By_Agent',
+    //   cellRenderer: 'selectCellRenderer',
+    // }
   ];
   frameworkComponents;
   showClientInstructionCommentModal
@@ -74,38 +77,43 @@ export class ClientUpdateComponent implements OnInit {
       "Agent_Id": this.UserId
     }
     const { data } = statusObj;
-    this.showClientInstructionCommentModal = true;
-    // let actionType = data.event.target.getAttribute("data-action-type");
+    let actionType = statusObj.event.target.getAttribute("data-action-type");
     console.log('cellValueChanged data : ', data);
+    /*
+     commented for UAT
+    this.showClientInstructionCommentModal = true;
     this.activeRow = data;
-    // switch (data.Read_By) {
-    //   case true:
-    //     {
-    //       this.activeRow = 
-    //       break;
-    //     }
-    //   case false:
-    //     {
-    //       break;
-    //     }
-    //   default:
-    //     break;
-    // }
-    // if (data.colDef.headerName == "Action" && actionType == "update") {
-    //   this.service.updateClientInstruction(updateVlue).subscribe(res => {
-    //     this.ResponseHelper.GetSuccessResponse(res);
-    //     data = res.json();
-    //     this.ClientUpdateData = data.Data;
-    //     this.getCount.emit('')
-    //   }, err => {
-    //     this.ResponseHelper.GetFaliureResponse(err);
+    switch (data.Read_By) {
+      case true:
+        {
+          this.activeRow = 
+          break;
+        }
+      case false:
+        {
+          break;
+        }
+      default:
+        break;
+    }
+    */
+    if (statusObj.colDef.headerName == "Action" && actionType == "update") {
+      this.service.updateClientInstruction(updateVlue).subscribe(res => {
+        this.ResponseHelper.GetSuccessResponse(res);
+        statusObj = res.json();
+        this.ClientUpdateData = statusObj.Data;
+        this.getCount.emit('')
+      }, err => {
+        this.ResponseHelper.GetFaliureResponse(err);
 
-    //   })
-    // }
+      })
+    }
   }
+
   DateFormat(params) {
     return moment(params.value).format('MM/DD/YYYY')
   }
+
   MyCustomCellRendererClass(params) {
     let val
     if (params.value) {

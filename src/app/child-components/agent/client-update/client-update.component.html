@@ -22,11 +22,14 @@
               [rowData]="ClientUpdateData" [columnDefs]="columnDefs" [suppressDragLeaveHidesColumns]="true"
               [suppressDragLeaveHidesColumns]="true" [rowSelection]="rowSelection" (gridReady)="onGridReady($event)"
               [suppressColumnVirtualisation]="true" [frameworkComponents]="frameworkComponents"
-              (cellValueChanged)="onCellClicked($event)">
+              (cellClicked)='onCellClicked($event)'>
               <!--
                 commented for betterment
                  (cellClicked)='onCellClicked($event)' 
                 -->
+              <!-- commented for UAT release
+                   (cellValueChanged)="onCellClicked($event)" 
+                  -->
             </ag-grid-angular>
           </div>
         </div>
@@ -34,6 +37,7 @@
     </div>
   </div>
 </div>
-
-<app-comment-confirmation *ngIf="showClientInstructionCommentModal && activeRow" [activeRow]="activeRow" (close)="closeCommentModal()">
-</app-comment-confirmation>
+<!-- commented for UAT release -->
+<!-- <app-comment-confirmation *ngIf="showClientInstructionCommentModal && activeRow" [activeRow]="activeRow"
+  (close)="closeCommentModal()">
+</app-comment-confirmation> -->
