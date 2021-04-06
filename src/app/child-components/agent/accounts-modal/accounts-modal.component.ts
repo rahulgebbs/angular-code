@@ -161,7 +161,9 @@ export class AccountsModalComponent implements OnInit {
   resetFilter() {
     this.gridApi.setFilterModel([]);
     this.gridApi.onFilterChanged();
-    this.checkFilter();
+    setTimeout(() => {
+      this.checkFilter();
+    }, 100);
 
   }
 
@@ -260,5 +262,19 @@ export class AccountsModalComponent implements OnInit {
   clearFilter() {
 
   }
-
+  onDeSelect() {
+    console.log('this.filterIsActive :', this.filterIsActive);
+    this.filterIsActive = false;
+    this.resetFilter();
+    // commented for now
+    // this.activeFilters = 0;
+    // this.activeFilterList = []
+    // this.setFilterFields([]);
+  }
+  onDropDownClose(event) {
+    console.log('onDropDownClose event : ', this.activeFilterList);
+    if (this.activeFilterList && this.activeFilterList.length == 0) {
+      this.resetFilter();
+    }
+  }
 }

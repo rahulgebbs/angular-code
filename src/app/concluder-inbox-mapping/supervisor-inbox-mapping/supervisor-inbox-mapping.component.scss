@@ -6,6 +6,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
+
+  form {
+    width: 100%;
+  }
 
   .form-group {
     // margin-right: 1rem;
@@ -13,6 +18,7 @@
 
     label {
       margin-right: 0.5rem;
+      font-weight: bold;
     }
   }
 }
@@ -20,6 +26,7 @@
 /* report section*/
 #reportSection {
   margin-bottom: 2rem;
+  border: 1px solid #cfcfcf;
 
   #noReport {
     text-align: center;
@@ -90,9 +97,10 @@ i {
   // max-height: 425px !important;
   max-height: 70vh !important;
   font: 13px "open sans";
-
-  color: #333333;
   overflow-y: auto;
+  overflow-x: hidden;
+  color: #333333;
+  //   overflow-y: auto;
 }
 
 th,
@@ -156,6 +164,17 @@ td {
   }
 }
 
+#rowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  button {
+    margin-top: 2rem;
+  }
+}
+
 .fetchingMsg {
   text-align: center;
 
@@ -189,3 +208,13 @@ td {
   key to great success, achievement, respect, status and happiness in
   life
   */
+
+h1 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 36px;
+}
+
+.textAlignLeft {
+  text-align: left !important;
+}

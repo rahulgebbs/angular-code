@@ -55,6 +55,7 @@ export const Access = {
   "deallocate-module": ["Admin", "Supervisor"],
   "project-and-priority-report": ["Supervisor", "Admin"],
   "project-and-priority-dashboard": ["Supervisor", "Admin"],
-  "client-simple-report": ["Client Supervisor"]
+  "client-simple-report": ["Client Supervisor"],
+  "supervisor-inbox-mapping": ["Supervisor", "Admin"]
 };
   //add new role here

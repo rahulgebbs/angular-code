@@ -1,0 +1,155 @@
+<div id="reportContainer" class="container-fluid">
+  <h1 id="title">Concluder Inbox Mapping</h1>
+
+  <div id="reportSection" style="width:60%;margin:auto;">
+    <!-- <h1 id="noReport"> Report Will come here !</h1> -->
+    <div class="container-fluid p-0">
+      <div class="row table-responsive-lg" id="tableContainer">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>category</th>
+              <th>queue</th>
+              <th>inbox</th>
+              <th>count</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let category of treeData">
+
+              <tr class="clientColor">
+                <td class="textAlignLeft">
+                  <i title="Expand Client" (click)="toggleNodes(category,'manager')" class="fa"
+                    [ngClass]="{'fa-plus' : !category.isExpanded,'fa-minus' : category.isExpanded==true}"></i>
+                  {{category.category || 'N/A'}}
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  {{category.count || 'N/A'}}
+                </td>
+              </tr>
+
+              <ng-container *ngIf="category.isExpanded==true">
+                <!-- show if client has queue START-->
+                <ng-container *ngFor="let queue of category.queueList">
+                  <tr class="managerColor">
+                    <td></td>
+                    <td class="textAlignLeft">
+                      <!-- class="paddingLeft-03" -->
+                      <i (click)="toggleNodes(queue,'supervisor')" class="fa"
+                        [ngClass]="{'fa-plus' : !queue.isExpanded,'fa-minus' : queue.isExpanded==true}"></i>
+                      <!-- <p class="tdItem"> -->
+                      {{queue.queue}}
+                      <!-- </p> -->
+                    </td>
+                    <td></td>
+                    <td>
+                      {{queue.count || 'N/A'}}
+                    </td>
+
+                  </tr>
+                  <ng-container *ngIf="queue.isExpanded==true">
+                    <tr class="">
+                      <td>&nbsp;&nbsp;</td>
+                      <td>&nbsp;&nbsp;</td>
+                      <td style="border: 1px solid !important;">Select Box will be here</td>
+                      <td></td>
+                    </tr>
+                    <ng-container *ngFor="let inbox of queue.inboxList">
+                      <tr class="supervisorColor">
+                        <td>&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td class="">
+                          <!-- class="paddingLeft-04" -->
+                          <!-- <i (click)="toggleNodes(supervisor,'agent')" class="fa" [ngClass]="{'fa-plus' : !inbox.isExpanded,'fa-minus' : inbox.isExpanded==true}"></i> -->
+                          <!-- <p class="tdItem"> -->
+                          {{inbox.inbox}}
+                          <!-- </p> -->
+                        </td>
+                        <td>{{inbox.count}}</td>
+                      </tr>
+                    </ng-container>
+                    <!-- show  if manager has no supervisor START-->
+                    <ng-container class="noData" *ngIf="queue && queue.inboxList && queue.inboxList.length==0">
+                      <tr class="noData">
+                        <td colspan="12">
+                          <!-- show if supervisor is fetched by http request START-->
+                          <h3 class="fetchingMsg" *ngIf="queue.httpStatus==true">
+                            <i class="fa fa-refresh fa-spin fa-3x"></i>
+                          </h3>
+                          <!-- <h3 *ngIf="queue.httpStatus==true">Fetching Supervisors</h3> -->
+                          <!-- show if supervisor is fetched by http request END-->
+
+                          <!-- show if supervisor is not in manager START-->
+                          <h3 class="fetchingMsg" *ngIf="queue.httpStatus==false">
+                            <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Supervisors to show
+                          </h3>
+                          <!-- show if supervisor is not in manager END-->
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <!-- show  if manager has no supervisor END-->
+                  </ng-container>
+
+
+
+                </ng-container>
+                <!-- show if client has manager END-->
+
+                <!-- show  if client has no manager START-->
+                <ng-container class="noData" *ngIf="category.queueList && category.queueList.length==0">
+                  <tr class="noData">
+                    <td colspan="12">
+                      <!-- show if managers is fetched by http request START-->
+                      <h3 class="fetchingMsg" *ngIf="category.httpStatus==true">
+                        <i class="fa fa-refresh fa-spin fa-3x"></i>
+                      </h3>
+                      <!-- <h3 *ngIf="category.httpStatus==true">Fetching Managers</h3> -->
+                      
+                      <!-- show if managers is fetched by http request END-->
+                      <!-- show if manager is not in client START-->
+                      <h3 class="fetchingMsg" *ngIf="category.httpStatus==false">
+                        <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Queues to show</h3>
+                      <!-- show if manager is not in client END-->
+                    </td>
+                  </tr>
+                </ng-container>
+                <!-- show  if client has no manager END-->
+
+              </ng-container>
+
+            </ng-container>
+
+            <!-- show  if client has no manager START-->
+            <ng-container class="noData" *ngIf="treeData && treeData.length==0 && httpStatus!=null">
+              <tr class="noData">
+                <td colspan="12">
+                  <!-- show if managers is fetched by http request START-->
+                  <h3 class="fetchingMsg" *ngIf="httpStatus==true">
+                    <i class="fa fa-refresh fa-spin fa-3x"></i>
+                  </h3>
+                  <!-- <h3 *ngIf="httpStatus==true">Fetching Client report</h3> -->
+
+                  <!-- show if managers is fetched by http request END-->
+
+                  <!-- show if manager is not in client START-->
+                  <h3 class="fetchingMsg" *ngIf="httpStatus==false">
+                    <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+                    No Report for client
+                  </h3>
+                  <!-- show if manager is not in client END-->
+                </td>
+              </tr>
+            </ng-container>
+            <!-- show  if client has no manager END-->
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>

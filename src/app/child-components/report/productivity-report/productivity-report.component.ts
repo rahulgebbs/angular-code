@@ -310,6 +310,7 @@ export class ProductivityReportComponent implements OnInit {
         });
         nodeObj.agent = agentList;
         nodeObj.httpStatus = false;
+        console.log('treeData : ', JSON.stringify(this.treeData));
     }
 
 

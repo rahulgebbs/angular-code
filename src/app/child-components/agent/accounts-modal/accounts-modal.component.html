@@ -16,7 +16,7 @@
                         <!-- <label class=" label-std control-label p-0 b-600 pl-0" for="">Filter List</label> -->
                         <ng-multiselect-dropdown [placeholder]="'Applied Filter'" [data]="activeFilterList"
                             [(ngModel)]="activeFilterList" [settings]="filterSetting" (onSelect)="selectFilter()"
-                            (onDeSelect)="removeFilter($event)">
+                            (onDeSelect)="removeFilter($event)" (onSelectAll)="onDeSelect()" (onDropDownClose)="onDropDownClose($event)">
                             <!-- (onSelect)="enableSearch()"
                             (onDeSelect)="enableSearch()" -->
                         </ng-multiselect-dropdown>

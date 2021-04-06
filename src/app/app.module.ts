@@ -174,6 +174,7 @@ import { ProjectReallocationComponent } from './project-and-priority/project-rea
 import { ClientSupervisorSimpleReportComponent } from './landing-page/client-supervisor-simple-report/client-supervisor-simple-report.component';
 import { SelectBoxComponent } from './ag-grid/select-box/select-box.component';
 import { CommentConfirmationComponent } from './child-components/agent/client-update/comment-confirmation/comment-confirmation.component';
+import { SupervisorInboxMappingComponent } from './concluder-inbox-mapping/supervisor-inbox-mapping/supervisor-inbox-mapping.component';
 
 
 
@@ -339,7 +340,8 @@ export const MY_CUSTOM_FORMATS = {
     ProjectReallocationComponent,
     ClientSupervisorSimpleReportComponent,
     SelectBoxComponent,
-    CommentConfirmationComponent
+    CommentConfirmationComponent,
+    SupervisorInboxMappingComponent
   ],
   imports: [
     BrowserModule,
@@ -431,6 +433,8 @@ export const MY_CUSTOM_FORMATS = {
       { path: 'project-and-priority-report', component: ProjectAndPriorityReportComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-report'] } },
       { path: 'project-and-priority-dashboard', component: ProjectAndPriorityDashboardComponent, canActivate: [AuthGuard], data: { route: ['project-and-priority-dashboard'] } },
       { path: 'client-simple-report', component: ClientSupervisorSimpleReportComponent, canActivate: [AuthGuard], data: { route: ['client-simple-report'] } },
+      { path: 'supervisor-inbox-mapping', component: SupervisorInboxMappingComponent, canActivate: [AuthGuard], data: { route: ['supervisor-inbox-mapping'] } },
+      // SupervisorInboxAppingComponent
       { path: '**', component: NotFoundComponent }
 
     ]),
