@@ -426,38 +426,28 @@ export class SupervisorInboxMappingComponent implements OnInit {
     }
   }
 
-  toggleNodes(nodeObj, role) {
-    console.log('nodeObj, role : ', nodeObj, nodeObj[role], JSON.stringify(this.treeData));
-    const list = nodeObj[role];
+  toggleNodes(nodeObj, key) {
+    console.log('nodeObj, role : ', nodeObj, nodeObj[key], JSON.stringify(this.treeData));
+    const list = nodeObj[key];
     nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
     if (list && list.length > 0) {
       // alert('No '+role.toUpperCase()+' to show');
       return false;
     }
     nodeObj.httpStatus = true;
-    switch (role) {
-      case 'manager': {
-        nodeObj.manager = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getManagers(nodeObj);
+    switch (key) {
+      case 'queue': {
+        nodeObj.queueList = [];
+        this.getQueues(nodeObj);
         break;
       }
-      case 'supervisor': {
-        nodeObj.supervisor = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getSupervisors(nodeObj)
+      case 'inbox': {
+        nodeObj.inboxList = [];
+
+        this.getInboxes(nodeObj)
         break;
       }
-      case 'agent': {
-        nodeObj.agent = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getAgents(nodeObj);
-        break;
-      }
-      case 'dateRangeList': {
-        this.getAgentReport(nodeObj)
-        break;
-      }
+
       default:
         break;
     }
@@ -482,13 +472,13 @@ export class SupervisorInboxMappingComponent implements OnInit {
       case 'manager': {
         // nodeObj.manager = [];
         // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getManagers(nodeObj);
+        this.getQueues(nodeObj);
         break;
       }
       case 'supervisor': {
         nodeObj.supervisor = [];
         // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getSupervisors(nodeObj)
+        this.getInboxes(nodeObj)
         break;
       }
       case 'agent': {
@@ -595,44 +585,44 @@ export class SupervisorInboxMappingComponent implements OnInit {
     console.log('getClientList : ', this.treeData);
   }
 
-  getManagers(nodeObj) {
+  getQueues(nodeObj) {
     // nodeObj.httpStatus = true;
-    console.log('getManagers : ', nodeObj);
-    this.clientService.getManagerProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], 1, this.startDate, this.endDate).subscribe((response) => {
-      console.log('response : ', response);
-      this.setManager(nodeObj, response.Data.manager_InventoryList_count);
-    }, (error) => {
-      console.log('error : ', error);
-      nodeObj.httpStatus = false;
-      nodeObj.refreshStatus = false;
-      this.ResponseHelper.GetFaliureResponse(error);
-      nodeObj.manager = [];
-    });
+    console.log('getQueues : ', nodeObj);
+    // this.clientService.getManagerProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], 1, this.startDate, this.endDate).subscribe((response) => {
+    //   console.log('response : ', response);
+    //   this.setQueues(nodeObj, response.Data.manager_InventoryList_count);
+    // }, (error) => {
+    //   console.log('error : ', error);
+    //   nodeObj.httpStatus = false;
+    //   nodeObj.refreshStatus = false;
+    //   this.ResponseHelper.GetFaliureResponse(error);
+    //   nodeObj.manager = [];
+    // });
   }
 
-  setManager(nodeObj, managerList) {
-    console.log('setManager : ', nodeObj, managerList);
-    managerList.forEach((element: any) => {
-      element.supervisor = []
+  setQueues(nodeObj, queueList) {
+    console.log('setQueues : ', nodeObj, queueList);
+    queueList.forEach((element: any) => {
+      element.inboxList = []
     });
-    nodeObj.manager = managerList;
+    nodeObj.queueList = queueList;
     nodeObj.httpStatus = false;
     nodeObj.refreshStatus = false;
   }
 
-  getSupervisors(nodeObj) {
-    console.log('getSupervisors nodeObj : ', nodeObj);
+  getInboxes(nodeObj) {
+    console.log('getInboxes nodeObj : ', nodeObj);
     // nodeObj.httpStatus = true;
-    const { startDate, endDate } = this.productivityForm.value;
-    this.clientService.getSupervisorProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, this.startDate, this.endDate).subscribe((response) => {
-      console.log('response : ', response)
-      this.setSupervisor(nodeObj, response.Data.manager_InventoryList_count);
-    }, (error) => {
-      console.log('error : ', error);
-      nodeObj.httpStatus = false;
-      nodeObj.supervisor = [];
-      this.ResponseHelper.GetFaliureResponse(error);
-    })
+    // const { startDate, endDate } = this.productivityForm.value;
+    // this.clientService.getSupervisorProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, this.startDate, this.endDate).subscribe((response) => {
+    //   console.log('response : ', response)
+    //   this.setSupervisor(nodeObj, response.Data.manager_InventoryList_count);
+    // }, (error) => {
+    //   console.log('error : ', error);
+    //   nodeObj.httpStatus = false;
+    //   nodeObj.supervisor = [];
+    //   this.ResponseHelper.GetFaliureResponse(error);
+    // })
   }
 
   setSupervisor(nodeObj, supervisorList) {

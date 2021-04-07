@@ -1,15 +1,15 @@
 <div class="white container-fluid">
   <div class="lock-screen">
     <div class="animate fadeIn text-center">
-      <div class="col-md-12 p-0">
+      <div class="row p-0">
         <div id="bgImage" class="col-md-9 blue-seprator">
-          <img src="../../../assets/images/RCM_1.jpg" class="img-responsive">
+          <img src="../../../assets/images/RCM_1.jpg" class="img-fluid">
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3">
           <div id="enableTwoFactor">
             <ng-container *ngIf="activeUser && activeUser.enableTFAuth">
               <div *ngIf="activeUser.enableTFAuth.status=='incomplete'">
-                <h4>
+                <h4 style="margin-top: 1rem !important;font-size: 1.8rem !important;">
                   Scan this barcode with your app.
                 </h4>
                 <h6>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
 
-                  <label for="">Enter Passcode</label>
+                  <label for="" style="font-weight: bold">Enter Passcode</label>
                   <input [(ngModel)]="passcode" class="form-control" placeholder="eg. 512364" type="text" name="" id=""
                     maxlength="6">
                 </div>
@@ -54,7 +54,7 @@
                   </h4>
                 </div>
                 <div class="form-group">
-                  <label for="">Enter Passcode</label>
+                  <label for="" style="font-weight: bold">Enter Passcode</label>
                   <input [(ngModel)]="passcode" class="form-control" placeholder="eg. 512364" type="text" name="" id=""
                     maxlength="6">
                 </div>

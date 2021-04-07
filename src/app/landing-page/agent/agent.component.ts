@@ -854,7 +854,7 @@ export class AgentComponent implements OnInit, OnDestroy {
         let data = res.json()
         this.DenialCodes = data.Data
       }, err => {
-        this.ResponseHelper.GetFaliureResponse(err);
+        // this.ResponseHelper.GetFaliureResponse(err);
       })
     }
   }
