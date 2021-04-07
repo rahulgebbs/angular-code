@@ -1,5 +1,5 @@
 <div id="reportContainer" class="container-fluid">
-  <h1 id="title">Concluder Inbox Mapping</h1>
+  <h4 id="title">Concluder Inbox Mapping</h4>
 
   <div id="reportSection" style="width:60%;margin:auto;">
     <!-- <h1 id="noReport"> Report Will come here !</h1> -->
@@ -12,15 +12,13 @@
               <th>queue</th>
               <th>inbox</th>
               <th>count</th>
-
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let category of treeData">
-
+            <ng-container *ngFor="let category of treeData;let categoryIndex=index">
               <tr class="clientColor">
                 <td class="textAlignLeft">
-                  <i title="Expand Client" (click)="toggleNodes(category,'manager')" class="fa"
+                  <i title="Expand Client" (click)="toggleNodes(category,'queue')" class="fa"
                     [ngClass]="{'fa-plus' : !category.isExpanded,'fa-minus' : category.isExpanded==true}"></i>
                   {{category.category || 'N/A'}}
                 </td>
@@ -30,15 +28,14 @@
                   {{category.count || 'N/A'}}
                 </td>
               </tr>
-
               <ng-container *ngIf="category.isExpanded==true">
                 <!-- show if client has queue START-->
-                <ng-container *ngFor="let queue of category.queueList">
+                <ng-container *ngFor="let queue of category.queueList;let queueIndex=index">
                   <tr class="managerColor">
                     <td></td>
                     <td class="textAlignLeft">
                       <!-- class="paddingLeft-03" -->
-                      <i (click)="toggleNodes(queue,'supervisor')" class="fa"
+                      <i (click)="toggleNodes(queue,'inbox')" class="fa"
                         [ngClass]="{'fa-plus' : !queue.isExpanded,'fa-minus' : queue.isExpanded==true}"></i>
                       <!-- <p class="tdItem"> -->
                       {{queue.queue}}
@@ -51,30 +48,63 @@
 
                   </tr>
                   <ng-container *ngIf="queue.isExpanded==true">
-                    <tr class="">
+                    <tr class="" *ngIf="queue.inboxList && queue.inboxList.length>0">
                       <td>&nbsp;&nbsp;</td>
                       <td>&nbsp;&nbsp;</td>
-                      <td style="border: 1px solid !important;">Select Box will be here</td>
+                      <td>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-primary searchBtn" type="button">
+                              <i class="fa fa-search"></i>
+                            </button>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Search Inboxes"
+                            [(ngModel)]="queue.inboxName" (keyup)="matchInbox(queue)">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary searchBtn" type="button">
+                              <i class="fa fa-arrow-up"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <!-- <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="fa fa-search">
+                            </span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Recipient's username"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <span class="fa fa-sort-up">
+                            </span>
+                          </div>
+                        </div> -->
+                      </td>
                       <td></td>
                     </tr>
-                    <ng-container *ngFor="let inbox of queue.inboxList">
-                      <tr class="supervisorColor">
+                    <ng-container *ngFor="let inbox of queue.inboxList;let inboxIndex=index">
+                      <tr class="supervisorColor" *ngIf="inbox.show==null || inbox.show==true">
                         <td>&nbsp;&nbsp;</td>
                         <td>&nbsp;&nbsp;</td>
-                        <td class="">
+                        <td class="textAlignLeft">
                           <!-- class="paddingLeft-04" -->
                           <!-- <i (click)="toggleNodes(supervisor,'agent')" class="fa" [ngClass]="{'fa-plus' : !inbox.isExpanded,'fa-minus' : inbox.isExpanded==true}"></i> -->
                           <!-- <p class="tdItem"> -->
-                          {{inbox.inbox}}
+                          <label for="check{{categoryIndex}}{{queueIndex}}{{index}}"><input
+                              id="check{{categoryIndex}}{{queueIndex}}{{index}}" [(ngModel)]="inbox.status"
+                              type="checkbox">
+                            {{inbox.inbox}}
+                          </label>
+
                           <!-- </p> -->
                         </td>
                         <td>{{inbox.count}}</td>
                       </tr>
+                      <!-- <tr></tr> -->
                     </ng-container>
                     <!-- show  if manager has no supervisor START-->
                     <ng-container class="noData" *ngIf="queue && queue.inboxList && queue.inboxList.length==0">
                       <tr class="noData">
-                        <td colspan="12">
+                        <td colspan="4">
                           <!-- show if supervisor is fetched by http request START-->
                           <h3 class="fetchingMsg" *ngIf="queue.httpStatus==true">
                             <i class="fa fa-refresh fa-spin fa-3x"></i>
@@ -84,7 +114,7 @@
 
                           <!-- show if supervisor is not in manager START-->
                           <h3 class="fetchingMsg" *ngIf="queue.httpStatus==false">
-                            <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Supervisors to show
+                            <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Inboxes to show
                           </h3>
                           <!-- show if supervisor is not in manager END-->
                         </td>
@@ -101,13 +131,13 @@
                 <!-- show  if client has no manager START-->
                 <ng-container class="noData" *ngIf="category.queueList && category.queueList.length==0">
                   <tr class="noData">
-                    <td colspan="12">
+                    <td colspan="4">
                       <!-- show if managers is fetched by http request START-->
                       <h3 class="fetchingMsg" *ngIf="category.httpStatus==true">
                         <i class="fa fa-refresh fa-spin fa-3x"></i>
                       </h3>
                       <!-- <h3 *ngIf="category.httpStatus==true">Fetching Managers</h3> -->
-                      
+
                       <!-- show if managers is fetched by http request END-->
                       <!-- show if manager is not in client START-->
                       <h3 class="fetchingMsg" *ngIf="category.httpStatus==false">
@@ -125,7 +155,7 @@
             <!-- show  if client has no manager START-->
             <ng-container class="noData" *ngIf="treeData && treeData.length==0 && httpStatus!=null">
               <tr class="noData">
-                <td colspan="12">
+                <td colspan="4">
                   <!-- show if managers is fetched by http request START-->
                   <h3 class="fetchingMsg" *ngIf="httpStatus==true">
                     <i class="fa fa-refresh fa-spin fa-3x"></i>
@@ -137,7 +167,7 @@
                   <!-- show if manager is not in client START-->
                   <h3 class="fetchingMsg" *ngIf="httpStatus==false">
                     <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
-                    No Report for client
+                    No Categories to show
                   </h3>
                   <!-- show if manager is not in client END-->
                 </td>

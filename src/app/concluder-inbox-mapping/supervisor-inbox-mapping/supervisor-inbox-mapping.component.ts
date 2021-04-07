@@ -23,12 +23,34 @@ export class SupervisorInboxMappingComponent implements OnInit {
       "id": 1,
       "category": "Denied",
       "count": 600,
-      "isExpanded": true,
-      "queueList": [
+      "isExpanded": false,
+      "backupList": [
         {
           "queue": "Denial_Payer Issue",
           "count": 200,
-          "isExpanded": true,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -55,8 +77,29 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Provider Issue",
           "count": 150,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -83,8 +126,182 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Patient Issue",
           "count": 150,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Coding Issue",
+          "count": 100
+        }
+      ],
+      "queueList": [
+        {
+          "queue": "Denial_Payer Issue",
+          "count": 200,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Provider Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Patient Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -118,13 +335,34 @@ export class SupervisorInboxMappingComponent implements OnInit {
       "id": 2,
       "category": "No Response",
       "count": 500,
-      "isExpanded": true,
-      "queueList": [
+      "isExpanded": false,
+      "backupList": [
         {
           "queue": "Denial_Payer Issue",
           "count": 200,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -151,8 +389,29 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Provider Issue",
           "count": 150,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -179,8 +438,29 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Patient Issue",
           "count": 150,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -206,8 +486,159 @@ export class SupervisorInboxMappingComponent implements OnInit {
         },
         {
           "queue": "Denial_Coding Issue",
-          "isExpanded": true,
-
+          "count": 100
+        }
+      ],
+      "queueList": [
+        {
+          "queue": "Denial_Payer Issue",
+          "count": 200,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Provider Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Patient Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Coding Issue",
           "count": 100
         }
       ]
@@ -216,13 +647,34 @@ export class SupervisorInboxMappingComponent implements OnInit {
       "id": 3,
       "category": "Rejections",
       "count": 100,
-      "isExpanded": true,
-      "queueList": [
+      "isExpanded": false,
+      "backupList": [
         {
           "queue": "Denial_Payer Issue",
           "count": 200,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -249,8 +701,29 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Provider Issue",
           "count": 150,
-          "isExpanded": true,
-
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -277,7 +750,29 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Patient Issue",
           "count": 150,
-          "isExpanded": true,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -303,21 +798,36 @@ export class SupervisorInboxMappingComponent implements OnInit {
         },
         {
           "queue": "Denial_Coding Issue",
-          "count": 100,
-          "isExpanded": true
+          "count": 100
         }
-      ]
-    },
-    {
-      "id": 4,
-      "category": "Paid",
-      "count": 1200,
-      "isExpanded": true,
+      ],
       "queueList": [
         {
           "queue": "Denial_Payer Issue",
           "count": 200,
-          "isExpanded": true,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -344,7 +854,78 @@ export class SupervisorInboxMappingComponent implements OnInit {
         {
           "queue": "Denial_Provider Issue",
           "count": 150,
-          "isExpanded": true,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Patient Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
           "inboxList": [
             {
               "inbox": "110 | M42",
@@ -370,7 +951,318 @@ export class SupervisorInboxMappingComponent implements OnInit {
         },
         {
           "queue": "Denial_Coding Issue",
-          "isExpanded": true,
+          "count": 100
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "Paid",
+      "count": 1200,
+      "isExpanded": false,
+      "backupList": [
+        {
+          "queue": "Denial_Payer Issue",
+          "count": 200,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Provider Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Patient Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Coding Issue",
+          "count": 100
+        }
+      ],
+      "queueList": [
+        {
+          "queue": "Denial_Payer Issue",
+          "count": 200,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Provider Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Patient Issue",
+          "count": 150,
+          "isExpanded": false,
+          "backupList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ],
+          "inboxList": [
+            {
+              "inbox": "110 | M42",
+              "count": 30
+            },
+            {
+              "inbox": "80 | N229",
+              "count": 20
+            },
+            {
+              "inbox": "16 | MA115",
+              "count": 10
+            },
+            {
+              "inbox": "B7 | N95",
+              "count": 50
+            },
+            {
+              "inbox": "58 | N970",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "queue": "Denial_Coding Issue",
           "count": 100
         }
       ]
@@ -397,9 +1289,9 @@ export class SupervisorInboxMappingComponent implements OnInit {
     this.ResponseHelper = new ResponseHelper(this.notification);
   }
   ngOnInit() {
-    this.getClientList();
+    // this.getClientList();
     this.initForm();
-    this.setDates();
+    // this.setDates();
   }
 
   initForm() {
@@ -411,39 +1303,28 @@ export class SupervisorInboxMappingComponent implements OnInit {
       selectedMonth: [null, Validators.required]
     });
   }
-  setDates() {
-    const date = new Date(), y = date.getFullYear(), m = date.getMonth(), startDate = new Date(y, m, 1), endDate = new Date(y, m, date.getDate());
-    this.productivityForm.patchValue({ startDate: startDate, endDate: endDate, selectedMonth: startDate });
-  }
 
-  BlockInput(event) {
-    console.log('event : ', event.key)
-    if (event.key == 'Backspace' || event.key == 'Tab') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
 
   toggleNodes(nodeObj, key) {
-    console.log('nodeObj, role : ', nodeObj, nodeObj[key], JSON.stringify(this.treeData));
-    const list = nodeObj[key];
+    // console.log('nodeObj, role : ', nodeObj, nodeObj[key], JSON.stringify(this.treeData));
+    // const list = nodeObj[key];
     nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-    if (list && list.length > 0) {
-      // alert('No '+role.toUpperCase()+' to show');
-      return false;
-    }
+    // if (list && list.length > 0) {
+    //   // alert('No '+role.toUpperCase()+' to show');
+    //   return false;
+    // }
     nodeObj.httpStatus = true;
     switch (key) {
       case 'queue': {
+        // nodeObj.backupList = nodeObj.queueList != null && nodeObj.queueList.length > 0 ? JSON.parse(JSON.stringify(nodeObj.queueList)) : [];
+
         nodeObj.queueList = [];
         this.getQueues(nodeObj);
         break;
       }
       case 'inbox': {
+        // nodeObj.backupList = nodeObj.inboxList != null && nodeObj.inboxList.length > 0 ? JSON.parse(JSON.stringify(nodeObj.inboxList)) : [];
         nodeObj.inboxList = [];
-
         this.getInboxes(nodeObj)
         break;
       }
@@ -453,141 +1334,14 @@ export class SupervisorInboxMappingComponent implements OnInit {
     }
   }
 
-  refreshReport(nodeObj, role) {
-    // console.log('nodeObj, role : ', nodeObj, nodeObj[role]);
-    // const list = nodeObj[role];
-    // if(list && list.length>0)
-    // {
-    //     // alert('No '+role.toUpperCase()+' to show');
-    //     return false;
-    // }
-    console.log('refreshReport nodeObj : ', nodeObj.refreshStatus);
-    if (nodeObj.refreshStatus == true) {
-      return false;
-    }
-    nodeObj.isExpanded = true;
-    nodeObj.refreshStatus = true;
-    nodeObj.httpStatus = true;
-    switch (role) {
-      case 'manager': {
-        // nodeObj.manager = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getQueues(nodeObj);
-        break;
-      }
-      case 'supervisor': {
-        nodeObj.supervisor = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getInboxes(nodeObj)
-        break;
-      }
-      case 'agent': {
-        nodeObj.agent = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getAgents(nodeObj);
-        break;
-      }
-      case 'dateRangeList': {
-        this.getAgentReport(nodeObj)
-        break;
-      }
-      default:
-        break;
-    }
-  }
 
-  getClientList() {
-
-    this.clientService.getClientList(this.userData.TokenValue).subscribe((response) => {
-      console.log('response : ', response);
-      if (response) {
-
-        this.clientList = response.json().Data;
-        // this.ResponseHelper.GetSuccessResponse(response);
-      }
-
-    }, (error) => {
-      console.log('error : ', error);;
-      this.ResponseHelper.GetFaliureResponse(error);
-
-    });
-  }
-
-  formatDates() {
-    const { startDate, endDate, selectedMonth, reportType } = this.productivityForm.value;
-    if (reportType == 'month') {
-      this.startDate = moment(selectedMonth).startOf('month').format('MM-DD-YYYY');
-      this.endDate = moment(selectedMonth).endOf('month').format('MM-DD-YYYY')
-    }
-    else {
-      this.startDate = moment(startDate).format('MM-DD-YYYY');
-      this.endDate = moment(endDate).format('MM-DD-YYYY')
-    }
-  }
-
-  chosenMonthHandler(month, datepicker) {
-    let endDate = new Date(Number(moment(month).format('YYYY')), month.getMonth(), new Date().getDate());
-    const today = new Date();
-    console.log('currentMonth : ', month.getMonth(), today.getMonth(), today.getFullYear());
-    if (month.getMonth() <= today.getMonth() && month.getFullYear() == today.getFullYear()) {
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      datepicker.close();
-    }
-    else if (month.getFullYear() != today.getFullYear()) {
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      datepicker.close();
-    }
-    else {
-      datepicker.close();
-      endDate = new Date(Number(moment().format('YYYY')), new Date().getMonth(), new Date().getDate());
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      // alert('Please don\'t select future months');
-      //   this.notification.ChangeNotification([{ Message: "Please don't select future dates !", Type: "ERROR" }])
-    }
-
-  }
-
-  getCLientReport() {
-    this.treeData = [];
-    console.log('form value : ', this.productivityForm.value);
-    this.formatDates();
-    this.httpStatus = true;
-    this.clientService.getClientProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], this.startDate, this.endDate).subscribe((response) => {
-      console.log('response : ', response);
-      this.setClient(response.Data.inventoryList);
-      this.httpStatus = false;
-    }, (error) => {
-      console.log('error : ', error);
-      this.ResponseHelper.GetFaliureResponse(error);
-      this.httpStatus = false;
-      this.treeData = []
-    });
-  }
-
-  setClient(clientList) {
-    // const result = httpResponse.Data.inventoryList;
-    const client: any = { ClientID: clientList[0].ClientID };
-    // const sum = _.sumBy(clientList, (ele) => {
-    //     return Number(ele.Count);
-    // });
-    // client.total = sum;
-    // console.log('sum : ', sum);
-    clientList.forEach((element: any) => {
-      // element.manager = [];
-      client[element.Effectiveness.toUpperCase().replace(/[- ]/g, '_')] = element.Count;
-      client.showRow = false;
-      console.log('getClientList : ', element.Effectiveness, element.Count);
-      if (element.Effectiveness == 'Total') {
-        client['TOTAL_BALANCE'] = element.Total_Balance;
-      }
-    });
-    this.treeData = [client];
-    console.log('getClientList : ', this.treeData);
-  }
 
   getQueues(nodeObj) {
-    // nodeObj.httpStatus = true;
+    nodeObj.httpStatus = true;
     console.log('getQueues : ', nodeObj);
+    setTimeout(() => {
+      this.setQueues(nodeObj, nodeObj.backupList)
+    }, 1000);
     // this.clientService.getManagerProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], 1, this.startDate, this.endDate).subscribe((response) => {
     //   console.log('response : ', response);
     //   this.setQueues(nodeObj, response.Data.manager_InventoryList_count);
@@ -603,7 +1357,7 @@ export class SupervisorInboxMappingComponent implements OnInit {
   setQueues(nodeObj, queueList) {
     console.log('setQueues : ', nodeObj, queueList);
     queueList.forEach((element: any) => {
-      element.inboxList = []
+      // element.inboxList = []
     });
     nodeObj.queueList = queueList;
     nodeObj.httpStatus = false;
@@ -612,11 +1366,16 @@ export class SupervisorInboxMappingComponent implements OnInit {
 
   getInboxes(nodeObj) {
     console.log('getInboxes nodeObj : ', nodeObj);
-    // nodeObj.httpStatus = true;
+    nodeObj.httpStatus = true;
+    // nodeObj.backupList = JSON.parse(JSON.stringify(nodeObj.inboxList));
+    // nodeObj.inboxList = [];
+    setTimeout(() => {
+      this.setInboxes(nodeObj, nodeObj.backupList);
+    }, 1000);
     // const { startDate, endDate } = this.productivityForm.value;
     // this.clientService.getSupervisorProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, this.startDate, this.endDate).subscribe((response) => {
     //   console.log('response : ', response)
-    //   this.setSupervisor(nodeObj, response.Data.manager_InventoryList_count);
+    //   this.setInboxes(nodeObj, response.Data.manager_InventoryList_count);
     // }, (error) => {
     //   console.log('error : ', error);
     //   nodeObj.httpStatus = false;
@@ -625,74 +1384,27 @@ export class SupervisorInboxMappingComponent implements OnInit {
     // })
   }
 
-  setSupervisor(nodeObj, supervisorList) {
-    console.log('setSupervisor : ', nodeObj, supervisorList);
-    supervisorList.forEach((element: any) => {
-      element.agent = [];
+  setInboxes(nodeObj, inboxList) {
+    console.log('setInboxes : ', nodeObj, inboxList);
+    inboxList.forEach((element: any) => {
+      // element.agent = [];
       element.managerId = nodeObj.EmployeeID;
     });
-    nodeObj.supervisor = supervisorList;
+    nodeObj.inboxList = inboxList;
     nodeObj.httpStatus = false;
   }
-
-  getAgents(nodeObj) {
-    // nodeObj.httpStatus = true;
-    const { startDate, endDate } = this.productivityForm.value;
-    this.clientService.getAgentProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, this.startDate, this.endDate)
-      .subscribe((response) => {
-        console.log('getAgents response : ', response);
-        // nodeObj.httpStatus = false;
-        this.setAgents(nodeObj, response.Data.manager_InventoryList_count);
-      }, (error) => {
-        console.log('getAgents error : ', error);
-        nodeObj.httpStatus = false;
-        this.ResponseHelper.GetFaliureResponse(error);
-      });
-  }
-
-  setAgents(nodeObj, agentList) {
-    agentList.forEach((element: any) => {
-      element.dateRangeList = []
-    });
-    nodeObj.agent = agentList;
-    nodeObj.httpStatus = false;
-    console.log('treeData : ', JSON.stringify(this.treeData));
-  }
-
-
-  getAgentReport(nodeObj) {
-    // nodeObj.httpStatus = true;
-    const { startDate, endDate } = this.productivityForm.value;
-    this.clientService.getAgentReportByDate(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, 1, this.startDate, this.endDate)
-      .subscribe((response) => {
-        console.log('getAgentReport response : ', response);
-
-        this.setAgentsReportDateWise(nodeObj, response.Data.manager_InventoryList_count)
-      }, (error) => {
-        console.log('getAgents error : ', error);
-        nodeObj.httpStatus = false;
-        this.ResponseHelper.GetFaliureResponse(error)
-      });
-  }
-
-  setAgentsReportDateWise(nodeObj, dateRangeList) {
-    // agentList.forEach((element: any) => {
-    //     element.dateRangeList = []
-    // });
-    nodeObj.dateRangeList = dateRangeList;
-    nodeObj.httpStatus = false;
-  }
-  changeClient(event) {
-    // console.log('changeClient() : ',event);
-    const client = this.productivityForm.value['processName'];
-    // console.log('client : ',client);
-    this.clientObj = _.find(this.clientList, (clientObj) => {
-      // console.log('clientObj : ',clientObj);
-      return clientObj.Id.toString() == client.toString();
-    });
-    // console.log('this.clientObj : ',this.clientObj);
-    this.treeData = [];
-    this.httpStatus = null;
+  matchInbox(queue) {
+    // console.log('matchInbox : ', queue);
+    queue.inboxList.forEach((element) => {
+      var result = element.inbox.indexOf(queue.inboxName);
+      if (result !== -1) {
+        element.show = true;
+      }
+      else {
+        element.show = false;
+      }
+      // console.log('result : ', result, queue.inboxName, element.inbox)
+    })
   }
 
 }

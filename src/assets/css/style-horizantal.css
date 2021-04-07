@@ -1934,7 +1934,8 @@ input::-webkit-input-placeholder {
  margin: 4px 0 0;
 } */
 input[type="checkbox"] {
-  display: none;
+  /* display: none; */
+  vertical-align: middle;
 }
 [type="checkbox"]:not(:checked) + label,
 [type="checkbox"]:checked + label {

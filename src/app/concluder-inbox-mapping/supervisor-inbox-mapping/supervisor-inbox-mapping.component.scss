@@ -2,40 +2,7 @@
   text-align: center;
 }
 
-#formContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
 
-  form {
-    width: 100%;
-  }
-
-  .form-group {
-    // margin-right: 1rem;
-    padding: 1rem;
-
-    label {
-      margin-right: 0.5rem;
-      font-weight: bold;
-    }
-  }
-}
-
-/* report section*/
-#reportSection {
-  margin-bottom: 2rem;
-  border: 1px solid #cfcfcf;
-
-  #noReport {
-    text-align: center;
-  }
-
-  table {
-    font-size: 1.2rem;
-  }
-}
 
 .newSection {
   min-height: 50px;
@@ -95,9 +62,9 @@ i {
 
 #tableContainer {
   // max-height: 425px !important;
-  max-height: 70vh !important;
+  max-height: 85vh !important;
   font: 13px "open sans";
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
   color: #333333;
   //   overflow-y: auto;
@@ -217,4 +184,45 @@ h1 {
 
 .textAlignLeft {
   text-align: left !important;
+}
+
+.orderBtn {
+  padding: 0.5rem 1rem !important;
+  border: none;
+  margin-left: 1rem;
+}
+
+.input-group-prepend,
+.input-group-append {
+  // margin-left: 0.5rem !important;
+  // max-height: 25px !important;
+  // background: #cfcfcf;
+  // padding: 0.1rem 1rem 0 1rem;
+  // background: transparent !important;
+  // color: #666 !important;
+}
+.searchBtn {
+  background: transparent !important;
+  color: #666 !important;
+  border-color: #666 !important;
+}
+// .input-group-prepend {
+//   font-size: 1.5rem !important;
+//   justify-content: center;
+//   align-items: center;
+// }
+.input-group-append {
+  background: #cfcfcf !important;
+  border: none !important;
+}
+
+th {
+  z-index: 99999999 !important;
+}
+
+label {
+  margin-bottom: 0 !important;
+  input[type="checkbox"] {
+    vertical-align: middle;
+  }
 }
