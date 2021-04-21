@@ -25,7 +25,7 @@
                                 </div>
                             </span>
                         </div>
-                        <div class="col-md-12 text-center version-text">Version: 4.0</div>
+                        <div class="col-md-12 text-center version-text">Version: 4.1</div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-12 p-0">
@@ -39,8 +39,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="username" class="label-std control-label p-0 b-600">Username</label>
-                                <input required type="text" maxlength="20" class="form-control"
-                                    formControlName="username" name="username" id="username" placeholder="Username">
+                                <input required type="text" maxlength="20" class="form-control" formControlName="username" name="username" id="username" placeholder="Username">
                                 <div class="error" *ngIf="MyForm.get('username').hasError('required') && DisplayError">
                                     Username is required.
                                 </div>
@@ -49,8 +48,7 @@
                         <div class="col-md-12 mt-6">
                             <div class="form-group">
                                 <label for="Password" class="label-std control-label p-0 b-600">Password</label>
-                                <input maxlength="20" required type="password" name="password" class="form-control"
-                                    id="Password" placeholder="Password" formControlName="password">
+                                <input maxlength="20" required type="password" name="password" class="form-control" id="Password" placeholder="Password" formControlName="password">
                                 <div class="error" *ngIf="MyForm.get('password').hasError('required') && DisplayError">
                                     Password is required.
                                 </div>
@@ -60,15 +58,13 @@
                             <div class="form-group" style="margin-bottom:0">
                                 <div class="captchaContainer">
                                     <div class="captchaText" title="Captcha Code" [style.background]="gradientColor">
-                                        <div title="Captcha Code" class="random-char"
-                                            *ngFor="let captcha of captchaArray">
+                                        <div title="Captcha Code" class="random-char" *ngFor="let captcha of captchaArray">
                                             <p>{{captcha}}</p>
                                         </div>
                                     </div>
                                     <div class="controls">
                                         <div class="inputCtrl">
-                                            <input class="valid" formControlName="captchaModel" type="text"
-                                                placeholder="Type above text">
+                                            <input class="valid" formControlName="captchaModel" type="text" placeholder="Type above text">
                                             <span class="errorSection" *ngIf="captcha.touched==true || DisplayError">
                                                 <div class="error"
                                                     *ngIf="captcha.errors && captcha.errors.captchaRequired">
@@ -80,8 +76,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        <button title="Refresh Captcha Code" type="button" class="btn btn-primary"
-                                            (click)="makeid()">
+                                        <button title="Refresh Captcha Code" type="button" class="btn btn-primary" (click)="makeid()">
                                             <i class="fa fa-refresh"></i>
                                         </button>
                                     </div>
@@ -94,14 +89,12 @@
                             <div class="row text-left">
                                 <!-- removed pl pr classes -->
                                 <div class="col-md-6" style="float: left;">
-                                    <button [disabled]="DisableSubmit"
-                                        class="btn blue square-btn blue-hover btn-txt w-100">Sign
+                                    <button [disabled]="DisableSubmit" class="btn blue square-btn blue-hover btn-txt w-100">Sign
                                         in</button>
                                 </div>
                                 <!-- removed pl pr classes -->
                                 <div class="col-md-6" style="float: right">
-                                    <button type="submit" [disabled]="DisableSubmit" routerLink="/forgot-password"
-                                        class="btn blue square-btn blue-hover btn-txt w-100">Forgot
+                                    <button type="submit" [disabled]="DisableSubmit" routerLink="/forgot-password" class="btn blue square-btn blue-hover btn-txt w-100">Forgot
                                         password?</button>
                                 </div>
                             </div>
