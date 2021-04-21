@@ -12,20 +12,24 @@
                     <div class="col-md-12">
                         <!-- added 'row' class -->
                         <div class="row mb-10 ">
+                            <!-- *ngIf="loginservice && loginservice.hideGebbsLogo==false" -->
                             <span class="col-md-6">
                                 <div>
                                     <!-- replaced 'img-responsive' class with 'img-fluid' -->
                                     <img src="../../../assets/images/logo_156.png" class="img-fluid img-100">
                                 </div>
                             </span>
-                            <span class="col-md-6 blue-seprator-l">
+                            [ngClass]="{'col-md-9 offset-md-2 p-0' : loginservice &&
+                            loginservice.hideGebbsLogo==true,'blue-seprator-l':loginservice.hideGebbsLogo==false}"
+                            <span class="col-md-6">
                                 <div>
                                     <!-- replaced 'img-responsive' class with 'img-fluid' -->
                                     <img src="../../../assets/images/iAR.png" class="img-fluid img-100">
                                 </div>
                             </span>
                         </div>
-                        <div class="col-md-12 text-center version-text">Version: 4.0</div>
+                        <div class="col-md-12 text-center version-text">Version: 4.0 {{loginservice.hideGebbsLogo}}
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="col-md-12 p-0">

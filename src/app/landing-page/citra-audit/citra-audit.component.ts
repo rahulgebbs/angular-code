@@ -114,11 +114,7 @@ export class CitraAuditComponent implements OnInit {
         'txtGlobalTrendsIdentified': ['', Validators.required]
       })
   }
-
-
-
-
-
+  
   GetClientList() {
 
     this.dash.GetClientList(this.UserId).subscribe(

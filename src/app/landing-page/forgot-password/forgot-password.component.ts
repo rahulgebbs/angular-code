@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { customValidation } from 'src/app/manager/customValidators';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { finalize } from 'rxjs/operators';
+import { LoginService } from 'src/app/service/login.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -25,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
   gradientColor = null;
   captchaModel = '';
   CurrentYear;
-  constructor(private forgotpasswordservice: ForgotPaswordService, private notificationservice: NotificationService, private router: Router) { }
+  constructor(public loginservice:LoginService,private forgotpasswordservice: ForgotPaswordService, private notificationservice: NotificationService, private router: Router) { }
 
 
   ngOnInit() {

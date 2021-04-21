@@ -1,185 +1,195 @@
-<div id="reportContainer" class="container-fluid">
-  <h4 id="title">Concluder Inbox Mapping</h4>
-
-  <div id="reportSection" style="width:60%;margin:auto;">
-    <!-- <h1 id="noReport"> Report Will come here !</h1> -->
-    <div class="container-fluid p-0">
-      <div class="row table-responsive-lg" id="tableContainer">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>category</th>
-              <th>queue</th>
-              <th>inbox</th>
-              <th>count</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let category of treeData;let categoryIndex=index">
-              <tr class="clientColor">
-                <td class="textAlignLeft">
-                  <i title="Expand Client" (click)="toggleNodes(category,'queue')" class="fa"
-                    [ngClass]="{'fa-plus' : !category.isExpanded,'fa-minus' : category.isExpanded==true}"></i>
-                  {{category.category || 'N/A'}}
-                </td>
-                <td></td>
-                <td></td>
-                <td>
-                  {{category.count || 'N/A'}}
-                </td>
-              </tr>
-              <ng-container *ngIf="category.isExpanded==true">
-                <!-- show if client has queue START-->
-                <ng-container *ngFor="let queue of category.queueList;let queueIndex=index">
-                  <tr class="managerColor">
-                    <td></td>
-                    <td class="textAlignLeft">
-                      <!-- class="paddingLeft-03" -->
-                      <i (click)="toggleNodes(queue,'inbox')" class="fa"
-                        [ngClass]="{'fa-plus' : !queue.isExpanded,'fa-minus' : queue.isExpanded==true}"></i>
-                      <!-- <p class="tdItem"> -->
-                      {{queue.queue}}
-                      <!-- </p> -->
-                    </td>
-                    <td></td>
-                    <td>
-                      {{queue.count || 'N/A'}}
-                    </td>
-
-                  </tr>
-                  <ng-container *ngIf="queue.isExpanded==true">
-                    <tr class="" *ngIf="queue.inboxList && queue.inboxList.length>0">
-                      <td>&nbsp;&nbsp;</td>
-                      <td>&nbsp;&nbsp;</td>
-                      <td>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <button class="btn btn-primary searchBtn" type="button">
-                              <i class="fa fa-search"></i>
-                            </button>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Search Inboxes"
-                            [(ngModel)]="queue.inboxName" (keyup)="matchInbox(queue)">
-                          <div class="input-group-append">
-                            <button class="btn btn-primary searchBtn" type="button">
-                              <i class="fa fa-arrow-up"></i>
-                            </button>
-                          </div>
-                        </div>
-                        <!-- <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="fa fa-search">
-                            </span>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Recipient's username"
-                            aria-label="Recipient's username" aria-describedby="basic-addon2">
-                          <div class="input-group-append">
-                            <span class="fa fa-sort-up">
-                            </span>
-                          </div>
-                        </div> -->
-                      </td>
-                      <td></td>
-                    </tr>
-                    <ng-container *ngFor="let inbox of queue.inboxList;let inboxIndex=index">
-                      <tr class="supervisorColor" *ngIf="inbox.show==null || inbox.show==true">
-                        <td>&nbsp;&nbsp;</td>
-                        <td>&nbsp;&nbsp;</td>
-                        <td class="textAlignLeft">
-                          <!-- class="paddingLeft-04" -->
-                          <!-- <i (click)="toggleNodes(supervisor,'agent')" class="fa" [ngClass]="{'fa-plus' : !inbox.isExpanded,'fa-minus' : inbox.isExpanded==true}"></i> -->
-                          <!-- <p class="tdItem"> -->
-                          <label for="check{{categoryIndex}}{{queueIndex}}{{index}}"><input
-                              id="check{{categoryIndex}}{{queueIndex}}{{index}}" [(ngModel)]="inbox.status"
-                              type="checkbox">
-                            {{inbox.inbox}}
-                          </label>
-
-                          <!-- </p> -->
-                        </td>
-                        <td>{{inbox.count}}</td>
-                      </tr>
-                      <!-- <tr></tr> -->
-                    </ng-container>
-                    <!-- show  if manager has no supervisor START-->
-                    <ng-container class="noData" *ngIf="queue && queue.inboxList && queue.inboxList.length==0">
-                      <tr class="noData">
-                        <td colspan="4">
-                          <!-- show if supervisor is fetched by http request START-->
-                          <h3 class="fetchingMsg" *ngIf="queue.httpStatus==true">
-                            <i class="fa fa-refresh fa-spin fa-3x"></i>
-                          </h3>
-                          <!-- <h3 *ngIf="queue.httpStatus==true">Fetching Supervisors</h3> -->
-                          <!-- show if supervisor is fetched by http request END-->
-
-                          <!-- show if supervisor is not in manager START-->
-                          <h3 class="fetchingMsg" *ngIf="queue.httpStatus==false">
-                            <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Inboxes to show
-                          </h3>
-                          <!-- show if supervisor is not in manager END-->
-                        </td>
-                      </tr>
-                    </ng-container>
-                    <!-- show  if manager has no supervisor END-->
-                  </ng-container>
-
-
-
-                </ng-container>
-                <!-- show if client has manager END-->
-
-                <!-- show  if client has no manager START-->
-                <ng-container class="noData" *ngIf="category.queueList && category.queueList.length==0">
-                  <tr class="noData">
-                    <td colspan="4">
-                      <!-- show if managers is fetched by http request START-->
-                      <h3 class="fetchingMsg" *ngIf="category.httpStatus==true">
-                        <i class="fa fa-refresh fa-spin fa-3x"></i>
-                      </h3>
-                      <!-- <h3 *ngIf="category.httpStatus==true">Fetching Managers</h3> -->
-
-                      <!-- show if managers is fetched by http request END-->
-                      <!-- show if manager is not in client START-->
-                      <h3 class="fetchingMsg" *ngIf="category.httpStatus==false">
-                        <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Queues to show</h3>
-                      <!-- show if manager is not in client END-->
-                    </td>
-                  </tr>
-                </ng-container>
-                <!-- show  if client has no manager END-->
-
-              </ng-container>
-
-            </ng-container>
-
-            <!-- show  if client has no manager START-->
-            <ng-container class="noData" *ngIf="treeData && treeData.length==0 && httpStatus!=null">
-              <tr class="noData">
-                <td colspan="4">
-                  <!-- show if managers is fetched by http request START-->
-                  <h3 class="fetchingMsg" *ngIf="httpStatus==true">
-                    <i class="fa fa-refresh fa-spin fa-3x"></i>
-                  </h3>
-                  <!-- <h3 *ngIf="httpStatus==true">Fetching Client report</h3> -->
-
-                  <!-- show if managers is fetched by http request END-->
-
-                  <!-- show if manager is not in client START-->
-                  <h3 class="fetchingMsg" *ngIf="httpStatus==false">
-                    <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
-                    No Categories to show
-                  </h3>
-                  <!-- show if manager is not in client END-->
-                </td>
-              </tr>
-            </ng-container>
-            <!-- show  if client has no manager END-->
-
-          </tbody>
-        </table>
-      </div>
+<app-header [title]="'Concluder Inbox Mapping'"></app-header>
+<div class="container-fluid p-0 inboxDiv">
+  <div class="row">
+    <div class="col-md-3 padding1rem">
+      <form name="actionForm" class="form-inline" role="form">
+        <div class="form-group p-0">
+          <label for="" class="formLabel">Client List &nbsp; </label>
+          <select [disabled]="DisableclientList" name="ClientId" class="form-control" [(ngModel)]="ClientId">
+            <option [selected]="clientList && clientList.length >1" disabled [value]="null">Select</option>
+            <option *ngFor="let c of clientList" [value]="c.Client_Id" [selected]="c.selected">
+              {{c.Client_Name}}</option>
+          </select>
+          <button [disabled]="ClientId==null || ClientId.length==0" (click)="getUserList()"
+            class="btn blue square-btn blue-hover btn-txt ml-10">Search</button>
+        </div>
+        <div class="form-group p-0 mt-3">
+          <!-- <label class="formLabel" for="">Agent List &nbsp;</label> -->
+          <ng-multiselect-dropdown name="userList" [placeholder]="'Select User'" [data]="userList"
+            [(ngModel)]="activeUserList" [settings]="fieldSetting" (onSelect)="getCategory()"
+            (onDeSelect)="enableSearch()">
+          </ng-multiselect-dropdown>
+        </div>
+      </form>
 
     </div>
-  </div>
+    <div class="col-md-9 padding1rem">
+      <div id="reportContainer" class="container-fluid p-0">
+        <div id="reportSection">
+          <div class="container-fluid p-0">
+            <div class="row table-responsive-lg" id="tableContainer">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>category</th>
+                    <th>queue</th>
+                    <th>inbox</th>
+                    <th>count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let category of treeData;let categoryIndex=index">
+                    <tr class="clientColor">
+                      <td class="textAlignLeft">
+                        <i title="Expand Client" (click)="toggleNodes(category,'queue')" class="fa"
+                          [ngClass]="{'fa-plus' : !category.isExpanded,'fa-minus' : category.isExpanded==true}"></i>
+                        {{category.Name || "N/A"}}
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        {{category.Count || 0}}
+                      </td>
+                    </tr>
+                    <ng-container *ngIf="category.isExpanded==true">
+                      <!-- show if Category has queue START-->
+                      <ng-container *ngFor="let queue of category.queueList;let queueIndex=index">
+                        <tr class="managerColor">
+                          <td></td>
+                          <td class="textAlignLeft">
+                            <i (click)="toggleNodes(queue,'inbox')" class="fa"
+                              [ngClass]="{'fa-plus' : !queue.isExpanded,'fa-minus' : queue.isExpanded==true}"></i>
+                            {{queue.Name || "N/A"}}
+                          </td>
+                          <td></td>
+                          <td>
+                            {{queue.Count || 0}}
+                          </td>
+                        </tr>
+                        <ng-container *ngIf="queue.isExpanded==true">
+                          <tr class="" *ngIf="queue.inboxList && queue.inboxList.length>0">
+                            <td>&nbsp;&nbsp;</td>
+                            <td>&nbsp;&nbsp;</td>
+                            <td>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <button class="btn btn-primary searchBtn" type="button">
+                                    <i class="fa fa-search"></i>
+                                  </button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search Inboxes"
+                                  [(ngModel)]="queue.inboxName" (keyup)="matchInbox(queue)">
+                                <div class="input-group-append">
+                                  <button class="btn btn-primary searchBtn" type="button">
+                                    <i class="fa fa-arrow-up"></i>
+                                  </button>
+                                </div>
+                              </div>
 
+                            </td>
+                            <td></td>
+                          </tr>
+                          <ng-container *ngFor="let inbox of queue.inboxList;let inboxIndex=index">
+                            <tr class="supervisorColor" *ngIf="inbox.show==null || inbox.show==true">
+                              <td>&nbsp;&nbsp;</td>
+                              <td>&nbsp;&nbsp;</td>
+                              <td class="textAlignLeft">
+                                <label for="check{{categoryIndex}}{{queueIndex}}{{index}}"><input
+                                    id="check{{categoryIndex}}{{queueIndex}}{{index}}" [(ngModel)]="inbox.status"
+                                    type="checkbox">
+                                  {{inbox.Name || "N/A"}}
+                                </label>
+                              </td>
+                              <td>{{inbox.Count || 0}}</td>
+                            </tr>
+                            <!-- <tr></tr> -->
+                          </ng-container>
+                          <!-- show  if Queue has no Inboxes START-->
+                          <ng-container class="noData" *ngIf="queue && queue.inboxList && queue.inboxList.length==0">
+                            <tr class="noData">
+                              <td colspan="4">
+                                <!-- show if Inbox is fetched by http request START-->
+                                <h3 class="fetchingMsg" *ngIf="queue.httpStatus==true">
+                                  <i class="fa fa-refresh fa-spin fa-3x"></i>
+                                </h3>
+                                <!-- show if inbox is not in queue START-->
+                                <h3 class="fetchingMsg" *ngIf="queue.httpStatus==false">
+                                  <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Inboxes to show
+                                </h3>
+                                <!-- show if inbox is not in queue END-->
+                              </td>
+                            </tr>
+                          </ng-container>
+                          <!-- show  if Queue has no Inbox END-->
+                        </ng-container>
+
+
+
+                      </ng-container>
+                      <!-- show if Category has Queue END-->
+
+                      <!-- show  if category has no queue START-->
+                      <ng-container class="noData" *ngIf="category.queueList && category.queueList.length==0">
+                        <tr class="noData">
+                          <td colspan="4">
+                            <!-- show if queues are fetched by http request START-->
+                            <h3 class="fetchingMsg" *ngIf="category.httpStatus==true">
+                              <i class="fa fa-refresh fa-spin fa-3x"></i>
+                            </h3>
+
+                            <!-- show if queues are fetched by http request END-->
+
+                            <!-- show if queues are not in category START-->
+                            <h3 class="fetchingMsg" *ngIf="category.httpStatus==false">
+                              <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> No Queues to show</h3>
+                            <!-- show if manager is not in client END-->
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <!-- show  if client has no manager END-->
+
+                    </ng-container>
+
+                  </ng-container>
+
+                  <!-- show  if client has no manager START-->
+                  <ng-container class="noData" *ngIf="treeData && treeData.length==0 && httpStatus!=null">
+                    <tr class="noData">
+                      <td colspan="4">
+                        <!-- show if managers is fetched by http request START-->
+                        <h3 class="fetchingMsg" *ngIf="httpStatus==true">
+                          <i class="fa fa-refresh fa-spin fa-3x"></i>
+                        </h3>
+                        <!-- <h3 *ngIf="httpStatus==true">Fetching Client report</h3> -->
+
+                        <!-- show if managers is fetched by http request END-->
+
+                        <!-- show if manager is not in client START-->
+                        <h3 class="fetchingMsg" *ngIf="httpStatus==false">
+                          <i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i>
+                          No Categories to show
+                        </h3>
+                        <!-- show if manager is not in client END-->
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <!-- show  if client has no manager END-->
+
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <div class="offset-md-4 col-md-1 p-0">
+                <button class="btn grey square-btn btn-txt">Map</button>
+              </div>
+              <div class="col-md-2 p-0">
+                <button class="btn grey square-btn btn-txt">De-Allocate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

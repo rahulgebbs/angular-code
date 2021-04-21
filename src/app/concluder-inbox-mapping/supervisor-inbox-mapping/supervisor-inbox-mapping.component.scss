@@ -2,8 +2,6 @@
   text-align: center;
 }
 
-
-
 .newSection {
   min-height: 50px;
   width: 100%;
@@ -61,10 +59,12 @@ i {
 }
 
 #tableContainer {
-  // max-height: 425px !important;
-  max-height: 85vh !important;
+  // min-height: 50vh !important;
+  max-height: 60vh !important;
+  // height: 100%;
+  // max-height: 85vh !important;
   font: 13px "open sans";
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   color: #333333;
   //   overflow-y: auto;
@@ -151,29 +151,10 @@ td {
   }
 }
 
-.monthFilter {
-  min-width: 202px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #2431403b;
-  min-height: 25px;
-  margin-bottom: 0rem;
-  text-align: right;
-  padding-left: 1rem;
-
-  span {
-    float: right;
-    text-align: right;
-    position: absolute;
-    right: 5%;
-  }
-}
-
 /*
   the ability to concentrate single-mindedly on your
   most important task, to do it well and to finish it completely, is the
-  key to great success, achievement, respect, status and happiness in
-  life
+  key to great success, achievement, respect, status and happiness in life
   */
 
 h1 {
@@ -192,15 +173,6 @@ h1 {
   margin-left: 1rem;
 }
 
-.input-group-prepend,
-.input-group-append {
-  // margin-left: 0.5rem !important;
-  // max-height: 25px !important;
-  // background: #cfcfcf;
-  // padding: 0.1rem 1rem 0 1rem;
-  // background: transparent !important;
-  // color: #666 !important;
-}
 .searchBtn {
   background: transparent !important;
   color: #666 !important;
@@ -225,4 +197,49 @@ label {
   input[type="checkbox"] {
     vertical-align: middle;
   }
+}
+
+.borderDiv {
+  border: 1px solid;
+}
+
+.formLabel {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-top: 0 !important;
+  margin-bottom: 0.3rem !important;
+}
+
+// .form-group {
+//   padding: 1rem !important;
+// }
+
+.padding1rem {
+  padding-top: 1rem !important;
+}
+
+select {
+  max-width: 150px !important;
+}
+
+ng-multiselect-dropdown {
+  min-width: 230px;
+  max-width: 300px !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-btn {
+  // background: #fff !important;
+  // border: 1px solid #fff !important;
+  padding: 2px !important;
+}
+
+:host ::ng-deep .selected-item {
+  font-size: 1rem !important;
+}
+
+.inboxDiv {
+  max-height: 75vh !important;
+  // border: 1px solid #000;
+  width: 98%;
+  margin-top: 1.5%;
 }

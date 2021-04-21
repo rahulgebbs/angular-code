@@ -19,11 +19,11 @@ export class NotificationComponent implements OnInit {
   notification() {
     let time = 3000;
     this.notificationservice.notify.subscribe((res: any) => {
-      console.log('Before toast res : ', res.length);
+      // console.log('Before toast res : ', res.length);
       if (res && res.length == 0) {
         return null;
       }
-      console.log('After toast res : ', res.length);
+      // console.log('After toast res : ', res.length);
       if (Array.isArray(res)) {
         if (res.length > 0) {
           if (res[0] && res[0].time) {

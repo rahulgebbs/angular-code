@@ -188,9 +188,7 @@ export class GlobalMappingComponent implements OnInit {
   }
 
   selectedValue(data) {
-
     if (data.length == 1 && data.length) {
-
       data[0].selected = true;
       this.ClientId = data[0].Id
       this.SelectedClientInsurance.Client_Id = data[0].Client_Id
