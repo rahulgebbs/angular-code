@@ -2,41 +2,6 @@
   text-align: center;
 }
 
-#formContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-
-  form {
-    width: 100%;
-  }
-
-  .form-group {
-    // margin-right: 1rem;
-    padding: 1rem;
-
-    label {
-      margin-right: 0.5rem;
-      font-weight: bold;
-    }
-  }
-}
-
-/* report section*/
-#reportSection {
-  margin-bottom: 2rem;
-  border: 1px solid #cfcfcf;
-
-  #noReport {
-    text-align: center;
-  }
-
-  table {
-    font-size: 1.2rem;
-  }
-}
-
 .newSection {
   min-height: 50px;
   width: 100%;
@@ -94,8 +59,10 @@ i {
 }
 
 #tableContainer {
-  // max-height: 425px !important;
-  max-height: 70vh !important;
+  // min-height: 50vh !important;
+  max-height: 60vh !important;
+  // height: 100%;
+  // max-height: 85vh !important;
   font: 13px "open sans";
   overflow-y: auto;
   overflow-x: hidden;
@@ -184,29 +151,10 @@ td {
   }
 }
 
-.monthFilter {
-  min-width: 202px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #2431403b;
-  min-height: 25px;
-  margin-bottom: 0rem;
-  text-align: right;
-  padding-left: 1rem;
-
-  span {
-    float: right;
-    text-align: right;
-    position: absolute;
-    right: 5%;
-  }
-}
-
 /*
   the ability to concentrate single-mindedly on your
   most important task, to do it well and to finish it completely, is the
-  key to great success, achievement, respect, status and happiness in
-  life
+  key to great success, achievement, respect, status and happiness in life
   */
 
 h1 {
@@ -217,4 +165,81 @@ h1 {
 
 .textAlignLeft {
   text-align: left !important;
+}
+
+.orderBtn {
+  padding: 0.5rem 1rem !important;
+  border: none;
+  margin-left: 1rem;
+}
+
+.searchBtn {
+  background: transparent !important;
+  color: #666 !important;
+  border-color: #666 !important;
+}
+// .input-group-prepend {
+//   font-size: 1.5rem !important;
+//   justify-content: center;
+//   align-items: center;
+// }
+.input-group-append {
+  background: #cfcfcf !important;
+  border: none !important;
+}
+
+th {
+  z-index: 99999999 !important;
+}
+
+label {
+  margin-bottom: 0 !important;
+  input[type="checkbox"] {
+    vertical-align: middle;
+  }
+}
+
+.borderDiv {
+  border: 1px solid;
+}
+
+.formLabel {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-top: 0 !important;
+  margin-bottom: 0.3rem !important;
+}
+
+// .form-group {
+//   padding: 1rem !important;
+// }
+
+.padding1rem {
+  padding-top: 1rem !important;
+}
+
+select {
+  max-width: 150px !important;
+}
+
+ng-multiselect-dropdown {
+  min-width: 230px;
+  max-width: 300px !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-btn {
+  // background: #fff !important;
+  // border: 1px solid #fff !important;
+  padding: 2px !important;
+}
+
+:host ::ng-deep .selected-item {
+  font-size: 1rem !important;
+}
+
+.inboxDiv {
+  max-height: 75vh !important;
+  // border: 1px solid #000;
+  width: 98%;
+  margin-top: 1.5%;
 }

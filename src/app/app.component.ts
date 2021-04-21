@@ -8,7 +8,9 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { AnalyticsService } from './analytics.service';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
+import { LoginService } from './service/login.service';
 // import * as moment from 'moment';
+
 declare var jQuery: any;
 @Component({
   selector: 'app-root',
@@ -35,6 +37,7 @@ export class AppComponent implements OnInit {
   warningInterval: any;
   constructor(private router: Router,
     private idle: Idle, private keepalive: Keepalive,
+    private loginservice: LoginService,
     private ts: Title,
     private agentService: AgentService,
     private analyticsService: AnalyticsService,
@@ -56,6 +59,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loginservice.checkIfDomainIsForClient();
     this.Getcount();
     this.initiateTimer();
     // jQuery.ajaxPrefilter(function (s) {

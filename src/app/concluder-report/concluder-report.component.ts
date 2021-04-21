@@ -63,8 +63,7 @@ export class ConcluderReportComponent implements OnInit {
     this.Role = userdata.Role;
     this.ClientList = this.selectField.setSelected(userdata.Clients);
     if (this.ClientList[0].selected == true) {
-      this.disablesubmit = false
-
+      this.disablesubmit = false;
       this.ClientId = this.ClientList[0].Client_Id
       this.singleclient = true;
       this.ShowDownloadButton(this.ClientId);

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   gradientColor = null;
   captchaModel = '';
   constructor(
-    private loginservice: LoginService,
+    public loginservice: LoginService,
     private notificationservice: NotificationService,
     private RedirectHelper: RedirectHelper,
     private idle: Idle, private keepalive: Keepalive,
@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
     this.Token.ClearUserData();
     this.ResponseHelper = new ResponseHelper(this.notificationservice);
     this.makeid();
+    
   }
 
   logEvent() {

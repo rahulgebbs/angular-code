@@ -7,6 +7,7 @@ import { LogoutService } from 'src/app/service/logout.service';
 import { Router } from '@angular/router';
 import { Token } from 'src/app/manager/token';
 import { ProjectandpriorityService } from 'src/app/service/projectandpriority.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   ClientId = 0;
   projectList = [];
   projectListStatus = false;
+
   constructor(
     private notificationservice: NotificationService,
     public route: Router,
@@ -53,6 +55,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.getPNPProjectList();
     }
   }
+
   hideHeader() {
     console.log('hideHeader() : ', this.showHeader);
     if (this.showHeader == true || this.showHeader == null) { this.showHeader = false; }

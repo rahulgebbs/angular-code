@@ -19,6 +19,7 @@ export class InventoryHighPriorityComponent implements OnInit {
     idField: 'Id',
     textField: 'Field_Name',
     closeDropDownOnSelection: true,
+    itemsShowLimit: 2,
     allowSearchFilter: true
   };
   fieldList = [];

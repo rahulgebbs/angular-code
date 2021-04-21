@@ -12,9 +12,19 @@ import * as jwt_decode from "jwt-decode";
 export class LoginService {
 
   Token;
+  hideGebbsLogo = false;
   TokenCls: Token = new Token(this.router);
-  constructor(private http: Http, private router: Router) { }
-
+  constructor(private http: Http, private router: Router) {
+    // this.checkIfDomainIsForClient()
+  }
+  checkIfDomainIsForClient() {
+    // const apiURL = environment.ApiUrl;
+    // console.log('checkIfDomainIsForClient apiURL : ', apiURL);
+    // if (apiURL === 'http://172.30.52.25:1001/') {
+    //   this.hideGebbsLogo = true;
+    // }
+    // console.log('checkIfDomainIsForClient this.hideGebbsLogo : ',this.hideGebbsLogo);
+  }
   Login(data: any) {
     return this.http.post(environment.ApiUrl + '/api/Login', data);
   }

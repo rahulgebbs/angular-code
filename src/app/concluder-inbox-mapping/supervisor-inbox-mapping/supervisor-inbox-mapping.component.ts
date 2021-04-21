@@ -2,380 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client-configuration/client.service';
 import { Token } from 'src/app/manager/token';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
-
-import * as XLSX from 'xlsx';
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import { ResponseHelper } from 'src/app/manager/response.helper';
 import { NotificationService } from 'src/app/service/notification.service';
+import { dropDownFields } from 'src/app/manager/dropdown-feilds';
+import { ConcluderInboxMappingService } from 'src/app/concluder-inbox-mapping.service';
+
 @Component({
   selector: 'app-supervisor-inbox-mapping',
   templateUrl: './supervisor-inbox-mapping.component.html',
-  styleUrls: ['./supervisor-inbox-mapping.component.scss']
+  styleUrls: ['./supervisor-inbox-mapping.component.scss'],
+  providers: [dropDownFields]
 })
 export class SupervisorInboxMappingComponent implements OnInit {
-
+  ClientId = 9132;
   productivityForm: FormGroup;
-  treeData = [
-    {
-      "id": 1,
-      "category": "Denied",
-      "count": 600,
-      "isExpanded": true,
-      "queueList": [
-        {
-          "queue": "Denial_Payer Issue",
-          "count": 200,
-          "isExpanded": true,
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Provider Issue",
-          "count": 150,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Patient Issue",
-          "count": 150,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Coding Issue",
-          "count": 100
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "category": "No Response",
-      "count": 500,
-      "isExpanded": true,
-      "queueList": [
-        {
-          "queue": "Denial_Payer Issue",
-          "count": 200,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Provider Issue",
-          "count": 150,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Patient Issue",
-          "count": 150,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Coding Issue",
-          "isExpanded": true,
-
-          "count": 100
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "category": "Rejections",
-      "count": 100,
-      "isExpanded": true,
-      "queueList": [
-        {
-          "queue": "Denial_Payer Issue",
-          "count": 200,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Provider Issue",
-          "count": 150,
-          "isExpanded": true,
-
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Patient Issue",
-          "count": 150,
-          "isExpanded": true,
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Coding Issue",
-          "count": 100,
-          "isExpanded": true
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "category": "Paid",
-      "count": 1200,
-      "isExpanded": true,
-      "queueList": [
-        {
-          "queue": "Denial_Payer Issue",
-          "count": 200,
-          "isExpanded": true,
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Provider Issue",
-          "count": 150,
-          "isExpanded": true,
-          "inboxList": [
-            {
-              "inbox": "110 | M42",
-              "count": 30
-            },
-            {
-              "inbox": "80 | N229",
-              "count": 20
-            },
-            {
-              "inbox": "16 | MA115",
-              "count": 10
-            },
-            {
-              "inbox": "B7 | N95",
-              "count": 50
-            },
-            {
-              "inbox": "58 | N970",
-              "count": 8
-            }
-          ]
-        },
-        {
-          "queue": "Denial_Coding Issue",
-          "isExpanded": true,
-          "count": 100
-        }
-      ]
-    }
-  ];
+  treeData = [];
   token: Token;
   userData;
   clientList = [];
@@ -385,12 +28,23 @@ export class SupervisorInboxMappingComponent implements OnInit {
   clientObj = null;
   ResponseHelper: ResponseHelper;
   maxDate = new Date();
-
+  fieldSetting = {
+    singleSelection: false,
+    idField: 'Employee_Id',
+    textField: 'Full_Name',
+    itemsShowLimit: 2,
+    closeDropDownOnSelection: true,
+    allowSearchFilter: true
+  };
+  activeUserList = []
+  userList = [];
   constructor(
-    private clientService: ClientService,
+    // private clientService: ClientService,
+    private selectedFields: dropDownFields,
     private router: Router,
     private notification: NotificationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private concluderInboxService: ConcluderInboxMappingService
   ) {
     this.token = new Token(this.router);
     this.userData = this.token.GetUserData();
@@ -399,7 +53,7 @@ export class SupervisorInboxMappingComponent implements OnInit {
   ngOnInit() {
     this.getClientList();
     this.initForm();
-    this.setDates();
+    this.getUserList();
   }
 
   initForm() {
@@ -411,84 +65,85 @@ export class SupervisorInboxMappingComponent implements OnInit {
       selectedMonth: [null, Validators.required]
     });
   }
-  setDates() {
-    const date = new Date(), y = date.getFullYear(), m = date.getMonth(), startDate = new Date(y, m, 1), endDate = new Date(y, m, date.getDate());
-    this.productivityForm.patchValue({ startDate: startDate, endDate: endDate, selectedMonth: startDate });
+
+  getClientList() {
+    var token = new Token(this.router);
+    var userdata = token.GetUserData();
+    this.clientList = this.selectedFields.setSelected(userdata.Clients);
+    if (this.clientList && this.clientList.length == 1) {
+      this.ClientId = this.clientList[0].Client_Id;
+      this.getUserList();
+    }
   }
 
-  BlockInput(event) {
-    console.log('event : ', event.key)
-    if (event.key == 'Backspace' || event.key == 'Tab') {
-      return true;
-    }
-    else {
-      return false;
-    }
+  getUserList() {
+    console.log('getUserList() : ', this.ClientId);
+    this.userList = [];
+    this.concluderInboxService.getConcluderUserListByCLientID(this.ClientId).subscribe((response) => {
+      console.log('getUserList() : ', response);
+      if (response && response.Data) {
+        this.userList = response.Data.EmployeeInfo ? response.Data.EmployeeInfo : [];
+      }
+      else {
+        this.userList = []
+      }
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      this.userList = [];
+      this.ResponseHelper.GetFaliureResponse(error);
+      console.log('getUserList() error : ', error);
+    })
+    this.getCategoryList();
+  }
+
+  getCategoryList() {
+    this.concluderInboxService.getConcluderCategoryListByCLientID(this.ClientId).subscribe((response) => {
+      console.log('getConcluderCategoryListByCLientID response : ', response);
+      if (response && response.Data) {
+        const { Category_Info } = response.Data;
+        this.setCategoryList(Category_Info)
+      }
+      else {
+        this.treeData = [];
+      }
+      this.ResponseHelper.GetSuccessResponse(response);
+    }, (error) => {
+      this.treeData = [];
+      this.ResponseHelper.GetFaliureResponse(error);
+      console.log('getConcluderCategoryListByCLientID error : ', error);
+    })
+  }
+
+  setCategoryList(list) {
+    list.forEach(element => {
+      element['isExpanded'] = false;
+      element['backupList'] = [];
+      element['queueList'] = [];
+    });
+    this.treeData = list;
+
   }
 
   toggleNodes(nodeObj, key) {
-    console.log('nodeObj, role : ', nodeObj, nodeObj[key], JSON.stringify(this.treeData));
-    const list = nodeObj[key];
+    // console.log('nodeObj, role : ', nodeObj, nodeObj[key], JSON.stringify(this.treeData));
+    // const list = nodeObj[key];
     nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-    if (list && list.length > 0) {
-      // alert('No '+role.toUpperCase()+' to show');
-      return false;
-    }
+    // if (list && list.length > 0) {
+    //   // alert('No '+role.toUpperCase()+' to show');
+    //   return false;
+    // }
     nodeObj.httpStatus = true;
     switch (key) {
       case 'queue': {
+        // nodeObj.backupList = nodeObj.queueList != null && nodeObj.queueList.length > 0 ? JSON.parse(JSON.stringify(nodeObj.queueList)) : [];
         nodeObj.queueList = [];
         this.getQueues(nodeObj);
         break;
       }
       case 'inbox': {
+        // nodeObj.backupList = nodeObj.inboxList != null && nodeObj.inboxList.length > 0 ? JSON.parse(JSON.stringify(nodeObj.inboxList)) : [];
         nodeObj.inboxList = [];
-
         this.getInboxes(nodeObj)
-        break;
-      }
-
-      default:
-        break;
-    }
-  }
-
-  refreshReport(nodeObj, role) {
-    // console.log('nodeObj, role : ', nodeObj, nodeObj[role]);
-    // const list = nodeObj[role];
-    // if(list && list.length>0)
-    // {
-    //     // alert('No '+role.toUpperCase()+' to show');
-    //     return false;
-    // }
-    console.log('refreshReport nodeObj : ', nodeObj.refreshStatus);
-    if (nodeObj.refreshStatus == true) {
-      return false;
-    }
-    nodeObj.isExpanded = true;
-    nodeObj.refreshStatus = true;
-    nodeObj.httpStatus = true;
-    switch (role) {
-      case 'manager': {
-        // nodeObj.manager = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getQueues(nodeObj);
-        break;
-      }
-      case 'supervisor': {
-        nodeObj.supervisor = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getInboxes(nodeObj)
-        break;
-      }
-      case 'agent': {
-        nodeObj.agent = [];
-        // nodeObj.isExpanded = (nodeObj.isExpanded != undefined && nodeObj.isExpanded == true) ? false : true;
-        this.getAgents(nodeObj);
-        break;
-      }
-      case 'dateRangeList': {
-        this.getAgentReport(nodeObj)
         break;
       }
       default:
@@ -496,98 +151,26 @@ export class SupervisorInboxMappingComponent implements OnInit {
     }
   }
 
-  getClientList() {
 
-    this.clientService.getClientList(this.userData.TokenValue).subscribe((response) => {
-      console.log('response : ', response);
-      if (response) {
-
-        this.clientList = response.json().Data;
-        // this.ResponseHelper.GetSuccessResponse(response);
-      }
-
-    }, (error) => {
-      console.log('error : ', error);;
-      this.ResponseHelper.GetFaliureResponse(error);
-
-    });
-  }
-
-  formatDates() {
-    const { startDate, endDate, selectedMonth, reportType } = this.productivityForm.value;
-    if (reportType == 'month') {
-      this.startDate = moment(selectedMonth).startOf('month').format('MM-DD-YYYY');
-      this.endDate = moment(selectedMonth).endOf('month').format('MM-DD-YYYY')
-    }
-    else {
-      this.startDate = moment(startDate).format('MM-DD-YYYY');
-      this.endDate = moment(endDate).format('MM-DD-YYYY')
-    }
-  }
-
-  chosenMonthHandler(month, datepicker) {
-    let endDate = new Date(Number(moment(month).format('YYYY')), month.getMonth(), new Date().getDate());
-    const today = new Date();
-    console.log('currentMonth : ', month.getMonth(), today.getMonth(), today.getFullYear());
-    if (month.getMonth() <= today.getMonth() && month.getFullYear() == today.getFullYear()) {
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      datepicker.close();
-    }
-    else if (month.getFullYear() != today.getFullYear()) {
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      datepicker.close();
-    }
-    else {
-      datepicker.close();
-      endDate = new Date(Number(moment().format('YYYY')), new Date().getMonth(), new Date().getDate());
-      this.productivityForm.patchValue({ selectedMonth: endDate });
-      // alert('Please don\'t select future months');
-      //   this.notification.ChangeNotification([{ Message: "Please don't select future dates !", Type: "ERROR" }])
-    }
-
-  }
-
-  getCLientReport() {
-    this.treeData = [];
-    console.log('form value : ', this.productivityForm.value);
-    this.formatDates();
-    this.httpStatus = true;
-    this.clientService.getClientProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], this.startDate, this.endDate).subscribe((response) => {
-      console.log('response : ', response);
-      this.setClient(response.Data.inventoryList);
-      this.httpStatus = false;
-    }, (error) => {
-      console.log('error : ', error);
-      this.ResponseHelper.GetFaliureResponse(error);
-      this.httpStatus = false;
-      this.treeData = []
-    });
-  }
-
-  setClient(clientList) {
-    // const result = httpResponse.Data.inventoryList;
-    const client: any = { ClientID: clientList[0].ClientID };
-    // const sum = _.sumBy(clientList, (ele) => {
-    //     return Number(ele.Count);
-    // });
-    // client.total = sum;
-    // console.log('sum : ', sum);
-    clientList.forEach((element: any) => {
-      // element.manager = [];
-      client[element.Effectiveness.toUpperCase().replace(/[- ]/g, '_')] = element.Count;
-      client.showRow = false;
-      console.log('getClientList : ', element.Effectiveness, element.Count);
-      if (element.Effectiveness == 'Total') {
-        client['TOTAL_BALANCE'] = element.Total_Balance;
-      }
-    });
-    this.treeData = [client];
-    console.log('getClientList : ', this.treeData);
-  }
 
   getQueues(nodeObj) {
-    // nodeObj.httpStatus = true;
+    nodeObj.httpStatus = true;
     console.log('getQueues : ', nodeObj);
+    // setTimeout(() => {
+    //   this.setQueues(nodeObj, nodeObj.backupList)
+    // }, 1000);
+    this.concluderInboxService.getQueueList(this.ClientId, nodeObj.Name).subscribe((response) => {
+      console.log('getQueueList response : ', response);
+      if (response && response.Data) {
+        this.setQueues(nodeObj, response.Data.Queue_Info);
+      }
+      else {
+        this.setQueues(nodeObj, []);
+      }
+    }, (error) => {
+      console.log('getQueueList error : ', error);
+      this.setQueues(nodeObj, [])
+    })
     // this.clientService.getManagerProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], 1, this.startDate, this.endDate).subscribe((response) => {
     //   console.log('response : ', response);
     //   this.setQueues(nodeObj, response.Data.manager_InventoryList_count);
@@ -602,21 +185,39 @@ export class SupervisorInboxMappingComponent implements OnInit {
 
   setQueues(nodeObj, queueList) {
     console.log('setQueues : ', nodeObj, queueList);
-    queueList.forEach((element: any) => {
-      element.inboxList = []
-    });
-    nodeObj.queueList = queueList;
+    if (queueList && queueList.length > 0) {
+      queueList.forEach((element: any) => {
+        element.inboxList = [];
+      });
+    }
+
+    nodeObj.queueList = queueList != null && queueList.length > 0 ? queueList : [];
     nodeObj.httpStatus = false;
     nodeObj.refreshStatus = false;
   }
 
   getInboxes(nodeObj) {
     console.log('getInboxes nodeObj : ', nodeObj);
-    // nodeObj.httpStatus = true;
+    nodeObj.httpStatus = true;
+    // nodeObj.backupList = JSON.parse(JSON.stringify(nodeObj.inboxList));
+    // nodeObj.inboxList = [];
+    this.concluderInboxService.getInboxList(this.ClientId, nodeObj.Name).
+      subscribe((response) => {
+        console.log('response : ', response);
+        if (response && response.Data) {
+          this.setInboxes(nodeObj, response.Data.Inbox_Info);
+        }
+        else {
+          this.setInboxes(nodeObj, []);
+        }
+      }, (error) => {
+        this.setInboxes(nodeObj, []);
+        console.log('error : ', error);
+      })
     // const { startDate, endDate } = this.productivityForm.value;
     // this.clientService.getSupervisorProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, this.startDate, this.endDate).subscribe((response) => {
     //   console.log('response : ', response)
-    //   this.setSupervisor(nodeObj, response.Data.manager_InventoryList_count);
+    //   this.setInboxes(nodeObj, response.Data.manager_InventoryList_count);
     // }, (error) => {
     //   console.log('error : ', error);
     //   nodeObj.httpStatus = false;
@@ -625,74 +226,35 @@ export class SupervisorInboxMappingComponent implements OnInit {
     // })
   }
 
-  setSupervisor(nodeObj, supervisorList) {
-    console.log('setSupervisor : ', nodeObj, supervisorList);
-    supervisorList.forEach((element: any) => {
-      element.agent = [];
-      element.managerId = nodeObj.EmployeeID;
-    });
-    nodeObj.supervisor = supervisorList;
+  setInboxes(nodeObj, inboxList) {
+    console.log('setInboxes : ', nodeObj, inboxList);
+    if (inboxList && inboxList.length > 0) {
+      nodeObj.inboxList = inboxList && inboxList.length > 0 ? inboxList : [];
+      nodeObj.backupList = inboxList && inboxList.length > 0 ? inboxList : [];
+    }
+    else {
+      nodeObj.inboxList = [];
+      nodeObj.backupList = [];
+    }
+
     nodeObj.httpStatus = false;
   }
-
-  getAgents(nodeObj) {
-    // nodeObj.httpStatus = true;
-    const { startDate, endDate } = this.productivityForm.value;
-    this.clientService.getAgentProductivityReport(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, this.startDate, this.endDate)
-      .subscribe((response) => {
-        console.log('getAgents response : ', response);
-        // nodeObj.httpStatus = false;
-        this.setAgents(nodeObj, response.Data.manager_InventoryList_count);
-      }, (error) => {
-        console.log('getAgents error : ', error);
-        nodeObj.httpStatus = false;
-        this.ResponseHelper.GetFaliureResponse(error);
-      });
+  matchInbox(queue) {
+    // console.log('matchInbox : ', queue);
+    queue.inboxList.forEach((element) => {
+      var result = element.Name.toUpperCase().indexOf(queue.inboxName.toUpperCase());
+      if (result !== -1) {
+        element.show = true;
+      }
+      else {
+        element.show = false;
+      }
+      // console.log('result : ', result, queue.inboxName, element.inbox)
+    })
   }
 
-  setAgents(nodeObj, agentList) {
-    agentList.forEach((element: any) => {
-      element.dateRangeList = []
-    });
-    nodeObj.agent = agentList;
-    nodeObj.httpStatus = false;
-    console.log('treeData : ', JSON.stringify(this.treeData));
-  }
+  ascending() {
 
-
-  getAgentReport(nodeObj) {
-    // nodeObj.httpStatus = true;
-    const { startDate, endDate } = this.productivityForm.value;
-    this.clientService.getAgentReportByDate(this.userData.TokenValue, this.productivityForm.value['processName'], nodeObj.EmployeeID, 1, 1, 1, this.startDate, this.endDate)
-      .subscribe((response) => {
-        console.log('getAgentReport response : ', response);
-
-        this.setAgentsReportDateWise(nodeObj, response.Data.manager_InventoryList_count)
-      }, (error) => {
-        console.log('getAgents error : ', error);
-        nodeObj.httpStatus = false;
-        this.ResponseHelper.GetFaliureResponse(error)
-      });
-  }
-
-  setAgentsReportDateWise(nodeObj, dateRangeList) {
-    // agentList.forEach((element: any) => {
-    //     element.dateRangeList = []
-    // });
-    nodeObj.dateRangeList = dateRangeList;
-    nodeObj.httpStatus = false;
-  }
-  changeClient(event) {
-    // console.log('changeClient() : ',event);
-    const client = this.productivityForm.value['processName'];
-    // console.log('client : ',client);
-    this.clientObj = _.find(this.clientList, (clientObj) => {
-      // console.log('clientObj : ',clientObj);
-      return clientObj.Id.toString() == client.toString();
-    });
-    // console.log('this.clientObj : ',this.clientObj);
-    this.treeData = [];
-    this.httpStatus = null;
   }
 
 }
